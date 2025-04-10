@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://aidfastbd.com/sitemap/static.xml</loc>
+    <lastmod>2025-03-10</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://aidfastbd.com/sitemap/doctor.xml</loc>
+    <lastmod>2025-03-10</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://aidfastbd.com/sitemap/diagnostic.xml</loc>
+    <lastmod>2025-03-10</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://aidfastbd.com/sitemap/dental.xml</loc>
+    <lastmod>2025-03-10</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://aidfastbd.com/sitemap/pharmacy.xml</loc>
+    <lastmod>2025-03-10</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://aidfastbd.com/sitemap/ambulance.xml</loc>
+    <lastmod>2025-03-10</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://aidfastbd.com/sitemap/blood.xml</loc>
+    <lastmod>2025-03-10</lastmod>
+  </sitemap>
+</sitemapindex>
