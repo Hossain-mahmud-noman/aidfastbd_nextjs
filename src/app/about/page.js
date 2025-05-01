@@ -9,8 +9,6 @@ export const metadata = {
 };
 
 function page() {
-   
-
     return (
         <>
             <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='About Us' ></AppBar>

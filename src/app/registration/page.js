@@ -4,13 +4,9 @@ import AppBar from '../../components/AppBar';
 import { FaArrowLeft } from "react-icons/fa";
 import RegistrationForm from '../../components/forms/RegistrationForm';
 
-
-
 export const metadata = {
   title: "Registration | " + appname,
 };
-
-
 
 function page() {
   return (
