@@ -32,12 +32,11 @@ const RegistrationForm = () => {
     };
 
     const handleSignup = async (e) => {
+      console.log("handleSignup called",registrationType);
         e.preventDefault();
         setError('');
         if (!validateInputs()) return;
-
         setIsLoading(true);
-
         try {
             const response = await fetch(`${base_endpoint}/Auth/Register`, {
                 method: 'POST',
@@ -48,7 +47,7 @@ const RegistrationForm = () => {
                 body: JSON.stringify({
                     mobileNoOrEmail: mobileEmailNo,
                     password,
-                    isPatient: registrationType=="patient",
+                    isPatient: registrationType
                 }),
             });
 

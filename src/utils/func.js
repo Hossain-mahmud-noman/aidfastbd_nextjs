@@ -16,8 +16,6 @@ export const removeSSRContent = (route) => {
         ssrElement.remove();
       }
       break;
-
-
     default:
       const e = document.getElementById('ssr_grid');
       if (e) {
@@ -99,7 +97,6 @@ export const getDoctorList = async ({ dispatch, isSearch = false, page = 1, lat 
 
   }
 }
-
 
 export const getDiagnosticList = async ({ dispatch, isSearch = false, page = 1, lat = null, lon = null, icu = null, ot = null, diagnostic = null, rating = null, emergency = null, rank = null }) => {
   try {
