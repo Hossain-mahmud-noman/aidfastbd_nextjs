@@ -4,13 +4,15 @@ import React, { useState } from 'react';
 import { IoQrCode } from 'react-icons/io5';
 import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt } from 'react-icons/fa';
 
-function ProfileQR({ userId = null, type = null }) {
+function ProfileQR({ id = null, type = null }) {
     const [qrCodeUrl, setQrCodeUrl] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const fetchQRCode = async () => {
-        if (!userId) return;
-        const qrUrl = `https://api.aidfastbd.com/api/QR/GetQRCode${type}?id=${userId}`;
+        if (!id) return;
+        // const qrUrl = `https://api.aidfastbd.com/api/QR/GetQRCode${type}?id=${id}`;
+        const qrUrl = `https://api.aidfastbd.com/api/QR/GetQRCodeGenericService?id=${id}`;
+        // https://api.aidfastbd.com/api/QR/GetQRCodeGenericService?id=778f9bcb-5fa6-4c8e-cc1e-08dd83644117
         setQrCodeUrl(qrUrl);
         setIsModalOpen(true);
     };
@@ -25,7 +27,7 @@ function ProfileQR({ userId = null, type = null }) {
 
             const link = document.createElement('a');
             link.href = blobUrl;
-            link.download = `qr_code_${userId}.png`;
+            link.download = `qr_code_${id}.png`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
