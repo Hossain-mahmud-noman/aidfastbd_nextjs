@@ -1,12 +1,11 @@
 'use client';
-
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import DentalCard from '../DentalCard';
-import { getDentalList } from '../../utils/func';
+import { getDrugDeAddictionList } from '../../utils/func';
 import { FaSpinner } from "react-icons/fa";
+import DrugDeAddictionCard from '../DrugDeAddictionCard';
 
-function DentalList({ location, nextPage }) {
+function DrugDeAddictionList({ location, nextPage }) {
     const dispatch = useDispatch();
     const { data, loading, page, error } = useSelector((state) => state.dental);
     const loader = useRef(null);
@@ -14,7 +13,7 @@ function DentalList({ location, nextPage }) {
     const handleObserver = (entities) => {
         const target = entities[0];
         if (target.isIntersecting && !loading && nextPage !== -1) {
-            getDentalList({ dispatch, lat: localStorage.getItem("lat"), lon: localStorage.getItem("lon"), page: page })
+            getDrugDeAddictionList({ dispatch, lat: localStorage.getItem("lat"), lon: localStorage.getItem("lon"), page: page })
         }
     };
     useEffect(() => {
@@ -43,11 +42,10 @@ function DentalList({ location, nextPage }) {
         <>
             {loading == false && data.length == 0 ? <div className='h-[300px] w-full flex items-center justify-center text-2xl'>No data available</div> : <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
                 {data.map((d) => (
-                    <DentalCard key={d.id} data={d}></DentalCard>
+                    // <DentalCard key={d.id} data={d}></DentalCard>
+                    <DrugDeAddictionCard key={d.id} data={d}></DrugDeAddictionCard>
                 ))}
             </div>}
-
-
             <div
                 ref={loader}
                 className="flex items-center justify-center p-4 mt-6"
@@ -57,7 +55,7 @@ function DentalList({ location, nextPage }) {
                 {loading && (
                     <div className="flex items-center space-x-2">
                         <FaSpinner className="animate-spin text-indigo-600 text-2xl" />
-                        <span className="text-gray-600">Loading dental...</span>
+                        <span className="text-gray-600">Loading Drug De Addiction...</span>
                     </div>
                 )}
             </div>
@@ -66,4 +64,4 @@ function DentalList({ location, nextPage }) {
     )
 }
 
-export default DentalList
+export default DrugDeAddictionList

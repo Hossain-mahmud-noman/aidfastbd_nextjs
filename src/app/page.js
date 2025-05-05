@@ -5,8 +5,6 @@ import Carousel from '../components/Carousel';
 import BottomNavigation from "../components/BottomNavigation";
 import AidComponent from '../components/AidComponent';
 
-
-
 const fetchCarousel = async () => {
 
   try {
@@ -24,10 +22,6 @@ const fetchCarousel = async () => {
     return [];
   }
 }
-
-
-
-
 
 export default async function Home() {
 

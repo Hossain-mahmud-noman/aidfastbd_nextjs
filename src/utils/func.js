@@ -354,6 +354,8 @@ export const getBloodList = async ({ dispatch, isSearch = false, page = 1, lat =
 }
 
 
+
+
 export const getDentalList = async ({ dispatch, isSearch = false, page = 1, lat = null, lon = null, dental = null, rating = null, emergency = null, rank = null }) => {
   try {
     if (page == -1) {
@@ -387,6 +389,69 @@ export const getDentalList = async ({ dispatch, isSearch = false, page = 1, lat 
     }
 
     const url = `${base_endpoint}/GeneralWeb/GetAllBloodBankList?pageNumber=${page}&pageSize=20&serviceType=1&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
+
+    const response = await
+      fetch(url);
+    if (response.status === 200) {
+      const data = await response.json();
+
+      const next = data['pageNumber'] * 20 < data['totalRecords'] ? data['pageNumber'] + 1 : -1;
+      if (isSearch) {
+        dispatch(setDentalData(data['data']));
+      } else {
+        dispatch(setAddDentalData(data['data']));
+      }
+
+      dispatch(setDentalPage(next));
+    }
+    else {
+      dispatch(setDentalData([]));
+      dispatch(setDentalPage(-1));
+
+    }
+  } catch (err) {
+    dispatch(setDentalData([]));
+  } finally {
+    dispatch(setDentalLoading(false));
+
+  }
+}
+
+
+// get Drug De Addiction
+export const getDrugDeAddictionList = async ({ dispatch, isSearch = false, page = 1, lat = null, lon = null, dental = null, rating = null, emergency = null, rank = null }) => {
+  try {
+    if (page == -1) {
+      return;
+    }
+    if (isSearch) {
+      removeSSRContent("/drugDeAddiction");
+    }
+    dispatch(setDentalLoading(true));
+    let location = "";
+    if (lat && lon) {
+      location = `&lat=${lat}&lon=${lon}`;
+    }
+
+    let Popularity = "";
+    if (rank) {
+      Popularity = `&popularity=${rank}`;
+    }
+    let Emergency = "";
+    if (emergency) {
+      Emergency = `&emergency=${emergency}`;
+    }
+
+    let Rating = "";
+    if (rating) {
+      Rating = `&ratngs=${rating}`;
+    }
+    let DentalId = "";
+    if (dental) {
+      DentalId = `&genericServiceId=${blood}`;
+    }
+
+    const url = `${base_endpoint}/GeneralWeb/GetAllBloodBankList?pageNumber=${page}&pageSize=20&serviceType=2&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
 
     const response = await
       fetch(url);
