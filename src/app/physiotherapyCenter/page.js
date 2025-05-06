@@ -1,21 +1,21 @@
 import React from "react";
 import LayoutAppBar from "../../components/LayoutAppBar";
 import { appname, map_key } from "../../utils/constants";
-import DrugDeAddictionList from "../../components/list/DrugDeAddictionList";
+import PhysiotherapyCenterList from "../../components/list/PhysiotherapyCenterList";
 import SearchDental from "../../components/search/SearchDental";
 import { FaArrowLeft } from "react-icons/fa";
 
 export const metadata = {
-  title: "Drug De-Addiction Center | " + appname,
+  title: "Physiotherapy Center | " + appname,
 };
 
 function Page() {
   return (
     <>
       <LayoutAppBar
-        title="Drug De-Addiction Center"
+        title="Physiotherapy Center"
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        route="/drugDeAddiction"
+        route="/physiotherapyCenter"
         api_key={map_key}
       />
       <div
@@ -25,7 +25,8 @@ function Page() {
         {/* Have to work on this search */}
         <SearchDental />
         <div className="container mx-auto px-2">
-          <DrugDeAddictionList nextPage={1} />
+          {/* <DrugDeAddictionList nextPage={1} /> */}
+          <PhysiotherapyCenterList nextPage={1} />
         </div>
       </div>
     </>

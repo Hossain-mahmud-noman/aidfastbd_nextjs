@@ -2,11 +2,11 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDrugDeAddictionList } from '../../utils/func';
+import { getHearingCareCenterList } from '../../utils/func';
 import { FaSpinner } from "react-icons/fa";
-import DrugDeAddictionCard from '../DrugDeAddictionCard';
+import HearingCareCenterCard from '../HearingCareCenterCard';
 
-function DrugDeAddictionList({ location, nextPage }) {
+function HearingCareCenterList({ location, nextPage }) {
     const dispatch = useDispatch();
     const { data, loading, page, error } = useSelector((state) => state.dental);
     const loader = useRef(null);
@@ -14,7 +14,7 @@ function DrugDeAddictionList({ location, nextPage }) {
     const handleObserver = (entities) => {
         const target = entities[0];
         if (target.isIntersecting && !loading && nextPage !== -1) {
-            getDrugDeAddictionList({ dispatch, lat: localStorage.getItem("lat"), lon: localStorage.getItem("lon"), page: page })
+            getHearingCareCenterList({ dispatch, lat: localStorage.getItem("lat"), lon: localStorage.getItem("lon"), page: page })
         }
     };
     useEffect(() => {
@@ -44,7 +44,7 @@ function DrugDeAddictionList({ location, nextPage }) {
             {loading == false && data.length == 0 ? <div className='h-[300px] w-full flex items-center justify-center text-2xl'>No data available</div> : <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
                 {data.map((d) => (
                     // <DentalCard key={d.id} data={d}></DentalCard>
-                    <DrugDeAddictionCard key={d.id} data={d}></DrugDeAddictionCard>
+                    <HearingCareCenterCard key={d.id} data={d} />
                 ))}
             </div>}
             <div
@@ -56,7 +56,7 @@ function DrugDeAddictionList({ location, nextPage }) {
                 {loading && (
                     <div className="flex items-center space-x-2">
                         <FaSpinner className="animate-spin text-indigo-600 text-2xl" />
-                        <span className="text-gray-600">Loading Drug De Addiction...</span>
+                        <span className="text-gray-600">Loading hearing Care Center...</span>
                     </div>
                 )}
             </div>
@@ -65,4 +65,4 @@ function DrugDeAddictionList({ location, nextPage }) {
     )
 }
 
-export default DrugDeAddictionList
+export default HearingCareCenterList

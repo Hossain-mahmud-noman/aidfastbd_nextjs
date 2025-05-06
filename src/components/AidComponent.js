@@ -46,7 +46,9 @@ const AidComponent = () => {
                 </div>
 
                 <div className="mb-3 flex items-center justify-center">
-                  <img
+                  <Image
+                    width={100}
+                    height={100}
                     src={"/icons/diagnostic.png"}
                     alt={"Diagnostic Center & Hospital"}
                     className="w-[45px] h-full object-contain"
@@ -60,7 +62,9 @@ const AidComponent = () => {
             >
               <Link href={"/blood"} className="h-full">
                 <div className="mb-1">
-                  <img
+                  <Image
+                    width={100}
+                    height={100}
                     src={"/icons/blood_bank.png"}
                     alt={"Blood Bank & Donor Club"}
                     className="w-[28px] h-[28px] object-contain"
@@ -80,7 +84,9 @@ const AidComponent = () => {
         >
           <Link href={"/dental"}>
             <div className="mb-3">
-              <img
+              <Image
+                width={100}
+                height={100}
                 src={"/images/dental.png"}
                 alt={"Dentals"}
                 className="w-[45px] h-[35px] object-contain"
@@ -95,9 +101,11 @@ const AidComponent = () => {
           className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
         >
           <Link href={"/drugDeAddiction"}>
-            <div className="mb-3">
-              <img
-                src={"/images/drug.png"}
+            <div className="mb-2 flex flex-col items-center justify-center">
+              <Image
+                width={100}
+                height={100}
+                src={"/icons/drug.png"}
                 alt={"Dentals"}
                 className="w-[50px] h-[35px] object-contain"
               />
@@ -106,6 +114,49 @@ const AidComponent = () => {
           </Link>
         </div>
 
+
+
+        {/* Physiotherapy Center */}
+        <div
+          className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
+        >
+          <Link href={"/physiotherapyCenter"}>
+            <div className="mb-2 flex flex-col items-center justify-center">
+              <Image
+                width={100}
+                height={100}
+                src={"/icons/psy.png"}
+                alt={"Dentals"}
+                className="w-[50px] h-[35px] object-contain"
+              />
+            </div>
+            <h3 className="font-semi text-gray-700">{"Physiotherapy Center"}</h3>
+          </Link>
+        </div>
+
+
+
+        {/* Hearing Care Center */}
+        <div
+          className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
+        >
+          <Link href={"/hearingCareCenter"}>
+            <div className="mb-2 flex flex-col items-center justify-center">
+              <Image
+                width={100}
+                height={100}
+                src={"/icons/hear.png"}
+                alt={"Dentals"}
+                className="w-[50px] h-[35px] object-contain"
+              />
+            </div>
+            <h3 className="font-semi text-gray-700">{"Hearing Care Center"}</h3>
+          </Link>
+        </div>
+
+
+
+
         {/* Bottom Section Start */}
         <div className="flex h-[90px] mt-2 w-full">
           <div
@@ -113,7 +164,9 @@ const AidComponent = () => {
           >
             <Link href={"/ambulance"}>
               <div className="mb-3">
-                <img
+                <Image
+                  width={100}
+                  height={100}
                   src={"/icons/ambulance.png"}
                   alt={"Ambulance"}
                   className="w-[45px] h-[35px] object-contain"
@@ -129,7 +182,9 @@ const AidComponent = () => {
             {" "}
             <Link href={"/pharmacy"}>
               <div className="mb-3">
-                <img
+                <Image
+                  width={100}
+                  height={100}
                   src={"/icons/drugs.png"}
                   alt={"Pharmacy"}
                   className="w-[35px] h-[35px] object-contain"

@@ -7,6 +7,13 @@ import { setData as setBloodData, setAddData as setAddBloodData, setLoading as s
 
 import { setData as setDentalData, setAddData as setAddDentalData, setLoading as setDentalLoading, setPage as setDentalPage } from "../redux/features/dentalSlice";
 
+import { setData as setDrugDeAddictionDataData, setAddData as setAddDrugDeAddictionDataData, setLoading as setDrugDeAddictionDataLoading, setPage as setDrugDeAddictionDataPage } from "../redux/features/drugDeAddictionSlice";
+
+import { setData as setPhysiotherapyCenterData, setAddData as setAddPhysiotherapyCenterData, setLoading as setPhysiotherapyCenterLoading, setPage as setPhysiotherapyCenterPage } from "../redux/features/physiotherapyCenterSlice";
+
+import { setData as setHearingCareCenterData, setAddData as setAddHearingCareCenterData, setLoading as setHearingCareCenterLoading, setPage as setHearingCareCenterPage } from "../redux/features/hearingCareCenterSlice";
+
+
 export const removeSSRContent = (route) => {
 
   switch (route) {
@@ -427,7 +434,7 @@ export const getDrugDeAddictionList = async ({ dispatch, isSearch = false, page 
     if (isSearch) {
       removeSSRContent("/drugDeAddiction");
     }
-    dispatch(setDentalLoading(true));
+    dispatch(setDrugDeAddictionDataLoading(true));
     let location = "";
     if (lat && lon) {
       location = `&lat=${lat}&lon=${lon}`;
@@ -460,25 +467,151 @@ export const getDrugDeAddictionList = async ({ dispatch, isSearch = false, page 
 
       const next = data['pageNumber'] * 20 < data['totalRecords'] ? data['pageNumber'] + 1 : -1;
       if (isSearch) {
-        dispatch(setDentalData(data['data']));
+        dispatch(setDrugDeAddictionDataData(data['data']));
       } else {
-        dispatch(setAddDentalData(data['data']));
+        dispatch(setAddDrugDeAddictionDataData(data['data']));
       }
 
-      dispatch(setDentalPage(next));
+      dispatch(setDrugDeAddictionDataPage(next));
     }
     else {
-      dispatch(setDentalData([]));
-      dispatch(setDentalPage(-1));
+      dispatch(setDrugDeAddictionDataData([]));
+      dispatch(setDrugDeAddictionDataPage(-1));
 
     }
   } catch (err) {
-    dispatch(setDentalData([]));
+    dispatch(setDrugDeAddictionDataData([]));
   } finally {
-    dispatch(setDentalLoading(false));
+    dispatch(setDrugDeAddictionDataLoading(false));
 
   }
 }
+
+
+// get Physiotherapy Center
+export const getPhysiotherapyCenterList = async ({ dispatch, isSearch = false, page = 1, lat = null, lon = null, dental = null, rating = null, emergency = null, rank = null }) => {
+  try {
+    if (page == -1) {
+      return;
+    }
+    if (isSearch) {
+      removeSSRContent("/physiotherapyCenter");
+    }
+    dispatch(setPhysiotherapyCenterLoading(true));
+    let location = "";
+    if (lat && lon) {
+      location = `&lat=${lat}&lon=${lon}`;
+    }
+
+    let Popularity = "";
+    if (rank) {
+      Popularity = `&popularity=${rank}`;
+    }
+    let Emergency = "";
+    if (emergency) {
+      Emergency = `&emergency=${emergency}`;
+    }
+
+    let Rating = "";
+    if (rating) {
+      Rating = `&ratngs=${rating}`;
+    }
+    let DentalId = "";
+    if (dental) {
+      DentalId = `&genericServiceId=${blood}`;
+    }
+
+    const url = `${base_endpoint}/GeneralWeb/GetAllBloodBankList?pageNumber=${page}&pageSize=20&serviceType=3&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
+
+    const response = await
+      fetch(url);
+    if (response.status === 200) {
+      const data = await response.json();
+
+      const next = data['pageNumber'] * 20 < data['totalRecords'] ? data['pageNumber'] + 1 : -1;
+      if (isSearch) {
+        dispatch(setPhysiotherapyCenterData(data['data']));
+      } else {
+        dispatch(setAddPhysiotherapyCenterData(data['data']));
+      }
+      dispatch(setPhysiotherapyCenterPage(next));
+    }
+    else {
+      dispatch(setPhysiotherapyCenterData([]));
+      dispatch(setPhysiotherapyCenterPage(-1));
+
+    }
+  } catch (err) {
+    dispatch(setPhysiotherapyCenterData([]));
+  } finally {
+    dispatch(setPhysiotherapyCenterLoading(false));
+  }
+}
+
+
+// get hearing Care Center
+export const getHearingCareCenterList = async ({ dispatch, isSearch = false, page = 1, lat = null, lon = null, dental = null, rating = null, emergency = null, rank = null }) => {
+  try {
+    if (page == -1) {
+      return;
+    }
+    if (isSearch) {
+      removeSSRContent("/physiotherapyCenter");
+    }
+    dispatch(setHearingCareCenterLoading(true));
+    let location = "";
+    if (lat && lon) {
+      location = `&lat=${lat}&lon=${lon}`;
+    }
+
+    let Popularity = "";
+    if (rank) {
+      Popularity = `&popularity=${rank}`;
+    }
+    let Emergency = "";
+    if (emergency) {
+      Emergency = `&emergency=${emergency}`;
+    }
+
+    let Rating = "";
+    if (rating) {
+      Rating = `&ratngs=${rating}`;
+    }
+    let DentalId = "";
+    if (dental) {
+      DentalId = `&genericServiceId=${blood}`;
+    }
+
+    const url = `${base_endpoint}/GeneralWeb/GetAllBloodBankList?pageNumber=${page}&pageSize=20&serviceType=4&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
+
+    const response = await
+      fetch(url);
+    if (response.status === 200) {
+      const data = await response.json();
+
+      const next = data['pageNumber'] * 20 < data['totalRecords'] ? data['pageNumber'] + 1 : -1;
+      if (isSearch) {
+        dispatch(setHearingCareCenterData(data['data']));
+      } else {
+        dispatch(setAddHearingCareCenterData(data['data']));
+      }
+      dispatch(setHearingCareCenterPage(next));
+    }
+    else {
+      dispatch(setHearingCareCenterData([]));
+      dispatch(setHearingCareCenterPage(-1));
+
+    }
+  } catch (err) {
+    dispatch(setHearingCareCenterData([]));
+  } finally {
+    dispatch(setHearingCareCenterLoading(false));
+  }
+}
+
+
+
+
 
 
 

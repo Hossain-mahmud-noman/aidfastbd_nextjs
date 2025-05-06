@@ -3,7 +3,7 @@ import { image_base_endpoint } from "../utils/constants";
 import { FaStar, FaPhone } from "react-icons/fa";
 import Link from "next/link";
 
-const DrugDeAddictionCard = ({ data }) => {
+const PhysiotherapyCenterCard = ({ data }) => {
   const defaultImageUrl = "/images/dental.png";
   const imageUrl = data.profileImageUrl
     ? `${image_base_endpoint}${data.profileImageUrl}`
@@ -14,10 +14,10 @@ const DrugDeAddictionCard = ({ data }) => {
     e.stopPropagation();
   };
   return (
-    <Link href={"/drugDeAddiction/" + data.id}>
+    <Link href={"/physiotherapyCenter/" + data.id}>
       <div
         className="flex flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
-        aria-label={`Drug De Addiction ${data.name} information card`}
+        aria-label={`Physiotherapy Center ${data.name} information card`}
       >
         <div className="flex-1 pl-3 pt-3 pr-3 pb-1">
           {/* Centering the image */}
@@ -66,4 +66,4 @@ const DrugDeAddictionCard = ({ data }) => {
   );
 };
 
-export default DrugDeAddictionCard;
+export default PhysiotherapyCenterCard;

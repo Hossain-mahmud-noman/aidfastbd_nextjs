@@ -52,6 +52,18 @@ import {
   setPage as setDrugDeAddictionPage,
 } from "../redux/features/drugDeAddictionSlice";
 
+import {
+  setData as setPhysiotherapyCenterData,
+  setLoading as setPhysiotherapyCenterLoading,
+  setPage as setPhysiotherapyCenterPage,
+} from "../redux/features/physiotherapyCenterSlice";
+
+import {
+  setData as setHearingCareCenterData,
+  setLoading as setHearingCareCenterLoading,
+  setPage as setHearingCareCenterPage,
+} from "../redux/features/hearingCareCenterSlice";
+
 
 import { removeSSRContent } from "../utils/func";
 
@@ -322,6 +334,73 @@ const LayoutAppBar = ({
           dispatch(setDrugDeAddictionLoading(false));
         }
         break;
+
+      // physiotherapyCenter
+      case "/physiotherapyCenter":
+        try {
+          removeSSRContent(route);
+          dispatch(setPhysiotherapyCenterLoading(true));
+
+          const response = await fetch(
+            `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?pageNumber=1&serviceType=3&pageSize=20${location}`
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+
+            const next =
+              data["pageNumber"] * 20 < data["totalRecords"]
+                ? data["pageNumber"] + 1
+                : -1;
+            dispatch(setPhysiotherapyCenterPage(next));
+            dispatch(setPhysiotherapyCenterData(data["data"]));
+          } else {
+            dispatch(setPhysiotherapyCenterData([]));
+          }
+        } catch (err) {
+          dispatch(setPhysiotherapyCenterData([]));
+        } finally {
+          dispatch(setPhysiotherapyCenterLoading(false));
+        }
+        break;
+
+      // hearingCareCenter
+      case "/hearingCareCenter":
+        try {
+          removeSSRContent(route);
+          dispatch(setHearingCareCenterLoading(true));
+
+          const response = await fetch(
+            `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?pageNumber=1&serviceType=4&pageSize=20${location}`
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+
+            const next =
+              data["pageNumber"] * 20 < data["totalRecords"]
+                ? data["pageNumber"] + 1
+                : -1;
+            dispatch(setHearingCareCenterPage(next));
+            dispatch(setHearingCareCenterData(data["data"]));
+          } else {
+            dispatch(setHearingCareCenterData([]));
+          }
+        } catch (err) {
+          dispatch(setHearingCareCenterData([]));
+        } finally {
+          dispatch(setHearingCareCenterLoading(false));
+        }
+        break;
+
+
+
+
+
+
+
+
+
 
       case "/ambulance":
         try {
