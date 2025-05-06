@@ -79,80 +79,87 @@ const AidComponent = () => {
         </div>
         {/* Top Section End*/}
 
-        <div
-          className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
-        >
-          <Link href={"/dental"}>
-            <div className="mb-3">
-              <Image
-                width={100}
-                height={100}
-                src={"/images/dental.png"}
-                alt={"Dentals"}
-                className="w-[45px] h-[35px] object-contain"
-              />
-            </div>
-            <h3 className="font-semi text-gray-700">{"Dental Clinic"}</h3>
-          </Link>
-        </div>
 
-        {/* Drug de addiction */}
-        <div
-          className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
-        >
-          <Link href={"/drugDeAddiction"}>
-            <div className="mb-2 flex flex-col items-center justify-center">
-              <Image
-                width={100}
-                height={100}
-                src={"/icons/drug.png"}
-                alt={"Dentals"}
-                className="w-[50px] h-[35px] object-contain"
-              />
-            </div>
-            <h3 className="font-semi text-gray-700">{"Drug De Addiction"}</h3>
-          </Link>
-        </div>
+        <div className="flex items-center justify-between w-full gap-2">
+          {/* Dental */}
+          <div
+            className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
+          >
+            <Link href={"/dental"}>
+              <div className="mb-3">
+                <Image
+                  width={100}
+                  height={100}
+                  src={"/images/dental.png"}
+                  alt={"Dentals"}
+                  className="w-[45px] h-[35px] object-contain"
+                />
+              </div>
+              <h3 className="font-semi text-gray-700">{"Dental Clinic"}</h3>
+            </Link>
+          </div>
 
-
-
-        {/* Physiotherapy Center */}
-        <div
-          className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
-        >
-          <Link href={"/physiotherapyCenter"}>
-            <div className="mb-2 flex flex-col items-center justify-center">
-              <Image
-                width={100}
-                height={100}
-                src={"/icons/psy.png"}
-                alt={"Dentals"}
-                className="w-[50px] h-[35px] object-contain"
-              />
-            </div>
-            <h3 className="font-semi text-gray-700">{"Physiotherapy Center"}</h3>
-          </Link>
+          {/* Hearing Care Center */}
+          <div
+            className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
+          >
+            <Link href={"/hearingCareCenter"}>
+              <div className="mb-2 flex flex-col items-center justify-center">
+                <Image
+                  width={100}
+                  height={100}
+                  src={"/icons/hear.png"}
+                  alt={"Dentals"}
+                  className="w-[50px] h-[35px] object-contain"
+                />
+              </div>
+              <h3 className="font-semi text-gray-700">{"Hearing Care Center"}</h3>
+            </Link>
+          </div>
         </div>
 
 
+        <div className="flex items-center justify-between w-full gap-2">
+          {/* Drug de addiction */}
+          <div
+            className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
+          >
+            <Link href={"/drugDeAddiction"}>
+              <div className="mb-2 flex flex-col items-center justify-center">
+                <Image
+                  width={100}
+                  height={100}
+                  src={"/icons/drug.png"}
+                  alt={"Dentals"}
+                  className="w-[50px] h-[35px] object-contain"
+                />
+              </div>
+              <h3 className="font-semi text-gray-700">{"Drug De Addiction"}</h3>
+            </Link>
+          </div>
 
-        {/* Hearing Care Center */}
-        <div
-          className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
-        >
-          <Link href={"/hearingCareCenter"}>
-            <div className="mb-2 flex flex-col items-center justify-center">
-              <Image
-                width={100}
-                height={100}
-                src={"/icons/hear.png"}
-                alt={"Dentals"}
-                className="w-[50px] h-[35px] object-contain"
-              />
-            </div>
-            <h3 className="font-semi text-gray-700">{"Hearing Care Center"}</h3>
-          </Link>
+          {/* Physiotherapy Center */}
+          <div
+            className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
+          >
+            <Link href={"/physiotherapyCenter"}>
+              <div className="mb-2 flex flex-col items-center justify-center">
+                <Image
+                  width={100}
+                  height={100}
+                  src={"/icons/psy.png"}
+                  alt={"Dentals"}
+                  className="w-[50px] h-[35px] object-contain"
+                />
+              </div>
+              <h3 className="font-semi text-gray-700">{"Physiotherapy Center"}</h3>
+            </Link>
+          </div>
         </div>
+
+
+
+
 
 
 
