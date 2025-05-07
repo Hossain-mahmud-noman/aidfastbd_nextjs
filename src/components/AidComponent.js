@@ -103,7 +103,7 @@ const AidComponent = () => {
           <div
             className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
           >
-            <Link href={"/hearingCareCenter"}>
+            <Link href={"/hearing-care-center"}>
               <div className="mb-2 flex flex-col items-center justify-center">
                 <Image
                   width={100}
@@ -124,7 +124,7 @@ const AidComponent = () => {
           <div
             className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
           >
-            <Link href={"/drugDeAddiction"}>
+            <Link href={"/drug-de-addiction"}>
               <div className="mb-2 flex flex-col items-center justify-center">
                 <Image
                   width={100}
@@ -134,7 +134,7 @@ const AidComponent = () => {
                   className="w-[50px] h-[35px] object-contain"
                 />
               </div>
-              <h3 className="font-semi text-gray-700">{"Drug De Addiction"}</h3>
+              <h3 className="font-semi text-gray-700">{"Drug De-Addiction"}</h3>
             </Link>
           </div>
 
@@ -142,7 +142,7 @@ const AidComponent = () => {
           <div
             className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
           >
-            <Link href={"/physiotherapyCenter"}>
+            <Link href={"/physiotherapy-center"}>
               <div className="mb-2 flex flex-col items-center justify-center">
                 <Image
                   width={100}
