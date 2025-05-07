@@ -33,7 +33,7 @@ const fetchDetail = async (slug) => {
       headerx["Authorization"] = `Bearer ${tokenCookie}`;
     }
     const response = await fetch(
-      `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=3&id=${slug}`,
+      `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=2&id=${slug}`,
       {
         method: "GET",
         headers: headerx,
@@ -81,29 +81,29 @@ async function Page({ params }) {
 
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        title="Physiotherapy Center Details"
+        title="Drug De Addiction Details"
         trailingComponents={
           <div className="flex">
-            <ProfileQR id={data?.id} type={"physiotherapyCenter"} />
+            <ProfileQR id={data?.id} type={"DrugDeAddiction"}></ProfileQR>
             <FavouriteToggle
               isFill={data.isFavourite}
               userId={user?.id}
               id={data?.id}
               type={3}
               token={token}
-            />
+            ></FavouriteToggle>
 
-            <ShareButton link={`${frontend_url}/physiotherapyCenter/${data.id}`} />
+            <ShareButton
+              link={`${frontend_url}/drug-de-ddiction/${data.id}`}
+            ></ShareButton>
           </div>
         }
-      />
+      ></AppBar>
 
       <div className="pt-16">
         <div className="p-4">
           <div className="w-full h-[30vh] overflow-hidden">
             <Image
-              width={1000}
-              height={1000}
               src={cover}
               alt="Dental cover"
               className="w-full h-full object-cover"
@@ -113,8 +113,6 @@ async function Page({ params }) {
             {/* Logo and Name */}
             <div className="flex items-center">
               <Image
-                width={1000}
-                height={1000}
                 src={profile}
                 alt="Dental Logo"
                 className="w-16 h-16 rounded-full mr-3"

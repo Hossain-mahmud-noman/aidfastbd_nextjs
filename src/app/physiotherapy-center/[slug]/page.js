@@ -33,7 +33,7 @@ const fetchDetail = async (slug) => {
       headerx["Authorization"] = `Bearer ${tokenCookie}`;
     }
     const response = await fetch(
-      `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=4&id=${slug}`,
+      `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=3&id=${slug}`,
       {
         method: "GET",
         headers: headerx,
@@ -81,10 +81,10 @@ async function Page({ params }) {
 
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        title="Hearing Care Center Details"
+        title="Physiotherapy Center Details"
         trailingComponents={
           <div className="flex">
-            <ProfileQR id={data?.id} type={"hearingCareCenter"} />
+            <ProfileQR id={data?.id} type={"physiotherapyCenter"} />
             <FavouriteToggle
               isFill={data.isFavourite}
               userId={user?.id}
@@ -92,7 +92,8 @@ async function Page({ params }) {
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/hearingCareCenter/${data.id}`} />
+
+            <ShareButton link={`${frontend_url}/physiotherapy-center/${data.id}`} />
           </div>
         }
       />
@@ -162,6 +163,7 @@ async function Page({ params }) {
               </div>
             </div>
           </div>
+
           <div>
             <a
               href={`tel:${data.emergencyContactNumber}`}
@@ -172,6 +174,7 @@ async function Page({ params }) {
           </div>
         </div>
       </div>
+
       {/* Have to add tabs */}
       <DentalTabs data={data}></DentalTabs>
       <FloatingCallButton number={data.contact}></FloatingCallButton>
