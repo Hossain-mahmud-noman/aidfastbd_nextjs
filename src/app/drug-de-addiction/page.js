@@ -9,6 +9,7 @@ export const metadata = {
   title: "Drug De-Addiction Center | " + appname,
 };
 
+
 function Page() {
   return (
     <>
