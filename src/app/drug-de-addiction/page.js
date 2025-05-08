@@ -7,8 +7,6 @@ import { FaArrowLeft } from "react-icons/fa";
 
 export const metadata = {
   title: "Drug De-Addiction Center | " + appname,
-  description: null,
-
 };
 
 function Page() {
