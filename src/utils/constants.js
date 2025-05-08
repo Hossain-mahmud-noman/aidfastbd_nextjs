@@ -5,6 +5,7 @@ export const frontend_url = 'https://aidfastbd.shohayok.com';
 export const base_endpoint ='https://'+base+"/api";
 export const image_base_endpoint ='https://'+base+"/";
 export const chat_base_endpoint = 'ws://'+base;
+export const panel_base = "https://api2.aidfastbd.com"
 
 export const ambulanceImg="https://www.aidfastbd.com/content/MyImages/ambulance.jpg"
 export const doctorImg="https://www.aidfastbd.com/content/MyImages/doctor.jpg"

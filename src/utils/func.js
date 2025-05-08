@@ -638,3 +638,9 @@ export const cancelBooking = async ({ id, token }) => {
   }
 }
 
+
+
+
+export const panelLogout = async () => {
+  fetch("/api/panel-logout")
+  }
