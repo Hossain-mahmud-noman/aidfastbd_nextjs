@@ -22,7 +22,6 @@ function Page() {
         style={{ insetBlockEnd: "70px" }}
         className="font-[family-name:var(--font-geist-sans)] pt-20"
       >
-        {/* Have to work on this search */}
         <SearchDental />
         <div className="container mx-auto px-2">
           <DrugDeAddictionList nextPage={1} />
