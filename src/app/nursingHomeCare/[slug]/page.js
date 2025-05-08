@@ -22,7 +22,6 @@ import { useRouter } from "next/navigation";
 function Page({ params }) {
   const router = useRouter();
   const [data, setData] = useState(null);
-  console.log("🚀 ~ Page ~ data:", data)
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
 
@@ -39,7 +38,7 @@ function Page({ params }) {
 
       try {
         const res = await fetch(
-          `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=1&id=${params.slug}`,
+          `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=6&id=${params.slug}`,
           {
             method: "GET",
             headers: headerx,
@@ -85,10 +84,10 @@ function Page({ params }) {
 
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        title="Dental Detail"
+        title="Nursing Home Care  Center Detail"
         trailingComponents={
           <div className="flex">
-            <ProfileQR id={data?.id} type={"Dental"} />
+            <ProfileQR id={data?.id} type={"Nursing Home Care Center"} />
             <FavouriteToggle
               isFill={data.isFavourite}
               userId={user?.id}
@@ -96,7 +95,7 @@ function Page({ params }) {
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/dental/${data.userId}`} />
+            <ShareButton link={`${frontend_url}/nursingHomeCare/${data.id}`} />
           </div>
         }
       />

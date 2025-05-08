@@ -39,7 +39,7 @@ function Page({ params }) {
 
       try {
         const res = await fetch(
-          `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=1&id=${params.slug}`,
+          `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=5&id=${params.slug}`,
           {
             method: "GET",
             headers: headerx,
@@ -85,10 +85,10 @@ function Page({ params }) {
 
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        title="Dental Detail"
+        title="Eye Care Center Detail"
         trailingComponents={
           <div className="flex">
-            <ProfileQR id={data?.id} type={"Dental"} />
+            <ProfileQR id={data?.id} type={"Eye Care Center"} />
             <FavouriteToggle
               isFill={data.isFavourite}
               userId={user?.id}
@@ -96,7 +96,7 @@ function Page({ params }) {
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/dental/${data.userId}`} />
+            <ShareButton link={`${frontend_url}/eyeCareCenter/${data.id}`} />
           </div>
         }
       />

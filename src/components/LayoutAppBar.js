@@ -64,6 +64,18 @@ import {
   setPage as setHearingCareCenterPage,
 } from "../redux/features/hearingCareCenterSlice";
 
+import {
+  setData as setEyaCareCenterData,
+  setLoading as setEyaCareCenterLoading,
+  setPage as setEyaCareCenterPage,
+} from "../redux/features/eyeCareCenterSlice";
+
+import {
+  setData as setNursingHomeCareData,
+  setLoading as setNursingHomeCareLoading,
+  setPage as setNursingHomeCarePage,
+} from "../redux/features/nursingHomeCareSlice";
+
 
 import { removeSSRContent } from "../utils/func";
 
@@ -390,6 +402,66 @@ const LayoutAppBar = ({
           dispatch(setHearingCareCenterData([]));
         } finally {
           dispatch(setHearingCareCenterLoading(false));
+        }
+        break;
+
+      // eyeCareCenter
+      case "/eyeCareCenter":
+        try {
+          removeSSRContent(route);
+          dispatch(setEyaCareCenterLoading(true));
+
+          const response = await fetch(
+            `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?pageNumber=1&serviceType=5&pageSize=20${location}`
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+
+            const next =
+              data["pageNumber"] * 20 < data["totalRecords"]
+                ? data["pageNumber"] + 1
+                : -1;
+            dispatch(setEyaCareCenterPage(next));
+            dispatch(setEyaCareCenterData(data["data"]));
+          } else {
+            dispatch(setEyaCareCenterData([]));
+          }
+        } catch (err) {
+          dispatch(setEyaCareCenterData([]));
+        } finally {
+          dispatch(setEyaCareCenterLoading(false));
+        }
+        break;
+
+
+
+      // Nursing Home Care
+      case "/nursingHomeCare":
+        try {
+          removeSSRContent(route);
+          dispatch(setNursingHomeCareLoading(true));
+
+          const response = await fetch(
+            `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?pageNumber=1&serviceType=6&pageSize=20${location}`
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+
+            const next =
+              data["pageNumber"] * 20 < data["totalRecords"]
+                ? data["pageNumber"] + 1
+                : -1;
+            dispatch(setNursingHomeCarePage(next));
+            dispatch(setNursingHomeCareData(data["data"]));
+          } else {
+            dispatch(setNursingHomeCareData([]));
+          }
+        } catch (err) {
+          dispatch(setNursingHomeCareData([]));
+        } finally {
+          dispatch(setNursingHomeCareLoading(false));
         }
         break;
 
