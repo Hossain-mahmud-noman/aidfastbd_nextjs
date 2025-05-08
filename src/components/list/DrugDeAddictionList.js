@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
+
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDrugDeAddictionList } from '../../utils/func';
@@ -43,7 +44,6 @@ function DrugDeAddictionList({ location, nextPage }) {
         <>
             {loading == false && data.length == 0 ? <div className='h-[300px] w-full flex items-center justify-center text-2xl'>No data available</div> : <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
                 {data.map((d) => (
-                    // <DentalCard key={d.id} data={d}></DentalCard>
                     <DrugDeAddictionCard key={d.id} data={d}></DrugDeAddictionCard>
                 ))}
             </div>}

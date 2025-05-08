@@ -14,7 +14,7 @@ const DrugDeAddictionCard = ({ data }) => {
     e.stopPropagation();
   };
   return (
-    <Link href={"/drugDeAddiction/" + data.id}>
+    <Link href={"/drug-de-addiction/" + data.id}>
       <div
         className="flex flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
         aria-label={`Drug De Addiction ${data.name} information card`}

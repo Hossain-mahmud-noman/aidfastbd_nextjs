@@ -7,6 +7,8 @@ import { FaArrowLeft } from "react-icons/fa";
 
 export const metadata = {
   title: "Drug De-Addiction Center | " + appname,
+  description: null,
+
 };
 
 function Page() {
@@ -15,7 +17,7 @@ function Page() {
       <LayoutAppBar
         title="Drug De-Addiction Center"
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        route="/drugDeAddiction"
+        route="/drug-de-addiction"
         api_key={map_key}
       />
       <div

@@ -94,7 +94,7 @@ async function Page({ params }) {
             ></FavouriteToggle>
 
             <ShareButton
-              link={`${frontend_url}/drug-de-ddiction/${data.id}`}
+              link={`${frontend_url}/drug-de-adiction/${data.id}`}
             ></ShareButton>
           </div>
         }

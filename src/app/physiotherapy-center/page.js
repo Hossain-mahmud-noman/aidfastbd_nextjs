@@ -7,6 +7,8 @@ import { FaArrowLeft } from "react-icons/fa";
 
 export const metadata = {
   title: "Physiotherapy Center | " + appname,
+  description: null,
+
 };
 
 function Page() {

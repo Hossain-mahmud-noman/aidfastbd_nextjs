@@ -43,7 +43,6 @@ function HearingCareCenterList({ location, nextPage }) {
         <>
             {loading == false && data.length == 0 ? <div className='h-[300px] w-full flex items-center justify-center text-2xl'>No data available</div> : <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
                 {data.map((d) => (
-                    // <DentalCard key={d.id} data={d}></DentalCard>
                     <HearingCareCenterCard key={d.id} data={d} />
                 ))}
             </div>}

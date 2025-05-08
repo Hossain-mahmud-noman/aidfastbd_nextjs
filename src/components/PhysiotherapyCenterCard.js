@@ -14,7 +14,7 @@ const PhysiotherapyCenterCard = ({ data }) => {
     e.stopPropagation();
   };
   return (
-    <Link href={"/physiotherapyCenter/" + data.id}>
+    <Link href={"/physiotherapy-center/" + data.id}>
       <div
         className="flex flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
         aria-label={`Physiotherapy Center ${data.name} information card`}

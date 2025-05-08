@@ -15,7 +15,7 @@ function Page() {
       <LayoutAppBar
         title="Hearing Care Center"
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        route="/hearingCareCenter"
+        route="/hearing-care-center"
         api_key={map_key}
       />
       <div
@@ -25,7 +25,6 @@ function Page() {
         {/* Have to work on this search */}
         <SearchDental />
         <div className="container mx-auto px-2">
-          {/* <DrugDeAddictionList nextPage={1} /> */}
           <HearingCareCenterList nextPage={1} />
         </div>
       </div>
