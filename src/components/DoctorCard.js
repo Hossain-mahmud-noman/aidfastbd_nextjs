@@ -5,11 +5,7 @@ import Image from 'next/image';
 
 const DoctorCard = ({ doctor, lat = null, lon = null, id = null }) => {
     const defaultImageUrl = "/images/doctor.jpg";
-
     const profile = doctor.imageUrl == null || doctor.imageUrl == "" ? defaultImageUrl : image_base_endpoint + doctor.imageUrl;
-
-
-
     return (
         <Link href={lat !== null && lon !== null && id !== null ? `/doctor/${id}?lat=${lat}&lon=${lon}` : "/doctor/" + doctor.userId}>
             <div

@@ -9,7 +9,6 @@ import DoctorTabs from '../../../components/tabs/DoctorTabs';
 import AppointmentBooking from '../../../components/bottom/AppointmentBooking';
 import ProfileQR from '../../../components/profileQR';
 
-
 const fetchDetail = async (slug) => {
   try {
     const tokenCookie = cookies().get('token')?.value ?? "";
@@ -37,6 +36,7 @@ const fetchDetail = async (slug) => {
 
 const Page = async ({ params }) => {
   const { data, token, user } = await fetchDetail(params.slug);
+  console.log("🚀 ~ Page ~ data:", data)
 
   if (!data) {
     notFound(); // Automatically show 404 page
