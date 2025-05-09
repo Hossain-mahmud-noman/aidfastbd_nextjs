@@ -46,7 +46,8 @@ const fetchDetail = async (slug) => {
 
 async function page({ params }) {
   const { data, token, user } = await fetchDetail(params.slug);
-
+  console.log("🚀 ~ page ~ data:", data)
+  
   if (data == null) {
     notFound();
   }

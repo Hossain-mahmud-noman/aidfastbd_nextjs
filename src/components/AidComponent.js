@@ -196,12 +196,6 @@ const AidComponent = () => {
         </div>
 
 
-
-
-
-
-
-
         {/* Bottom Section Start */}
         <div className="flex h-[90px] mt-2 w-full">
           <div
