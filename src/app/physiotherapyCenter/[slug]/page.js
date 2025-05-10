@@ -78,13 +78,12 @@ async function Page({ params }) {
         name="description"
         content={`${data.name}, ${data.location}`.slice(0, 150)}
       />
-
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
         title="Physiotherapy Center Details"
         trailingComponents={
           <div className="flex">
-            <ProfileQR id={data?.id} type={"physiotherapyCenter"} />
+            <ProfileQR slug={"newService"} id={data?.id} type={"physiotherapyCenter"} />
             <FavouriteToggle
               isFill={data.isFavourite}
               userId={user?.id}

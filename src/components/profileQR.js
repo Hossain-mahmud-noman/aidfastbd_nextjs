@@ -1,20 +1,26 @@
-'use client';
+"use client";
+import React, { useState } from "react";
+import { IoQrCode } from "react-icons/io5";
+import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt } from "react-icons/fa";
 
-import React, { useState } from 'react';
-import { IoQrCode } from 'react-icons/io5';
-import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt } from 'react-icons/fa';
-
-function ProfileQR({ id = null, type = null }) {
-  const [qrCodeUrl, setQrCodeUrl] = useState('');
+function ProfileQR({ id = null, type = null, slug = null }) {
+  console.log("🚀 ~ ProfileQR ~ id:", id);
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const fetchQRCode = async () => {
     if (!id) return;
-    // const qrUrl = `https://api.aidfastbd.com/api/QR/GetQRCode${type}?id=${id}`;
-    const qrUrl = `https://api.aidfastbd.com/api/QR/GetQRCodeGenericService?id=${id}`;
+    if (slug === "newService") {
+      const qrUrl = `https://api.aidfastbd.com/api/QR/GetQRCodeGenericService?id=${id}`;
+      setQrCodeUrl(qrUrl);
+      setIsModalOpen(true);
+    } else {
+      const qrUrl = `https://api.aidfastbd.com/api/QR/GetQRCode${type}?id=${id}`;
+      setQrCodeUrl(qrUrl);
+      setIsModalOpen(true);
+    }
+    // https://api.aidfastbd.com/api/QR/GetQRCodeDoctor?id=260caa70-1d41-4a94-46cd-08dc7a08e14c
+    // const qrUrl = `https://api.aidfastbd.com/api/QR/GetQRCodeGenericService?id=${id}`;
     // https://api.aidfastbd.com/api/QR/GetQRCodeGenericService?id=778f9bcb-5fa6-4c8e-cc1e-08dd83644117
-    setQrCodeUrl(qrUrl);
-    setIsModalOpen(true);
   };
 
   const downloadQRCode = async () => {
@@ -24,8 +30,7 @@ function ProfileQR({ id = null, type = null }) {
       const response = await fetch(qrCodeUrl);
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = blobUrl;
       link.download = `qr_code_${id}.png`;
       document.body.appendChild(link);
@@ -33,7 +38,7 @@ function ProfileQR({ id = null, type = null }) {
       document.body.removeChild(link);
       URL.revokeObjectURL(blobUrl);
     } catch (error) {
-      console.error('Error downloading QR code:', error);
+      console.error("Error downloading QR code:", error);
     }
   };
 
@@ -43,15 +48,15 @@ function ProfileQR({ id = null, type = null }) {
     try {
       if (navigator.share) {
         await navigator.share({
-          title: 'Check out this QR Code!',
-          text: 'Scan this QR code to access the link.',
+          title: "Check out this QR Code!",
+          text: "Scan this QR code to access the link.",
           url: qrCodeUrl,
         });
       } else {
-        alert('Web Share API not supported on this device.');
+        alert("Web Share API not supported on this device.");
       }
     } catch (error) {
-      console.error('Error sharing QR code:', error);
+      console.error("Error sharing QR code:", error);
     }
   };
 
@@ -71,7 +76,9 @@ function ProfileQR({ id = null, type = null }) {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-4 rounded-lg shadow-lg text-center">
             <h2 className="text-lg font-semibold mb-2">Profile QR Code</h2>
-            {qrCodeUrl && <img src={qrCodeUrl} alt="QR Code" className="mx-auto mb-4" />}
+            {qrCodeUrl && (
+              <img src={qrCodeUrl} alt="QR Code" className="mx-auto mb-4" />
+            )}
 
             <div className="flex justify-center gap-4">
               {/* Download Button */}
@@ -94,7 +101,9 @@ function ProfileQR({ id = null, type = null }) {
             {/* Social Media Links (Fallback) */}
             <div className="mt-4 flex justify-center gap-4">
               <a
-                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(qrCodeUrl)}`}
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                  qrCodeUrl
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 text-2xl"
@@ -103,7 +112,9 @@ function ProfileQR({ id = null, type = null }) {
                 <FaFacebook />
               </a>
               <a
-                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(qrCodeUrl)}&text=Scan this QR Code!`}
+                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                  qrCodeUrl
+                )}&text=Scan this QR Code!`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 text-2xl"
@@ -112,7 +123,9 @@ function ProfileQR({ id = null, type = null }) {
                 <FaTwitter />
               </a>
               <a
-                href={`https://api.whatsapp.com/send?text=Scan this QR Code: ${encodeURIComponent(qrCodeUrl)}`}
+                href={`https://api.whatsapp.com/send?text=Scan this QR Code: ${encodeURIComponent(
+                  qrCodeUrl
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-green-500 text-2xl"

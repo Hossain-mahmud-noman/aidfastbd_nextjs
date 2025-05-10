@@ -36,7 +36,6 @@ const fetchDetail = async (slug) => {
 
 const Page = async ({ params }) => {
   const { data, token, user } = await fetchDetail(params.slug);
-  console.log("🚀 ~ Page ~ data:", data)
 
   if (!data) {
     notFound(); // Automatically show 404 page
@@ -50,14 +49,12 @@ const Page = async ({ params }) => {
     <>
       <title>{`Dr. ${data.firstName} ${data.lastName} | ${appname}`}</title>
       <meta name="description" content={`${data.doctorAdditionalInfo?.title} ${data.doctorAdditionalInfo?.details}`.slice(0, 150)} />
-
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
         title="Doctor Detail"
         trailingComponents={
           <div className="flex">
-            <ProfileQR userId={data.userId} type={"Doctor"}></ProfileQR>
-
+            <ProfileQR userId={data?.id} type={"Doctor"}></ProfileQR>
             <FavouriteToggle
               isFill={data.isFavourite}
               userId={user?.id}
