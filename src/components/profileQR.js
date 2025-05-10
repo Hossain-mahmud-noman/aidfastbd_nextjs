@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { IoQrCode } from "react-icons/io5";
 import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt } from "react-icons/fa";
 
-function ProfileQR({ id = null, type = null, slug = null }) {
+function ProfileQR({ id = null, type = null, slug = null, }) {
   console.log("🚀 ~ ProfileQR ~ id:", id);
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
