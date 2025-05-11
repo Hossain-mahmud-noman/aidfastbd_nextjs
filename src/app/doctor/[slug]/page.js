@@ -12,14 +12,12 @@ import ProfileQR from '../../../components/profileQR';
 
 const fetchDetail = async (slug) => {
   try {
-    const tokenCookie = cookies().get('token')?.value ?? ""; // Retrieve token cookie
+    const tokenCookie = cookies().get('token')?.value ?? "";
     const userCookie = cookies().get('user')?.value;
     const user = userCookie ? JSON.parse(userCookie) : null;
-
     if (tokenCookie.length === 298) {
       headerx['Authorization'] = `Bearer ${tokenCookie}`;
     }
-
     const response = await fetch(`${base_endpoint}/GeneralWeb/GetDoctorInfoList?userid=${slug}`, {
       method: "GET",
       headers: headerx,
@@ -48,10 +46,8 @@ const Page = async ({ params }) => {
 
   const profile = data.imageUrl == null || data.imageUrl == "" ? defaultImageUrl : image_base_endpoint + data.imageUrl;
 
-
   return (
     <>
-
       <title>{`Dr. ${data.firstName} ${data.lastName} | ${appname}`}</title>
       <meta name="description" content={`${data.doctorAdditionalInfo?.title} ${data.doctorAdditionalInfo?.details}`.slice(0, 150)} />
 
