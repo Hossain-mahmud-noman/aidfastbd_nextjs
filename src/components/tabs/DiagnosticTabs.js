@@ -4,11 +4,10 @@ import React, { useState } from 'react'
 import { image_base_endpoint } from '../../utils/constants';
 import DoctorCard from '../DoctorCard'
 import ReviewList from '../ReviewList';
+import Image from 'next/image';
 
 function DiagnosticTabs({ data }) {
-
   const [activeTab, setActiveTab] = useState('Info');
-
   return (
     <>
       <div className="bg-white shadow-md">
@@ -21,9 +20,7 @@ function DiagnosticTabs({ data }) {
                   }`}
                 onClick={() => {
                   setActiveTab(tab);
-
-                }
-                }
+                }}
               >
                 {tab}
               </button>
@@ -36,57 +33,47 @@ function DiagnosticTabs({ data }) {
       <div className="p-4 mb-[70px]">
         {activeTab === 'Info' && (
           <div>
-            <h3 className="font-bold text-lg text-black-600">{data.diagnosticCenterAdditionalInfo?.title}</h3>
-            <pre className="w-full overflow-x-auto whitespace-pre-wrap">{data.diagnosticCenterAdditionalInfo?.details}</pre>
-            {data.diagnosticCenterAdditionalInfo?.imageUrl !== null && data.diagnosticCenterAdditionalInfo?.imageUrl !== "" && <img src={image_base_endpoint + data.diagnosticCenterAdditionalInfo?.imageUrl}></img>
+            <h3 className="font-bold text-lg text-black-600">{data?.diagnosticCenterAdditionalInfo?.title}</h3>
+            <pre className="w-full overflow-x-auto whitespace-pre-wrap">{data?.diagnosticCenterAdditionalInfo?.details}</pre>
+            {data?.diagnosticCenterAdditionalInfo?.imageUrl !== null && data?.diagnosticCenterAdditionalInfo?.imageUrl !== "" && <Image width={100} height={100} alt='Image' src={image_base_endpoint + data?.diagnosticCenterAdditionalInfo?.imageUrl}></Image>
             }
-            {data.diagnosticCenterAdditionalInfo?.imgList !== null && data.diagnosticCenterAdditionalInfo?.imgList.map((e, index) => {
+            {data?.diagnosticCenterAdditionalInfo?.imgList !== null && data?.diagnosticCenterAdditionalInfo?.imgList.map((e, index) => {
 
-              return <img key={`imgList_${index}`} className='w-full object-contain' src={e?.imgUrl}></img>
-
+              return <Image width={100} height={100} alt='Image' key={`imgList_${index}`} className='w-full object-contain' src={e?.imgUrl}></Image>
             })
             }
-
-
           </div>
         )}
-
         {activeTab === 'Doctor' && (
           <div className='container mx-auto'>
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-              {data.diagnosticCenterDoctors.map((e, index) => {
+              {data?.diagnosticCenterDoctors.map((e, index) => {
                 return (
-                  <DoctorCard id={e?.doctorUserId} lat={data.latitude} lon={data.longitude} key={`doctor_${index}`} doctor={e}></DoctorCard>
+                  <DoctorCard id={e?.doctorUserId} lat={data?.latitude} lon={data?.longitude} key={`doctor_${index}`} doctor={e}></DoctorCard>
                 );
               })}
             </div>
           </div>
         )}
 
-
         {activeTab === 'Services' && (
           <div className="w-full overflow-x-auto">
-
-
-
-
-            {data.diagnosticCenterServices.length > 0 ? (
+            {data?.diagnosticCenterServices.length > 0 ? (
               <>
+                <div>
+                  {data?.diagnosticCenterServices?.filter(service => service.serviceType === "heading").map((service) => {
+                    return <div key={service.id} className="relative bg-purple-100 p-4 rounded-lg shadow-md mb-3">
+                      <h3 className="text-lg font-bold">{service.serviceName}</h3>
+                      <p className="text-gray-600">{service.price}</p>
+                      <div className="flex mt-2">
+                        {service.remarks.split(",").map(i => i.trim()).map((img, index) => (
+                          <Image width={100} height={100} key={index} src={img} alt="Service" className="w-[100px] h-[100px] mr-1 rounded" />
+                        ))}
+                      </div>
 
-<div>
-                        {data.diagnosticCenterServices?.filter(service => service.serviceType === "heading").map((service) => {
-                            return <div key={service.id} className="relative bg-purple-100 p-4 rounded-lg shadow-md mb-3">
-                                <h3 className="text-lg font-bold">{service.serviceName}</h3>
-                                <p className="text-gray-600">{service.price}</p>
-                                <div className="flex mt-2">
-                                    {service.remarks.split(",").map(i => i.trim()).map((img, index) => (
-                                        <img key={index} src={img} alt="Service" className="w-[100px] h-[100px] mr-1 rounded" />
-                                    ))}
-                                </div>
-
-                            </div>;
-                        })}
-                    </div>
+                    </div>;
+                  })}
+                </div>
                 <h3 className="text-lg font-semibold mb-4">Investigation</h3>
                 <table
                   className="w-full border-collapse table-auto"
@@ -117,7 +104,7 @@ function DiagnosticTabs({ data }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.diagnosticCenterServices.filter((i) => i.serviceType === "Investigation").map((service, index) => (
+                    {data?.diagnosticCenterServices.filter((i) => i.serviceType === "Investigation").map((service, index) => (
                       <tr
                         key={index + 1}
                         className="hover:bg-gray-50 focus-within:bg-gray-50 transition-colors"
@@ -144,7 +131,7 @@ function DiagnosticTabs({ data }) {
                         <th
                           className="p-4 text-left border rounded-tl-lg"
                           role="columnheader"
-                          style={{ width: "40px" }}
+                          style={{ inlineSize: "40px" }}
                         >
                           #
                         </th>
@@ -169,7 +156,7 @@ function DiagnosticTabs({ data }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.diagnosticCenterServices
+                      {data?.diagnosticCenterServices
                         .filter((i) => i.serviceType === "OT List")
                         .map((service, index) => (
                           <tr
@@ -179,7 +166,7 @@ function DiagnosticTabs({ data }) {
                           >
                             <td
                               className="p-4 border text-center"
-                              style={{ width: "40px" }}
+                              style={{ inlineSize: "40px" }}
                               role="cell"
                             >
                               {index + 1}
@@ -225,7 +212,7 @@ function DiagnosticTabs({ data }) {
 
         {activeTab === 'Review' && (
 
-          <ReviewList reviews={data.diagnosticCenterReview} averageRating={data.averageRating} totalRatings={data.totalRating}></ReviewList>
+          <ReviewList reviews={data?.diagnosticCenterReview} averageRating={data?.averageRating} totalRatings={data?.totalRating}></ReviewList>
 
         )}
       </div>

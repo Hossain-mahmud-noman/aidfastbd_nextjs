@@ -4,10 +4,7 @@ import { useRouter } from "next/navigation";
 
 
 const AppBar = ({ title = "AidFast", leadingIcon, trailingComponents }) => {
-
   const router = useRouter();
-
-
   return (
     <header >
       <div className="fixed top-0 left-0 w-full bg-white shadow-md z-[10000]">

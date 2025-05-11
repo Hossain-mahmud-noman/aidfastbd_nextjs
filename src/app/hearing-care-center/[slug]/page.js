@@ -1,4 +1,5 @@
-import { notFound } from "next/navigation";
+'use client';
+import { notFound, useRouter } from "next/navigation";
 import {
   base_endpoint,
   appname,
@@ -11,72 +12,80 @@ import ShareButton from "../../../components/ShareButton";
 import { FaArrowLeft } from "react-icons/fa";
 import DentalTabs from "../../../components/tabs/DentalTabs";
 import TextTicker from "../../../components/TextTicker";
-import { cookies } from "next/headers";
 import FavouriteToggle from "../../../components/FavouriteToggle";
 import DiaLocation from "../../../components/DiaLocation";
 import FloatingCallButton from "../../../components/FloatingCallButton";
 import ProfileQR from "../../../components/profileQR";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
-export const metadata = {
-  title: null,
-  description: null,
-};
 
-const fetchDetail = async (slug) => {
-  try {
-    const tokenCookie = cookies().get("token")?.value ?? "";
-    const userCookie = cookies().get("user")?.value;
-    const user = userCookie ? JSON.parse(userCookie) : null;
+function Page({ params }) {
+   const router = useRouter();
+  const [data, setData] = useState(null);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState("");
 
-    if (tokenCookie.length === 298) {
-      headerx["Authorization"] = `Bearer ${tokenCookie}`;
-    }
-    const response = await fetch(
-      `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=4&id=${slug}`,
-      {
-        method: "GET",
-        headers: headerx,
-        cache: "no-store",
+  useEffect(() => {
+    const fetchDetail = async () => {
+      const tokenCookie = localStorage.getItem("token") ?? "";
+      const userCookie = localStorage.getItem("user");
+      const parsedUser = userCookie ? JSON.parse(userCookie) : null;
+
+      if (tokenCookie.length === 298) {
+        headerx["Authorization"] = `Bearer ${tokenCookie}`;
       }
-    );
 
-    if (response.status == 200) {
-      const data = await response.json();
-      return { token: tokenCookie, user: user, data: data["data"][0] };
-    } else {
-      return { token: tokenCookie, user: user, data: null };
-    }
-  } catch (err) {
-    return { token: null, user: user, data: null };
-  }
-};
+      try {
+        const res = await fetch(
+          `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`,
+          {
+            method: "GET",
+            headers: headerx,
+            cache: "no-store",
+          }
+        );
+        if (res.status === 200) {
+          const json = await res.json();
+          if (json?.data?.length > 0) {
+            const fetchedData = json.data[0];
+            setData(fetchedData);
+            setToken(tokenCookie);
+            setUser(parsedUser);
+          } else {
+            router.push("/not-found");
+          }
+        } else {
+          router.push("/not-found");
+        }
+      } catch (err) {
+        console.error(err);
+        router.push("/not-found");
+      }
+    };
 
-async function Page({ params }) {
-  const { data, token, user } = await fetchDetail(params.slug);
+    fetchDetail();
+  }, [params.slug, router]);
 
-  if (data == null) {
-    notFound();
-  }
 
   const defaultImageUrl = "/images/dental.png";
 
   const profile =
-    data.profileImageUrl == null || data.profileImageUrl == ""
+    data?.profileImageUrl == null || data?.profileImageUrl == ""
       ? defaultImageUrl
-      : image_base_endpoint + data.profileImageUrl;
+      : image_base_endpoint + data?.profileImageUrl;
 
   const cover =
-    data.coverImageUrl == null || data.coverImageUrl == ""
+    data?.coverImageUrl == null || data?.coverImageUrl == ""
       ? defaultImageUrl
-      : image_base_endpoint + data.profileImageUrl;
+      : image_base_endpoint + data?.profileImageUrl;
 
   return (
     <>
-      <title>{`${data.name}  | ${appname}`}</title>
+      <title>{`${data?.name}  | ${appname}`}</title>
       <meta
         name="description"
-        content={`${data.name}, ${data.location}`.slice(0, 150)}
+        content={`${data?.name}, ${data?.location}`.slice(0, 150)}
       />
 
       <AppBar
@@ -84,15 +93,15 @@ async function Page({ params }) {
         title="Hearing Care Center Details"
         trailingComponents={
           <div className="flex">
-            <ProfileQR id={data?.id} type={"hearingCareCenter"} />
+            <ProfileQR id={data?.id} slug={"newService"} type={"hearingCareCenter"} />
             <FavouriteToggle
-              isFill={data.isFavourite}
+              isFill={data?.isFavourite}
               userId={user?.id}
               id={data?.id}
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/hearing-care-center/${data.id}`} />
+            <ShareButton link={`${frontend_url}/hearingCareCenter/${data?.id}`} />
           </div>
         }
       />
@@ -122,22 +131,22 @@ async function Page({ params }) {
                 <h1 className="text-lg font-bold">{data?.name}</h1>
 
                 <div className="flex items-center justify-start text-left space-x-2 mb-2">
-                  {data.location !== null && (
+                  {data?.location !== null && (
                     <span className="text-sm text-gray-500">
-                      {data.location}
+                      {data?.location}
                     </span>
                   )}
                   <DiaLocation
-                    lat={data.latitude}
-                    lon={data.longitude}
+                    lat={data?.latitude}
+                    lon={data?.longitude}
                   ></DiaLocation>
                 </div>
               </div>
             </div>
           </div>
 
-          {data.notice != null ? (
-            <TextTicker text={data.notice}></TextTicker>
+          {data?.notice != null ? (
+            <TextTicker text={data?.notice}></TextTicker>
           ) : null}
           {/* Info Section */}
           <div className="bg-gray-100 p-3 rounded-lg mb-4">
@@ -145,26 +154,26 @@ async function Page({ params }) {
               <div>
                 <p className="font-bold">Registration No</p>
                 <p>
-                  {data.registrationNumber == null
+                  {data?.registrationNumber == null
                     ? "N/A"
-                    : data.registrationNumber}{" "}
+                    : data?.registrationNumber}{" "}
                 </p>
               </div>
               <div>
                 <p className="font-bold">Service Time</p>
-                <p>{data.serviceTime}</p>
+                <p>{data?.serviceTime}</p>
               </div>
               <div>
                 <p className="font-bold">Total Rating</p>
                 <p>
-                  {data.averageRating} ⭐ ({data.atotalRating} reviews)
+                  {data?.averageRating} ⭐ ({data?.atotalRating} reviews)
                 </p>
               </div>
             </div>
           </div>
           <div>
             <a
-              href={`tel:${data.emergencyContactNumber}`}
+              href={`tel:${data?.emergencyContactNumber}`}
               className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm"
             >
               Emergency Call
@@ -174,7 +183,7 @@ async function Page({ params }) {
       </div>
       {/* Have to add tabs */}
       <DentalTabs data={data}></DentalTabs>
-      <FloatingCallButton number={data.contact}></FloatingCallButton>
+      <FloatingCallButton number={data?.contact}></FloatingCallButton>
     </>
   );
 }

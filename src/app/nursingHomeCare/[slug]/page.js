@@ -27,7 +27,6 @@ function Page({ params }) {
 
   useEffect(() => {
     const fetchDetail = async () => {
-      console.log('appppppppppppppppppppppppppppppppppppppp',params.slug);
       const tokenCookie = localStorage.getItem("token") ?? "";
       const userCookie = localStorage.getItem("user");
       const parsedUser = userCookie ? JSON.parse(userCookie) : null;
@@ -38,7 +37,7 @@ function Page({ params }) {
 
       try {
         const res = await fetch(
-          `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=6&id=${params.slug}`,
+          `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`,
           {
             method: "GET",
             headers: headerx,
@@ -68,34 +67,34 @@ function Page({ params }) {
   const defaultImageUrl = "/images/dental.png";
 
   const profile =
-    !data.profileImageUrl
+    !data?.profileImageUrl
       ? defaultImageUrl
-      : image_base_endpoint + data.profileImageUrl;
+      : image_base_endpoint + data?.profileImageUrl;
 
   const cover =
-    !data.coverImageUrl
+    !data?.coverImageUrl
       ? defaultImageUrl
-      : image_base_endpoint + data.profileImageUrl;
+      : image_base_endpoint + data?.profileImageUrl;
 
   return (
     <>
-      <title>{`${data.name} | ${appname}`}</title>
-      <meta name="description" content={`${data.name}, ${data.location}`.slice(0, 150)} />
+      <title>{`${data?.name} | ${appname}`}</title>
+      <meta name="description" content={`${data?.name}, ${data?.location}`.slice(0, 150)} />
 
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
         title="Nursing Home Care  Center Detail"
         trailingComponents={
           <div className="flex">
-            <ProfileQR id={data?.id} type={"Nursing Home Care Center"} />
+            <ProfileQR slug={"newService"} id={data?.id} type={"Nursing Home Care Center"} />
             <FavouriteToggle
-              isFill={data.isFavourite}
+              isFill={data?.isFavourite}
               userId={user?.id}
-              id={data.userId}
+              id={data?.userId}
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/nursingHomeCare/${data.id}`} />
+            <ShareButton link={`${frontend_url}/nursingHomeCare/${data?.id}`} />
           </div>
         }
       />
@@ -121,33 +120,33 @@ function Page({ params }) {
                 className="w-16 h-16 rounded-full mr-3"
               />
               <div>
-                <h1 className="text-lg font-bold">{data.name}</h1>
+                <h1 className="text-lg font-bold">{data?.name}</h1>
                 <div className="flex items-center text-left space-x-2 mb-2">
-                  {data.location && (
-                    <span className="text-sm text-gray-500">{data.location}</span>
+                  {data?.location && (
+                    <span className="text-sm text-gray-500">{data?.location}</span>
                   )}
-                  <DiaLocation lat={data.latitude} lon={data.longitude} />
+                  <DiaLocation lat={data?.latitude} lon={data?.longitude} />
                 </div>
               </div>
             </div>
           </div>
 
-          {data.notice && <TextTicker text={data.notice} />}
+          {data?.notice && <TextTicker text={data?.notice} />}
 
           <div className="bg-gray-100 p-3 rounded-lg mb-4">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="font-bold">Registration No</p>
-                <p>{data.registrationNumber || "N/A"}</p>
+                <p>{data?.registrationNumber || "N/A"}</p>
               </div>
               <div>
                 <p className="font-bold">Service Time</p>
-                <p>{data.serviceTime}</p>
+                <p>{data?.serviceTime}</p>
               </div>
               <div>
                 <p className="font-bold">Total Rating</p>
                 <p>
-                  {data.averageRating} ⭐ ({data.atotalRating} reviews)
+                  {data?.averageRating} ⭐ ({data?.atotalRating} reviews)
                 </p>
               </div>
             </div>
@@ -155,7 +154,7 @@ function Page({ params }) {
 
           <div>
             <a
-              href={`tel:${data.emergencyContactNumber}`}
+              href={`tel:${data?.emergencyContactNumber}`}
               className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm"
             >
               Emergency Call
@@ -165,7 +164,7 @@ function Page({ params }) {
       </div>
 
       <DentalTabs data={data} />
-      <FloatingCallButton number={data.contact} />
+      <FloatingCallButton number={data?.contact} />
     </>
   );
 }
