@@ -15,7 +15,7 @@ import FavouriteToggle from "../../../components/FavouriteToggle";
 import DoctorTabs from "../../../components/tabs/DoctorTabs";
 import AppointmentBooking from "../../../components/bottom/AppointmentBooking";
 import ProfileQR from "../../../components/profileQR";
-// const response = await fetch(  `${base_endpoint}/GeneralWeb/GetDoctorInfoList?userid=${slug}`, {
+import Image from "next/image";
 
 const Page = ({ params }) => {
   const router = useRouter();
@@ -102,7 +102,9 @@ const Page = ({ params }) => {
       <div className="pt-16">
         {/* Profile Section */}
         <div>
-          <img
+          <Image
+            width={1000}
+            height={1000}
             src={profile}
             alt="Doctor"
             className="w-full h-[180px] object-contain"

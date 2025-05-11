@@ -22,10 +22,7 @@ import React, { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 
 const TextTicker = ({ text }) => {
-
- 
   const [animate, setAnimate] = useState(true);
-
   useEffect(() => {
     const timer = setInterval(() => {
       setAnimate(false);

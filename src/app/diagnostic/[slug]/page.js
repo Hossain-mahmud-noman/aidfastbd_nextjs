@@ -1,82 +1,78 @@
-import { notFound } from 'next/navigation';
+/* eslint-disable react-hooks/rules-of-hooks */
+'use client';
+import { useRouter } from 'next/navigation';
 import { base_endpoint, appname, frontend_url, headerx } from '../../../utils/constants'
 import DiagnosticDetail from "../../../components/DiagnosticDetail"
 import AppBar from '../../../components/AppBar';
 import { FaArrowLeft } from "react-icons/fa";
 import ShareButton from '../../../components/ShareButton';
 import DiagnosticTabs from '../../../components/tabs/DiagnosticTabs';
-import { cookies } from 'next/headers';
 import FavouriteToggle from '../../../components/FavouriteToggle';
 import FloatingCallButton from '../../../components/FloatingCallButton';
 import ProfileQR from '../../../components/profileQR';
+import { useEffect, useState } from 'react';
 
-export const metadata = {
-  title: null,
-  description: null,
-};
+function page({ params }) {
+  const router = useRouter();
+  const [data, setData] = useState(null);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    const fetchDetail = async () => {
+      const tokenCookie = localStorage.getItem("token") ?? "";
+      const userCookie = localStorage.getItem("user");
+      const parsedUser = userCookie ? JSON.parse(userCookie) : null;
+      if (tokenCookie.length === 298) {
+        headerx["Authorization"] = `Bearer ${tokenCookie}`;
+      }
+      try {
+        const res = await fetch(
+          `${base_endpoint}/GeneralWeb/GetAllDiagnosticCenterList?diagnosticCenterId=${params.slug}`,
+          {
+            method: "GET",
+            headers: headerx,
+            cache: "no-store",
+          }
+        );
+        if (res.status === 200) {
+          const json = await res.json();
+          if (json?.data?.length > 0) {
+            const fetchedData = json?.data[0];
+            setData(fetchedData);
+            setToken(tokenCookie);
+            setUser(parsedUser);
+          } else {
+            router.push("/not-found");
+          }
+        } else {
+          router.push("/not-found");
+        }
+      } catch (err) {
+        console.error(err);
+        router.push("/not-found");
+      }
+    };
 
-const fetchDetail = async (slug) => {
-  try {
-    const tokenCookie = cookies().get('token')?.value ?? "";
-    const userCookie = cookies().get('user')?.value;
-    const user = userCookie ? JSON.parse(userCookie) : null;
-
-    if (tokenCookie.length === 298) {
-      headerx['Authorization'] = `Bearer ${tokenCookie}`
-    }
-    const response = await fetch(`${base_endpoint}/GeneralWeb/GetAllDiagnosticCenterList?diagnosticCenterId=${slug}`, {
-      method: "GET",
-      headers: headerx,
-      cache: "no-store"
-
-    });
-    if (response.status == 200) {
-      const data = await response.json();
-
-      return { token: tokenCookie, user: user, data: data['data'][0] };
-    } else {
-      return { token: tokenCookie, user: user, data: null };
-    }
-
-  } catch (err) {
-    return { token: null, user: user, data: null };
-  }
-}
-
-
-async function page({ params }) {
-  const { data, token, user } = await fetchDetail(params.slug);
-  console.log("🚀 ~ page ~ data:", data)
-  
-  if (data == null) {
-    notFound();
-  }
-
-
+    fetchDetail();
+  }, [params.slug, router]);
 
   return (
     <>
-
-      <title>{`${data.name}  | ${appname}`}</title>
-      <meta name="description" content={`${data.diagnosticCenterAdditionalInfo?.details}`.slice(0, 150)} />
+      <title>{`${data?.name}  | ${appname}`}</title>
+      <meta name="description" content={`${data?.diagnosticCenterAdditionalInfo?.details}`.slice(0, 150)} />
 
       <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Diagnostic Detail' trailingComponents={
         <div className='flex'>
-          <ProfileQR userId={data.userId} type={"Diagnostic"}></ProfileQR>
-
-          <FavouriteToggle isFill={data.isFavourite} userId={user?.id} id={data.userId} type={2} token={token}  ></FavouriteToggle>
-          <ShareButton link={`${frontend_url}/diagnostic/${data.userId}`}></ShareButton>
-        </div>}></AppBar>
-
+          <ProfileQR id={data?.userId} type={"Diagnostic"} />
+          <FavouriteToggle isFill={data?.isFavourite} userId={user?.id} id={data?.userId} type={2} token={token} />
+          <ShareButton link={`${frontend_url}/diagnostic/${data?.userId}`} />
+        </div>}
+      />
       <div className="pt-16">
-
-        <DiagnosticDetail data={data}></DiagnosticDetail>
-
+        {data && <DiagnosticDetail data={data} />}
       </div>
-
-      <DiagnosticTabs data={data}></DiagnosticTabs>
-      <FloatingCallButton number={data.contact}></FloatingCallButton>
-
+      <DiagnosticTabs data={data} />
+      <FloatingCallButton number={data?.contact} />
     </>
   )
 }
