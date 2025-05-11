@@ -69,7 +69,6 @@ function PharmacyTabs({ data }) {
             </table>}
           </div>
         )}
-
         {activeTab === 'Equipments' && (
           <div>
             {data?.pharmacyDrugEquipment.length !== 0 &&
