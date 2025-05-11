@@ -30,7 +30,7 @@ function page({ params }) {
       }
       try {
         const res = await fetch(
-          `${base_endpoint}/GeneralWeb/GetAllDiagnosticCenterList?diagnosticCenterId=${params.slug}`,
+          `${base_endpoint}/GeneralWeb/GetAllBloodBankList?userId=${params.slug}`,
           {
             method: "GET",
             headers: headerx,
