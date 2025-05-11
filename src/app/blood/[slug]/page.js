@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-
 'use client';
 import { base_endpoint, appname, frontend_url, image_base_endpoint, headerx } from '../../../utils/constants'
 import AppBar from '../../../components/AppBar';
@@ -30,7 +29,7 @@ function page({ params }) {
       }
       try {
         const res = await fetch(
-          `${base_endpoint}/GeneralWeb/GetAllDiagnosticCenterList?diagnosticCenterId=${params.slug}`,
+          `${base_endpoint}/GeneralWeb/GetAllBloodBankList?userId=${params.slug}`,
           {
             method: "GET",
             headers: headerx,
@@ -60,11 +59,8 @@ function page({ params }) {
   }, [params.slug, router]);
 
   const defaultImageUrl = "/images/logo.png";
-
   const profile = data?.profileImageUrl == null || data?.profileImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.profileImageUrl;
-
   const cover = data?.coverImageUrl == null || data?.coverImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.profileImageUrl;
-
   return (
     <>
 
@@ -143,7 +139,7 @@ function page({ params }) {
           </div>
         </div>
       </div>
-      <BloodTabs data={data}></BloodTabs>
+      {data && <BloodTabs data={data}></BloodTabs>}
       <FloatingCallButton number={data?.contact}></FloatingCallButton>
     </>
   )

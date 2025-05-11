@@ -65,7 +65,7 @@ function BloodTabs({ data }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.bloodBankServices.map((service, index) => {
+                  {data?.bloodBankServices?.map((service, index) => {
                     const id = index + 1;
                     return <tr
                       key={id}
@@ -81,7 +81,7 @@ function BloodTabs({ data }) {
                 </tbody>
               </table>
             }
-            {data?.bloodBankServices !== null && data?.bloodBankServices.length === 0 && (
+            {data?.bloodBankServices !== null && data?.bloodBankServices?.length === 0 && (
               <div
                 className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
                 role="alert"
@@ -95,7 +95,7 @@ function BloodTabs({ data }) {
         )}
         {activeTab === 'Donor List' && (
           <div className="space-y-4">
-            {data?.bloodBankDonerInfo.map((donor) => (
+            {data?.bloodBankDonerInfo?.map((donor) => (
               <div
                 key={donor.id}
                 className="bg-white rounded-lg shadow-md p-4 cursor-pointer"

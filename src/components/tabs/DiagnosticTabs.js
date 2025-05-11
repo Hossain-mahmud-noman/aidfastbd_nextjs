@@ -39,7 +39,7 @@ function DiagnosticTabs({ data }) {
             }
             {data?.diagnosticCenterAdditionalInfo?.imgList !== null && data?.diagnosticCenterAdditionalInfo?.imgList.map((e, index) => {
 
-              return <Image width={100} height={100} alt='Image' key={`imgList_${index}`} className='w-full object-contain' src={e?.imgUrl}></Image>
+              return <Image width={10000} height={10000} alt='Image' key={`imgList_${index}`} className='w-full object-contain' src={e?.imgUrl}></Image>
             })
             }
           </div>
