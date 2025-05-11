@@ -16,7 +16,6 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 function page({ params }) {
-
   const router = useRouter();
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
