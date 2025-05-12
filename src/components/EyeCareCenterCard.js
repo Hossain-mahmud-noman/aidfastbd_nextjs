@@ -7,7 +7,7 @@ const EyeCareCenterCard = ({ data }) => {
   const defaultImageUrl = "/images/dental.png";
   const imageUrl = data.profileImageUrl ? `${image_base_endpoint}${data.profileImageUrl}` : defaultImageUrl;
   return (
-    <Link href={"/eyeCareCenter/" + data.id}>
+    <Link href={"/eye-care-center/" + data.id}>
       <div
         className="flex flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
         aria-label={`Eye Care Center ${data.name} information card`}

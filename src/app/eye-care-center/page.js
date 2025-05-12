@@ -15,7 +15,7 @@ function Page() {
       <LayoutAppBar
         title="Eye Care Center"
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        route="/eyeCareCenter"
+        route="/eye-care-center"
         api_key={map_key}
       />
       <div

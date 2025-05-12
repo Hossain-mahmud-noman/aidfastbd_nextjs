@@ -406,7 +406,7 @@ const LayoutAppBar = ({
         break;
 
       // eyeCareCenter
-      case "/eyeCareCenter":
+      case "/eye-care-center":
         try {
           removeSSRContent(route);
           dispatch(setEyaCareCenterLoading(true));
@@ -433,8 +433,6 @@ const LayoutAppBar = ({
           dispatch(setEyaCareCenterLoading(false));
         }
         break;
-
-
 
       // Nursing Home Care
       case "/nursingHomeCare":
