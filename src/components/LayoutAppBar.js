@@ -319,7 +319,7 @@ const LayoutAppBar = ({
         break;
 
       // Drug De Addiction
-      case "/drugDeAddiction":
+      case "/drug-de-addiction":
         try {
           removeSSRContent(route);
           dispatch(setDrugDeAddictionLoading(true));
