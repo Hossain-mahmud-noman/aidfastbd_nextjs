@@ -30,12 +30,12 @@ export default async function Home() {
   return (
     <>
 
-      <LayoutAppBar api_key={map_key}></LayoutAppBar>
+      <LayoutAppBar api_key={map_key} />
       <div style={{ paddingBottom: "70px" }} className="font-[family-name:var(--font-geist-sans)] pt-16">
-        <Carousel data={data}></Carousel>
-        <AidComponent></AidComponent>
-        <Nearest ></Nearest>
-        <BottomNavigation active="/"></BottomNavigation>
+        <Carousel data={data} />
+        <AidComponent />
+        <Nearest />
+        <BottomNavigation active="/" />
       </div>
     </>
   );

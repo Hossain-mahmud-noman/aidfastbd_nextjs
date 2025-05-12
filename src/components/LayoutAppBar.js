@@ -377,7 +377,7 @@ const LayoutAppBar = ({
         break;
 
       // hearingCareCenter
-      case "/hearingCareCenter":
+      case "/hearing-care-center":
         try {
           removeSSRContent(route);
           dispatch(setHearingCareCenterLoading(true));

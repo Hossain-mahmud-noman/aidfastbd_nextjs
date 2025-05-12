@@ -103,7 +103,7 @@ const AidComponent = () => {
           <div
             className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
           >
-            <Link href={"/hearingCareCenter"}>
+            <Link href={"/hearing-care-center"}>
               <div className="mb-2 flex flex-col items-center justify-center">
                 <Image
                   width={100}

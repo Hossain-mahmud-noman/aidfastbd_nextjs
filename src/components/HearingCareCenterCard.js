@@ -14,7 +14,7 @@ const HearingCareCenterCard = ({ data }) => {
     e.stopPropagation();
   };
   return (
-    <Link href={"/hearingCareCenter/" + data.id}>
+    <Link href={"/hearing-care-center/" + data.id}>
       <div
         className="flex flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
         aria-label={`Hearing Care Center ${data.name} information card`}
