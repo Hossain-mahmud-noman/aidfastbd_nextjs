@@ -435,7 +435,7 @@ const LayoutAppBar = ({
         break;
 
       // Nursing Home Care
-      case "/nursingHomeCare":
+      case "/nursing-home-care":
         try {
           removeSSRContent(route);
           dispatch(setNursingHomeCareLoading(true));

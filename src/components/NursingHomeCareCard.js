@@ -7,7 +7,7 @@ const NursingHomeCareCard = ({ data }) => {
   const defaultImageUrl = "/images/dental.png";
   const imageUrl = data.profileImageUrl ? `${image_base_endpoint}${data.profileImageUrl}` : defaultImageUrl;
   return (
-    <Link href={"/nursingHomeCare/" + data.id}>
+    <Link href={"/nursing-home-care/" + data.id}>
       <div
         className="flex flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
         aria-label={`Nursing Home Care ${data.name} information card`}
