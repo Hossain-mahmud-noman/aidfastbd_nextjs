@@ -347,8 +347,8 @@ const LayoutAppBar = ({
         }
         break;
 
-      // physiotherapyCenter
-      case "/physiotherapyCenter":
+      // physiotherapy Center
+      case "/physiotherapy-center":
         try {
           removeSSRContent(route);
           dispatch(setPhysiotherapyCenterLoading(true));
@@ -463,15 +463,7 @@ const LayoutAppBar = ({
         }
         break;
 
-
-
-
-
-
-
-
-
-
+      // Ambulance
       case "/ambulance":
         try {
           removeSSRContent(route);

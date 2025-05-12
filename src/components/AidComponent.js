@@ -118,7 +118,6 @@ const AidComponent = () => {
           </div>
         </div>
 
-
         <div className="flex items-center justify-between w-full gap-2">
           {/* Drug de addiction */}
           <div
@@ -142,7 +141,7 @@ const AidComponent = () => {
           <div
             className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
           >
-            <Link href={"/physiotherapyCenter"}>
+            <Link href={"/physiotherapy-center"}>
               <div className="mb-2 flex flex-col items-center justify-center">
                 <Image
                   width={100}
