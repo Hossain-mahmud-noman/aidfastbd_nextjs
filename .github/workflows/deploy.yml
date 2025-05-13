@@ -1,24 +1,37 @@
-name: Deploy
+name: Deploy to VPS
 
-# Trigger the workflow on push and
-# pull request events on the master branch
 on:
   push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    branches:
+      - main
 
-# Authenticate to the the server via ssh
-# and run our deployment script
 jobs:
   deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Deploy to Server
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy over SSH
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSHKEY }}
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_KEY }}
+          script: |
+            cd /var/www/www.aidfastbd.com/aidfastbd_nextjs
+
+            echo "Fetching latest code..."
+            git reset --hard
+            git pull origin main
+
+            echo "Installing dependencies..."
+            npm install
+
+            echo "Building Next.js app..."
+            npm run build
+
+            echo "Reloading with PM2..."
+            pm2 reload aidfastbd_nextjs --update-env
