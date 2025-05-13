@@ -64,6 +64,18 @@ import {
   setPage as setHearingCareCenterPage,
 } from "../redux/features/hearingCareCenterSlice";
 
+import {
+  setData as setEyaCareCenterData,
+  setLoading as setEyaCareCenterLoading,
+  setPage as setEyaCareCenterPage,
+} from "../redux/features/eyeCareCenterSlice";
+
+import {
+  setData as setNursingHomeCareData,
+  setLoading as setNursingHomeCareLoading,
+  setPage as setNursingHomeCarePage,
+} from "../redux/features/nursingHomeCareSlice";
+
 
 import { removeSSRContent } from "../utils/func";
 
@@ -307,7 +319,7 @@ const LayoutAppBar = ({
         break;
 
       // Drug De Addiction
-      case "/drugDeAddiction":
+      case "/drug-de-addiction":
         try {
           removeSSRContent(route);
           dispatch(setDrugDeAddictionLoading(true));
@@ -335,8 +347,8 @@ const LayoutAppBar = ({
         }
         break;
 
-      // physiotherapyCenter
-      case "/physiotherapyCenter":
+      // physiotherapy Center
+      case "/physiotherapy-center":
         try {
           removeSSRContent(route);
           dispatch(setPhysiotherapyCenterLoading(true));
@@ -365,7 +377,7 @@ const LayoutAppBar = ({
         break;
 
       // hearingCareCenter
-      case "/hearingCareCenter":
+      case "/hearing-care-center":
         try {
           removeSSRContent(route);
           dispatch(setHearingCareCenterLoading(true));
@@ -393,15 +405,65 @@ const LayoutAppBar = ({
         }
         break;
 
+      // eyeCareCenter
+      case "/eye-care-center":
+        try {
+          removeSSRContent(route);
+          dispatch(setEyaCareCenterLoading(true));
 
+          const response = await fetch(
+            `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?pageNumber=1&serviceType=5&pageSize=20${location}`
+          );
 
+          if (response.ok) {
+            const data = await response.json();
 
+            const next =
+              data["pageNumber"] * 20 < data["totalRecords"]
+                ? data["pageNumber"] + 1
+                : -1;
+            dispatch(setEyaCareCenterPage(next));
+            dispatch(setEyaCareCenterData(data["data"]));
+          } else {
+            dispatch(setEyaCareCenterData([]));
+          }
+        } catch (err) {
+          dispatch(setEyaCareCenterData([]));
+        } finally {
+          dispatch(setEyaCareCenterLoading(false));
+        }
+        break;
 
+      // Nursing Home Care
+      case "/nursing-home-care":
+        try {
+          removeSSRContent(route);
+          dispatch(setNursingHomeCareLoading(true));
 
+          const response = await fetch(
+            `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?pageNumber=1&serviceType=6&pageSize=20${location}`
+          );
 
+          if (response.ok) {
+            const data = await response.json();
 
+            const next =
+              data["pageNumber"] * 20 < data["totalRecords"]
+                ? data["pageNumber"] + 1
+                : -1;
+            dispatch(setNursingHomeCarePage(next));
+            dispatch(setNursingHomeCareData(data["data"]));
+          } else {
+            dispatch(setNursingHomeCareData([]));
+          }
+        } catch (err) {
+          dispatch(setNursingHomeCareData([]));
+        } finally {
+          dispatch(setNursingHomeCareLoading(false));
+        }
+        break;
 
-
+      // Ambulance
       case "/ambulance":
         try {
           removeSSRContent(route);

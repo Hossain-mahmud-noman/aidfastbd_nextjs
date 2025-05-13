@@ -78,8 +78,6 @@ const AidComponent = () => {
           </div>
         </div>
         {/* Top Section End*/}
-
-
         <div className="flex items-center justify-between w-full gap-2">
           {/* Dental */}
           <div
@@ -117,7 +115,6 @@ const AidComponent = () => {
             </Link>
           </div>
         </div>
-
 
         <div className="flex items-center justify-between w-full gap-2">
           {/* Drug de addiction */}
@@ -157,11 +154,43 @@ const AidComponent = () => {
           </div>
         </div>
 
+        <div className="flex items-center justify-between w-full gap-2">
+          {/* Eye Care Center */}
+          <div
+            className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
+          >
+            <Link href={"/eye-care-center"}>
+              <div className="mb-2 flex flex-col items-center justify-center">
+                <Image
+                  width={100}
+                  height={100}
+                  src={"/icons/eye.png"}
+                  alt={"Dentals"}
+                  className="w-[50px] h-[35px] object-contain"
+                />
+              </div>
+              <h3 className="font-semi text-gray-700">{"Eye Care Center"}</h3>
+            </Link>
+          </div>
 
-
-
-
-
+          {/* Nursing Home Care */}
+          <div
+            className={`bg-white mt-2 p-2 rounded-lg flex flex-col items-center text-center  mr-2 w-full`}
+          >
+            <Link href={"/nursing-home-care"}>
+              <div className="mb-2 flex flex-col items-center justify-center">
+                <Image
+                  width={100}
+                  height={100}
+                  src={"/icons/nurse.png"}
+                  alt={"Dentals"}
+                  className="w-[50px] h-[35px] object-contain"
+                />
+              </div>
+              <h3 className="font-semi text-gray-700">{"Nursing Home Care"}</h3>
+            </Link>
+          </div>
+        </div>
 
 
         {/* Bottom Section Start */}

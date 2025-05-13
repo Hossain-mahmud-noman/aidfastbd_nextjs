@@ -1,33 +1,30 @@
 import React from "react";
 import LayoutAppBar from "../../components/LayoutAppBar";
 import { appname, map_key } from "../../utils/constants";
-import PhysiotherapyCenterList from "../../components/list/PhysiotherapyCenterList";
+import NursingHomeCareList from "../../components/list/NursingHomeCareList";
 import SearchDental from "../../components/search/SearchDental";
 import { FaArrowLeft } from "react-icons/fa";
 
 export const metadata = {
-  title: "Physiotherapy Center | " + appname,
-  description: null,
-
+  title: "Nursing Home Care | " + appname,
 };
 
 function Page() {
   return (
     <>
       <LayoutAppBar
-        title="Physiotherapy Center"
+        title="Nursing Home Care"
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        route="/physiotherapy-center"
+        route="/nursing-home-care"
         api_key={map_key}
       />
       <div
         style={{ insetBlockEnd: "70px" }}
         className="font-[family-name:var(--font-geist-sans)] pt-20"
       >
-        {/* Have to work on this search */}
-        <SearchDental />
+        <SearchDental></SearchDental>
         <div className="container mx-auto px-2">
-          <PhysiotherapyCenterList nextPage={1} />
+          <NursingHomeCareList nextPage={1} />
         </div>
       </div>
     </>

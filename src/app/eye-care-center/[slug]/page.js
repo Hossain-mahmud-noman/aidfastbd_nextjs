@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import {
   base_endpoint,
   appname,
@@ -18,6 +17,7 @@ import FloatingCallButton from "../../../components/FloatingCallButton";
 import ProfileQR from "../../../components/profileQR";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function Page({ params }) {
   const router = useRouter();
@@ -66,68 +66,56 @@ function Page({ params }) {
     fetchDetail();
   }, [params.slug, router]);
 
+  if (!data) return <div className="p-4 text-gray-600">Loading...</div>;
+
   const defaultImageUrl = "/images/dental.png";
 
-  const profile =
-    data?.profileImageUrl == null || data?.profileImageUrl == ""
-      ? defaultImageUrl
-      : image_base_endpoint + data?.profileImageUrl;
+  const profile = !data.profileImageUrl
+    ? defaultImageUrl
+    : image_base_endpoint + data.profileImageUrl;
 
-  const cover =
-    data?.coverImageUrl == null || data?.coverImageUrl == ""
-      ? defaultImageUrl
-      : image_base_endpoint + data?.profileImageUrl;
+  const cover = !data.coverImageUrl
+    ? defaultImageUrl
+    : image_base_endpoint + data.profileImageUrl;
 
   return (
     <>
-      <title>{`${data?.name}  | ${appname}`}</title>
+      <title>{`${data.name} | ${appname}`}</title>
       <meta
         name="description"
-        content={`${data?.name}, ${data?.location}`.slice(0, 150)}
+        content={`${data.name}, ${data.location}`.slice(0, 150)}
       />
 
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        title="Drug De Addiction Details"
+        title="Eye Care Center Detail"
         trailingComponents={
           <div className="flex">
-            <ProfileQR
-              id={data?.id}
-              slug={"newService"}
-              type={"DrugDeAddiction"}
-            ></ProfileQR>
+            <ProfileQR slug={"newService"} id={data?.id}  type={"Eye Care Center"} />
             <FavouriteToggle
-              isFill={data?.isFavourite}
+              isFill={data.isFavourite}
               userId={user?.id}
-              id={data?.id}
+              id={data.userId}
               type={3}
               token={token}
-            ></FavouriteToggle>
-
-            <ShareButton
-<<<<<<< HEAD
-              link={`${frontend_url}/drug-de-adiction/${data.id}`}
-=======
-              link={`${frontend_url}/drugDeAddiction/${data?.id}`}
->>>>>>> jewel
-            ></ShareButton>
+            />
+            <ShareButton link={`${frontend_url}/eyeCareCenter/${data.id}`} />
           </div>
         }
-      ></AppBar>
+      />
 
       <div className="pt-16">
         <div className="p-4">
           <div className="w-full h-[30vh] overflow-hidden">
             <Image
-              src={cover}
               width={1000}
               height={1000}
+              src={cover}
               alt="Dental cover"
               className="w-full h-full object-cover"
             />
           </div>
           <div className="flex items-center justify-between mb-4">
-            {/* Logo and Name */}
             <div className="flex items-center">
               <Image
                 width={1000}
@@ -137,45 +125,35 @@ function Page({ params }) {
                 className="w-16 h-16 rounded-full mr-3"
               />
               <div>
-                <h1 className="text-lg font-bold">{data?.name}</h1>
-
-                <div className="flex items-center justify-start text-left space-x-2 mb-2">
-                  {data?.location !== null && (
+                <h1 className="text-lg font-bold">{data.name}</h1>
+                <div className="flex items-center text-left space-x-2 mb-2">
+                  {data.location && (
                     <span className="text-sm text-gray-500">
-                      {data?.location}
+                      {data.location}
                     </span>
                   )}
-                  <DiaLocation
-                    lat={data?.latitude}
-                    lon={data?.longitude}
-                  ></DiaLocation>
+                  <DiaLocation lat={data.latitude} lon={data.longitude} />
                 </div>
               </div>
             </div>
           </div>
 
-          {data?.notice != null ? (
-            <TextTicker text={data?.notice}></TextTicker>
-          ) : null}
-          {/* Info Section */}
+          {data.notice && <TextTicker text={data.notice} />}
+
           <div className="bg-gray-100 p-3 rounded-lg mb-4">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="font-bold">Registration No</p>
-                <p>
-                  {data?.registrationNumber == null
-                    ? "N/A"
-                    : data?.registrationNumber}{" "}
-                </p>
+                <p>{data.registrationNumber || "N/A"}</p>
               </div>
               <div>
                 <p className="font-bold">Service Time</p>
-                <p>{data?.serviceTime}</p>
+                <p>{data.serviceTime}</p>
               </div>
               <div>
                 <p className="font-bold">Total Rating</p>
                 <p>
-                  {data?.averageRating} ⭐ ({data?.atotalRating} reviews)
+                  {data.averageRating} ⭐ ({data.atotalRating} reviews)
                 </p>
               </div>
             </div>
@@ -183,7 +161,7 @@ function Page({ params }) {
 
           <div>
             <a
-              href={`tel:${data?.emergencyContactNumber}`}
+              href={`tel:${data.emergencyContactNumber}`}
               className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm"
             >
               Emergency Call
@@ -192,9 +170,8 @@ function Page({ params }) {
         </div>
       </div>
 
-      {/* Have to add tabs */}
-      <DentalTabs data={data}></DentalTabs>
-      <FloatingCallButton number={data?.contact}></FloatingCallButton>
+      <DentalTabs data={data} />
+      <FloatingCallButton number={data.contact} />
     </>
   );
 }

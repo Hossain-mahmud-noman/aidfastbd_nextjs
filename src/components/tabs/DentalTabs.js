@@ -28,7 +28,7 @@ function DentalTabs({ data }) {
       <div className="p-4 mb-[70px]">
         {activeTab === 'Info' && (
           <div>
-            {data?.genericServiceInfos !== null && <> <h3 className="font-bold text-lg text-black-600">{data.genericServiceInfos?.[0]?.title}</h3>
+            {data?.genericServiceInfos !== null && <> <h3 className="font-bold text-lg text-black-600">{data?.genericServiceInfos?.[0]?.title}</h3>
               <pre className="w-full overflow-x-auto whitespace-pre-wrap">{data?.genericServiceInfos?.[0]?.details}</pre>
               {data?.genericServiceInfos?.[0]?.imgList !== null && data?.genericServiceInfos?.[0]?.imgList?.map((e, id) => {
                 return <Image width={100} height={100} key={`id: ${id}`} alt='Image' src={e.imgUrl}></Image>

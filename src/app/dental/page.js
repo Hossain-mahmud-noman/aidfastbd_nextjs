@@ -19,7 +19,7 @@ function Page() {
         api_key={map_key}
       ></LayoutAppBar>
       <div
-        style={{ paddingBottom: "70px" }}
+        style={{ insetBlockEnd: "70px" }}
         className="font-[family-name:var(--font-geist-sans)] pt-20"
       >
         <SearchDental></SearchDental>
