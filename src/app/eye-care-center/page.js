@@ -22,7 +22,7 @@ function Page() {
         style={{ insetBlockEnd: "70px" }}
         className="font-[family-name:var(--font-geist-sans)] pt-20"
       >
-        <SearchDental></SearchDental>
+        <SearchDental title={"Eye Care Center"}></SearchDental>
         <div className="container mx-auto px-2">
           <EyeCareCenterList nextPage={1} />
         </div>

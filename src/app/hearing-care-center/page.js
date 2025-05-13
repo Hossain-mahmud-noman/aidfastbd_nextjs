@@ -23,7 +23,7 @@ function Page() {
         className="font-[family-name:var(--font-geist-sans)] pt-20"
       >
         {/* Have to work on this search */}
-        <SearchDental />
+        <SearchDental title={"Hearing Care Center"} />
         <div className="container mx-auto px-2">
           <HearingCareCenterList nextPage={1} />
         </div>
