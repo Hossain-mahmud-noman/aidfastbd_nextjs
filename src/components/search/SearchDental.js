@@ -83,7 +83,7 @@ export const SearchableDropdown = ({ label, options, dispatch, onSelect }) => {
 };
 
 
-const SearchDental = () => {
+const SearchDental = ({title=null}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const togglePopup = () => setIsOpen(!isOpen);
@@ -123,7 +123,7 @@ const SearchDental = () => {
       <div onClick={togglePopup}
         className="relative flex items-center ml-3 mr-3 mb-3">
         <div className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-all duration-300 shadow-lg pr-12"
-        >        Search Dental
+        >        Search {title===null?"Dental":title}
         </div>
 
         <button
