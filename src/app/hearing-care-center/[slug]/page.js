@@ -1,5 +1,5 @@
 'use client';
-import { notFound, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   base_endpoint,
   appname,
@@ -101,11 +101,8 @@ function Page({ params }) {
               type={3}
               token={token}
             />
-<<<<<<< HEAD
             <ShareButton link={`${frontend_url}/hearing-care-center/${data.id}`} />
-=======
-            <ShareButton link={`${frontend_url}/hearingCareCenter/${data?.id}`} />
->>>>>>> jewel
+
           </div>
         }
       />

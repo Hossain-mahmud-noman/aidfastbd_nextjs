@@ -105,11 +105,7 @@ function Page({ params }) {
             ></FavouriteToggle>
 
             <ShareButton
-<<<<<<< HEAD
               link={`${frontend_url}/drug-de-adiction/${data.id}`}
-=======
-              link={`${frontend_url}/drugDeAddiction/${data?.id}`}
->>>>>>> jewel
             ></ShareButton>
           </div>
         }
