@@ -298,10 +298,8 @@ const LayoutAppBar = ({
           const response = await fetch(
             `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?pageNumber=1&serviceType=1&pageSize=20${location}`
           );
-
           if (response.ok) {
             const data = await response.json();
-
             const next =
               data["pageNumber"] * 20 < data["totalRecords"]
                 ? data["pageNumber"] + 1
