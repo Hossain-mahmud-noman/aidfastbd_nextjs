@@ -7,13 +7,10 @@ import {getDentalList} from '../../utils/func';
 import { MdCancel } from "react-icons/md";
 import { FaAngleDown } from "react-icons/fa6";
 
-
 export const SearchableDropdown = ({ label, options, dispatch, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-
   const toggleDropdown = () => setIsOpen(!isOpen);
-
   const handleOptionClick = (option) => {
 
     switch (label) {
@@ -199,7 +196,6 @@ const SearchDental = () => {
               </button>
             </form>
           </div>
-
         </div>
       )}
     </>

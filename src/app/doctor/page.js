@@ -8,8 +8,6 @@ export const metadata = {
   title: "Doctors | " + appname,
 };
 
-
-
 const fetchSpecialityData = async () => {
   try {
     const res = await fetch(`${base_endpoint}/Dropdown/GetDropDownList?type=Speciality`, { next: { revalidate: 3600 } });
@@ -41,7 +39,6 @@ async function DoctorPage() {
 
           <DoctorList nextPage={1} ></DoctorList>
         </div>
-
         <BottomNavigation active="/doctor"></BottomNavigation>
       </div>
     </>
