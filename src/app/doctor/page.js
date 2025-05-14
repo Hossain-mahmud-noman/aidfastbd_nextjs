@@ -41,7 +41,6 @@ async function DoctorPage() {
 
           <DoctorList nextPage={1} ></DoctorList>
         </div>
-
         <BottomNavigation active="/doctor"></BottomNavigation>
       </div>
     </>

@@ -51,5 +51,5 @@ export const dentalReducer = createSlice({
 
 });
 
-export const { setName,setAddData,setPage, setRating, setRank, setEmergency ,setNameOptions,setData,setNext,setLoading } = dentalReducer.actions;
+export const { setName,setAddData,setPage, setRating, setRank, setEmergency , setNameOptions, setData, setNext,setLoading } = dentalReducer.actions;
 export default dentalReducer.reducer;
