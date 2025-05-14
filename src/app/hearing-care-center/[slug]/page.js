@@ -19,7 +19,6 @@ import ProfileQR from "../../../components/profileQR";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-
 function Page({ params }) {
    const router = useRouter();
   const [data, setData] = useState(null);
