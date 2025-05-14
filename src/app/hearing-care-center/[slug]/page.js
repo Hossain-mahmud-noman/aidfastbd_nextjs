@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import {
   base_endpoint,
   appname,
@@ -18,6 +18,7 @@ import FloatingCallButton from "../../../components/FloatingCallButton";
 import ProfileQR from "../../../components/profileQR";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+
 
 function Page({ params }) {
    const router = useRouter();
@@ -100,21 +101,20 @@ function Page({ params }) {
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/hearing-care-center/${data.id}`} />
-
+            <ShareButton link={`${frontend_url}/hearingCareCenter/${data?.id}`} />
           </div>
         }
       />
 
       <div className="pt-16">
         <div className="p-4">
-          <div className="w-full h-[30vh] overflow-hidden">
+          <div className="w-full lg:h-[80vh] md:h-[50vh] h-[40vh] overflow-hidden">
             <Image
               width={1000}
               height={1000}
               src={cover}
               alt="Dental cover"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-fill"
             />
           </div>
           <div className="flex items-center justify-between mb-4">
