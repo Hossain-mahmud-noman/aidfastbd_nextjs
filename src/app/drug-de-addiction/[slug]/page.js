@@ -76,7 +76,7 @@ function Page({ params }) {
   const cover =
     data?.coverImageUrl == null || data?.coverImageUrl == ""
       ? defaultImageUrl
-      : image_base_endpoint + data?.profileImageUrl;
+      : image_base_endpoint + data?.coverImageUrl;
 
   return (
     <>
@@ -105,15 +105,15 @@ function Page({ params }) {
             ></FavouriteToggle>
 
             <ShareButton
-              link={`${frontend_url}/drug-de-adiction/${data.id}`}
-            ></ShareButton>
+              link={`${frontend_url}/drug-de-adiction/${data?.id}`}
+            />
           </div>
         }
-      ></AppBar>
+      />
 
       <div className="pt-16">
         <div className="p-4">
-          <div className="w-full lg:h-[80vh] md:h-[50vh] h-[40vh] overflow-hidden">
+          <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
             <Image
               src={cover}
               width={1000}

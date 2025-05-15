@@ -60,8 +60,8 @@ const Carousel = ({ data }) => {
       <div className="relative h-[200px] sm:h-70 md:h-96">
         {data.map((image, index) => (
           <Image
-            // width={500}
-            // height={500}
+            width={500}
+            height={500}
             // blurDataURL="https://user-images.githubusercontent.com/160484/173871411-4d27b6dd-af89-4568-863c-c59b1242ce74.png"
             // priority={false}
             // placeholder="blur"
