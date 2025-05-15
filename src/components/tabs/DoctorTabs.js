@@ -55,6 +55,7 @@ function DoctorTabs({ data }) {
             {data?.doctorAdditionalInfo?.imageUrl !== null &&
               data?.doctorAdditionalInfo?.imageUrl !== "" && (
                 <Image
+                alt="Image"
                   width={200}
                   height={200}
                   src={
