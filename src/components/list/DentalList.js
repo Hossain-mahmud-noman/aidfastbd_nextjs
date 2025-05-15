@@ -9,7 +9,6 @@ import { FaSpinner } from "react-icons/fa";
 function DentalList({ location, nextPage }) {
   const dispatch = useDispatch();
   const { data, loading, page, error } = useSelector((state) => state.dental);
-  console.log("🚀 ~ DentalList ~ data:", loading)
   const loader = useRef(null);
 
   const handleObserver = (entities) => {
