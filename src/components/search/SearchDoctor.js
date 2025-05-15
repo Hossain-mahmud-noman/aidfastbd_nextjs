@@ -8,16 +8,11 @@ import { MdCancel } from "react-icons/md";
 import { FaAngleDown } from "react-icons/fa6";
 import { base_endpoint } from '../../utils/constants';
 import DoctorCard from '../DoctorCard';
-
-
 export const SearchableDropdown = ({ label, options, dispatch, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-
   const toggleDropdown = () => setIsOpen(!isOpen);
-
   const handleOptionClick = (option) => {
-
     switch (label) {
       case "Name":
         dispatch(setName(option));
@@ -186,7 +181,6 @@ const SearchDoctor = ({ specialityData = [] }) => {
   const [spLoading, setSpLoading] = useState(false);
 
   return (
-
     <>
       <div onClick={togglePopup}
         className="relative flex items-center ml-3 mr-3 mb-3">

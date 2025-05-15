@@ -101,13 +101,13 @@ function Page({ params }) {
 
       <div className="pt-16">
         <div className="p-4">
-          <div className="w-full h-[30vh] overflow-hidden">
+          <div className="w-full lg:h-[80vh] md:h-[50vh] h-[40vh] overflow-hidden">
             <Image
               width={1000}
               height={1000}
               src={cover}
               alt="Dental cover"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-fill"
             />
           </div>
           <div className="flex items-center justify-between mb-4">

@@ -1,23 +1,26 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react'
-import { image_base_endpoint } from '../../utils/constants';
-import DoctorCard from '../DoctorCard'
-import ReviewList from '../ReviewList';
-import Image from 'next/image';
+import React, { useState } from "react";
+import { image_base_endpoint } from "../../utils/constants";
+import DoctorCard from "../DoctorCard";
+import ReviewList from "../ReviewList";
+import Image from "next/image";
 
 function DiagnosticTabs({ data }) {
-  const [activeTab, setActiveTab] = useState('Info');
+  const [activeTab, setActiveTab] = useState("Info");
   return (
     <>
       <div className="bg-white shadow-md">
         <div className="overflow-x-auto scrollbar-hide">
           <div className="flex justify-start space-x-4 pl-4 pr-4 border-b w-full">
-            {['Info', 'Doctor', 'Services', 'Review'].map(tab => (
+            {["Info", "Doctor", "Services", "Review"].map((tab) => (
               <button
                 key={tab}
-                className={`text-sm font-semibold whitespace-nowrap p-3 ${activeTab === tab ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'
-                  }`}
+                className={`text-sm font-semibold whitespace-nowrap p-3 ${
+                  activeTab === tab
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : "text-gray-500"
+                }`}
                 onClick={() => {
                   setActiveTab(tab);
                 }}
@@ -31,48 +34,99 @@ function DiagnosticTabs({ data }) {
 
       {/* Conditionally Render Tab Content */}
       <div className="p-4 mb-[70px]">
-        {activeTab === 'Info' && (
+        {activeTab === "Info" && (
           <div>
-            <h3 className="font-bold text-lg text-black-600">{data?.diagnosticCenterAdditionalInfo?.title}</h3>
-            <pre className="w-full overflow-x-auto whitespace-pre-wrap">{data?.diagnosticCenterAdditionalInfo?.details}</pre>
-            {data?.diagnosticCenterAdditionalInfo?.imageUrl !== null && data?.diagnosticCenterAdditionalInfo?.imageUrl !== "" && <Image width={100} height={100} alt='Image' src={image_base_endpoint + data?.diagnosticCenterAdditionalInfo?.imageUrl}></Image>
-            }
-            {data?.diagnosticCenterAdditionalInfo?.imgList !== null && data?.diagnosticCenterAdditionalInfo?.imgList.map((e, index) => {
-
-              return <Image width={100} height={100} alt='Image' key={`imgList_${index}`} className='w-full object-contain' src={e?.imgUrl}></Image>
-            })
-            }
+            <h3 className="font-bold text-lg text-black-600">
+              {data?.diagnosticCenterAdditionalInfo?.title}
+            </h3>
+            <pre className="w-full overflow-x-auto whitespace-pre-wrap">
+              {data?.diagnosticCenterAdditionalInfo?.details}
+            </pre>
+            {data?.diagnosticCenterAdditionalInfo?.imageUrl !== null &&
+              data?.diagnosticCenterAdditionalInfo?.imageUrl !== "" && (
+                <div className="w-full mt-3">
+                  <Image
+                    width={1000}
+                    height={1000}
+                    alt="Image"
+                    className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"  
+                    src={
+                      image_base_endpoint +
+                      data?.diagnosticCenterAdditionalInfo?.imageUrl
+                    }
+                  />
+                </div>
+              )}
+            {data?.diagnosticCenterAdditionalInfo?.imgList !== null &&
+              data?.diagnosticCenterAdditionalInfo?.imgList.map((e, index) => {
+                return (
+                  <div className="w-full mt-3">
+                    <Image
+                      width={1000}
+                      height={1000}
+                      alt="Image"
+                      key={`imgList_${index}`}
+                      className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"
+                      src={e?.imgUrl}
+                    />
+                  </div>
+                );
+              })}
           </div>
         )}
-        {activeTab === 'Doctor' && (
-          <div className='container mx-auto'>
+        {activeTab === "Doctor" && (
+          <div className="container mx-auto">
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
               {data?.diagnosticCenterDoctors.map((e, index) => {
                 return (
-                  <DoctorCard id={e?.doctorUserId} lat={data?.latitude} lon={data?.longitude} key={`doctor_${index}`} doctor={e}></DoctorCard>
+                  <DoctorCard
+                    id={e?.doctorUserId}
+                    lat={data?.latitude}
+                    lon={data?.longitude}
+                    key={`doctor_${index}`}
+                    doctor={e}
+                  ></DoctorCard>
                 );
               })}
             </div>
           </div>
         )}
 
-        {activeTab === 'Services' && (
+        {activeTab === "Services" && (
           <div className="w-full overflow-x-auto">
             {data?.diagnosticCenterServices.length > 0 ? (
               <>
                 <div>
-                  {data?.diagnosticCenterServices?.filter(service => service.serviceType === "heading").map((service) => {
-                    return <div key={service.id} className="relative bg-purple-100 p-4 rounded-lg shadow-md mb-3">
-                      <h3 className="text-lg font-bold">{service.serviceName}</h3>
-                      <p className="text-gray-600">{service.price}</p>
-                      <div className="flex mt-2">
-                        {service.remarks.split(",").map(i => i.trim()).map((img, index) => (
-                          <Image width={100} height={100} key={index} src={img} alt="Service" className="w-[100px] h-[100px] mr-1 rounded" />
-                        ))}
-                      </div>
-
-                    </div>;
-                  })}
+                  {data?.diagnosticCenterServices
+                    ?.filter((service) => service.serviceType === "heading")
+                    .map((service) => {
+                      return (
+                        <div
+                          key={service.id}
+                          className="relative bg-purple-100 p-4 rounded-lg shadow-md mb-3"
+                        >
+                          <h3 className="text-lg font-bold">
+                            {service.serviceName}
+                          </h3>
+                          <p className="text-gray-600">{service.price}</p>
+                          <div className="flex mt-2">
+                            {service.remarks
+                              .split(",")
+                              .map((i) => i.trim())
+                              .map((img, index) => (
+                                <Image
+                                  width={100}
+                                  height={100}
+                                  key={index}
+                                  src={img}
+                                  alt="Service"
+                                  className="w-[100px] h-[100px] mr-1 rounded"
+                                />
+                              ))}
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
                 <h3 className="text-lg font-semibold mb-4">Investigation</h3>
                 <table
@@ -88,10 +142,7 @@ function DiagnosticTabs({ data }) {
                       >
                         #
                       </th>
-                      <th
-                        className="p-4 text-left border"
-                        role="columnheader"
-                      >
+                      <th className="p-4 text-left border" role="columnheader">
                         Name
                       </th>
 
@@ -104,20 +155,27 @@ function DiagnosticTabs({ data }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {data?.diagnosticCenterServices.filter((i) => i.serviceType === "Investigation").map((service, index) => (
-                      <tr
-                        key={index + 1}
-                        className="hover:bg-gray-50 focus-within:bg-gray-50 transition-colors"
-                        role="row"
-                      >
-                        <td className="p-4 border" role="cell">{index + 1}</td>
-                        <td className="p-4 border" role="cell">{service.serviceName}</td>
-                        <td className="p-4 border" role="cell">{service.price}</td>
-                      </tr>
-                    ))}
+                    {data?.diagnosticCenterServices
+                      .filter((i) => i.serviceType === "Investigation")
+                      .map((service, index) => (
+                        <tr
+                          key={index + 1}
+                          className="hover:bg-gray-50 focus-within:bg-gray-50 transition-colors"
+                          role="row"
+                        >
+                          <td className="p-4 border" role="cell">
+                            {index + 1}
+                          </td>
+                          <td className="p-4 border" role="cell">
+                            {service.serviceName}
+                          </td>
+                          <td className="p-4 border" role="cell">
+                            {service.price}
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
-
 
                 <h3 className="text-lg font-semibold mt-4 mb-4">OT List</h3>
                 <div className="w-full overflow-x-auto">
@@ -171,16 +229,10 @@ function DiagnosticTabs({ data }) {
                             >
                               {index + 1}
                             </td>
-                            <td
-                              className="p-4 border break-words"
-                              role="cell"
-                            >
+                            <td className="p-4 border break-words" role="cell">
                               {service.serviceName}
                             </td>
-                            <td
-                              className="p-4 border break-words"
-                              role="cell"
-                            >
+                            <td className="p-4 border break-words" role="cell">
                               {service.price}
                             </td>
                             <td
@@ -194,10 +246,7 @@ function DiagnosticTabs({ data }) {
                     </tbody>
                   </table>
                 </div>
-
-
               </>
-
             ) : (
               <div
                 className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
@@ -207,20 +256,18 @@ function DiagnosticTabs({ data }) {
               </div>
             )}
           </div>
-
         )}
 
-        {activeTab === 'Review' && (
-
-          <ReviewList reviews={data?.diagnosticCenterReview} averageRating={data?.averageRating} totalRatings={data?.totalRating}></ReviewList>
-
+        {activeTab === "Review" && (
+          <ReviewList
+            reviews={data?.diagnosticCenterReview}
+            averageRating={data?.averageRating}
+            totalRatings={data?.totalRating}
+          ></ReviewList>
         )}
       </div>
-
     </>
-
-
-  )
+  );
 }
 
-export default DiagnosticTabs
+export default DiagnosticTabs;

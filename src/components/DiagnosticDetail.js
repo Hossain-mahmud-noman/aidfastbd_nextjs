@@ -10,21 +10,21 @@ const DiagnosticDetail = ({ data }) => {
   const cover = data?.coverImageUrl == null || data?.coverImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.coverImageUrl;
   return (
     <div className="p-4 w-full bg-white shadow-md rounded-lg">
-      <div className="w-full h-[70vh] overflow-hidden">
+      <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
         <Image
           width={1000}
           height={1000}
           priority={false}
           src={cover}
           alt="Diagnostic Center cover"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-fill "
         />
       </div>
 
       {/* Header Section */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 mt-4">
         {/* Logo and Name */}
-        <div className="flex items-center">
+        <div className="flex items-center ">
           <Image
             width={100}
             height={100}

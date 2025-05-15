@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DentalCard from '../DentalCard';
@@ -37,17 +37,15 @@ function DentalList({ location, nextPage }) {
     };
   }, [loading]);
 
-
   return (
-
     <>
-      {loading == false && data.length == 0 ? <div className='h-[300px] w-full flex items-center justify-center text-2xl'>No data available</div> : <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-        {data.map((d) => (
-          <DentalCard key={d.id} data={d} />
-        ))}
-      </div>}
-
-
+      {
+        loading === false && data.length == 0 ? <div className='h-[300px] w-full flex items-center justify-center text-2xl'>No data available</div> : <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+          {data.map((d) => (
+            <DentalCard key={d.id} data={d} />
+          ))}
+        </div>
+      }
       <div
         ref={loader}
         className="flex items-center justify-center p-4 mt-6"

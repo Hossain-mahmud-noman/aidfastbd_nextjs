@@ -17,6 +17,7 @@ import FavouriteToggle from "../../../components/FavouriteToggle";
 import DiaLocation from "../../../components/DiaLocation";
 import FloatingCallButton from "../../../components/FloatingCallButton";
 import ProfileQR from "../../../components/profileQR";
+import Image from "next/image";
 function Page({ params }) {
   const router = useRouter();
   const [data, setData] = useState(null);
@@ -111,17 +112,21 @@ function Page({ params }) {
 
       <div className="pt-16">
         <div className="p-4">
-          <div className="w-full h-[30vh] overflow-hidden">
-            <img
+          <div className="w-full lg:h-[80vh] md:h-[50vh] h-[40vh] overflow-hidden">
+            <Image
+              width={1000}
+              height={1000}
               src={cover}
               alt="Dental cover"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-fill"
             />
           </div>
           <div className="flex items-center justify-between mb-4">
             {/* Logo and Name */}
             <div className="flex items-center">
-              <img
+              <Image
+                width={1000}
+                height={1000}
                 src={profile}
                 alt="Dental Logo"
                 className="w-16 h-16 rounded-full mr-3"
