@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { image_base_endpoint } from '../../../utils/constants';
+import Image from 'next/image';
 
 function DoctorProfileInfo({ data, user, token }) {
 
@@ -108,7 +109,9 @@ function DoctorProfileInfo({ data, user, token }) {
                 <div className="mb-4 flex justify-center items-center border rounded-md p-4 bg-gray-50">
                     {selectedImage ? (
                         <div className="relative">
-                            <img
+                            <Image
+                                width={200}
+                                height={200}
                                 src={selectedImage}
                                 alt="Selected Cover"
                                 className="h-40 w-full object-cover rounded-md"

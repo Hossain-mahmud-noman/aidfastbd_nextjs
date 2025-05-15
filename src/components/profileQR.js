@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { IoQrCode } from "react-icons/io5";
 import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt } from "react-icons/fa";
+import Image from "next/image";
 
 function ProfileQR({ id = null, type = null, slug = null, }) {
   console.log("🚀 ~ ProfileQR ~ id:", id);
@@ -77,7 +78,7 @@ function ProfileQR({ id = null, type = null, slug = null, }) {
           <div className="bg-white p-4 rounded-lg shadow-lg text-center">
             <h2 className="text-lg font-semibold mb-2">Profile QR Code</h2>
             {qrCodeUrl && (
-              <img src={qrCodeUrl} alt="QR Code" className="mx-auto mb-4" />
+              <Image width={100} height={100} src={qrCodeUrl} alt="QR Code" className="mx-auto mb-4" />
             )}
 
             <div className="flex justify-center gap-4">

@@ -127,7 +127,9 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
               <h2 className="font-bold">{ambulance.name}</h2>
 
               <p className="text-sm text-gray-600">
-                <img
+                <Image
+                  width={48}
+                  height={48}
                   src={`${image_base_endpoint}${ambulance.imageUrl}`}
                   alt={ambulance.name}
                   className="h-12 w-12 rounded-full"

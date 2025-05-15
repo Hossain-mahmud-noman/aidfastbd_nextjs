@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { image_base_endpoint } from "../../../utils/constants";
+import Image from "next/image";
 
 function DiagnosticProfileBlood({ data, user, token }) {
   const [bloods, setBloods] = useState([]); // List of selected bloods
@@ -122,7 +123,9 @@ function DiagnosticProfileBlood({ data, user, token }) {
             <div>
               <h2 className="font-bold">{blood.name}</h2>
               <p className="text-sm text-gray-600">
-                <img
+                <Image
+                  width={100}
+                  height={100}
                   src={`${image_base_endpoint}${blood.imageUrl}`}
                   alt={blood.name}
                   className="h-12 w-12 rounded-full"
@@ -163,7 +166,9 @@ function DiagnosticProfileBlood({ data, user, token }) {
                   >
                     <h3 className="font-bold">{blood.text}</h3>
                     <p className="text-sm text-gray-600">
-                      <img
+                      <Image
+                        width={100}
+                        height={100}
                         src={`${image_base_endpoint}${blood.imageUrl}`}
                         alt={blood.text}
                         className="h-8 w-8 rounded-full"

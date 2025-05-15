@@ -160,7 +160,9 @@ const ServiceForm = ({ initialData = null, onSubmit, discard ,token,isDental=tru
           <div className="flex flex-wrap mt-2">
             {imgList.map((img, index) => (
               <div key={index} className="relative m-2">
-                <img
+                <Image
+                  width={200}
+                  height={200}
                   src={img.imgUrl!=null?img.imgUrl:img}
                   alt="Uploaded"
                   className="w-20 h-20 rounded object-cover"

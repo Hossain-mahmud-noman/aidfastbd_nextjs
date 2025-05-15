@@ -10,6 +10,7 @@ import FavouriteToggle from '../../../../components/FavouriteToggle';
 import DiaLocation from '../../../../components/DiaLocation';
 import FloatingCallButton from '../../../../components/FloatingCallButton'
 import ProfileQR from '../../../../components/profileQR'
+import Image from 'next/image';
 
 
 export const metadata = {
@@ -82,7 +83,9 @@ async function page({ params }) {
         <div className='p-4'>
 
           <div className="w-full h-[30vh] overflow-hidden">
-            <img
+            <Image
+              width={1000}
+              height={1000}
               src={cover}
               alt="Blood Bank cover"
               className="w-full h-full object-cover"
@@ -91,7 +94,9 @@ async function page({ params }) {
           <div className="flex items-center justify-between mb-4">
             {/* Logo and Name */}
             <div className="flex items-center">
-              <img
+              <Image
+                width={1000}
+                height={1000}
                 src={profile}
                 alt="Blood Bank Logo"
                 className="w-16 h-16 rounded-full mr-3"

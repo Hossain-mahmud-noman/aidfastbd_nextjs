@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { image_base_endpoint } from "../../../utils/constants";
+import Image from "next/image";
 
 function DiagnosticProfileDoctors({ data, user, token }) {
   const [doctors, setDoctors] = useState([]); // List of selected doctors
@@ -116,7 +117,9 @@ function DiagnosticProfileDoctors({ data, user, token }) {
             <div>
               <h2 className="font-bold">{doctor.name}</h2>
               <p className="text-sm text-gray-600">
-                <img
+                <Image
+                  width={100}
+                  height={100}
                   src={`${image_base_endpoint}${doctor.imageUrl}`}
                   alt={doctor.name}
                   className="h-12 w-12 rounded-full"
@@ -162,7 +165,9 @@ function DiagnosticProfileDoctors({ data, user, token }) {
                     >
 
                       <p className="text-sm text-gray-600">
-                        <img
+                        <Image
+                          width={100}
+                          height={100}
                           src={`${image_base_endpoint}${doctor.imageUrl}`}
                           alt={doctor.name}
                           className="h-12 w-12 rounded-full"

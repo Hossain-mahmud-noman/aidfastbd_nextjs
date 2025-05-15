@@ -1,5 +1,4 @@
 'use client';
-
 import Image from "next/image";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { FaChevronLeft, FaChevronRight, FaPause, FaPlay } from "react-icons/fa";
@@ -60,7 +59,7 @@ const Carousel = ({ data }) => {
     >
       <div className="relative h-[200px] sm:h-70 md:h-96">
         {data.map((image, index) => (
-          <img
+          <Image
             // width={500}
             // height={500}
             // blurDataURL="https://user-images.githubusercontent.com/160484/173871411-4d27b6dd-af89-4568-863c-c59b1242ce74.png"

@@ -4,6 +4,7 @@ import { FaPhone,  FaMapMarkerAlt, FaStar, FaStarHalf} from "react-icons/fa";
 import { motion } from "framer-motion";
 import { image_base_endpoint } from "../utils/constants";
 import TextTicker from "./TextTicker";
+import Image from "next/image";
 
 
 const renderStars = (rating) => {
@@ -32,7 +33,9 @@ function DoctorDetail({data}) {
             >
                 {/* Profile Section */}
                 <div className="relative">
-                    <img
+                    <Image
+                        width={1000}
+                        height={1000}
                         src={image_base_endpoint + data.imageUrl}
                         alt="Doctor's profile"
                         className="w-full h-48 object-cover"
@@ -121,7 +124,7 @@ function DoctorDetail({data}) {
                     <div>
                         <h2 className="text-lg font-semibold mb-2">{data.doctorAdditionalInfo.title}</h2>
                         <p>{data.doctorAdditionalInfo.details}</p>
-                        <img src={image_base_endpoint+data.doctorAdditionalInfo.imageUrl}></img>
+                        <Image height={100} width={100} alt="Additional Information" src={image_base_endpoint+data.doctorAdditionalInfo.imageUrl} />
                     </div>
                 </div>
             </motion.div>

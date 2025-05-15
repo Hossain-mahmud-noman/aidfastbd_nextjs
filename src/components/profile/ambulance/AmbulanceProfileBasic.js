@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { base_endpoint, image_base_endpoint } from '../../../utils/constants';
 import MapComponent from '../../MapComponent';
+import Image from 'next/image';
 
 
 function InputField({ label, placeholder, type = "text", value, onChange, required = false }) {
@@ -188,7 +189,7 @@ function AmbulanceProfileBasic({ data, user, token }) {
         <div className="relative">
           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
             {selectedLogo ? (
-              <img src={selectedLogo} alt="Profile/Logo" className="w-full h-full object-cover" />
+              <Image width={100} height={100} src={selectedLogo} alt="Profile/Logo" className="w-full h-full object-cover" />
             ) : (
               <span className="text-gray-400 text-lg">+</span>
             )}
@@ -209,7 +210,9 @@ function AmbulanceProfileBasic({ data, user, token }) {
         </label>
         <div className="mb-4 flex justify-center items-center border rounded-md p-4 bg-gray-50">
           {coverImage ? (
-            <img
+            <Image
+              width={1000}
+              height={1000}
               src={coverImage}
               alt="Selected Cover"
               className="h-40 w-full object-cover rounded-md"
@@ -247,7 +250,7 @@ function AmbulanceProfileBasic({ data, user, token }) {
         <div className="relative">
           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
             {ownerImage ? (
-              <img src={ownerImage} alt="Owner" className="w-full h-full object-cover" />
+              <Image width={100} height={100} src={ownerImage} alt="Owner" className="w-full h-full object-cover" />
             ) : (
               <span className="text-gray-400 text-lg">+</span>
             )}

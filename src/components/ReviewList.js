@@ -3,6 +3,7 @@
 import React from 'react'
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { BiUserCircle } from "react-icons/bi";
+import Image from 'next/image';
 
 
 function ReviewList({ reviews = [], totalRatings, averageRating }) {
@@ -62,7 +63,9 @@ function ReviewList({ reviews = [], totalRatings, averageRating }) {
                         className="bg-gray-50 p-4 rounded-lg transition-transform duration-200 hover:transform hover:scale-102 hover:shadow-md"
                     >
                         <div className="flex items-center mb-2">
-                            <img
+                            <Image
+                                width={100}
+                                height={100}
                                 src={`https://cdn-icons-png.flaticon.com/128/666/666201.png`}
                                 alt={review.username}
                                 className="w-10 h-10 rounded-full object-cover"

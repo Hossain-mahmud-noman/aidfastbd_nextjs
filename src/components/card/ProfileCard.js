@@ -1,4 +1,5 @@
 'use client';
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FaCamera } from "react-icons/fa";
 
@@ -88,7 +89,9 @@ const ProfileCard = ({ token, user }) => {
         <div className="relative flex justify-center">
           <div className="w-28 h-28 rounded-full bg-gradient-to-r from-teal-500 to-blue-500 flex items-center justify-center">
             {image ? (
-              <img
+              <Image
+                width={100}
+                height={100}
                 src={image}
                 alt="Profile"
                 className="w-28 h-28 rounded-full object-cover"

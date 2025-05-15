@@ -3,6 +3,7 @@ import { FaTimes } from 'react-icons/fa';
 import { panel_base } from '../../../utils/constants';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Image from 'next/image';
 
 export default function PharmcyCard({ service, onSave }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -67,7 +68,9 @@ export default function PharmcyCard({ service, onSave }) {
         className="border rounded p-4 shadow hover:shadow-lg transition cursor-pointer"
         onClick={() => setIsPopupOpen(true)}
       >
-        <img
+        <Image
+          width={200}
+          height={200}
           src={
             service.profileImageUrl
               ? `https://api.aidfastbd.com/${service.profileImageUrl}`

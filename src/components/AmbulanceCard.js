@@ -18,7 +18,7 @@ const AmbulanceCard = ({ data }) => {
                 <div className="flex-1 pl-3 pt-3 pr-3 pb-1">
                     {/* Centering the image */}
                     <div className="flex justify-center">
-                        <img
+                        <Image
                             width={100}
                             height={100}
                             src={imageUrl}

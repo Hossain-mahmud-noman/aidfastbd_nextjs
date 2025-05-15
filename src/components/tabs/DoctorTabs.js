@@ -6,6 +6,7 @@ import ReviewList from "../ReviewList";
 import { FaPhoneAlt } from "react-icons/fa";
 
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
+import Image from "next/image";
 
 function DoctorTabs({ data }) {
   const [activeTab, setActiveTab] = useState("Info");
@@ -53,11 +54,13 @@ function DoctorTabs({ data }) {
             </pre>
             {data?.doctorAdditionalInfo?.imageUrl !== null &&
               data?.doctorAdditionalInfo?.imageUrl !== "" && (
-                <img
+                <Image
+                  width={200}
+                  height={200}
                   src={
                     image_base_endpoint + data?.doctorAdditionalInfo?.imageUrl
                   }
-                ></img>
+                />
               )}
           </div>
         )}
@@ -80,7 +83,8 @@ function DoctorTabs({ data }) {
                             Location: {e.location}
                           </span>
                         )}
-                        <img
+                        <Image
+                        
                           onClick={() => {
                             const mapUrl = `https://www.google.com/maps?q=${e.lat},${e.lon}`;
 

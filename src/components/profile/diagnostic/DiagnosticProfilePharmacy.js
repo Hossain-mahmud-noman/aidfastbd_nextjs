@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { image_base_endpoint } from "../../../utils/constants";
+import Image from "next/image";
 
 function DiagnosticProfilePharmacy({ data, user, token }) {
   const [pharmacys, setPharmacys] = useState([]); // List of selected pharmacies
@@ -122,7 +123,9 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
             <div>
               <h2 className="font-bold">{pharmacy.name}</h2>
               <p className="text-sm text-gray-600">
-                <img
+                <Image
+                  width={100}
+                  height={100}
                   src={`${image_base_endpoint}${pharmacy.imageUrl}`}
                   alt={pharmacy.name}
                   className="h-12 w-12 rounded-full"

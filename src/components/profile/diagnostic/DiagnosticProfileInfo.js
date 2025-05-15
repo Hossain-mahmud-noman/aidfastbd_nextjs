@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 
@@ -132,7 +133,9 @@ function DiagnosticProfileInfo({ data, user, token }) {
         <div className="grid grid-cols-2 gap-4">
           {imgList.map((image, index) => (
             <div key={index} className="relative group">
-              <img
+              <Image
+                width={200}
+                height={200}
                 src={`${image.imgUrl}`}
                 alt="Uploaded"
                 className="w-full h-32 object-cover rounded-md"
@@ -163,7 +166,9 @@ function DiagnosticProfileInfo({ data, user, token }) {
         />
         {selectedImage && (
           <div className="mt-2 flex justify-between items-center">
-            <img
+            <Image
+              width={200}
+              height={200}
               src={selectedImage}
               alt="Preview"
               className="h-20 w-20 object-cover rounded-md"

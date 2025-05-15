@@ -1,9 +1,8 @@
 'use client';
-
+import Image from 'next/image';
 import React from 'react'
-
 function DiaLocation({lat,lon}) {
-    return (<img onClick={() => {
+    return (<Image onClick={() => {
         const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
         window.open(mapUrl, "_blank"); // Open in a new tab
     }}

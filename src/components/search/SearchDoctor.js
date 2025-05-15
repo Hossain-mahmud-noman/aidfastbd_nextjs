@@ -8,6 +8,7 @@ import { MdCancel } from "react-icons/md";
 import { FaAngleDown } from "react-icons/fa6";
 import { base_endpoint } from '../../utils/constants';
 import DoctorCard from '../DoctorCard';
+import Image from 'next/image';
 export const SearchableDropdown = ({ label, options, dispatch, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -356,7 +357,9 @@ const SearchDoctor = ({ specialityData = [] }) => {
                 className={`flex-shrink-0 w-[150px] h-[220px] bg-white shadow-lg rounded-lg p-1 ${index === spActive ? "border-green-500 border-t-4 border-2" : ""
                   }`}
               >
-                <img
+                <Image
+                  width={150}
+                  height={150}
                   src={speciality.imageUrl}
                   alt={speciality.text}
                   className="w-full object-cover rounded-t-lg"

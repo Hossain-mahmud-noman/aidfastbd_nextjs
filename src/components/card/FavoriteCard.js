@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { base_endpoint, headerx } from "../../utils/constants";
+import Image from "next/image";
 
 
 export default function FavoriteCard({ user, token }) {
@@ -100,7 +101,9 @@ export default function FavoriteCard({ user, token }) {
                       className="relative bg-white shadow-md rounded-lg overflow-hidden"
                     >
                       {/* Image */}
-                      <img
+                      <Image
+                        width={100}
+                        height={100}
                         src={
                           item.imageUrl
                             ? imageBaseUrl + item.imageUrl

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { image_base_endpoint } from "../../../utils/constants";
+import Image from "next/image";
 
 // Reusable InputField component
 function InputField({
@@ -231,7 +232,9 @@ function DoctorProfileBasic({ data, user, token }) {
         <div className="relative">
           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
             {selectedLogo ? (
-              <img
+              <Image
+                width={100}
+                height={100}
                 src={selectedLogo}
                 alt="Profile/Logo"
                 className="w-full h-full object-cover"

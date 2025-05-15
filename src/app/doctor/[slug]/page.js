@@ -113,11 +113,7 @@ const Page = ({ params }) => {
 
         <div className="p-4">
           <div className="flex items-center space-x-4">
-            {/* <img
-              src={`${image_base_endpoint}${data?.imageUrl}`}
-              alt="Doctor"
-              className="w-24 h-24 rounded-lg"
-            /> */}
+          
             <div>
               <h2 className="text-lg font-bold">
                 Dr. {data?.firstName} {data?.lastName}

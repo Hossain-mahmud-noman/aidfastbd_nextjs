@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { image_base_endpoint } from '../../../utils/constants';
 import { FaCalendarAlt } from "react-icons/fa";
 import MapComponent from '../../MapComponent';
+import Image from 'next/image';
 
 function InputField({ label, placeholder, type = "text", value, onChange, required = false, maxLength = 255, name }) {
   return (
@@ -225,7 +226,7 @@ function DiagnosticProfileBasic({ data, token, user }) {
         <div className="relative">
           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
             {selectedLogo ? (
-              <img src={selectedLogo} alt="Profile/Logo" className="w-full h-full object-cover" />
+              <Image width={100} height={100} src={selectedLogo} alt="Profile/Logo" className="w-full h-full object-cover" />
             ) : (
               <span className="text-gray-400 text-lg">+</span>
             )}
@@ -244,7 +245,9 @@ function DiagnosticProfileBasic({ data, token, user }) {
         <label className="block text-xs font-semibold text-gray-700 mb-2">Add a Cover Photo</label>
         <div className="mb-4 flex justify-center items-center border rounded-md p-4 bg-gray-50">
           {selectedCover ? (
-            <img
+            <Image
+              width={100}
+              height={100}
               src={selectedCover}
               alt="Selected Cover"
               className="h-40 w-full object-cover rounded-md"
@@ -431,7 +434,9 @@ function DiagnosticProfileBasic({ data, token, user }) {
         <div className="relative">
           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
             {ownerImage ? (
-              <img
+              <Image
+                width={100}
+                height={100}
                 src={ownerImage}
                 alt="Profile/Owner"
                 className="w-full h-full object-cover"

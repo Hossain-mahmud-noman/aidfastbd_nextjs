@@ -3,6 +3,7 @@ import { FaTimes } from 'react-icons/fa';
 import { panel_base } from '../../../utils/constants';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Image from 'next/image';
 
 export default function AmbulanceCard({ service, onSave }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -73,7 +74,9 @@ export default function AmbulanceCard({ service, onSave }) {
           setIsPopupOpen(true);
         }}
       >
-        <img
+        <Image
+          width={200}
+          height={200}
           src={
             service.profileImageUrl
               ? `https://api.aidfastbd.com/${service.profileImageUrl}`

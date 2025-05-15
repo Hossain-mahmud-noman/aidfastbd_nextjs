@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { image_base_endpoint, base_endpoint } from '../../../utils/constants';
 import React, { useEffect, useState } from 'react';
 
@@ -113,7 +114,9 @@ function PharmacyProfileInfo({ data, user, token }) {
         </label>
         <div className="mb-4 flex justify-center items-center border rounded-md p-4 bg-gray-50">
           {selectedImage ? (
-            <img
+            <Image
+              width={200}
+              height={200}
               src={selectedImage}
               alt="Selected Cover"
               className="h-40 w-full object-cover rounded-md"

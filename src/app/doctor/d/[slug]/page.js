@@ -8,6 +8,7 @@ import FavouriteToggle from '../../../../components/FavouriteToggle';
 import DoctorTabs from '../../../../components/tabs/DoctorTabs';
 import AppointmentBooking from '../../../../components/bottom/AppointmentBooking';
 import ProfileQR from '../../../../components/profileQR';
+import Image from 'next/image';
 
 
 const fetchDetail = async (slug) => {
@@ -77,7 +78,9 @@ const Page = async ({ params }) => {
       <div className="pt-16">
         {/* Profile Section */}
         <div>
-          <img
+          <Image
+            width={500}
+            height={500}
             src={profile}
             alt="Doctor"
             className="w-full h-[180px] object-contain"
@@ -87,11 +90,7 @@ const Page = async ({ params }) => {
         <div className="p-4">
 
           <div className="flex items-center space-x-4">
-            {/* <img
-              src={`${image_base_endpoint}${data.imageUrl}`}
-              alt="Doctor"
-              className="w-24 h-24 rounded-lg"
-            /> */}
+           
             <div>
               <h2 className="text-lg font-bold">Dr. {data.firstName} {data.lastName}</h2>
               <p className="text-gray-600">{data.degreeName}</p>

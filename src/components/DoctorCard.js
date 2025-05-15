@@ -12,7 +12,7 @@ const DoctorCard = ({ doctor, lat = null, lon = null, id = null }) => {
                 className="flex  cursor-pointer flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
                 aria-label={`Doctor ${doctor.name} information card`}
             >
-                <img
+                <Image
                     width={100}
                     height={100}
                     placeholder="blur"

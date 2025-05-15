@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ServiceForm from "../../../components/forms/ServiceForm";
+import Image from "next/image";
 
 export default function DentalProfileServices({ data, token, user }) {
   const [services, setServices] = useState(data);
@@ -81,7 +82,7 @@ export default function DentalProfileServices({ data, token, user }) {
               <p className="text-gray-600">{service.details}</p>
               <div className="flex mt-2">
                 {service.imgList.map((img, index) => (
-                  <img key={index} src={img.imgUrl} alt="Service" className="w-10 h-10 mr-1 rounded" />
+                  <Image width={100} height={100} key={index} src={img.imgUrl} alt="Service" className="w-10 h-10 mr-1 rounded" />
                 ))}
               </div>
               <button
