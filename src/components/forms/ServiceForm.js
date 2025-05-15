@@ -1,5 +1,6 @@
 'use client';
 
+import Image from "next/image";
 import React, { useState } from "react";
 
 const ServiceForm = ({ initialData = null, onSubmit, discard ,token,isDental=true}) => {
