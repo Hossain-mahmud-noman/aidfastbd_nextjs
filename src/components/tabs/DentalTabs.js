@@ -87,7 +87,7 @@ function DentalTabs({ data }) {
                 >
                   <h3 className="text-lg font-bold">{service?.title}</h3>
                   <p className="text-gray-600">{service?.details}</p>
-                  <div className="flex mt-2">
+                  <div className="mt-2">
                     {service?.imgList?.map((img, index) => (
                       <div key={index} className="mt-3 w-full">
                         <Image
