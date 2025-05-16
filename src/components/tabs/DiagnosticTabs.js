@@ -109,12 +109,12 @@ function DiagnosticTabs({ data }) {
                             {service.serviceName}
                           </h3>
                           <p className="text-gray-600">{service.price}</p>
-                          <div className="flex mt-2">
+                          <div className="mt-2">
                             {service.remarks
                               .split(",")
                               .map((i) => i.trim())
                               .map((img, index) => (
-                                <div key={index} className="w-full">
+                                <div key={index} className="w-full mt-3">
                                   <Image
                                     width={1000}
                                     height={1000}
