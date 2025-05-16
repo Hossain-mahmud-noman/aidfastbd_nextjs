@@ -1,13 +1,4 @@
 
-// /** @type {import('next').NextConfig} */
-
-// const nextConfig = {};
-
-// export default nextConfig;
-
-// next.config.mjs
-
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 
@@ -20,6 +11,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: "api.aidfastbd.com",
+      },
+      {
+        protocol: 'https',
+        hostname: "cdn-icons-png.flaticon.com",
+      },
+      {
+        protocol: 'https',
+        hostname: "**",
       },
     ],
   },

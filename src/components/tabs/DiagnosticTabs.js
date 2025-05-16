@@ -114,14 +114,16 @@ function DiagnosticTabs({ data }) {
                               .split(",")
                               .map((i) => i.trim())
                               .map((img, index) => (
-                                <Image
-                                  width={100}
-                                  height={100}
-                                  key={index}
-                                  src={img}
-                                  alt="Service"
-                                  className="w-[100px] h-[100px] mr-1 rounded"
-                                />
+                                <div key={index} className="w-full">
+                                  <Image
+                                    width={1000}
+                                    height={1000}
+                                    alt="Image"
+                                    key={`imgList_${index}`}
+                                    className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"
+                                    src={img}
+                                  />
+                                </div>
                               ))}
                           </div>
                         </div>
@@ -263,7 +265,7 @@ function DiagnosticTabs({ data }) {
             reviews={data?.diagnosticCenterReview}
             averageRating={data?.averageRating}
             totalRatings={data?.totalRating}
-          ></ReviewList>
+          />
         )}
       </div>
     </>

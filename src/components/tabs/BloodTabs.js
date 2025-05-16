@@ -1,21 +1,24 @@
-'use client';
-import React, { useState } from 'react'
-import { image_base_endpoint } from '../../utils/constants';
-import ReviewList from '../ReviewList';
+"use client";
+import React, { useState } from "react";
+import { image_base_endpoint } from "../../utils/constants";
+import ReviewList from "../ReviewList";
 import { FaPhone, FaUserCircle, FaTint } from "react-icons/fa";
-import Image from 'next/image';
+import Image from "next/image";
 function BloodTabs({ data }) {
-  const [activeTab, setActiveTab] = useState('Info');
+  const [activeTab, setActiveTab] = useState("Info");
   return (
     <>
       <div className="bg-white shadow-md">
         <div className="overflow-x-auto scrollbar-hide">
           <div className="flex justify-start space-x-4 pl-4 pr-4 border-b w-full">
-            {['Info', 'Services', 'Donor List', 'Review'].map(tab => (
+            {["Info", "Services", "Donor List", "Review"].map((tab) => (
               <button
                 key={tab}
-                className={`text-sm font-semibold whitespace-nowrap p-3 ${activeTab === tab ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'
-                  }`}
+                className={`text-sm font-semibold whitespace-nowrap p-3 ${
+                  activeTab === tab
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : "text-gray-500"
+                }`}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab}
@@ -26,17 +29,39 @@ function BloodTabs({ data }) {
       </div>
       {/* Conditionally Render Tab Content */}
       <div className="p-4 mb-[70px]">
-        {activeTab === 'Info' && (
+        {activeTab === "Info" && (
           <div>
-            {data?.bloodBankAdditionalInfo !== null && <> <h3 className="font-bold text-lg text-black-600">{data?.bloodBankAdditionalInfo?.title}</h3>
-              <pre className="w-full overflow-x-auto whitespace-pre-wrap">{data?.bloodBankAdditionalInfo?.details}</pre>
-              {data?.bloodBankAdditionalInfo?.imageUrl !== null && data?.bloodBankAdditionalInfo?.imageUrl !== "" && <Image width={1000} height={1000} alt='Image' src={image_base_endpoint + data?.bloodBankAdditionalInfo?.imageUrl} />}
-            </>}
+            {data?.bloodBankAdditionalInfo !== null && (
+              <>
+                {" "}
+                <h3 className="font-bold text-lg text-black-600">
+                  {data?.bloodBankAdditionalInfo?.title}
+                </h3>
+                <pre className="w-full overflow-x-auto whitespace-pre-wrap">
+                  {data?.bloodBankAdditionalInfo?.details}
+                </pre>
+                {data?.bloodBankAdditionalInfo?.imageUrl !== null &&
+                  data?.bloodBankAdditionalInfo?.imageUrl !== "" && (
+                    <div className="w-full mt-3">
+                      <Image
+                        width={1000}
+                        height={1000}
+                        alt="Image"
+                        className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"
+                        src={
+                          image_base_endpoint +
+                          data?.bloodBankAdditionalInfo?.imageUrl
+                        }
+                      />
+                    </div>
+                  )}
+              </>
+            )}
           </div>
         )}
-        {activeTab === 'Services' && (
+        {activeTab === "Services" && (
           <div>
-            {data?.bloodBankServices !== null &&
+            {data?.bloodBankServices !== null && (
               <table
                 className="w-full border-collapse table-auto"
                 role="table"
@@ -67,33 +92,39 @@ function BloodTabs({ data }) {
                 <tbody>
                   {data?.bloodBankServices.map((service, index) => {
                     const id = index + 1;
-                    return <tr
-                      key={id}
-                      className="hover:bg-gray-50 focus-within:bg-gray-50 transition-colors"
-                      role="row"
-                    >
-                      <td className="p-4 border" role="cell">{id}</td>
-                      <td className="p-4 border" role="cell">{service.serviceName}</td>
-                      <td className="p-4 border" role="cell">{service.price}</td>
-                    </tr>
-                  }
-                  )}
+                    return (
+                      <tr
+                        key={id}
+                        className="hover:bg-gray-50 focus-within:bg-gray-50 transition-colors"
+                        role="row"
+                      >
+                        <td className="p-4 border" role="cell">
+                          {id}
+                        </td>
+                        <td className="p-4 border" role="cell">
+                          {service.serviceName}
+                        </td>
+                        <td className="p-4 border" role="cell">
+                          {service.price}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
-            }
-            {data?.bloodBankServices !== null && data?.bloodBankServices.length === 0 && (
-              <div
-                className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
-                role="alert"
-              >
-                <p className="text-yellow-700">
-                  No Services data available.
-                </p>
-              </div>
             )}
+            {data?.bloodBankServices !== null &&
+              data?.bloodBankServices.length === 0 && (
+                <div
+                  className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
+                  role="alert"
+                >
+                  <p className="text-yellow-700">No Services data available.</p>
+                </div>
+              )}
           </div>
         )}
-        {activeTab === 'Donor List' && (
+        {activeTab === "Donor List" && (
           <div className="space-y-4">
             {data?.bloodBankDonerInfo.map((donor) => (
               <div
@@ -109,10 +140,14 @@ function BloodTabs({ data }) {
                       <FaUserCircle className="w-10 h-10" />
                     </div>
                     <div>
-                      <h2 className="font-semibold text-gray-800">{donor.name}</h2>
+                      <h2 className="font-semibold text-gray-800">
+                        {donor.name}
+                      </h2>
                       <div className="flex items-center mt-1">
                         <FaPhone className="w-4 h-4 text-gray-500 mr-1" />
-                        <p className="text-sm text-gray-600">{donor.mobileNo}</p>
+                        <p className="text-sm text-gray-600">
+                          {donor.mobileNo}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -130,12 +165,16 @@ function BloodTabs({ data }) {
           </div>
         )}
 
-        {activeTab === 'Review' && (
-          <ReviewList reviews={data?.bloodBankReview} averageRating={data?.averageRating} totalRatings={data?.totalRating} />
+        {activeTab === "Review" && (
+          <ReviewList
+            reviews={data?.bloodBankReview}
+            averageRating={data?.averageRating}
+            totalRatings={data?.totalRating}
+          />
         )}
       </div>
     </>
-  )
+  );
 }
 
-export default BloodTabs
+export default BloodTabs;
