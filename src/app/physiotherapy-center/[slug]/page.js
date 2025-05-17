@@ -97,8 +97,8 @@ async function Page({ params }) {
         }
       />
 
-      <div className="pt-16">
-        <div className="p-4">
+      <div className="pt-16 aid-container">
+        <div className="">
           <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
             <Image
               width={1000}
@@ -175,8 +175,10 @@ async function Page({ params }) {
       </div>
 
       {/* Have to add tabs */}
-      <DentalTabs data={data}></DentalTabs>
-      <FloatingCallButton number={data.contact}></FloatingCallButton>
+      <div className="aid-container">
+        <DentalTabs data={data} />
+      </div>
+      <FloatingCallButton number={data.contact} />
     </>
   );
 }

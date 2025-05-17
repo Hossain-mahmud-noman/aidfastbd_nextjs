@@ -23,7 +23,7 @@ function Page() {
         className="font-[family-name:var(--font-geist-sans)] pt-20"
       >
         <SearchDental />
-        <div className="container mx-auto px-2">
+        <div className="aid-container mx-auto px-2">
           <DentalList nextPage={1} />
         </div>
       </div>

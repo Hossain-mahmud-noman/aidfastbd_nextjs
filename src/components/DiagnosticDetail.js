@@ -9,7 +9,7 @@ const DiagnosticDetail = ({ data }) => {
   const profile = data?.profileImageUrl == null || data?.profileImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.profileImageUrl;
   const cover = data?.coverImageUrl == null || data?.coverImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.coverImageUrl;
   return (
-    <div className="p-4 w-full bg-white shadow-md rounded-lg">
+    <div className="w-full bg-white rounded-lg">
       <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
         <Image
           width={1000}

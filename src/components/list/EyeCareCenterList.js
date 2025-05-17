@@ -46,11 +46,9 @@ function EyeCareCenterList({ location, nextPage }) {
           <EyeCareCenterCard key={d.id} data={d} />
         ))}
       </div>}
-
-
       <div
         ref={loader}
-        className="flex items-center justify-center p-4 mt-6"
+        className="flex items-center justify-center mt-6"
         role="status"
         aria-label="Loading more content"
       >

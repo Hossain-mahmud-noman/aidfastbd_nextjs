@@ -8,9 +8,9 @@ function PharmacyTabs({ data }) {
   const [activeTab, setActiveTab] = useState("Info");
   return (
     <>
-      <div className="bg-white shadow-md">
+      <div className="bg-white ">
         <div className="overflow-x-auto scrollbar-hide">
-          <div className="flex justify-start space-x-4 pl-4 pr-4 border-b w-full">
+          <div className="flex justify-start border-b w-full">
             {["Info", "Services", "Drug List", "Equipments", "Review"].map(
               (tab) => (
                 <button
@@ -31,7 +31,7 @@ function PharmacyTabs({ data }) {
       </div>
 
       {/* Conditionally Render Tab Content */}
-      <div className="p-4 mb-[70px]">
+      <div className="mt-6 mb-[70px]">
         {activeTab === "Info" && (
           <div>
             {data?.pharmacyAdditionalInfo !== null && (

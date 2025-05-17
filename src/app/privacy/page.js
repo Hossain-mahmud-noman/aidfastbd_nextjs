@@ -12,8 +12,7 @@ function page() {
     return (
         <>
             <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title="Privacy Policy" ></AppBar>
-
-            <div className="pt-16 pl-8 pr-8">
+            <div className="pt-16 aid-container">
                 <br></br>
                 <b >1. INTRODUCTION</b><br></br>
                 On behalf of (us, we, AIDFAST which also includes its affiliates) is the author and publisher of the internet resource www.aidfastbd.com (Website) on the world wide web and mobile applications (Mobile Applications) AIDFAST and AIDFAST for Providers. This privacy policy (Privacy Policy) explains how we collect, use, share, disclose and protect personal information about the End-User(s)/User(s)/Provider(s)/Practioner(s) as (defined in Agreement) as (You, Your(s)). We created this Privacy Policy to demonstrate our commitment to the protection of your privacy and your personal information. Your use of and access to the services are subject to this Privacy Policy.
@@ -133,7 +132,6 @@ function page() {
                 <br></br>
                 <b>7. CONSENT TO THIS POLICYS</b>
                 <br></br>
-
                 You acknowledge that this Privacy Policy is a part of the Agreement of the Website/Mobile Applications and the other services, and you unconditionally agree that becoming a User of the Website/Mobile Applications and its services signifies your (i) assent to this Privacy Policy, and (ii) consent to AIDFAST using, collecting, processing and/or disclosing your personal information in the manner and for the purposes set out in this Privacy Policy. Your visit to the Website/Mobile Applications and use of the services is subject to this Privacy Policy and the Agreement.
             </div>
         </>

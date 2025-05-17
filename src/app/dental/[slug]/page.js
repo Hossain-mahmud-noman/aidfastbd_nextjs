@@ -110,8 +110,8 @@ function Page({ params }) {
         }
       />
 
-      <div className="pt-16">
-        <div className="p-4">
+      <div className="pt-16 aid-container">
+        <div className="">
           <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
             <Image
               width={1000}
@@ -186,9 +186,10 @@ function Page({ params }) {
           </div>
         </div>
       </div>
-
-      <DentalTabs data={data}></DentalTabs>
-      <FloatingCallButton number={data?.contact}></FloatingCallButton>
+      <div className="aid-container mt-6">
+        <DentalTabs data={data} />
+      </div>
+      <FloatingCallButton number={data?.contact} />
     </>
   );
 }

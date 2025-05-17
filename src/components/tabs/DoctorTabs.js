@@ -4,13 +4,11 @@ import { image_base_endpoint } from "../../utils/constants";
 import TextTicker from "../TextTicker";
 import ReviewList from "../ReviewList";
 import { FaPhoneAlt } from "react-icons/fa";
-
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import Image from "next/image";
 
 function DoctorTabs({ data }) {
   const [activeTab, setActiveTab] = useState("Info");
-
   const formatDate = (dateString) => {
     if (dateString === "Present") return dateString;
     const date = new Date(dateString);
@@ -22,7 +20,7 @@ function DoctorTabs({ data }) {
 
   return (
     <>
-      <div className="bg-white shadow-md">
+      <div className="bg-white shadow-md aid-container">
         <div className="overflow-x-auto scrollbar-hide">
           <div className="flex justify-start space-x-4 pl-4 pr-4 border-b w-full">
             {["Info", "Chamber", "Experience", "Review"].map((tab) => (
@@ -43,7 +41,7 @@ function DoctorTabs({ data }) {
       </div>
 
       {/* Conditionally Render Tab Content */}
-      <div className="p-4" style={{ marginBottom: "70px" }}>
+      <div className="aid-container p-4" style={{ insetBlockEnd: "70px" }}>
         {activeTab === "Info" && (
           <div>
             <h3 className="font-bold text-lg text-black-600">
@@ -175,7 +173,7 @@ function DoctorTabs({ data }) {
                         <a
                           href={`tel:${e.phoneNumber}`}
                           className="bg-blue-500 text-white py-2 px-4 rounded-lg text-sm flex items-center space-x-2 max-w-fit"
-                          style={{ width: "auto" }}
+                          style={{ inlineSize: "auto" }}
                         >
                           <FaPhoneAlt />
                           <span>Call Now</span>

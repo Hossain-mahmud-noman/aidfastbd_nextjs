@@ -6,29 +6,23 @@ import BloodList from "../../components/list/BloodList";
 
 
 export const metadata = {
-    title: "Blood Bank Clubs | " + appname,
+  title: "Blood Bank Clubs | " + appname,
 };
 
 
 async function page() {
 
-    return (
-        <>
-
-            <LayoutAppBar route="/blood" leadingIcon={<FaArrowLeft className="h-5 w-5" />} title="Blood Bank"  api_key={map_key}></LayoutAppBar>
-
-            <div style={{ paddingBottom: "70px" }} className="font-[family-name:var(--font-geist-sans)] pt-20">
-                <SearchBlood></SearchBlood>
-
-                <div className="container mx-auto px-2">
-                  
-                    <BloodList nextPage={1} ></BloodList>
-
-                </div>
-
-            </div>
-        </>
-    )
+  return (
+    <>
+      <LayoutAppBar route="/blood" leadingIcon={<FaArrowLeft className="h-5 w-5" />} title="Blood Bank" api_key={map_key} />
+      <div style={{ insetBlockEnd: "70px" }} className="font-[family-name:var(--font-geist-sans)] pt-20">
+        <SearchBlood />
+        <div className="aid-container mx-auto">
+          <BloodList nextPage={1} />
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default page

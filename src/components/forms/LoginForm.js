@@ -66,8 +66,8 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center bg-gray-100 pt-4 px-4">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full">
+        <div className="flex flex-col items-center justify-center p-4 rounded-lg shadow-custom-light mt-6">
+            <div className="bg-white p-6 rounded-lg  w-full">
                 <p className="text-center text-gray-700 mb-6">With the best healthcare providers</p>
 
                 <form onSubmit={handleLogin}>

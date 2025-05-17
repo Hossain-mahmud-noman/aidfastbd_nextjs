@@ -70,12 +70,12 @@ function page({ params }) {
       <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Pharmacy Detail' trailingComponents={
         <div className='flex'>
           <ProfileQR id={data?.userId} type={"Pharmacy"} />
-          <FavouriteToggle isFill={data?.isFavourite} userId={user?.id} id={data?.userId} type={4} token={token}/>
+          <FavouriteToggle isFill={data?.isFavourite} userId={user?.id} id={data?.userId} type={4} token={token} />
           <ShareButton link={`${frontend_url}/pharmacy/${data?.userId}`} />
         </div>
-      }/>
-      <div className="pt-16">
-        <div className='p-4'>
+      } />
+      <div className="pt-16 aid-container">
+        <div className=''>
           <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
             <Image
               width={1000}
@@ -103,7 +103,7 @@ function page({ params }) {
                   {data?.location !== null && (
                     <span className="text-sm text-gray-500">{data?.location}</span>
                   )}
-                  <DiaLocation lat={data?.latitude} lon={data?.longitude}/>
+                  <DiaLocation lat={data?.latitude} lon={data?.longitude} />
                 </div>
               </div>
             </div>
@@ -137,7 +137,9 @@ function page({ params }) {
           </div>
         </div>
       </div>
-      <PharmacyTabs data={data} />
+      <div className='aid-container'>
+        <PharmacyTabs data={data} />
+      </div>
       <FloatingCallButton number={data?.contactNumber} />
     </>
   )

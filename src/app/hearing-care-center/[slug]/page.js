@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 
 
 function Page({ params }) {
-   const router = useRouter();
+  const router = useRouter();
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
@@ -106,8 +106,8 @@ function Page({ params }) {
         }
       />
 
-      <div className="pt-16">
-        <div className="p-4">
+      <div className="pt-16 aid-container">
+        <div className="">
           <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
             <Image
               width={10000}
@@ -182,8 +182,10 @@ function Page({ params }) {
         </div>
       </div>
       {/* Have to add tabs */}
-      <DentalTabs data={data}></DentalTabs>
-      <FloatingCallButton number={data?.contact}></FloatingCallButton>
+      <div className="aid-container">
+        <DentalTabs data={data} />
+      </div>
+      <FloatingCallButton number={data?.contact} />
     </>
   );
 }

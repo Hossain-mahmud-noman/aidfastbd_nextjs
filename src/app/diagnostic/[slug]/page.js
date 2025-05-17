@@ -68,10 +68,12 @@ function page({ params }) {
           <ShareButton link={`${frontend_url}/diagnostic/${data?.userId}`} />
         </div>}
       />
-      <div className="pt-16">
+      <div className="pt-16 aid-container">
         {data && <DiagnosticDetail data={data} />}
       </div>
-      <DiagnosticTabs data={data} />
+      <div className='aid-container'>
+        {data && <DiagnosticTabs data={data} />}
+      </div>
       <FloatingCallButton number={data?.contact} />
     </>
   )
