@@ -25,24 +25,15 @@ async function DoctorPage() {
   const speciality = await fetchSpecialityData();
   return (
     <>
-      <LayoutAppBar route="/doctor" api_key={map_key}></LayoutAppBar>
-      <div style={{ paddingBottom: "70px" }} className="font-[family-name:var(--font-geist-sans)] pt-20">
-        <SearchDoctor specialityData={speciality}></SearchDoctor>
-        <div className="container mx-auto px-2">
-          {/* <div id="ssr_grid" className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-            {data.map((d) => (
-              <DoctorCard key={d.id} doctor={d}></DoctorCard>
-            ))}
-          </div>
-
-          <DoctorList nextPage={page} location={location}></DoctorList> */}
-
-          <DoctorList nextPage={1} ></DoctorList>
+      <LayoutAppBar route="/doctor" api_key={map_key} />
+      <div style={{ insetBlockEnd: "70px" }} className="font-[family-name:var(--font-geist-sans)] pt-20">
+        <SearchDoctor specialityData={speciality} />
+        <div className="aid-container mx-auto px-2">
+          <DoctorList nextPage={1}/>
         </div>
-        <BottomNavigation active="/doctor"></BottomNavigation>
+        <BottomNavigation active="/doctor" />
       </div>
     </>
-
   )
 }
 

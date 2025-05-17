@@ -99,21 +99,20 @@ const Page = ({ params }) => {
         }
       />
 
-      <div className="pt-16">
+      <div className="pt-16 flex flex-col md:flex-row gap-5 md:gap-10 aid-container mt-6">
         {/* Profile Section */}
-        <div>
+        <div className=" rounded-xl">
           <Image
             width={1000}
             height={1000}
             src={profile}
             alt="Doctor"
-            className="w-full h-[180px] object-contain"
+            className="w-full h-[280px] md:h-[300px] lg:h-[350px] xl:h-[450px] object-fil rounded-md"
           />
         </div>
 
-        <div className="p-4">
+        <div className="">
           <div className="flex items-center space-x-4">
-          
             <div>
               <h2 className="text-lg font-bold">
                 Dr. {data?.firstName} {data?.lastName}
