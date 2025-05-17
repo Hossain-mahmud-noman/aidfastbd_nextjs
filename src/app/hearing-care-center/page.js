@@ -24,7 +24,7 @@ function Page() {
       >
         {/* Have to work on this search */}
         <SearchDental title={"Hearing Care Center"} />
-        <div className="container mx-auto px-2">
+        <div className="aid-container">
           <HearingCareCenterList nextPage={1} />
         </div>
       </div>

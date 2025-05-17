@@ -12,10 +12,8 @@ function page() {
     return (
         <>
             <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='About Us' ></AppBar>
-
-            <div className="pt-16 pl-8 pr-8">
+            <div className="pt-16 aid-container mt-6">
                 <p><b>AidFast</b> is designed to ensure quick and easy access to essential healthcare information for everyone. Inspired by the concept of first aid, AidFast provides a seamless platform for users to find and connect with critical health services. With AidFast, users can easily access a wealth of healthcare resources from home, including doctors, diagnostic centers, blood banks, blood donors, pharmacies, and ambulance services. The app enables users to view detailed information and directly connect with these services whenever they need.</p>
-
                 <b>Key Features:</b>
                 <p>- **Service Profiles**: Doctors, diagnostic centers, blood banks, pharmacies, and ambulance providers can create their own profiles to enhance their visibility and reach more patients.</p>
                 <p> - **Appointment Booking**: Users can conveniently book doctor appointments and check their position in the queue for efficient time management.      </p>

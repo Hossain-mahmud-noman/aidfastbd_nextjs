@@ -67,8 +67,8 @@ const SmsLoginForm = () => {
 
     return (
         <>
-            {isSuccessed === null ? <div className="flex flex-col items-center justify-center bg-gray-100 pt-4 px-4">
-                <div className="bg-white p-6 rounded-lg shadow-lg w-full">
+            {isSuccessed === null ? <div className="flex flex-col items-center justify-center rounded-lg p-4 mt-6 shadow-custom-light">
+                <div className="bg-white p-6 rounded-lg  w-full">
                     <p className="text-center text-gray-700 mb-6">Be Happy and Be Healthy</p>
 
                     {error && <p className="text-red-500 text-center mb-4">{error}</p>}

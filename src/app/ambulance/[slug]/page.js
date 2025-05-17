@@ -70,12 +70,12 @@ function page({ params }) {
       <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Ambulance Detail' trailingComponents={
         <div className='flex'>
           <ProfileQR id={data?.userId} type={"Ambulance"} />
-          <FavouriteToggle isFill={data?.isFavourite} userId={user?.id} id={data?.userId} type={5} token={token}/>
+          <FavouriteToggle isFill={data?.isFavourite} userId={user?.id} id={data?.userId} type={5} token={token} />
           <ShareButton link={`${frontend_url}/ambulance/${data?.userId}`} />
         </div>
       } />
-      <div className="pt-16">
-        <div className='p-4'>
+      <div className="pt-16 aid-container">
+        <div className=''>
           <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
             <Image
               width={1000}
@@ -138,7 +138,9 @@ function page({ params }) {
           </div>
         </div>
       </div>
-      <AmbulanceTabs data={data} />
+      <div className='aid-container'>
+        <AmbulanceTabs data={data} />
+      </div>
       <FloatingCallButton number={data?.contactNumber} />
     </>
   )

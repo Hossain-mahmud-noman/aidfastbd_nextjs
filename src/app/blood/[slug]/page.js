@@ -79,7 +79,7 @@ function page({ params }) {
       }
       />
 
-      <div className="pt-16">
+      <div className="pt-16 aid-container">
         <div className='p-4'>
           <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
             <Image
@@ -142,7 +142,9 @@ function page({ params }) {
           </div>
         </div>
       </div>
-      <BloodTabs data={data}></BloodTabs>
+      <div className='aid-container'>
+        <BloodTabs data={data} />
+      </div>
       <FloatingCallButton number={data?.contact}></FloatingCallButton>
     </>
   )

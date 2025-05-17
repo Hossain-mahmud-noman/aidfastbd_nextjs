@@ -12,25 +12,12 @@ function BloodList({ location, nextPage }) {
     const { data, loading, page, error } = useSelector((state) => state.blood);
 
     const loader = useRef(null);
-    // let x = 0;
-    // useEffect(() => {
-
-    //     if (data.length == 0 && nextPage == 2 && x == 0) {
-    //         x = 1;
-    //         getBloodList({ dispatch, lat: location.lat, lon: location.lng, page: nextPage })
-    //     }
-    // }, [])
-
-
-
-
+    
     const handleObserver = (entities) => {
         const target = entities[0];
         if (target.isIntersecting && !loading && nextPage !== -1) {
             // getBloodList({ dispatch, lat: location.lat, lon: location.lng, page: page })
             getBloodList({ dispatch, lat: localStorage.getItem("lat"), lon: localStorage.getItem("lon"), page: page })
-
-            
         }
     };
 

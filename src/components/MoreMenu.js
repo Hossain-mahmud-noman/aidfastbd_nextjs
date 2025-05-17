@@ -6,8 +6,7 @@ import { MdOutlinePolicy } from 'react-icons/md';
 const MoreMenu = ({ token = "" }) => {
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-
+    <div className="min-h-screen mt-6">
       {/* General Section */}
       {token !== "" && <div className="mb-4">
         <h3 className="font-semibold text-gray-500 mb-3">General</h3>
@@ -20,7 +19,7 @@ const MoreMenu = ({ token = "" }) => {
       </div>}
 
       {/* About Section */}
-      <div className="mb-4">
+      <div className="mb-4 shadow-custom-light p-4 rounded-md">
         <h3 className="font-semibold text-gray-500 mb-3">Info</h3>
         <div className="space-y-2">
           <MenuItem href={"/about"} icon={<FaInfoCircle />} text="About Us" />
@@ -32,7 +31,7 @@ const MoreMenu = ({ token = "" }) => {
       {/* Other Section */}
       <div className="mb-4">
         <h3 className="font-semibold text-gray-500 mb-3">Other</h3>
-        <div className="space-y-2">
+        <div className="space-y-2 shadow-custom-light p-2 rounded-md">
           {/* <MenuItem icon={<FaCog />} text="Settings" /> */}
           {/* <MenuItem icon={<FaLanguage />} text="English" /> */}
 
@@ -43,16 +42,13 @@ const MoreMenu = ({ token = "" }) => {
               text="Login"
             />
           ) : (<>
-
             <MenuItem href={"/reset"} icon={<FaLock />} text="Reset Password" />
             <MenuItem
-
               href={"/logout"}
               icon={<FaSignOutAlt />}
               text="Logout"
             />
           </>
-
           )}
         </div>
       </div>

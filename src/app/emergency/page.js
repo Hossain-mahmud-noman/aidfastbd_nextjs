@@ -12,16 +12,14 @@ export const metadata = {
 };
 
 async function page() {
-
   return (
     <>
-
-      <LayoutAppBar emergency={true} leadingIcon={<FaArrowLeft className="h-5 w-5" />} api_key={map_key}></LayoutAppBar>
-      <div style={{ paddingBottom: "70px" }} className="font-[family-name:var(--font-geist-sans)] pt-16">
-
-        <EmergencyAidComponent></EmergencyAidComponent>
-
-        <Nearest emergency={true} ></Nearest>
+      <LayoutAppBar emergency={true} leadingIcon={<FaArrowLeft className="h-5 w-5" />} api_key={map_key} />
+      <div style={{ paddingBlockEnd: "70px" }} className="font-[family-name:var(--font-geist-sans)] pt-16">
+        <div className='aid-container'>
+          <EmergencyAidComponent />
+        </div>
+        <Nearest emergency={true} />
       </div>
     </>
   )

@@ -24,7 +24,7 @@ function Page() {
         className="font-[family-name:var(--font-geist-sans)] pt-20"
       >
         <SearchDental title={"Drug De-Addiction"}/>
-        <div className="container mx-auto px-2">
+        <div className="aid-container">
           <DrugDeAddictionList nextPage={1} />
         </div>
       </div>

@@ -8,22 +8,8 @@ import { getDiagnosticList } from '../../utils/func';
 
 function DiagnosticList({ location, nextPage }) {
     const dispatch = useDispatch();
-
     const { data, loading, page, error } = useSelector((state) => state.diagnostic);
-
-
     const loader = useRef(null);
-
-    // let x = 0;
-    // useEffect(() => {
-    //     if (data.length == 0 && nextPage == 2 && x == 0) {
-    //         x = 1;
-    //         getDiagnosticList({ dispatch, lat: location.lat, lon: location.lng, page: nextPage })
-    //     }
-    // }, [location])
-
-
-
 
     const handleObserver = (entities) => {
         const target = entities[0];

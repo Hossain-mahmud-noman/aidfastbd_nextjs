@@ -10,7 +10,7 @@ function DiagnosticTabs({ data }) {
   const [activeTab, setActiveTab] = useState("Info");
   return (
     <>
-      <div className="bg-white shadow-md">
+      <div className="bg-white">
         <div className="overflow-x-auto scrollbar-hide">
           <div className="flex justify-start space-x-4 pl-4 pr-4 border-b w-full">
             {["Info", "Doctor", "Services", "Review"].map((tab) => (
