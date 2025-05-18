@@ -4,6 +4,7 @@ import { image_base_endpoint } from "../../utils/constants";
 import ReviewList from "../ReviewList";
 import { FaPhone, FaUserCircle, FaTint } from "react-icons/fa";
 import Image from "next/image";
+import ShowOriginalImage from "../list/ShowOriginalImage";
 function BloodTabs({ data }) {
   const [activeTab, setActiveTab] = useState("Info");
   return (
@@ -14,11 +15,10 @@ function BloodTabs({ data }) {
             {["Info", "Services", "Donor List", "Review"].map((tab) => (
               <button
                 key={tab}
-                className={`text-sm font-semibold whitespace-nowrap p-3 ${
-                  activeTab === tab
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : "text-gray-500"
-                }`}
+                className={`text-sm font-semibold whitespace-nowrap p-3 ${activeTab === tab
+                  ? "text-blue-600 border-b-2 border-blue-600"
+                  : "text-gray-500"
+                  }`}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab}
@@ -43,7 +43,7 @@ function BloodTabs({ data }) {
                 {data?.bloodBankAdditionalInfo?.imageUrl !== null &&
                   data?.bloodBankAdditionalInfo?.imageUrl !== "" && (
                     <div className="w-full mt-3">
-                      <Image
+                      {/* <Image
                         width={1000}
                         height={1000}
                         alt="Image"
@@ -52,7 +52,8 @@ function BloodTabs({ data }) {
                           image_base_endpoint +
                           data?.bloodBankAdditionalInfo?.imageUrl
                         }
-                      />
+                      /> */}
+                      <ShowOriginalImage image={image_base_endpoint + data?.bloodBankAdditionalInfo?.imageUrl} />
                     </div>
                   )}
               </>

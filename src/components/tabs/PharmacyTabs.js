@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { image_base_endpoint } from "../../utils/constants";
 import ReviewList from "../ReviewList";
 import Image from "next/image";
+import ShowOriginalImage from "../list/ShowOriginalImage";
 
 function PharmacyTabs({ data }) {
   const [activeTab, setActiveTab] = useState("Info");
@@ -15,11 +16,10 @@ function PharmacyTabs({ data }) {
               (tab) => (
                 <button
                   key={tab}
-                  className={`text-sm font-semibold whitespace-nowrap p-3 ${
-                    activeTab === tab
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : "text-gray-500"
-                  }`}
+                  className={`text-sm font-semibold whitespace-nowrap p-3 ${activeTab === tab
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : "text-gray-500"
+                    }`}
                   onClick={() => setActiveTab(tab)}
                 >
                   {tab}
@@ -44,7 +44,7 @@ function PharmacyTabs({ data }) {
                   {data?.pharmacyAdditionalInfo.details}
                 </pre>
                 <div className="w-full mt-3">
-                  <Image
+                  {/* <Image
                     width={1000}
                     height={1000}
                     alt="Image"
@@ -53,7 +53,8 @@ function PharmacyTabs({ data }) {
                       image_base_endpoint +
                       data?.pharmacyAdditionalInfo?.imageUrl
                     }
-                  />
+                  /> */}
+                  <ShowOriginalImage image={image_base_endpoint + data?.pharmacyAdditionalInfo?.imageUrl} />
                 </div>
               </>
             )}

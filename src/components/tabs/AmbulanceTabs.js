@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { image_base_endpoint } from "../../utils/constants";
 import ReviewList from "../ReviewList";
 import Image from "next/image";
+import ShowOriginalImage from "../list/ShowOriginalImage";
 
 function AmbulanceTabs({ data }) {
   const [activeTab, setActiveTab] = useState("Info");
@@ -14,11 +15,10 @@ function AmbulanceTabs({ data }) {
             {["Info", "Facilities", "Others", "Review"].map((tab) => (
               <button
                 key={tab}
-                className={`text-sm font-semibold whitespace-nowrap p-3 ${
-                  activeTab === tab
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : "text-gray-500"
-                }`}
+                className={`text-sm font-semibold whitespace-nowrap p-3 ${activeTab === tab
+                  ? "text-blue-600 border-b-2 border-blue-600"
+                  : "text-gray-500"
+                  }`}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab}
@@ -56,7 +56,7 @@ function AmbulanceTabs({ data }) {
                 {data?.ambulanceDriverInfo.imageUrl !== null &&
                   data?.ambulanceDriverInfo.imageUrl !== "" && (
                     <div className="w-full mt-3">
-                      <Image
+                      {/* <Image
                         width={1000}
                         height={1000}
                         alt="Image"
@@ -65,7 +65,8 @@ function AmbulanceTabs({ data }) {
                           image_base_endpoint +
                           data?.ambulanceDriverInfo.imageUrl
                         }
-                      />
+                      /> */}
+                      <ShowOriginalImage image={image_base_endpoint + data?.ambulanceDriverInfo?.imageUrl} />
                     </div>
                   )}{" "}
               </>
@@ -86,7 +87,7 @@ function AmbulanceTabs({ data }) {
                 {data?.ambulanceFacility.imageUrl !== null &&
                   data?.ambulanceFacility.imageUrl !== "" && (
                     <div className="w-full mt-3">
-                      <Image
+                      {/* <Image
                         width={1000}
                         height={1000}
                         alt="Image"
@@ -94,7 +95,8 @@ function AmbulanceTabs({ data }) {
                         src={
                           image_base_endpoint + data?.ambulanceFacility.imageUrl
                         }
-                      />
+                      /> */}
+                      <ShowOriginalImage image={image_base_endpoint + data?.ambulanceFacility?.imageUrl} />
                     </div>
                   )}
               </>
