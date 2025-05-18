@@ -95,7 +95,7 @@ function DentalTabs({ data }) {
                           height={1000}
                           src={img.imgUrl}
                           alt="Service"
-                          className="w-full object-fill h-[200px] sm:h-[250px] md:h-[300px] lg:h-[550px] xl:h-[600px]"
+                          className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"
                         />
                       </div>
                     ))}
