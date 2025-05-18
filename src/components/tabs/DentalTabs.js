@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import ReviewList from "../ReviewList";
 import DoctorCard from "../DoctorCard";
 import Image from "next/image";
+import ShowOriginalImage from "../list/ShowOriginalImage";
 function DentalTabs({ data }) {
   const [activeTab, setActiveTab] = useState("Info");
   return (
@@ -13,11 +14,10 @@ function DentalTabs({ data }) {
             {["Info", "Doctors", "Services", "Review"].map((tab) => (
               <button
                 key={tab}
-                className={`text-sm font-semibold whitespace-nowrap p-3 ${
-                  activeTab === tab
+                className={`text-sm font-semibold whitespace-nowrap p-3 ${activeTab === tab
                     ? "text-blue-600 border-b-2 border-blue-600"
                     : "text-gray-500"
-                }`}
+                  }`}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab}
@@ -44,14 +44,15 @@ function DentalTabs({ data }) {
                   data?.genericServiceInfos?.[0]?.imgList?.map((e, id) => {
                     return (
                       <div className="w-full mt-3">
-                        <Image
+                        {/* <Image
                           width={1000}
                           height={1000}
                           className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"
                           key={`id: ${id}`}
                           alt="Image"
                           src={e.imgUrl}
-                        />
+                        /> */}
+                        <ShowOriginalImage image={e.imgUrl} />
                       </div>
                     );
                   })}
@@ -90,13 +91,14 @@ function DentalTabs({ data }) {
                   <div className="mt-2">
                     {service?.imgList?.map((img, index) => (
                       <div key={index} className="mt-3 w-full">
-                        <Image
+                        {/* <Image
                           width={1000}
                           height={1000}
                           src={img.imgUrl}
                           alt="Service"
                           className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"
-                        />
+                        /> */}
+                        <ShowOriginalImage image={img.imgUrl} />
                       </div>
                     ))}
                   </div>

@@ -5,6 +5,7 @@ import { image_base_endpoint } from "../../utils/constants";
 import DoctorCard from "../DoctorCard";
 import ReviewList from "../ReviewList";
 import Image from "next/image";
+import ShowOriginalImage from "../list/ShowOriginalImage";
 
 function DiagnosticTabs({ data }) {
   const [activeTab, setActiveTab] = useState("Info");
@@ -16,11 +17,10 @@ function DiagnosticTabs({ data }) {
             {["Info", "Doctor", "Services", "Review"].map((tab) => (
               <button
                 key={tab}
-                className={`text-sm font-semibold whitespace-nowrap p-3 ${
-                  activeTab === tab
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : "text-gray-500"
-                }`}
+                className={`text-sm font-semibold whitespace-nowrap p-3 ${activeTab === tab
+                  ? "text-blue-600 border-b-2 border-blue-600"
+                  : "text-gray-500"
+                  }`}
                 onClick={() => {
                   setActiveTab(tab);
                 }}
@@ -45,7 +45,7 @@ function DiagnosticTabs({ data }) {
             {data?.diagnosticCenterAdditionalInfo?.imageUrl !== null &&
               data?.diagnosticCenterAdditionalInfo?.imageUrl !== "" && (
                 <div className="w-full mt-3">
-                  <Image
+                  {/* <Image
                     width={1000}
                     height={1000}
                     alt="Image"
@@ -54,21 +54,23 @@ function DiagnosticTabs({ data }) {
                       image_base_endpoint +
                       data?.diagnosticCenterAdditionalInfo?.imageUrl
                     }
-                  />
+                  /> */}
+                  <ShowOriginalImage image={image_base_endpoint + data?.diagnosticCenterAdditionalInfo?.imageUrl} />
                 </div>
               )}
             {data?.diagnosticCenterAdditionalInfo?.imgList !== null &&
               data?.diagnosticCenterAdditionalInfo?.imgList.map((e, index) => {
                 return (
                   <div className="w-full mt-3">
-                    <Image
+                    {/* <Image
                       width={1000}
                       height={1000}
                       alt="Image"
                       key={`imgList_${index}`}
                       className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"
                       src={e?.imgUrl}
-                    />
+                    /> */}
+                    <ShowOriginalImage image={e?.imgUrl} />
                   </div>
                 );
               })}
@@ -115,14 +117,15 @@ function DiagnosticTabs({ data }) {
                               .map((i) => i.trim())
                               .map((img, index) => (
                                 <div key={index} className="w-full mt-3">
-                                  <Image
+                                  {/* <Image
                                     width={1000}
                                     height={1000}
                                     alt="Image"
                                     key={`imgList_${index}`}
                                     className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"
                                     src={img}
-                                  />
+                                  /> */}
+                                  <ShowOriginalImage image={img} />
                                 </div>
                               ))}
                           </div>

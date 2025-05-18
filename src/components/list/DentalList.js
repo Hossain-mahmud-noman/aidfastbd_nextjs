@@ -60,7 +60,6 @@ function DentalList({ location, nextPage }) {
         )}
       </div>
     </>
-
   )
 }
 
