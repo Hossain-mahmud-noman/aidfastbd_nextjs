@@ -74,23 +74,23 @@ function DoctorTabs({ data }) {
           <div>
             <h3 className="font-bold text-lg">Chamber Information</h3>
             <div>
-              {data?.chamberInformation.map((e, index) => {
+              {data?.chamberInformation?.map((e, index) => {
                 return (
                   <div key={`chamber_${index}`}>
                     <div className="mt-4">
                       <h4 className="font-bold text-lg text-blue-700">
-                        {e.name}
+                        {e?.name}
                       </h4>
 
                       <div className="flex items-center justify-start text-left space-x-2 mb-2">
-                        {e.location !== null && (
+                        {e?.location !== null && (
                           <span className="font-bold text-sm">
-                            Location: {e.location}
+                            Location: {e?.location}
                           </span>
                         )}
                         <Image
                           onClick={() => {
-                            const mapUrl = `https://www.google.com/maps?q=${e.lat},${e.lon}`;
+                            const mapUrl = `https://www.google.com/maps?q=${e?.lat},${e?.lon}`;
 
                             window.open(mapUrl, "_blank"); // Open in a new tab
                           }}
@@ -101,8 +101,8 @@ function DoctorTabs({ data }) {
                         />
                       </div>
 
-                      {e.notice !== null && e.notice !== "" && (
-                        <TextTicker text={e.notice}></TextTicker>
+                      {e?.notice !== null && e?.notice !== "" && (
+                        <TextTicker text={e?.notice}></TextTicker>
                       )}
                       <h4 className="font-bold text-sm text-green-700">
                         Visiting Hours
@@ -124,17 +124,17 @@ function DoctorTabs({ data }) {
                             </tr>
                           </thead>
                           <tbody className="text-gray-600 text-sm font-light">
-                            {e.chamberTimeDetails.map((schedule, index) => (
+                            {e?.chamberTimeDetails?.map((schedule, index) => (
                               <tr
                                 key={`schedule_${index}`}
                                 className={`border-b border-gray-200 hover:bg-gray-100`}
                               >
                                 <td className="py-3 px-4 text-left">
-                                  {schedule.dayName}
+                                  {schedule?.dayName}
                                 </td>
 
                                 <td className="py-3 px-4 text-left">
-                                  {schedule.dayTime}
+                                  {schedule?.dayTime}
                                 </td>
                                 <td className="py-3 px-4 text-left">
                                   {schedule.eveningTime}
@@ -195,7 +195,7 @@ function DoctorTabs({ data }) {
         {activeTab === "Experience" && (
           <div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {data?.doctorExperiencelInfo.map((experience) => (
+              {data?.doctorExperiencelInfo?.map((experience) => (
                 <div
                   key={`experience_${experience.id}`}
                   className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
