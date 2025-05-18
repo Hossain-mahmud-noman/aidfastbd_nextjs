@@ -26,11 +26,10 @@ function DoctorTabs({ data }) {
             {["Info", "Chamber", "Experience", "Review"].map((tab) => (
               <button
                 key={tab}
-                className={`text-sm font-semibold whitespace-nowrap p-3 ${
-                  activeTab === tab
+                className={`text-sm font-semibold whitespace-nowrap p-3 ${activeTab === tab
                     ? "text-blue-600 border-b-2 border-blue-600"
                     : "text-gray-500"
-                }`}
+                  }`}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab}
@@ -53,7 +52,7 @@ function DoctorTabs({ data }) {
             {data?.doctorAdditionalInfo?.imageUrl !== null &&
               data?.doctorAdditionalInfo?.imageUrl !== "" && (
                 <Image
-                alt="Image"
+                  alt="Image"
                   width={200}
                   height={200}
                   src={
@@ -83,7 +82,7 @@ function DoctorTabs({ data }) {
                           </span>
                         )}
                         <Image
-                        
+
                           onClick={() => {
                             const mapUrl = `https://www.google.com/maps?q=${e.lat},${e.lon}`;
 
@@ -136,11 +135,10 @@ function DoctorTabs({ data }) {
                                 </td>
                                 <td className="py-3 px-4 text-left">
                                   <span
-                                    className={`${
-                                      schedule.isOpen
+                                    className={`${schedule.isOpen
                                         ? "bg-green-200 text-green-600"
                                         : "bg-red-200 text-red-600"
-                                    } py-1 px-3 rounded-full text-xs`}
+                                      } py-1 px-3 rounded-full text-xs`}
                                   >
                                     {schedule.isOpen ? "Open" : "Closed"}
                                   </span>

@@ -3,7 +3,6 @@ import AppBar from '../../components/AppBar';
 import { FaArrowLeft } from "react-icons/fa";
 import { appname } from "../../utils/constants";
 
-
 export const metadata = {
   title: "Terms and Condition | " + appname,
 };
