@@ -130,7 +130,7 @@ const AidComponent = () => {
             className={`bg-white shadow-custom-light p-2 rounded-lg flex flex-col items-center text-center w-full`}
           >
             <div>
-              <div className="mb-2">
+              <div className="mb-2 flex items-center justify-center">
                 <Image
                   width={100}
                   height={100}
@@ -148,7 +148,7 @@ const AidComponent = () => {
             className={`h-full bg-white shadow-custom-light p-2 rounded-lg flex flex-col items-center text-center w-full`}
           >
             <div href={"/pharmacy"}>
-              <div className="mb-2">
+              <div className="mb-2 flex items-center justify-center">
                 <Image
                   width={100}
                   height={100}
@@ -219,7 +219,7 @@ const AidComponent = () => {
                   className="w-[50px] h-[35px] object-contain"
                 />
               </div>
-              <h3 className="font-semi text-gray-700">{"Drug De-Addiction"}</h3>
+              <h3 className="font-semi text-gray-700 ">{"Drug De Addiction Center"}</h3>
             </div>
           </Link>
 
