@@ -16,6 +16,7 @@ import DoctorTabs from "../../../components/tabs/DoctorTabs";
 import AppointmentBooking from "../../../components/bottom/AppointmentBooking";
 import ProfileQR from "../../../components/profileQR";
 import Image from "next/image";
+import ShowOriginalImage from "../../../components/list/ShowOriginalImage";
 
 const Page = ({ params }) => {
   const router = useRouter();
@@ -102,12 +103,17 @@ const Page = ({ params }) => {
       <div className="pt-16 flex flex-col md:flex-row gap-5 md:gap-10 aid-container mt-6">
         {/* Profile Section */}
         <div className=" rounded-xl">
-          <Image
+          {/* <Image
             width={1000}
             height={1000}
             src={profile}
             alt="Doctor"
             className="w-full h-[280px] md:h-[300px] lg:h-[350px] xl:h-[450px] object-fil rounded-md"
+          /> */}
+          <ShowOriginalImage
+            image={
+              profile
+            }
           />
         </div>
 

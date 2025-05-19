@@ -27,11 +27,10 @@ function DoctorTabs({ data }) {
             {["Info", "Chamber", "Experience", "Review"].map((tab) => (
               <button
                 key={tab}
-                className={`text-sm font-semibold whitespace-nowrap p-3 ${
-                  activeTab === tab
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : "text-gray-500"
-                }`}
+                className={`text-sm font-semibold whitespace-nowrap p-3 ${activeTab === tab
+                  ? "text-blue-600 border-b-2 border-blue-600"
+                  : "text-gray-500"
+                  }`}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab}
@@ -42,7 +41,7 @@ function DoctorTabs({ data }) {
       </div>
 
       {/* Conditionally Render Tab Content */}
-      <div className="aid-container p-4" style={{ insetBlockEnd: "70px" }}>
+      <div className="aid-container p-4 pb-10" style={{ insetBlockEnd: "70px" }}>
         {activeTab === "Info" && (
           <div>
             <h3 className="font-bold text-lg text-black-600">
@@ -53,19 +52,17 @@ function DoctorTabs({ data }) {
             </pre>
             {data?.doctorAdditionalInfo?.imageUrl !== null &&
               data?.doctorAdditionalInfo?.imageUrl !== "" && (
-                // <Image
-                //   alt="Image"
-                //   width={200}
-                //   height={200}
-                //   src={
-                //     image_base_endpoint + data?.doctorAdditionalInfo?.imageUrl
-                //   }
-                // />
-                <ShowOriginalImage
-                  image={
-                    image_base_endpoint + data?.doctorAdditionalInfo?.imageUrl
-                  }
-                />
+                <>
+                  {/* <Image
+                    alt="Image"
+                    width={200}
+                    height={200}
+                    src={
+                      image_base_endpoint + data?.doctorAdditionalInfo?.imageUrl
+                    }
+                  /> */}
+                  <ShowOriginalImage slug="doctor" image={image_base_endpoint + data?.doctorAdditionalInfo?.imageUrl} />
+                </>
               )}
           </div>
         )}
@@ -141,11 +138,10 @@ function DoctorTabs({ data }) {
                                 </td>
                                 <td className="py-3 px-4 text-left">
                                   <span
-                                    className={`${
-                                      schedule.isOpen
-                                        ? "bg-green-200 text-green-600"
-                                        : "bg-red-200 text-red-600"
-                                    } py-1 px-3 rounded-full text-xs`}
+                                    className={`${schedule.isOpen
+                                      ? "bg-green-200 text-green-600"
+                                      : "bg-red-200 text-red-600"
+                                      } py-1 px-3 rounded-full text-xs`}
                                   >
                                     {schedule.isOpen ? "Open" : "Closed"}
                                   </span>
