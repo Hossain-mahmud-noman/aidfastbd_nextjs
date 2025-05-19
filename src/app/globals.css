@@ -31,13 +31,13 @@ body {
 }
 
 .specialist h2 {
-  @apply mt-4 text-3xl;
+  @apply mt-4 lg:text-3xl md:text-2xl text-xl font-bold;
 }
 
 .specialist p {
-  @apply text-base;
+  @apply lg:text-base text-sm mt-2 lg:mt-3;
 }
 
 .specialist ul {
-  @apply list-disc list-inside pl-4;
+  @apply list-disc list-inside pl-4 lg:text-base text-sm;
 }

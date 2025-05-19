@@ -244,6 +244,28 @@ const AidComponent = () => {
         </div>
 
       </div>
+
+      <div className="mt-3 w-full">
+        <Link
+          href={"/doctor-data"}
+          className={`bg-white shadow-custom-light p-2 rounded-lg flex flex-col items-center text-center w-full`}
+        >
+          <div className="w-full h-full">
+            <div className="mb-2 flex flex-col items-center justify-center">
+              <Image
+                width={100}
+                height={100}
+                src={"/icons/doc2.png"}
+                alt={"Dentals"}
+                className="w-[50px] h-[35px] object-contain"
+              />
+            </div>
+            <h3 className="font-semi text-gray-700">{"Doctors and Diseases"}</h3>
+          </div>
+        </Link>
+      </div>
+
+
       {/* Emergency Button */}
       <Link
         className="mt-6 bg-red-100 text-red-600 text-xl font-semibold w-full py-4 border-2 border-red-500 rounded-lg hover:bg-red-500 hover:text-white transition duration-300 text-center"
