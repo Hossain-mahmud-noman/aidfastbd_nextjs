@@ -365,7 +365,7 @@ export const getBloodList = async ({ dispatch, isSearch = false, page = 1, lat =
 }
 
 
-export const getDentalList = async ({ dispatch, isSearch = false, page = 1, lat = null, lon = null, dental = null, rating = null, emergency = null, rank = null }) => {
+export const getDentalList = async ({ dispatch, isSearch = false, page = 1, lat = null, lon = null, dental = null, rating = null, emergency = null, rank = null, doctorName = null }) => {
   try {
     if (page == -1) {
       return;
@@ -387,6 +387,10 @@ export const getDentalList = async ({ dispatch, isSearch = false, page = 1, lat 
     if (emergency) {
       Emergency = `&emergency=${emergency}`;
     }
+    let DoctorName = "";
+    if (doctorName) {
+      DoctorName = `searchTerm=${doctorName}`;
+    }
 
     let Rating = "";
     if (rating) {
@@ -397,7 +401,7 @@ export const getDentalList = async ({ dispatch, isSearch = false, page = 1, lat 
       DentalId = `&genericServiceId=${blood}`;
     }
 
-    const url = `${base_endpoint}/GeneralWeb/GetAllBloodBankList?pageNumber=${page}&pageSize=20&serviceType=1&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
+    const url = `${base_endpoint}/Generic/SearchAllGenericService?pageNumber=${page}&pageSize=20&serviceType=1&${DoctorName}${location}${Popularity}${Emergency}${Rating}${DentalId}`;
 
     const response = await
       fetch(url);
@@ -459,7 +463,7 @@ export const getDrugDeAddictionList = async ({ dispatch, isSearch = false, page 
       DentalId = `&genericServiceId=${blood}`;
     }
 
-    const url = `${base_endpoint}/GeneralWeb/GetAllBloodBankList?pageNumber=${page}&pageSize=20&serviceType=2&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
+    const url = `${base_endpoint}/Generic/SearchAllGenericService?pageNumber=${page}&pageSize=20&serviceType=2&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
 
     const response = await
       fetch(url);
@@ -521,7 +525,7 @@ export const getPhysiotherapyCenterList = async ({ dispatch, isSearch = false, p
       DentalId = `&genericServiceId=${blood}`;
     }
 
-    const url = `${base_endpoint}/GeneralWeb/GetAllBloodBankList?pageNumber=${page}&pageSize=20&serviceType=3&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
+    const url = `${base_endpoint}/Generic/SearchAllGenericService?pageNumber=${page}&pageSize=20&serviceType=3&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
 
     const response = await
       fetch(url);
@@ -581,7 +585,7 @@ export const getHearingCareCenterList = async ({ dispatch, isSearch = false, pag
       DentalId = `&genericServiceId=${blood}`;
     }
 
-    const url = `${base_endpoint}/GeneralWeb/GetAllBloodBankList?pageNumber=${page}&pageSize=20&serviceType=4&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
+    const url = `${base_endpoint}/Generic/SearchAllGenericService?pageNumber=${page}&pageSize=20&serviceType=4&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
 
     const response = await
       fetch(url);
@@ -641,7 +645,7 @@ export const getEyeCareCenterList = async ({ dispatch, isSearch = false, page = 
       DentalId = `&genericServiceId=${blood}`;
     }
 
-    const url = `${base_endpoint}/GeneralWeb/GetAllBloodBankList?pageNumber=${page}&pageSize=20&serviceType=4&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
+    const url = `${base_endpoint}/Generic/SearchAllGenericService?pageNumber=${page}&pageSize=20&serviceType=4&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
 
     const response = await
       fetch(url);
@@ -702,7 +706,7 @@ export const nursingHomeCareList = async ({ dispatch, isSearch = false, page = 1
       DentalId = `&genericServiceId=${blood}`;
     }
 
-    const url = `${base_endpoint}/GeneralWeb/GetAllBloodBankList?pageNumber=${page}&pageSize=20&serviceType=4&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
+    const url = `${base_endpoint}/Generic/SearchAllGenericService?pageNumber=${page}&pageSize=20&serviceType=4&${location}${Popularity}${Emergency}${Rating}${DentalId}`;
 
     const response = await
       fetch(url);

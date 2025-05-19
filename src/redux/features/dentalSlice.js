@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const dentalReducer = createSlice({
-  name: 'dental',
+  name: "dental",
   initialState: {
     data: [],
     start: false,
@@ -18,10 +18,10 @@ export const dentalReducer = createSlice({
   reducers: {
     setAddData: (state, action) => {
       state.data = [...state.data, ...action.payload];
-  },
-  setData: (state, action) => {
+    },
+    setData: (state, action) => {
       state.data = action.payload;
-  },
+    },
     setPage: (state, action) => {
       state.page = action.payload;
     },
@@ -34,6 +34,9 @@ export const dentalReducer = createSlice({
 
     setName: (state, action) => {
       state.name = action.payload;
+    },
+    setDoctorName: (state, action) => {
+      state.doctorName = action.payload;
     },
     setRating: (state, action) => {
       state.rating = action.payload;
@@ -48,8 +51,19 @@ export const dentalReducer = createSlice({
       state.nameOptions = action.payload;
     },
   },
-
 });
 
-export const { setName,setAddData,setPage, setRating, setRank, setEmergency , setNameOptions, setData, setNext,setLoading } = dentalReducer.actions;
+export const {
+  setName,
+  setAddData,
+  setPage,
+  setRating,
+  setRank,
+  setEmergency,
+  setNameOptions,
+  setData,
+  setNext,
+  setLoading,
+  setDoctorName,
+} = dentalReducer.actions;
 export default dentalReducer.reducer;

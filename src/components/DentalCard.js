@@ -26,7 +26,6 @@ const DentalCard = ({ data }) => {
               className="w-40 h-36 sm:w-52 sm:h-52 object-cover rounded-full" // Fixed sizes
             />
           </div>
-
           <h3 className="text-md mt-2 text-black mb-1 line-clamp-3">{data.name}</h3>
           <div className="flex items-center">
             <FaStar className="text-yellow-500 mr-1" />
@@ -50,7 +49,6 @@ const DentalCard = ({ data }) => {
         </div>
       </div>
     </Link>
-
   );
 };
 

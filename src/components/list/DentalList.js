@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-'use client';
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import DentalCard from '../DentalCard';
-import { getDentalList } from '../../utils/func';
+"use client";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import DentalCard from "../DentalCard";
+import { getDentalList } from "../../utils/func";
 import { FaSpinner } from "react-icons/fa";
 
 function DentalList({ location, nextPage }) {
@@ -14,14 +14,19 @@ function DentalList({ location, nextPage }) {
   const handleObserver = (entities) => {
     const target = entities[0];
     if (target.isIntersecting && !loading && nextPage !== -1) {
-      getDentalList({ dispatch, lat: localStorage.getItem("lat"), lon: localStorage.getItem("lon"), page: page })
+      getDentalList({
+        dispatch,
+        lat: localStorage.getItem("lat"),
+        lon: localStorage.getItem("lon"),
+        page: page,
+      });
     }
   };
   useEffect(() => {
     const options = {
       root: null,
       rootMargin: "20px",
-      threshold: 1.0
+      threshold: 1.0,
     };
 
     const observer = new IntersectionObserver(handleObserver, options);
@@ -39,13 +44,17 @@ function DentalList({ location, nextPage }) {
 
   return (
     <>
-      {
-        loading === false && data.length == 0 ? <div className='h-[300px] w-full flex items-center justify-center text-2xl'>No data available</div> : <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-          {data.map((d) => (
+      {loading === false && data?.length == 0 ? (
+        <div className="h-[300px] w-full flex items-center justify-center text-2xl">
+          No data available
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+          {data?.map((d) => (
             <DentalCard key={d.id} data={d} />
           ))}
         </div>
-      }
+      )}
       <div
         ref={loader}
         className="flex items-center justify-center p-4 mt-6"
@@ -60,7 +69,7 @@ function DentalList({ location, nextPage }) {
         )}
       </div>
     </>
-  )
+  );
 }
 
-export default DentalList
+export default DentalList;
