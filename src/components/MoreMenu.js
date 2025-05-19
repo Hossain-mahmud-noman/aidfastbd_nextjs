@@ -1,4 +1,5 @@
 'use client';
+import { message } from 'antd';
 import Link from 'next/link';
 import { FaUser, FaCalendarAlt, FaHeart, FaInfoCircle, FaShieldAlt, FaCog, FaLock, FaLanguage, FaHistory, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
 import { MdOutlinePolicy } from 'react-icons/md';
@@ -58,21 +59,18 @@ const MoreMenu = ({ token = "" }) => {
 
 const MenuItem = ({ icon, text, href = "" }) => {
   if (href == "/logout") {
-
     return <div onClick={async () => {
       const ret = await fetch("/api/logout", {
         method: "POST", headers: {
           'Content-Type': 'application/json'
         },
       })
-
       if (ret.status == 200) {
+        message.success("Logout Success");
         window.location.href ="/"
       } else {
-        alert("Logout Failed");
+        message.error("Logout Failed");
       }
-
-
     }} className="flex items-center space-x-3 bg-white p-3 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100">
       <div className="text-xl text-gray-600">
         {icon}

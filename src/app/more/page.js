@@ -32,7 +32,7 @@ async function page() {
       <LayoutAppBar  name={location.name} lat={location.lat} lng={location.lng} api_key={map_key}></LayoutAppBar>
       <div style={{ insetBlockEnd: "70px" }} className="aid-container font-[family-name:var(--font-geist-sans)]  pt-16">
         <MoreMenu token={token} />
-        <BottomNavigation active="/more"></BottomNavigation>
+        <BottomNavigation active="/more" />
       </div>
     </>
   )
