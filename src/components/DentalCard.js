@@ -9,7 +9,7 @@ const DentalCard = ({ data }) => {
   return (
     <Link href={"/dental/" + data.genericServiceId}>
       <div
-        className="shadow-custom-light flex flex-col h-full bg-white rounded-lg transition-all duration-300 hover:shadow-lg"
+        className="shadow-custom-light flex flex-col h-full bg-white rounded-lg  transition-all duration-300 hover:shadow-lg"
         aria-label={`Dental ${data.name} information card`}
       >
         <div className="flex-1 pl-3 pt-3 pr-3 pb-1">
@@ -40,12 +40,13 @@ const DentalCard = ({ data }) => {
 
         {/* Contact Button */}
         <div className='px-2 pb-2'>
-          <button
+          <Link
+          href={`tel:${data.contact}`}
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center text-sm sm:text-base md:text-lg"
           >
-            <FaPhone className="mr-2 text-lg sm:text-xl" /> {/* Responsive icon size */}
-            <span className="text-sm sm:text-base md:text-lg">Contact</span> {/* Responsive text size */}
-          </button>
+            <FaPhone className="mr-2 text-lg sm:text-xl" /> 
+            <span className="text-sm sm:text-base md:text-lg">Contact</span> 
+          </Link>
         </div>
       </div>
     </Link>
