@@ -4,7 +4,7 @@ import DataLoad from "./dataLoad";
 import { FaSpinner } from "react-icons/fa";
 import ServiceCard from "../ServiceCard";
 
-const DentalDataLoad = () => {
+const DrugDeAddictionDataLoad = () => {
   const [genericData, setGenericData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,7 +23,7 @@ const DentalDataLoad = () => {
   const buildApiUrl = (term = "") => {
     const base = "https://api.aidfastbd.com/api/Generic/SearchAllGenericService";
     const params = new URLSearchParams({
-      serviceType: "1",
+      serviceType: "2",
     });
     if (term) {
       params.append("searchTerm", term);
@@ -59,7 +59,7 @@ const DentalDataLoad = () => {
           placeholder="Search by name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
+          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
         />
       </div>
 
@@ -76,12 +76,11 @@ const DentalDataLoad = () => {
         ) : (
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
             {genericData?.map((d, index) => (
-              <ServiceCard slug="dental" key={index} data={d} />
+              <ServiceCard slug="drug-de-addiction" key={index} data={d} />
             ))}
           </div>
         )}
         <div
-          // ref={loader}
           className="flex items-center justify-center p-4 mt-6"
           role="status"
           aria-label="Loading more content"
@@ -89,7 +88,7 @@ const DentalDataLoad = () => {
           {loading && (
             <div className="flex items-center space-x-2">
               <FaSpinner className="animate-spin text-indigo-600 text-2xl" />
-              <span className="text-gray-600">Loading dental...</span>
+              <span className="text-gray-600">Loading drug de addiction...</span>
             </div>
           )}
         </div>
@@ -98,4 +97,4 @@ const DentalDataLoad = () => {
   );
 };
 
-export default DentalDataLoad;
+export default DrugDeAddictionDataLoad;

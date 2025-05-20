@@ -4,7 +4,7 @@ import DataLoad from "./dataLoad";
 import { FaSpinner } from "react-icons/fa";
 import ServiceCard from "../ServiceCard";
 
-const DentalDataLoad = () => {
+const HearingCareCenterDataLoad = () => {
   const [genericData, setGenericData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,7 +23,7 @@ const DentalDataLoad = () => {
   const buildApiUrl = (term = "") => {
     const base = "https://api.aidfastbd.com/api/Generic/SearchAllGenericService";
     const params = new URLSearchParams({
-      serviceType: "1",
+      serviceType: "4",
     });
     if (term) {
       params.append("searchTerm", term);
@@ -76,7 +76,7 @@ const DentalDataLoad = () => {
         ) : (
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
             {genericData?.map((d, index) => (
-              <ServiceCard slug="dental" key={index} data={d} />
+              <ServiceCard slug="hearing-care-center" key={index} data={d} />
             ))}
           </div>
         )}
@@ -98,4 +98,4 @@ const DentalDataLoad = () => {
   );
 };
 
-export default DentalDataLoad;
+export default HearingCareCenterDataLoad;

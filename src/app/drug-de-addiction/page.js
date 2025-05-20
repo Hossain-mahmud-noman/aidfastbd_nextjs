@@ -4,6 +4,7 @@ import { appname, map_key } from "../../utils/constants";
 import DrugDeAddictionList from "../../components/list/DrugDeAddictionList";
 import SearchDental from "../../components/search/SearchDental";
 import { FaArrowLeft } from "react-icons/fa";
+import DrugDeAddictionDataLoad from "../../components/dataLoad/DrugDeAddictionDataLoad";
 
 export const metadata = {
   title: "Drug De-Addiction Center | " + appname,
@@ -23,9 +24,10 @@ function Page() {
         style={{ insetBlockEnd: "70px" }}
         className="font-[family-name:var(--font-geist-sans)] pt-20"
       >
-        <SearchDental title={"Drug De-Addiction"}/>
+        {/* <SearchDental title={"Drug De-Addiction"}/> */}
         <div className="aid-container">
-          <DrugDeAddictionList nextPage={1} />
+          {/* <DrugDeAddictionList nextPage={1} /> */}
+          <DrugDeAddictionDataLoad />
         </div>
       </div>
     </>

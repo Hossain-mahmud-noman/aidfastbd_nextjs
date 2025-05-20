@@ -4,6 +4,7 @@ import { appname, map_key } from "../../utils/constants";
 import EyeCareCenterList from "../../components/list/EyeCareCenterList";
 import SearchDental from "../../components/search/SearchDental";
 import { FaArrowLeft } from "react-icons/fa";
+import EyeCareCenterDataLoad from "../../components/dataLoad/EyeCareCenterDataLoad";
 
 export const metadata = {
   title: "Eye Care Center | " + appname,
@@ -22,9 +23,10 @@ function Page() {
         style={{ insetBlockEnd: "70px" }}
         className="font-[family-name:var(--font-geist-sans)] pt-20"
       >
-        <SearchDental title={"Eye Care Center"}></SearchDental>
+        {/* <SearchDental title={"Eye Care Center"}></SearchDental> */}
         <div className="aid-container mx-auto px-2">
-          <EyeCareCenterList nextPage={1} />
+          {/* <EyeCareCenterList nextPage={1} /> */}
+          <EyeCareCenterDataLoad />
         </div>
       </div>
     </>

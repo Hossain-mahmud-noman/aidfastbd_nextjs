@@ -4,6 +4,7 @@ import { appname, map_key } from "../../utils/constants";
 import HearingCareCenterList from "../../components/list/HearingCareCenterList";
 import SearchDental from "../../components/search/SearchDental";
 import { FaArrowLeft } from "react-icons/fa";
+import HearingCareCenterDataLoad from "../../components/dataLoad/HearingCareCenterDataLoad";
 
 export const metadata = {
   title: "Hearing Care Center | " + appname,
@@ -23,9 +24,10 @@ function Page() {
         className="font-[family-name:var(--font-geist-sans)] pt-20"
       >
         {/* Have to work on this search */}
-        <SearchDental title={"Hearing Care Center"} />
+        {/* <SearchDental title={"Hearing Care Center"} /> */}
         <div className="aid-container">
-          <HearingCareCenterList nextPage={1} />
+          {/* <HearingCareCenterList nextPage={1} /> */}
+          <HearingCareCenterDataLoad />
         </div>
       </div>
     </>

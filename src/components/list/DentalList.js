@@ -2,7 +2,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DentalCard from "../DentalCard";
+import DentalCard from "../ServiceCard";
 import { getDentalList } from "../../utils/func";
 import { FaSpinner } from "react-icons/fa";
 

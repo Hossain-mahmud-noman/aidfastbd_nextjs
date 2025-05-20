@@ -3,11 +3,11 @@ import { image_base_endpoint } from '../utils/constants';
 import { FaStar, FaPhone } from "react-icons/fa";
 import Link from 'next/link';
 
-const DentalCard = ({ data }) => {
+const ServiceCard = ({ data, slug }) => {
   const defaultImageUrl = "/images/dental.png";
   const imageUrl = data.profileImageUrl ? `${image_base_endpoint}${data.profileImageUrl}` : defaultImageUrl;
   return (
-    <Link href={"/dental/" + data.genericServiceId}>
+    <Link href={`/${slug}/` + data.genericServiceId}>
       <div
         className="shadow-custom-light flex flex-col h-full bg-white rounded-lg  transition-all duration-300 hover:shadow-lg"
         aria-label={`Dental ${data.name} information card`}
@@ -53,4 +53,4 @@ const DentalCard = ({ data }) => {
   );
 };
 
-export default DentalCard;
+export default ServiceCard;
