@@ -24,7 +24,7 @@ function Page({ params }) {
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
-  const [loading, setLoading] = useState(true); // 👈 New loading state
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchDetail = async () => {
