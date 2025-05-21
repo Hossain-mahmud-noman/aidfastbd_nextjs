@@ -30,24 +30,21 @@ function AmbulanceProfile({ token, user }) {
     //
   }
 
-
   useEffect(() => {
     getProfileData();
   }, [token]);
 
   const tabs = [
-    { label: 'Basic', content: <AmbulanceProfileBasic data={profileData} token={token} user={user}></AmbulanceProfileBasic> },
+    { label: 'Basic', content: <AmbulanceProfileBasic data={profileData} token={token} user={user} /> },
     { label: 'Info', content: <AmbulanceProfileInfo data={profileData?.ambulanceAbout} token={token} user={user}></AmbulanceProfileInfo> },
     { label: 'Driver', content: <AmbulanceProfileDriver data={profileData?.ambulanceDriverInfo} token={token} user={user}></AmbulanceProfileDriver> },
     { label: 'Facilities', content: <AmbulanceProfileFacilities data={profileData?.ambulanceFacility} token={token} user={user}></AmbulanceProfileFacilities> },
     { label: 'Other Services', content: <AmbulanceProfileOther data={profileData?.ambulanceOtherFacility} token={token} user={user}></AmbulanceProfileOther> },
 
   ];
-
-
   return (
-    <div>
-      <TabBar tabs={tabs}></TabBar>
+    <div className='aid-container'>
+      <TabBar tabs={tabs} />
     </div>
   )
 }

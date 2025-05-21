@@ -113,7 +113,7 @@ function AmbulanceProfileInfo({ data, user, token }) {
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white rounded-lg w-full p-6 border">
       {/* Ambulance Name */}
       <InputField
         label="Ambulance Name"

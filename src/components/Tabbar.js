@@ -24,9 +24,9 @@ const TabBar = ({ tabs }) => {
 
 
     return (
-        <div className="flex flex-col w-full h-full">
+        <div className="flex flex-col w-full h-full aid-container">
             {/* Tab Bar */}
-            <div className="flex overflow-x-auto whitespace-nowrap border-b border-gray-200 fixed bg-white left-0 right-0 z-[10000]">
+            <div className="mt-6 flex items-center justify-center overflow-x-auto aid-container whitespace-nowrap border-b border-gray-200 fixed bg-white left-0 right-0 z-[10000]">
                 {tabs.map((tab, index) => (
                     <button
                         key={index}
@@ -43,7 +43,7 @@ const TabBar = ({ tabs }) => {
             </div>
 
             {/* Tab Content */}
-            <div className=" pt-14">
+            <div className="pt-14 aid-container mt-6">
                 {tabs[activeTab]?.content || <p>No content available.</p>}
             </div>
         </div>

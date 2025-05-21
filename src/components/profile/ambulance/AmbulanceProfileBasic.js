@@ -26,11 +26,9 @@ function InputField({ label, placeholder, type = "text", value, onChange, requir
 
 
 function AmbulanceProfileBasic({ data, user, token }) {
-
-
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [ownerImage, setOwnerImage] = useState(null);
-  const [coverImage, setCoverImage] = useState(null); // Added cover image state
+  const [coverImage, setCoverImage] = useState(null);
   const [name, setName] = useState('');
   const [nameBn, setNameBn] = useState('');
   const [location, setLocation] = useState('');
@@ -45,9 +43,6 @@ function AmbulanceProfileBasic({ data, user, token }) {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-
-
-
 
   const handleImageChange = (event, setImage) => {
     const file = event.target.files[0];
@@ -179,11 +174,8 @@ function AmbulanceProfileBasic({ data, user, token }) {
     }
   }, [data]);
 
-
-
-
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-custom-light rounded-lg p-6">
       <h2 className="text-xs font-semibold text-gray-700 mb-4">Add a Profile Picture or Logo</h2>
       <div className="flex justify-center mb-6">
         <div className="relative">

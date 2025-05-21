@@ -33,7 +33,7 @@ async function Page() {
     return (
         <>
             <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Ambulance Profile' ></AppBar>
-            <div className="pt-16">
+            <div className="pt-16 aid-container">
                 <AmbulanceProfile token={token} user={user}></AmbulanceProfile>
             </div>
 
