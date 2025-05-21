@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   base_endpoint,
   appname,
@@ -24,6 +24,7 @@ function Page({ params }) {
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -56,6 +57,8 @@ function Page({ params }) {
       } catch (err) {
         console.error(err);
         router.push("/not-found");
+      }finally {
+        setLoading(false);
       }
     };
 
@@ -66,27 +69,48 @@ function Page({ params }) {
 
   const defaultImageUrl = "/images/dental.png";
 
-  const profile =
-    !data?.profileImageUrl
-      ? defaultImageUrl
-      : image_base_endpoint + data?.profileImageUrl;
+  const profile = !data?.profileImageUrl
+    ? defaultImageUrl
+    : image_base_endpoint + data?.profileImageUrl;
 
-  const cover =
-    !data?.coverImageUrl
-      ? defaultImageUrl
-      : image_base_endpoint + data?.coverImageUrl;
+  const cover = !data?.coverImageUrl
+    ? defaultImageUrl
+    : image_base_endpoint + data?.coverImageUrl;
+
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className=" text-gray-500 text-lg">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className="text-red-500 text-lg">No data found</p>
+      </div>
+    );
+  }
 
   return (
     <>
       <title>{`${data?.name} | ${appname}`}</title>
-      <meta name="description" content={`${data?.name}, ${data?.location}`.slice(0, 150)} />
+      <meta
+        name="description"
+        content={`${data?.name}, ${data?.location}`.slice(0, 150)}
+      />
 
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
         title="Nursing Home Care  Center Detail"
         trailingComponents={
           <div className="flex">
-            <ProfileQR slug={"newService"} id={data?.id} type={"Nursing Home Care Center"} />
+            <ProfileQR
+              slug={"newService"}
+              id={data?.id}
+              type={"Nursing Home Care Center"}
+            />
             <FavouriteToggle
               isFill={data?.isFavourite}
               userId={user?.id}
@@ -123,7 +147,9 @@ function Page({ params }) {
                 <h1 className="text-lg font-bold">{data?.name}</h1>
                 <div className="flex items-center text-left space-x-2 mb-2">
                   {data?.location && (
-                    <span className="text-sm text-gray-500">{data?.location}</span>
+                    <span className="text-sm text-gray-500">
+                      {data?.location}
+                    </span>
                   )}
                   <DiaLocation lat={data?.latitude} lon={data?.longitude} />
                 </div>

@@ -24,6 +24,7 @@ function Page({ params }) {
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -60,6 +61,8 @@ function Page({ params }) {
       } catch (err) {
         console.error(err);
         router.push("/not-found");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -78,6 +81,22 @@ function Page({ params }) {
     ? defaultImageUrl
     : image_base_endpoint + data.coverImageUrl;
 
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className="text-gray-500 text-lg">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className="text-red-500 text-lg">No data found</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <title>{`${data.name} | ${appname}`}</title>
@@ -91,7 +110,11 @@ function Page({ params }) {
         title="Eye Care Center Detail"
         trailingComponents={
           <div className="flex">
-            <ProfileQR slug={"newService"} id={data?.id} type={"Eye Care Center"} />
+            <ProfileQR
+              slug={"newService"}
+              id={data?.id}
+              type={"Eye Care Center"}
+            />
             <FavouriteToggle
               isFill={data.isFavourite}
               userId={user?.id}

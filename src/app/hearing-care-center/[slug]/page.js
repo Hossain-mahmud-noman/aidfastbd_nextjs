@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { notFound, useRouter } from "next/navigation";
 import {
   base_endpoint,
@@ -19,12 +19,12 @@ import ProfileQR from "../../../components/profileQR";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-
 function Page({ params }) {
   const router = useRouter();
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -61,12 +61,13 @@ function Page({ params }) {
       } catch (err) {
         console.error(err);
         router.push("/not-found");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchDetail();
   }, [params.slug, router]);
-
 
   const defaultImageUrl = "/images/dental.png";
 
@@ -80,6 +81,21 @@ function Page({ params }) {
       ? defaultImageUrl
       : image_base_endpoint + data?.coverImageUrl;
 
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className="text-gray-500 text-lg">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className="text-red-500 text-lg">No data found</p>
+      </div>
+    );
+  }
   return (
     <>
       <title>{`${data?.name}  | ${appname}`}</title>
@@ -93,7 +109,11 @@ function Page({ params }) {
         title="Hearing Care Center Details"
         trailingComponents={
           <div className="flex">
-            <ProfileQR id={data?.id} slug={"newService"} type={"hearingCareCenter"} />
+            <ProfileQR
+              id={data?.id}
+              slug={"newService"}
+              type={"hearingCareCenter"}
+            />
             <FavouriteToggle
               isFill={data?.isFavourite}
               userId={user?.id}
@@ -101,7 +121,9 @@ function Page({ params }) {
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/hearingCareCenter/${data?.id}`} />
+            <ShareButton
+              link={`${frontend_url}/hearingCareCenter/${data?.id}`}
+            />
           </div>
         }
       />

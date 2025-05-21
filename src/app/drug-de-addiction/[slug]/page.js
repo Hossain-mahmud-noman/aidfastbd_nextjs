@@ -24,6 +24,7 @@ function Page({ params }) {
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -60,6 +61,8 @@ function Page({ params }) {
       } catch (err) {
         console.error(err);
         router.push("/not-found");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -69,18 +72,34 @@ function Page({ params }) {
   const defaultImageUrl = "/images/dental.png";
 
   const profile =
-    data?.profileImageUrl == null || data?.profileImageUrl == ""
+    data?.profileImageUrl == null || data?.profileImageUrl === ""
       ? defaultImageUrl
       : image_base_endpoint + data?.profileImageUrl;
 
   const cover =
-    data?.coverImageUrl == null || data?.coverImageUrl == ""
+    data?.coverImageUrl == null || data?.coverImageUrl === ""
       ? defaultImageUrl
       : image_base_endpoint + data?.coverImageUrl;
 
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className="text-gray-500 text-lg">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className="text-red-500 text-lg">No data found</p>
+      </div>
+    );
+  }
+
   return (
     <>
-      <title>{`${data?.name}  | ${appname}`}</title>
+      <title>{`${data?.name} | ${appname}`}</title>
       <meta
         name="description"
         content={`${data?.name}, ${data?.location}`.slice(0, 150)}
@@ -95,15 +114,14 @@ function Page({ params }) {
               id={data?.id}
               slug={"newService"}
               type={"DrugDeAddiction"}
-            ></ProfileQR>
+            />
             <FavouriteToggle
               isFill={data?.isFavourite}
               userId={user?.id}
               id={data?.id}
               type={3}
               token={token}
-            ></FavouriteToggle>
-
+            />
             <ShareButton
               link={`${frontend_url}/drug-de-adiction/${data?.id}`}
             />
@@ -122,8 +140,8 @@ function Page({ params }) {
               className="w-full h-full object-fill"
             />
           </div>
+
           <div className="flex items-center justify-between mb-4">
-            {/* Logo and Name */}
             <div className="flex items-center">
               <Image
                 width={1000}
@@ -134,35 +152,25 @@ function Page({ params }) {
               />
               <div>
                 <h1 className="text-lg font-bold">{data?.name}</h1>
-
                 <div className="flex items-center justify-start text-left space-x-2 mb-2">
-                  {data?.location !== null && (
+                  {data?.location && (
                     <span className="text-sm text-gray-500">
                       {data?.location}
                     </span>
                   )}
-                  <DiaLocation
-                    lat={data?.latitude}
-                    lon={data?.longitude}
-                  ></DiaLocation>
+                  <DiaLocation lat={data?.latitude} lon={data?.longitude} />
                 </div>
               </div>
             </div>
           </div>
 
-          {data?.notice != null ? (
-            <TextTicker text={data?.notice}></TextTicker>
-          ) : null}
-          {/* Info Section */}
+          {data?.notice && <TextTicker text={data?.notice} />}
+
           <div className="bg-gray-100 p-3 rounded-lg mb-4">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="font-bold">Registration No</p>
-                <p>
-                  {data?.registrationNumber == null
-                    ? "N/A"
-                    : data?.registrationNumber}{" "}
-                </p>
+                <p>{data?.registrationNumber ?? "N/A"}</p>
               </div>
               <div>
                 <p className="font-bold">Service Time</p>
@@ -188,7 +196,6 @@ function Page({ params }) {
         </div>
       </div>
 
-      {/* Have to add tabs */}
       <div className="aid-container">
         <DentalTabs data={data} />
       </div>

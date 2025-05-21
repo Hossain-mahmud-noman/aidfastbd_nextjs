@@ -18,11 +18,13 @@ import DiaLocation from "../../../components/DiaLocation";
 import FloatingCallButton from "../../../components/FloatingCallButton";
 import ProfileQR from "../../../components/profileQR";
 import Image from "next/image";
+
 function Page({ params }) {
   const router = useRouter();
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(true); // 👈 New loading state
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -43,6 +45,7 @@ function Page({ params }) {
             cache: "no-store",
           }
         );
+
         if (res.status === 200) {
           const json = await res.json();
           if (json?.data?.length > 0) {
@@ -51,14 +54,16 @@ function Page({ params }) {
             setToken(tokenCookie);
             setUser(parsedUser);
           } else {
-            router.push("/not-found");
+            setData(null);
           }
         } else {
-          router.push("/not-found");
+          setData(null);
         }
       } catch (err) {
         console.error(err);
-        router.push("/not-found");
+        setData(null);
+      } finally {
+        setLoading(false); // 👈 Set loading to false
       }
     };
 
@@ -66,20 +71,35 @@ function Page({ params }) {
   }, [params.slug, router]);
 
   const defaultImageUrl = "/images/dental.png";
-
   const profile =
-    data?.profileImageUrl == null || data?.profileImageUrl == ""
+    data?.profileImageUrl == null || data?.profileImageUrl === ""
       ? defaultImageUrl
       : image_base_endpoint + data?.profileImageUrl;
 
   const cover =
-    data?.coverImageUrl == null || data?.coverImageUrl == ""
+    data?.coverImageUrl == null || data?.coverImageUrl === ""
       ? defaultImageUrl
       : image_base_endpoint + data?.coverImageUrl;
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen text-lg font-semibold">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="flex justify-center items-center h-screen text-lg font-semibold">
+        No data found.
+      </div>
+    );
+  }
+
   return (
     <>
-      <title>{`${data?.name}  | ${appname}`}</title>
+      <title>{`${data?.name} | ${appname}`}</title>
       <meta
         name="description"
         content={`${data?.name}, ${data?.location}`.slice(0, 150)}
@@ -90,11 +110,7 @@ function Page({ params }) {
         title="Dental Detail"
         trailingComponents={
           <div className="flex">
-            <ProfileQR
-              slug={"newService"}
-              id={data?.id}
-              type={"Dental"}
-            />
+            <ProfileQR slug={"newService"} id={data?.id} type={"Dental"} />
             <FavouriteToggle
               isFill={data?.isFavourite}
               userId={user?.id}
@@ -102,88 +118,73 @@ function Page({ params }) {
               type={3}
               token={token}
             />
-
-            <ShareButton
-              link={`${frontend_url}/dental/${data?.userId}`}
-            />
+            <ShareButton link={`${frontend_url}/dental/${data?.userId}`} />
           </div>
         }
       />
 
       <div className="pt-16 aid-container">
-        <div className="">
-          <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
+        <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
+          <Image
+            width={1000}
+            height={1000}
+            src={cover}
+            alt="Dental cover"
+            className="w-full h-full object-fill"
+          />
+        </div>
+
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center">
             <Image
               width={1000}
               height={1000}
-              src={cover}
-              alt="Dental cover"
-              className="w-full h-full object-fill"
+              src={profile}
+              alt="Dental Logo"
+              className="w-16 h-16 rounded-full mr-3"
             />
-          </div>
-          <div className="flex items-center justify-between mb-4">
-            {/* Logo and Name */}
-            <div className="flex items-center">
-              <Image
-                width={1000}
-                height={1000}
-                src={profile}
-                alt="Dental Logo"
-                className="w-16 h-16 rounded-full mr-3"
-              />
-              <div>
-                <h1 className="text-lg font-bold">{data?.name}</h1>
-
-                <div className="flex items-center justify-start text-left space-x-2 mb-2">
-                  {data?.location !== null && (
-                    <span className="text-sm text-gray-500">
-                      {data?.location}
-                    </span>
-                  )}
-                  <DiaLocation
-                    lat={data?.latitude}
-                    lon={data?.longitude}
-                  ></DiaLocation>
-                </div>
+            <div>
+              <h1 className="text-lg font-bold">{data?.name}</h1>
+              <div className="flex items-center justify-start text-left space-x-2 mb-2">
+                {data?.location && (
+                  <span className="text-sm text-gray-500">
+                    {data?.location}
+                  </span>
+                )}
+                <DiaLocation lat={data?.latitude} lon={data?.longitude} />
               </div>
             </div>
           </div>
+        </div>
 
-          {data?.notice != null ? (
-            <TextTicker text={data?.notice}></TextTicker>
-          ) : null}
-          {/* Info Section */}
-          <div className="bg-gray-100 p-3 rounded-lg mb-4">
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <p className="font-bold">Registration No</p>
-                <p>
-                  {data?.registrationNumber == null
-                    ? "N/A"
-                    : data?.registrationNumber}{" "}
-                </p>
-              </div>
-              <div>
-                <p className="font-bold">Service Time</p>
-                <p>{data?.serviceTime}</p>
-              </div>
-              <div>
-                <p className="font-bold">Total Rating</p>
-                <p>
-                  {data?.averageRating} ⭐ ({data?.atotalRating} reviews)
-                </p>
-              </div>
+        {data?.notice && <TextTicker text={data?.notice} />}
+
+        <div className="bg-gray-100 p-3 rounded-lg mb-4">
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <p className="font-bold">Registration No</p>
+              <p>{data?.registrationNumber || "N/A"}</p>
+            </div>
+            <div>
+              <p className="font-bold">Service Time</p>
+              <p>{data?.serviceTime}</p>
+            </div>
+            <div>
+              <p className="font-bold">Total Rating</p>
+              <p>
+                {data?.averageRating} ⭐ ({data?.atotalRating} reviews)
+              </p>
             </div>
           </div>
+        </div>
 
-          <div>
-            <a
-              href={`tel:${data?.emergencyContactNumber}`}
-              className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm"
-            >
-              Emergency Call
-            </a>
-          </div>
+        <div>
+          <a
+            href={`tel:${data?.emergencyContactNumber}`}
+            className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm"
+          >
+            Emergency Call
+          </a>
         </div>
       </div>
       <div className="aid-container mt-6">
