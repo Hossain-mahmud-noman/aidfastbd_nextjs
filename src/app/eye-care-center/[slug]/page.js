@@ -8,7 +8,7 @@ import {
 } from "../../../utils/constants";
 import AppBar from "../../../components/AppBar";
 import ShareButton from "../../../components/ShareButton";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaSpinner } from "react-icons/fa";
 import DentalTabs from "../../../components/tabs/DentalTabs";
 import TextTicker from "../../../components/TextTicker";
 import FavouriteToggle from "../../../components/FavouriteToggle";
@@ -84,7 +84,10 @@ function Page({ params }) {
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center">
-        <p className="text-gray-500 text-lg">Loading...</p>
+        <div className="flex items-center space-x-2">
+          <FaSpinner className="animate-spin text-indigo-600 text-2xl" />
+          <span className="text-gray-600">Loading Eye Care Center...</span>
+        </div>
       </div>
     );
   }

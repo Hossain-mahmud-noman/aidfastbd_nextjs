@@ -3,7 +3,7 @@
 import { base_endpoint, appname, frontend_url, image_base_endpoint, headerx } from '../../../utils/constants'
 import AppBar from '../../../components/AppBar';
 import ShareButton from '../../../components/ShareButton';
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaSpinner } from "react-icons/fa";
 import BloodTabs from '../../../components/tabs/BloodTabs';
 import TextTicker from '../../../components/TextTicker';
 import FavouriteToggle from '../../../components/FavouriteToggle';
@@ -19,14 +19,18 @@ function page({ params }) {
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchDetail = async () => {
       const tokenCookie = localStorage.getItem("token") ?? "";
       const userCookie = localStorage.getItem("user");
       const parsedUser = userCookie ? JSON.parse(userCookie) : null;
+
       if (tokenCookie.length === 298) {
         headerx["Authorization"] = `Bearer ${tokenCookie}`;
       }
+
       try {
         const res = await fetch(
           `${base_endpoint}/GeneralWeb/GetAllBloodBankList?userId=${params.slug}`,
@@ -36,22 +40,25 @@ function page({ params }) {
             cache: "no-store",
           }
         );
+
         if (res.status === 200) {
           const json = await res.json();
           if (json?.data?.length > 0) {
-            const fetchedData = json?.data[0];
+            const fetchedData = json.data[0];
             setData(fetchedData);
             setToken(tokenCookie);
             setUser(parsedUser);
           } else {
-            router.push("/not-found");
+            setData(null);
           }
         } else {
-          router.push("/not-found");
+          setData(null);
         }
       } catch (err) {
         console.error(err);
-        router.push("/not-found");
+        setData(null);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -64,12 +71,29 @@ function page({ params }) {
 
   const cover = data?.coverImageUrl == null || data?.coverImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.coverImageUrl;
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen text-lg font-semibold">
+        <div className="flex items-center space-x-2">
+          <FaSpinner className="animate-spin text-indigo-600 text-2xl" />
+          <span className="text-gray-600">Loading Blood Bank...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="flex justify-center items-center h-screen text-lg font-semibold">
+        No data found.
+      </div>
+    );
+  }
+
   return (
     <>
-
       <title>{`${data?.name}  | ${appname}`}</title>
       <meta name="description" content={`${data?.name}, ${data?.location}`.slice(0, 150)} />
-
       <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Blood Bank Detail' trailingComponents={
         <div className='flex'>
           <ProfileQR id={data?.userId} type={"BloodBank"} />

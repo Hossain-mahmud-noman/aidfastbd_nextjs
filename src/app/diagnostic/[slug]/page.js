@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { base_endpoint, appname, frontend_url, headerx } from '../../../utils/constants'
 import DiagnosticDetail from "../../../components/DiagnosticDetail"
 import AppBar from '../../../components/AppBar';
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaSpinner } from "react-icons/fa";
 import ShareButton from '../../../components/ShareButton';
 import DiagnosticTabs from '../../../components/tabs/DiagnosticTabs';
 import FavouriteToggle from '../../../components/FavouriteToggle';
@@ -17,14 +17,18 @@ function page({ params }) {
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchDetail = async () => {
       const tokenCookie = localStorage.getItem("token") ?? "";
       const userCookie = localStorage.getItem("user");
       const parsedUser = userCookie ? JSON.parse(userCookie) : null;
+
       if (tokenCookie.length === 298) {
         headerx["Authorization"] = `Bearer ${tokenCookie}`;
       }
+
       try {
         const res = await fetch(
           `${base_endpoint}/GeneralWeb/GetAllDiagnosticCenterList?diagnosticCenterId=${params.slug}`,
@@ -34,27 +38,50 @@ function page({ params }) {
             cache: "no-store",
           }
         );
+
         if (res.status === 200) {
           const json = await res.json();
+          console.log("🚀 ~ fetchDetail ~ json:", json)
           if (json?.data?.length > 0) {
-            const fetchedData = json?.data[0];
+            const fetchedData = json?.data?.[0];
             setData(fetchedData);
             setToken(tokenCookie);
             setUser(parsedUser);
           } else {
-            router.push("/not-found");
+            setData(null);
           }
         } else {
-          router.push("/not-found");
+          setData(null);
         }
       } catch (err) {
         console.error(err);
-        router.push("/not-found");
+        setData(null);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchDetail();
   }, [params.slug, router]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen text-lg font-semibold">
+        <div className="flex items-center space-x-2">
+          <FaSpinner className="animate-spin text-indigo-600 text-2xl" />
+          <span className="text-gray-600">Loading diagnostic...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="flex justify-center items-center h-screen text-lg font-semibold">
+        No data found.
+      </div>
+    );
+  }
 
   return (
     <>

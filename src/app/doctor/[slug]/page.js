@@ -9,7 +9,7 @@ import {
   headerx,
 } from "../../../utils/constants";
 import AppBar from "../../../components/AppBar";
-import { FaArrowLeft, FaStar } from "react-icons/fa";
+import { FaArrowLeft, FaSpinner, FaStar } from "react-icons/fa";
 import ShareButton from "../../../components/ShareButton";
 import FavouriteToggle from "../../../components/FavouriteToggle";
 import DoctorTabs from "../../../components/tabs/DoctorTabs";
@@ -23,6 +23,7 @@ const Page = ({ params }) => {
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -43,22 +44,25 @@ const Page = ({ params }) => {
             cache: "no-store",
           }
         );
+
         if (res.status === 200) {
           const json = await res.json();
-          if (json.length > 0) {
+          if (json?.length > 0) {
             const fetchedData = json[0];
             setData(fetchedData);
             setToken(tokenCookie);
             setUser(parsedUser);
           } else {
-            router.push("/not-found");
+            setData(null);
           }
         } else {
-          router.push("/not-found");
+          setData(null);
         }
       } catch (err) {
         console.error(err);
-        router.push("/not-found");
+        setData(null);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -71,6 +75,26 @@ const Page = ({ params }) => {
     data?.imageUrl == null || data?.imageUrl == ""
       ? defaultImageUrl
       : image_base_endpoint + data?.imageUrl;
+
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen text-lg font-semibold">
+        <div className="flex items-center space-x-2">
+          <FaSpinner className="animate-spin text-indigo-600 text-2xl" />
+          <span className="text-gray-600">Loading doctor...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="flex justify-center items-center h-screen text-lg font-semibold">
+        No data found.
+      </div>
+    );
+  }
 
   return (
     <>
