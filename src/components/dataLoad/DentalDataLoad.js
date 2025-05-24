@@ -22,6 +22,7 @@ const DentalDataLoad = () => {
 
   const buildApiUrl = (term = "") => {
     const base = "https://api.aidfastbd.com/api/Generic/SearchAllGenericService";
+    //https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?pageNumber=1&serviceType=1&pageSize=20${location}
     const params = new URLSearchParams({
       serviceType: "1",
     });

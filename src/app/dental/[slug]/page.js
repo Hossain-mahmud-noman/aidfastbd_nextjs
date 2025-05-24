@@ -10,7 +10,7 @@ import {
 } from "../../../utils/constants";
 import AppBar from "../../../components/AppBar";
 import ShareButton from "../../../components/ShareButton";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaSpinner } from "react-icons/fa";
 import DentalTabs from "../../../components/tabs/DentalTabs";
 import TextTicker from "../../../components/TextTicker";
 import FavouriteToggle from "../../../components/FavouriteToggle";
@@ -24,7 +24,7 @@ function Page({ params }) {
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
-  const [loading, setLoading] = useState(true); // 👈 New loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -63,7 +63,7 @@ function Page({ params }) {
         console.error(err);
         setData(null);
       } finally {
-        setLoading(false); // 👈 Set loading to false
+        setLoading(false);
       }
     };
 
@@ -84,7 +84,10 @@ function Page({ params }) {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen text-lg font-semibold">
-        Loading...
+        <div className="flex items-center space-x-2">
+          <FaSpinner className="animate-spin text-indigo-600 text-2xl" />
+          <span className="text-gray-600">Loading doctor...</span>
+        </div>
       </div>
     );
   }
