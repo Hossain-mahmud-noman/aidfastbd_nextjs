@@ -16,14 +16,14 @@ const ServiceCard = ({ data, slug }) => {
           {/* Centering the image */}
           <div className="flex justify-center">
             <Image
-              width={100}
-              height={100}
+              width={1000}
+              height={1000}
               src={imageUrl}
               placeholder="blur"
               blurDataURL="https://user-images.githubusercontent.com/160484/173871411-4d27b6dd-af89-4568-863c-c59b1242ce74.png"
               priority={false}
               alt={data.name}
-              className="w-40 h-36 sm:w-52 sm:h-52 object-cover rounded-full" // Fixed sizes
+              className="w-40 h-36 sm:w-52 sm:h-52 object-cover rounded-full" 
             />
           </div>
           <h3 className="text-md mt-2 text-black mb-1 line-clamp-3">{data.name}</h3>

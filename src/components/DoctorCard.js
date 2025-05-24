@@ -13,8 +13,8 @@ const DoctorCard = ({ doctor, lat = null, lon = null, id = null }) => {
                 aria-label={`Doctor ${doctor.name} information card`}
             >
                 <Image
-                    width={100}
-                    height={100}
+                    width={1000}
+                    height={1000}
                     placeholder="blur"
                     blurDataURL="https://user-images.githubusercontent.com/160484/173871411-4d27b6dd-af89-4568-863c-c59b1242ce74.png"
                     priority={false}

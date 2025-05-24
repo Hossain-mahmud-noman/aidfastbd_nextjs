@@ -1,8 +1,6 @@
 import React from "react";
 import LayoutAppBar from "../../components/LayoutAppBar";
 import { appname, map_key } from "../../utils/constants";
-import PhysiotherapyCenterList from "../../components/list/PhysiotherapyCenterList";
-import SearchDental from "../../components/search/SearchDental";
 import { FaArrowLeft } from "react-icons/fa";
 import PhysiotherapyCenterDataLoad from "../../components/dataLoad/PhysiotherapyCenterDataLoad";
 
@@ -25,9 +23,7 @@ function Page() {
         style={{ insetBlockEnd: "70px" }}
         className="font-[family-name:var(--font-geist-sans)] pt-20"
       >
-        {/* <SearchDental title={"Physiotherapy Center"}/> */}
         <div className="aid-container">
-          {/* <PhysiotherapyCenterList nextPage={1} /> */}
           <PhysiotherapyCenterDataLoad />
         </div>
       </div>
