@@ -40,7 +40,6 @@ function AmbulanceProfileFacilities({ data, user, token }) {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Facility info saved successfully:", result);
         alert("Facility information saved successfully!");
       } else {
         console.error("Error saving facility info:", response.statusText);

@@ -19,7 +19,6 @@ const ProfileCard = ({ token, user }) => {
 
       if (res.status === 200) {
         const data = await res.json();
-        console.log(data);
         
         const profile = data[0];
         setName(profile.name || "");

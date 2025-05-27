@@ -107,7 +107,7 @@ const SearchDiagnostic = () => {
 
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       dispatch(setNameOptions([]));
     }
   }

@@ -3,7 +3,7 @@ export const GET = async (req, { params }) => {
     const ambulancesPerPage = 20;
 
     const page = parseInt(params.page || "1", 10);
-console.log(5354);
+
 
     // Fetch paginated ambulances from API
     try {

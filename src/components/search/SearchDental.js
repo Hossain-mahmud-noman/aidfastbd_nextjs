@@ -113,7 +113,7 @@ const SearchDental = ({ title = null }) => {
         dispatch(setNameOptions([]));
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       dispatch(setNameOptions([]));
     }
   };
@@ -250,7 +250,7 @@ export const DentalSearchByName = ({ title = null }) => {
         dispatch(setNameOptions([]));
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       dispatch(setNameOptions([]));
     }
   };

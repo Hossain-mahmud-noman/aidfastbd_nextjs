@@ -116,7 +116,7 @@ const SearchDoctor = ({ specialityData = [] }) => {
 
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       dispatch(setFeeOptions([]));
     }
   }
@@ -134,7 +134,7 @@ const SearchDoctor = ({ specialityData = [] }) => {
 
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       dispatch(setExperienceOptions([]));
     }
   }
@@ -159,7 +159,7 @@ const SearchDoctor = ({ specialityData = [] }) => {
         dispatch(setNameOptions([]));
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       dispatch(setNameOptions([]));
     }
   }

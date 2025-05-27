@@ -42,7 +42,6 @@ function AmbulanceProfileOther({ data, user, token }) {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Other facility info saved successfully:", result);
         alert("Other facility information saved successfully!");
       } else {
         console.error("Error saving other facility info:", response.statusText);

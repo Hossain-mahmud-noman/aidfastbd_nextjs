@@ -7,7 +7,7 @@ export async function GET(request: Request, { params }: { params: { lang: string
 
   // Build the file path
   const filePath = path.join(process.cwd(), `src/app/i18n/${lang}.json`);
-console.log(filePath);
+
 
   try {
     // Read the localization file

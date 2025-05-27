@@ -5,7 +5,6 @@ import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt } from "react-icons/fa";
 import Image from "next/image";
 
 function ProfileQR({ id = null, type = null, slug = null, }) {
-  console.log("🚀 ~ ProfileQR ~ id:", id);
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const fetchQRCode = async () => {

@@ -8,6 +8,7 @@ import {
   image_base_endpoint,
   headerx,
 } from "../../../utils/constants";
+  
 import AppBar from "../../../components/AppBar";
 import { FaArrowLeft, FaSpinner, FaStar } from "react-icons/fa";
 import ShareButton from "../../../components/ShareButton";
@@ -24,7 +25,7 @@ const Page = ({ params }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(true);
-
+console.log("🚀 ~ frontend_url:", frontend_url)
   useEffect(() => {
     const fetchDetail = async () => {
       const tokenCookie = localStorage.getItem("token") ?? "";

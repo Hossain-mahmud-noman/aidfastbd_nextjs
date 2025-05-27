@@ -216,7 +216,6 @@ function DoctorProfileBasic({ data, user, token }) {
 
       if (!response.ok) throw new Error("Error saving/updating profile");
       const result = await response.json();
-      console.log("Profile saved successfully:", result);
     } catch (error) {
       console.error("Error submitting the form:", error);
     }

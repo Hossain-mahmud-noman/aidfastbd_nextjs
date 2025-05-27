@@ -169,7 +169,6 @@ function PharmacyProfileBasic({ data, isRegister, token, user }) {
       setOwnerMobileNumber(data.ownerMobileNumber || '');
       setOwnerNID(data.ownerNID || '');
 
-      console.log(data);
       
       setLatitude(data.lat || '');
       setLongitude(data.lon || '');

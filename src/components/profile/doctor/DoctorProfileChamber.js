@@ -137,8 +137,6 @@ function DoctorProfileChamber({ data, user, token }) {
 
       if (response.status == 200) {
         const result = await response.json();
-        console.log(chamberList);
-        console.log(updatedChamber);
 
         if (!editingChamber) {
           setChamberList((prev) => [...prev, {

@@ -16,7 +16,7 @@ function FavouriteToggle({ isFill = false, userId = null, id, type, token }) {
         headerx['Authorization'] = `Bearer ${token}`;
         const res = await fetch(`${base_endpoint}/GeneralInformation/FavouriteProfilesSaveUpdate`, { method: "POST", body: JSON.stringify({ "typeId": type, "profileUserId": id, "userId": userId, "isDeleted": isFavorite }), headers: headerx },);
         const data = await res.json();
-        console.log(data);
+
 
         if (res.status == 200) {
             setIsFavorite((prev) => !prev);

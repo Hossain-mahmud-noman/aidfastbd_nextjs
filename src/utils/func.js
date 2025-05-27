@@ -750,7 +750,7 @@ export const cancelBooking = async ({ id, token }) => {
       fetch(url, { method: "PUT", headers: headerx, body: JSON.stringify({ "isCanceled": true, "id": id }) });
 
     const data = await response.json();
-    console.log(data);
+
     if (response.status === 200) {
       window.location.reload();
     }

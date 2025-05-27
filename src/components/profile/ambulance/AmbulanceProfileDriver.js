@@ -69,7 +69,6 @@ function AmbulanceProfileDriver({ data, user, token }) {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Driver info saved successfully:", result);
         alert("Driver information saved successfully!");
       } else {
         console.error("Error saving driver info:", response.statusText);

@@ -41,7 +41,6 @@ function page({ params }) {
 
         if (res.status === 200) {
           const json = await res.json();
-          console.log("🚀 ~ fetchDetail ~ json:", json)
           if (json?.data?.length > 0) {
             const fetchedData = json?.data?.[0];
             setData(fetchedData);
