@@ -1,6 +1,7 @@
 const base="api.aidfastbd.com"
 
 export const map_key="AIzaSyC6lCsV4xrm6ObZn0Jn8omwUj8bxNsBPZc";
+// export const frontend_url = 'https://aidfastbd.com';
 export const frontend_url = 'https://aidfastbd.shohayok.com';
 export const base_endpoint ='https://'+base+"/api";
 export const image_base_endpoint ='https://'+base+"/";
