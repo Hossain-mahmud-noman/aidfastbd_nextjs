@@ -41,13 +41,13 @@ const DiagnosticDetail = ({ data }) => {
               {data?.location !== null && (
                 <span className="text-sm text-gray-500">{data?.location}</span>
               )}
-              {/* <DiaLocation lat={data?.latitude} lon={data?.longitude} ></DiaLocation> */}
+              <DiaLocation lat={data?.latitude} lon={data?.longitude} ></DiaLocation>
             </div>
           </div>
         </div>
       </div>
 
-      {/* {data?.notice != null ? <TextTicker text={data?.notice}></TextTicker> : null} */}
+      {data?.notice != null ? <TextTicker text={data?.notice}></TextTicker> : null}
 
       {/* Info Section */}
       <div className="bg-gray-100 p-3 rounded-lg mb-4">
