@@ -26,14 +26,15 @@ const DentalDetails = ({ data }) => {
     setUser(parsedUser);
   }, []);
 
-  const profile = data?.imageUrl
-    ? image_base_endpoint + data.imageUrl
+  const profile = data?.profileImageUrl
+    ? image_base_endpoint + data.profileImageUrl
     : "/images/doctor.jpg";
 
   const cover =
     data?.coverImageUrl == null || data?.coverImageUrl === ""
       ? defaultImageUrl
       : image_base_endpoint + data?.coverImageUrl;
+
   return (
     <>
       <Head>
@@ -45,7 +46,7 @@ const DentalDetails = ({ data }) => {
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
         <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/dental/${data?.userId}`} />
+        <meta property="og:url" content={`${frontend_url}/dental/${data?.id}`} />
       </Head>
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
@@ -60,7 +61,7 @@ const DentalDetails = ({ data }) => {
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/dental/${data?.userId}`} />
+            <ShareButton link={`${frontend_url}/dental/${data?.id}`} />
           </div>
         }
       />

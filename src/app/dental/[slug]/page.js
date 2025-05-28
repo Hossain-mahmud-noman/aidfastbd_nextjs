@@ -14,15 +14,16 @@ export async function generateMetadata({ params }) {
   );
   const json = await res.json();
   const data = json?.data?.[0];
+
   if (!data) {
     return { title: "Dental Not Found" };
   }
 
-  const profile =
-    data?.profileImageUrl == null || data?.profileImageUrl === ""
-      ? defaultImageUrl
-      : image_base_endpoint + data?.profileImageUrl;
+  const profile = data?.profileImageUrl
+    ? image_base_endpoint + data?.profileImageUrl
+    : "/images/doctor.jpg";
 
+  
   return {
     title: `${data?.name} | ${appname}`,
     description: `${data.name ?? ""} ${data?.location ?? ""}`.slice(0, 150),
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }) {
       title: `${data?.name} | ${appname}`,
       description: `${data?.name ?? ""} ${data?.location ?? ""}`,
       images: [profile],
-      url: `${frontend_url}/dental/${data.userId}`,
+      url: `${frontend_url}/dental/${data.id}`,
     },
   };
 }
@@ -44,7 +45,7 @@ export default async function DoctorPage({ params }) {
   const data = json?.data?.[0];
 
   if (!data) {
-    return <div className="p-8 text-center text-lg">Doctor not found.</div>;
+    return <div className="p-8 text-center text-lg">Dental not found.</div>;
   }
 
   return <DentalDetails data={data} />;
