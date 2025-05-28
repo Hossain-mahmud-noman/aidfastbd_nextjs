@@ -25,26 +25,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* HTML Meta Tags */}
-        <title>AidFast</title>
-        <meta name="description" content="AidFast অ্যাপ এর মাধ্যমে কাঙ্ক্ষিত ডাক্তার,ডায়াগনস্টিক সেন্টার, হাসপাতাল, ব্লাড ব্যাংক, ব্লাড ডোনার ও অ্যাম্বুলেন্সের তথ্য পেয়ে যান দ্রুত সময়ে | Developed by aidfastbd.com" />
-
-        {/* Facebook Meta Tags */}
-        <meta property="og:url" content="https://aidfastbd.com" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="AidFast" />
-        <meta property="og:description" content="AidFast অ্যাপ এর মাধ্যমে কাঙ্ক্ষিত ডাক্তার,ডায়াগনস্টিক সেন্টার, হাসপাতাল, ব্লাড ব্যাংক, ব্লাড ডোনার ও অ্যাম্বুলেন্সের তথ্য পেয়ে যান দ্রুত সময়ে | Developed by aidfastbd.com" />
-        <meta property="og:image" content="https://aidfastbd.com/og-image.jpg" />
-
-        {/* Twitter Meta Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta property="twitter:domain" content="aidfastbd.com" />
-        <meta property="twitter:url" content="https://aidfastbd.com" />
-        <meta name="twitter:title" content="AidFast" />
-        <meta name="twitter:description" content="AidFast অ্যাপ এর মাধ্যমে কাঙ্ক্ষিত ডাক্তার,ডায়াগনস্টিক সেন্টার, হাসপাতাল, ব্লাড ব্যাংক, ব্লাড ডোনার ও অ্যাম্বুলেন্সের তথ্য পেয়ে যান দ্রুত সময়ে | Developed by aidfastbd.com" />
-        <meta name="twitter:image" content="https://aidfastbd.com/og-image.jpg" /> 
-
-        {/* Google Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
