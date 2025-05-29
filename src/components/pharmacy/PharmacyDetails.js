@@ -7,14 +7,13 @@ import ProfileQR from "../profileQR";
 import { FaArrowLeft } from "react-icons/fa";
 import { image_base_endpoint, frontend_url, appname } from "../../utils/constants";
 import Head from "next/head";
-import DentalTabs from "../tabs/DentalTabs";
 import FloatingCallButton from "../FloatingCallButton";
 import Image from "next/image";
 import DiaLocation from "../DiaLocation";
 import TextTicker from "../TextTicker";
-import BloodTabs from "../tabs/BloodTabs";
+import PharmacyTabs from "../tabs/PharmacyTabs";
 
-const BloodDetails = ({ data }) => {
+const PharmacyDetails = ({ data }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
 
@@ -27,6 +26,7 @@ const BloodDetails = ({ data }) => {
     setUser(parsedUser);
   }, []);
 
+  const defaultImageUrl = "/images/logo.png";
   const profile = data?.profileImageUrl == null || data?.profileImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.profileImageUrl;
   const cover = data?.coverImageUrl == null || data?.coverImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.coverImageUrl;
 
@@ -41,26 +41,24 @@ const BloodDetails = ({ data }) => {
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
         <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/blood/${data?.userId}`} />
+        <meta property="og:url" content={`${frontend_url}/pharmacy/${data?.userId}`} />
       </Head>
 
-      <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Blood Bank Detail' trailingComponents={
+      <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Pharmacy Detail' trailingComponents={
         <div className='flex'>
-          <ProfileQR id={data?.userId} type={"BloodBank"} />
-          <FavouriteToggle isFill={data?.isFavourite} userId={user?.id} id={data?.userId} type={3} token={token} />
-          <ShareButton link={`${frontend_url}/blood/${data?.userId}`} />
+          <ProfileQR id={data?.userId} type={"Pharmacy"} />
+          <FavouriteToggle isFill={data?.isFavourite} userId={user?.id} id={data?.userId} type={4} token={token} />
+          <ShareButton link={`${frontend_url}/pharmacy/${data?.userId}`} />
         </div>
-      }
-      />
-
+      } />
       <div className="pt-16 aid-container">
-        <div className='p-4'>
+        <div className=''>
           <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
             <Image
               width={1000}
               height={1000}
               src={cover}
-              alt="Blood Bank cover"
+              alt="Pharmacy Center cover"
               className="w-full h-full object-fill"
             />
           </div>
@@ -71,14 +69,13 @@ const BloodDetails = ({ data }) => {
                 width={1000}
                 height={1000}
                 src={profile}
-                alt="Blood Bank Logo"
+                alt="Pharmacy Center Logo"
                 className="w-16 h-16 rounded-full mr-3"
               />
               <div>
                 <h1 className="text-lg font-bold">
                   {data?.name}
                 </h1>
-
                 <div className='flex items-center justify-start text-left space-x-2 mb-2'>
                   {data?.location !== null && (
                     <span className="text-sm text-gray-500">{data?.location}</span>
@@ -88,6 +85,7 @@ const BloodDetails = ({ data }) => {
               </div>
             </div>
           </div>
+
           {data?.notice != null ? <TextTicker text={data?.notice}></TextTicker> : null}
           {/* Info Section */}
           <div className="bg-gray-100 p-3 rounded-lg mb-4">
@@ -117,12 +115,12 @@ const BloodDetails = ({ data }) => {
         </div>
       </div>
       <div className='aid-container'>
-        <BloodTabs data={data} />
+        <PharmacyTabs data={data} />
       </div>
-      <FloatingCallButton number={data?.contact} />
+      <FloatingCallButton number={data?.contactNumber} />
 
     </>
   );
 };
 
-export default BloodDetails;
+export default PharmacyDetails;
