@@ -13,7 +13,7 @@ import Image from "next/image";
 import DiaLocation from "../DiaLocation";
 import TextTicker from "../TextTicker";
 
-const PhysiotherapyCenterDetails = ({ data }) => {
+const NursingCareHomeDetails = ({ data }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
 
@@ -47,19 +47,19 @@ const PhysiotherapyCenterDetails = ({ data }) => {
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
         <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/physiotherapy-center/${data?.id}`} />
+        <meta property="og:url" content={`${frontend_url}/nursing-home-care/${data?.id}`} />
       </Head>
 
 
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        title="physiotherapy center Detail"
+        title="Nursing Home Care  Center Detail"
         trailingComponents={
           <div className="flex">
             <ProfileQR
               slug={"newService"}
               id={data?.id}
-              type={"physiotherapy center"}
+              type={"Nursing Home Care Center"}
             />
             <FavouriteToggle
               isFill={data?.isFavourite}
@@ -68,7 +68,7 @@ const PhysiotherapyCenterDetails = ({ data }) => {
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/physiotherapy-center/${data?.id}`} />
+            <ShareButton link={`${frontend_url}/nursing-home-care/${data?.id}`} />
           </div>
         }
       />
@@ -149,4 +149,4 @@ const PhysiotherapyCenterDetails = ({ data }) => {
   );
 };
 
-export default PhysiotherapyCenterDetails;
+export default NursingCareHomeDetails;
