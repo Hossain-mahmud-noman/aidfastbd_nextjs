@@ -58,7 +58,7 @@ const Hero = () => {
             </div>
 
             {/* Right Side Image */}
-            <div className="relative border border-red-600 flex-1 bg-[url('/home/frame.png')] bg-no-repeat bg-center bg-contain">
+            <div className=" -mr-7 relative flex-1 bg-[url('/home/frame.png')] bg-no-repeat bg-center bg-contain">
                <Image
                   src="/home/d.png"
                   alt="Doctor"
