@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Dropdown, Drawer } from "antd";
 import {
    IoChevronDownOutline,
@@ -16,6 +16,7 @@ import { setMap } from "../../redux/features/locationSlice.js";
 
 const Navbar = ({ textColor = "text-black" }) => {
    const pathname = usePathname();
+   const inputRef = useRef(null);
    const router = useRouter();
    let lat = 23.8103;
    let lng = 90.4125;
