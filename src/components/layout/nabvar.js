@@ -13,6 +13,7 @@ import { FiMapPin, FiSearch, FiTarget, FiX } from "react-icons/fi";
 import { map_key } from "../../utils/constants.js";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { setMap } from "../../redux/features/locationSlice.js";
+import { Tooltip } from 'antd';
 
 const Navbar = ({ textColor = "text-black" }) => {
    const pathname = usePathname();
@@ -33,8 +34,7 @@ const Navbar = ({ textColor = "text-black" }) => {
       googleMapsApiKey: map_key,
    });
    const pagesItems = [
-      { path: "/team", label: ("Tour Guiders") },
-      { path: "/faq", label: ("FAQ") },
+      { path: "/about", label: ("About") },
       { path: "/contact", label: ("Contact") },
       { path: "/privacyPolicy", label: ("Privacy Policy") },
       { path: "/termsCondition", label: ("Terms & Conditions") },
@@ -148,15 +148,28 @@ const Navbar = ({ textColor = "text-black" }) => {
       await fetchLocationName(mapCenter.lat, mapCenter.lng);
       localStorage.setItem("lat", mapCenter.lat);
       localStorage.setItem("lon", mapCenter.lng);
-      // await fetchIndexNearestData({ lat: mapCenter.lat, lon: mapCenter.lng });
    };
 
    useEffect(() => {
       fetchCurrentLocation();
    }, []);
 
+   function getFormattedLocation(rawLocation) {
+      if (!rawLocation) return { shortText: "Select Location", tooltipText: "" };
 
+      const parts = rawLocation.split(',');
+      const location = parts.length > 1
+         ? parts.slice(1).map(part => part.trim()).join(', ')
+         : rawLocation.trim();
 
+      const isLong = location.length > 20;
+      const shortText = isLong ? location.slice(0, 20) + '...' : location;
+      const tooltipText = isLong ? location : '';
+
+      return { shortText, tooltipText };
+   }
+
+   const { shortText, tooltipText } = getFormattedLocation(locationName);
 
    return (
       <div className="w-full font-lato overflow-hidden relative z-50"
@@ -165,10 +178,10 @@ const Navbar = ({ textColor = "text-black" }) => {
             boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.08)'
          }}
       >
-         <div className=" aid-container flex flex-row justify-between items-center md:py-[18px] py-4 lg:px-0 bg-[#FFFFFF] text-[#061C3D]" >
+         <div className="aid-container flex flex-row justify-between items-center md:py-[18px] py-4 lg:px-0 bg-[#FFFFFF] text-[#061C3D]" >
             {/* Logo */}
             <Link href="/">
-               <div className="sm:w-[133px] sm:h-[40px] w-[153px] h-[46px] flex justify-start items-center  -ml-2 lg:ml-0 mt-1">
+               <div className="sm:w-[133px] sm:h-[40px] w-[153px] h-[46px] flex justify-start items-center -ml-2 lg:ml-0 mt-1">
                   <Image
                      src="/logo.png"
                      width={153}
@@ -179,7 +192,7 @@ const Navbar = ({ textColor = "text-black" }) => {
                </div>
             </Link>
             {/* Desktop Menu */}
-            <ul className="list-none xl:gap-10 gap-4 items-center hidden lg:flex">
+            <ul className=" description1 list-none xl:gap-10 gap-4 items-center hidden lg:flex">
                <NavItem
                   path="/doctor"
                   label={("Doctor")}
@@ -218,28 +231,29 @@ const Navbar = ({ textColor = "text-black" }) => {
             </ul>
 
             <div className="flex gap-0 sm:gap-2 items-center">
-               {/* <div className="hidden lg:block">
-                  <Link href="/package" className="view-button">
-                     {("Book A Trip")}
-                  </Link>
-               </div> */}
-
                <div
                   className="flex items-center space-x-1 cursor-pointer	select-none"
                   onClick={() => setIsModalOpen(true)}
                >
-                  <div className="text-gray-700 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
-                     {locationName === "" ? "Select Location" : locationName}
-                  </div>
+
+                  <Tooltip title={tooltipText || null}>
+                     <div className="description1 text-[#212121]">
+                        {shortText}
+                     </div>
+                  </Tooltip>
                   <button
-                     className="p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                     className=""
                      aria-label="Select location"
                   >
-                     <FiMapPin className="w-7 h-7 text-red-600" />
+                     <Image
+                        src="/home/map.png"
+                        width={30}
+                        height={30}
+                        alt="Location" />
                   </button>
                </div>
                <button
-                  className={`lg:hidden ${textColor} text-2xl`}
+                  className={`lg:hidden ${textColor} text-2xl `}
                   onClick={() => setIsDrawerOpen(true)}
                >
                   <IoMenuOutline className="text-2xl relative z-50 ml-2 sm:ml-0" />
@@ -301,72 +315,72 @@ const Navbar = ({ textColor = "text-black" }) => {
             </div>
          </Drawer>
          {isModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-screen p-4">
-            <div
-              className="fixed inset-0 bg-gray-500 bg-opacity-75"
-              onClick={() => setIsModalOpen(false)}
-            ></div>
+            <div className="fixed inset-0 z-50 overflow-y-auto">
+               <div className="flex items-center justify-center min-h-screen p-4">
+                  <div
+                     className="fixed inset-0 bg-gray-500 bg-opacity-75"
+                     onClick={() => setIsModalOpen(false)}
+                  ></div>
 
-            <div className="relative bg-white rounded-lg max-w-3xl w-full p-6 shadow-xl z-10">
-              <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl font-semibold">Select Location</h2>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="p-2 rounded-full hover:bg-gray-100"
-                >
-                  <FiX className="w-5 h-5" />
-                </button>
-              </div>
+                  <div className="relative bg-white rounded-lg max-w-3xl w-full p-6 shadow-xl z-10">
+                     <div className="flex justify-between items-center mb-2">
+                        <h2 className="text-xl font-semibold">Select Location</h2>
+                        <button
+                           onClick={() => setIsModalOpen(false)}
+                           className="p-2 rounded-full hover:bg-gray-100"
+                        >
+                           <FiX className="w-5 h-5" />
+                        </button>
+                     </div>
 
-              <div className="flex items-center space-x-2 mb-3">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  className="px-4 py-2 border rounded w-full"
-                  placeholder="Search location"
-                />
-                <FiSearch className="w-5 h-5 text-gray-600" />
-              </div>
+                     <div className="flex items-center space-x-2 mb-3">
+                        <input
+                           ref={inputRef}
+                           type="text"
+                           className="px-4 py-2 border rounded w-full"
+                           placeholder="Search location"
+                        />
+                        <FiSearch className="w-5 h-5 text-gray-600" />
+                     </div>
 
-              <div className="h-96 mb-4">
-                {isLoaded ? (
-                  <GoogleMap
-                    mapContainerClassName="w-full h-full rounded-lg"
-                    center={mapCenter}
-                    zoom={13}
-                  >
-                    <Marker
-                      position={mapCenter}
-                      draggable={true}
-                      onDragEnd={handleMarkerDrag}
-                    />
-                  </GoogleMap>
-                ) : (
-                  <p>Loading map...</p>
-                )}
-              </div>
+                     <div className="h-96 mb-4">
+                        {isLoaded ? (
+                           <GoogleMap
+                              mapContainerClassName="w-full h-full rounded-lg"
+                              center={mapCenter}
+                              zoom={13}
+                           >
+                              <Marker
+                                 position={mapCenter}
+                                 draggable={true}
+                                 onDragEnd={handleMarkerDrag}
+                              />
+                           </GoogleMap>
+                        ) : (
+                           <p>Loading map...</p>
+                        )}
+                     </div>
 
-              <div className="flex justify-between">
-                <button
-                  onClick={fetchCurrentLocation}
-                  className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200"
-                >
-                  <FiTarget className="inline-block mr-2" /> Get Current
-                  Location
-                </button>
+                     <div className="flex justify-between">
+                        <button
+                           onClick={fetchCurrentLocation}
+                           className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200"
+                        >
+                           <FiTarget className="inline-block mr-2" /> Get Current
+                           Location
+                        </button>
 
-                <button
-                  onClick={handleConfirmLocation}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                >
-                  Confirm Location
-                </button>
-              </div>
+                        <button
+                           onClick={handleConfirmLocation}
+                           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                        >
+                           Confirm Location
+                        </button>
+                     </div>
+                  </div>
+               </div>
             </div>
-          </div>
-        </div>
-      )}
+         )}
       </div>
    );
 };
@@ -375,7 +389,7 @@ export default Navbar;
 
 const NavItem = ({ path, label, pathname, textColor }) => (
    <li
-      className={`text-lg font-medium hover:text-primary ${pathname === path
+      className={`description1 hover:text-primary ${pathname === path
          ? "text-primary"
          : textColor === "text-[#061C3D]"
             ? "text-[#061C3D]"
@@ -387,7 +401,7 @@ const NavItem = ({ path, label, pathname, textColor }) => (
 );
 
 const DropdownMenuTrigger = ({ label, items, textColor }) => (
-   <li className={`text-lg font-medium ${textColor} hover:text-primary`}>
+   <li className={`description1 ${textColor} hover:text-primary`}>
       <Dropdown
          menu={{
             items: items.map(({ path, label }) => ({
@@ -417,7 +431,7 @@ const MobileDropdown = ({ title, items }) => {
       <div className="w-full">
          <button
             onClick={() => setOpen(!open)}
-            className="!text-lg flex justify-between items-center w-full py-2"
+            className="description1 flex justify-between items-center w-full py-2"
          >
             {title}
             <IoChevronDownOutline
@@ -434,8 +448,8 @@ const MobileDropdown = ({ title, items }) => {
                      href={item.path}
                      onClick={() => location.assign(item.path)}
                      className={`py-2 text-sm ${pathname === item.path
-                        ? "text-primary font-semibold"
-                        : "text-textMain"
+                        ? "text-primary description1"
+                        : "description1"
                         } hover:text-primary`}
                   >
                      {item.label.toUpperCase()}

@@ -11,6 +11,9 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+      },
       boxShadow: {
         "custom-light": "0px 4px 25px -1px rgba(0, 0, 0, 0.20)",
       },

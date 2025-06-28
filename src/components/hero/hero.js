@@ -1,9 +1,12 @@
 'use client'
+
+import { Avatar } from 'antd'
 import Image from 'next/image'
+
 const Hero = () => {
    return (
-      <section className="aid-container bg-[#EEF8FF] lg:rounded-[20px] rounded-[10px]">
-         <div className="flex flex-col md:flex-row justify-between items-center gap-10">
+      <section className="">
+         <div className="bg-[#EEF8FF] rounded-[10px] xl:rounded-[20px] aid-container mx-auto flex flex-col lg:flex-row items justify-between gap-10 items-center overflow-hidden">
             {/* Left Side Content */}
             <div className='xl:pl-10 lg:pl-8 pl-5'>
                <span className="text-sm md:text-base text-blue-600 font-semibold bg-blue-100 px-3 py-1 rounded-full inline-block mb-4">
@@ -19,62 +22,63 @@ const Hero = () => {
                </p>
 
                <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="bg-[#1087EF] text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-all duration-300">
+                  <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition">
                      অ্যাপয়েন্টমেন্ট নিন →
                   </button>
-                  <button className="text-[#1087EF] font-medium underline hover:text-blue-800 transition-all duration-300">
+                  <button className="text-blue-600 font-medium underline hover:text-blue-800 transition">
                      একটি কল নির্ধারণ করুন
                   </button>
                </div>
 
                <div className="flex items-center mt-6 gap-3">
-                  <div className="flex -space-x-2">
-                     <Image
-                        src="/user1.jpg"
-                        alt="User 1"
-                        width={32}
-                        height={32}
-                        className="rounded-full border-2 border-white"
-                     />
-                     <Image
-                        src="/user2.jpg"
-                        alt="User 2"
-                        width={32}
-                        height={32}
-                        className="rounded-full border-2 border-white"
-                     />
-                     <Image
-                        src="/user3.jpg"
-                        alt="User 3"
-                        width={32}
-                        height={32}
-                        className="rounded-full border-2 border-white"
-                     />
-                  </div>
+                  <Avatar.Group>
+                     <Avatar size={40} src="/home/hero/d1.png" />
+                     <Avatar size={40} src="/home/hero/d2.png" />
+                     <Avatar size={40} src="/home/hero/d3.png" />
+                     <Avatar size={40} src="/home/hero/d4.png" />
+                  </Avatar.Group>
                   <p className="text-sm text-gray-600">
                      ১২০০+ রোগীর বিশ্বাসে রেটিং ৫/৫
                   </p>
                </div>
             </div>
 
-            {/* Right Side Image */}
-            <div className=" -mr-7 relative flex-1 bg-[url('/home/frame.png')] bg-no-repeat bg-center bg-contain">
-               <Image
-                  src="/home/d.png"
-                  alt="Doctor"
-                  width={1000}
-                  height={1000}
-                  className="w-[343px] h-[400px] mx-auto object-cover"
-               />
+            {/* Right Side Image aligned to far right */}
+            <div className="relative flex justify-end items-center h-[421px] w-[412px]">
+               <div className="relative h-full w-full bg-[url('/home/frame.png')] bg-no-repeat bg-center bg-cover rounded-[10px] xl:rounded-[20px]">
+                  {/* Doctor Image at bottom right */}
+                  <div className="absolute bottom-0 right-0 w-[300px] h-[330px] overflow-hidden">
+                     <Image
+                        src="/home/d.png"
+                        alt="Doctor"
+                        width={1000}
+                        height={1000}
+                        className="w-[300px] h-[330px] object-fill"
+                     />
+                  </div>
 
-               <div className="absolute top-6 left-6 bg-white shadow-lg rounded-xl px-4 py-3 text-center">
-                  <p className="text-sm font-semibold text-gray-800">২৪+</p>
-                  <p className="text-xs text-gray-500">ঘন্টা অনলাইন সাপোর্ট</p>
-               </div>
+                  {/* Floating Info Boxes */}
+                  <div className="absolute top-4 right-4 bg-white shadow-[12px] rounded-xl px-2 py-2 text-center">
+                     <p className="description2 text-[#252525]">২৪+</p>
+                     <p className="text-xs text-[#555555]">ঘন্টা জরুরি সার্ভিস</p>
+                  </div>
 
-               <div className="absolute bottom-6 left-6 bg-white shadow-lg rounded-xl px-4 py-3 text-center">
-                  <p className="text-sm font-semibold text-gray-800">৩০+</p>
-                  <p className="text-xs text-gray-500">অভিজ্ঞ ডাক্তার</p>
+                  <div className="absolute bottom-1/2 left-4 bg-white shadow-md rounded-xl px-2 py-2 text-center">
+                     <div className='flex items-center justify-center'>
+                        <div>
+                           <Avatar.Group>
+                              <Avatar src="/home/hero/d1.png" />
+                              <Avatar src="/home/hero/d2.png" />
+                              <Avatar src="/home/hero/d3.png" />
+
+                           </Avatar.Group>
+                        </div>
+                        <div>
+                           <p className="description2 text-[#252525]">৩০+</p>
+                           <p className="text-xs text-[#555555]">অভিজ্ঞ ডাক্তার</p>
+                        </div>
+                     </div>
+                  </div>
                </div>
             </div>
 
