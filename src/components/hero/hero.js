@@ -9,12 +9,12 @@ const Hero = () => {
          <div className="bg-[#EEF8FF] rounded-[10px] xl:rounded-[20px] aid-container mx-auto flex flex-col lg:flex-row items justify-between gap-10 items-center overflow-hidden">
             {/* Left Side Content */}
             <div className='xl:pl-10 lg:pl-8 pl-5'>
-               <span className="text-sm md:text-base text-blue-600 font-semibold bg-blue-100 px-3 py-1 rounded-full inline-block mb-4">
+               <span className="description2 text-[#1087EF] font-semibold bg-[#7AC1FF2E] px-3 py-1 rounded-md inline-block mb-4">
                   AidFast-এ আপনাকে স্বাগতম
                </span>
 
-               <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4 leading-snug">
-                  স্বাস্থ্যসেবা খুঁজে পাওয়া নিয়ে আর <span className="text-blue-600">দুশ্চিন্তা</span> নয়
+               <h1 className="heading2 text-[#212121] mb-4 ">
+                  স্বাস্থ্যসেবা খুঁজে পাওয়া নিয়ে আর <span className="text-[#1087EF]">দুশ্চিন্তা</span> নয়
                </h1>
 
                <p className="text-gray-600 mb-6 leading-relaxed">
@@ -22,10 +22,10 @@ const Hero = () => {
                </p>
 
                <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition">
+                  <button className="bg-[#1087EF] text-white px-6 py-3 description2 hover:bg-blue-700 transition-all duration-300">
                      অ্যাপয়েন্টমেন্ট নিন →
                   </button>
-                  <button className="text-blue-600 font-medium underline hover:text-blue-800 transition">
+                  <button className="text-[#1087EF] font-medium underline hover:text-blue-800 transition">
                      একটি কল নির্ধারণ করুন
                   </button>
                </div>
@@ -56,11 +56,9 @@ const Hero = () => {
                         className="w-[300px] h-[330px] object-fill"
                      />
                   </div>
-
-                  {/* Floating Info Boxes */}
                   <div className="absolute top-4 right-4 bg-white shadow-[12px] rounded-xl px-2 py-2 text-center">
                      <p className="description2 text-[#252525]">২৪+</p>
-                     <p className="text-xs text-[#555555]">ঘন্টা জরুরি সার্ভিস</p>
+                     <p className="text-[10px] text-[#555555]">ঘন্টা জরুরি সার্ভিস</p>
                   </div>
 
                   <div className="absolute bottom-1/2 left-4 bg-white shadow-md rounded-xl px-2 py-2 text-center">
@@ -74,8 +72,8 @@ const Hero = () => {
                            </Avatar.Group>
                         </div>
                         <div>
-                           <p className="description2 text-[#252525]">৩০+</p>
-                           <p className="text-xs text-[#555555]">অভিজ্ঞ ডাক্তার</p>
+                           <p className="description2 text-[#252525] text-left">৩০+</p>
+                           <p className="text-[10px] text-[#555555]">অভিজ্ঞ ডাক্তার</p>
                         </div>
                      </div>
                   </div>
