@@ -8,25 +8,25 @@ import { FaArrowRightLong } from "react-icons/fa6"
 const Information = () => {
    const data = [
       {
-         "image": "/services/doctor.png",
-         "heading": "General",
-         "description": "Consult experienced "
+         "image": "/home/info/i1.png",
+         "heading": "7900+",
+         "description": "Active Users Nationwide"
       },
       {
-         "image": "/services/ambulance.png",
-         "heading": "Ambulance",
-         "description": "Get emergency "
+         "image": "/home/info/i2.png",
+         "heading": "94%",
+         "description": "Received 5-Star Feedback"
       },
       {
-         "image": "/services/medicine.png",
-         "heading": "Pharmacy",
-         "description": "Order medicines "
+         "image": "/home/info/i3.png",
+         "heading": "29+",
+         "description": "Trusted Healthcare Services"
       },
       {
-         "image": "/services/lab-test.png",
-         "heading": "Lab ",
-         "description": "Book lab "
-      },
+         "image": "/home/info/i4.png",
+         "heading": "1200+",
+         "description": "App Installs Across Devices"
+      }
    ]
 
    return (
@@ -44,7 +44,7 @@ const Information = () => {
                            alt="Service image"
                         />
                         <h4 className="heading3 mt-4 md:mt-5 xl:mt-6 text-[#061C3D] text-center">{Item.heading}</h4>
-                        <h4 className="description1 mt-2 md:mt-3 text-[#42526B] text-center">{Item.description}</h4>
+                        <h4 className="description1 mt-2 md:mt-3 text-[#42526B] text-center whitespace-pre">{Item.description}</h4>
                      </div>
                   ))
                }

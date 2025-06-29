@@ -30,40 +30,42 @@ const Testimonials = () => {
       {
          image: "/home/testimonials/t1.jpg",
          user: "Halima Khatun",
-         comment: "AidFastBD helped me book a doctor within minutes. The service is quick and efficient!",
+         comment: "Thanks to AidFastBD, I was able to consult a qualified doctor without stepping out of my house. It’s truly a revolutionary service for busy people like me.",
          rate: 5
       },
       {
-        image: "/home/testimonials/t2.jpg",
+         image: "/home/testimonials/t2.jpg",
          user: "Md. Riaz Uddin",
-         comment: "I needed an ambulance late at night and got one in just 15 minutes. Great platform!",
+         comment: "In an emergency, AidFastBD’s ambulance reached us faster than I expected. Their service is dependable and life-saving.",
          rate: 5
       },
       {
          image: "/home/testimonials/t3.jpg",
          user: "Jannatul Ferdous",
-         comment: "The online consultation was smooth, and the doctor was very kind and professional.",
-         rate: 4
+         comment: "From doctor appointments to lab tests, everything was seamless. I felt cared for every step of the way. Highly recommended!",
+         rate: 5
       },
       {
          image: "/home/testimonials/t4.jpg",
          user: "Sajjad Hossain",
-         comment: "Very helpful for elderly people. My parents could consult with doctors from home.",
+         comment: "AidFastBD has made healthcare simpler for my parents. They no longer have to wait in long queues — everything is just a few taps away.",
          rate: 5
       },
       {
          image: "/home/testimonials/t5.jpg",
          user: "Fatema Akter",
-         comment: "Ordered medicine through the app — delivery was fast and affordable. Highly recommended.",
+         comment: "I ordered medicines through the app, and they arrived on time with proper packaging. Safe, reliable, and stress-free!",
          rate: 4
       },
       {
          image: "/home/testimonials/t6.jpg",
          user: "Nurul Islam",
-         comment: "A lifesaver during emergencies. Booking services online has never been easier.",
+         comment: "This is what modern healthcare should look like. AidFastBD brings hospitals, doctors, and support to your fingertips.",
          rate: 5
       },
+     
    ];
+
 
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 bg-[#1087EF] rouonded-[12px]">
@@ -101,8 +103,8 @@ const Testimonials = () => {
                                  className="w-[68px] h-[68px] rounded-full object-fill mx-auto"
                               />
                               <p className="mt-2 description2 text-white text-center">{item.user}</p>
-                              <p className="mt-3 lg:mt-4 xl:mt-[18px] description1 text-white text-center">{item.comment}</p>
-                              <Rate count={item.rate} defaultValue={item.rate} className="text-[#FFA500] text-center flex items-center justify-center" />
+                              <p className="mt-3 lg:mt-4 xl:mt-[18px] description1 text-white text-center max-w-[731px] mx-auto">{item.comment}</p>
+                              <Rate count={item.rate} defaultValue={item.rate} className="mt-4 lg:mt-5 text-[#FFA500] text-center flex items-center justify-center" />
                            </div>
                         </div>
                      </SwiperSlide>
