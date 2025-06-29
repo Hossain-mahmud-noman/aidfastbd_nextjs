@@ -66,9 +66,6 @@ body {
 
 /* faq.css */
 
-.custom-collapse {
-  background-color: transparent;
-}
 
 .faq-panel {
   background-color: transparent;
@@ -76,19 +73,31 @@ body {
   transition: all 0.3s ease;
 }
 
+
 .faq-panel.active {
-  background-color: #F8FCFF;
+  background-color: transparent; 
 }
 
-.faq-question {
-  border-block-end: 1px solid #e5e5e5;
-  padding-block-end: 10px;
+
+.faq-panel.active .ant-collapse-header {
+  background-color: #F8FCFF !important;
+  border-block-end: none !important;
+  padding: 16px; 
+}
+
+
+.ant-collapse-content {
+  background-color: #F8FCFF !important;
+  border-block-start: none !important;
   transition: all 0.3s ease;
 }
 
-.faq-panel.active .faq-question {
-  border-block-end: none;
+
+.ant-collapse-item {
+  margin-block-end: 12px;
+  border: none;
 }
+
 
 .rotate-icon {
   transform: rotate(180deg);
@@ -96,11 +105,32 @@ body {
 }
 
 
+.ant-collapse .ant-collapse-content {
+  color: rgba(0, 0, 0, 0.88);
+  background-color: #F8FCFF;
+  border-block-start: 1px solid #d9d9d9;
+}
+
+.ant-collapse {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  line-height: 1.5714285714285714;
+  list-style: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+}
+
 .dashinput {
   border: 1px solid #e8eae8;
   color: #05073c !important;
   inline-size: 100%;
 }
+
 .dashinput::placeholder {
   color: #717171 !important;
   opacity: 1;
@@ -112,15 +142,14 @@ body {
 }
 
 .ant-form-item-control textarea {
-  margin-block-start: 4px !important;  
+  margin-block-start: 4px !important;
 }
 
 
 
-.ant-form-item-label > label {
-  margin-block-end: 1px !important;  
+.ant-form-item-label>label {
+  margin-block-end: 1px !important;
   font-size: 14px;
   color: #05073c !important;
   font-weight: 500;
 }
-

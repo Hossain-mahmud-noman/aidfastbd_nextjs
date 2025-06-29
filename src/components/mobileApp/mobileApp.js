@@ -36,7 +36,7 @@ const MobileApp = () => {
                width={1000}
                height={1000}
                alt="mobile"
-               className="w-full md:w-[233px] xl:h-[488px] lg:h-[380px] h-[280px] object-fill"
+               className="w-[220px] md:w-[233px] xl:h-[488px] lg:h-[380px] h-[400px] object-fill"
             />
          </div>
       </section>

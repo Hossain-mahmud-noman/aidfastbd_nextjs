@@ -79,7 +79,7 @@ const FAQ = () => {
                onChange={handlePanelChange}
                expandIconPosition="end"
                expandIcon={({ isActive }) => (
-                  <FaAngleUp size={16} className={`transition-transform duration-300 ${isActive ? "rotate-icon" : ""}`} />
+                  <FaAngleUp size={16} className={`transition-transform xl:!mt-5 lg:!mt-4 md:!mt-3 !mt-2 duration-300 ${isActive ? "rotate-icon" : ""}`} />
                )}
                className="custom-collapse"
             >
@@ -87,13 +87,13 @@ const FAQ = () => {
                   <Collapse.Panel
                      key={item.key}
                      header={
-                        <p className="heading-5 text-[#2B2B2B] ">
+                        <p className="description2 text-[#212121] xl:p-5 lg:p-4 md:p-3 p-2">
                            {item.question}
                         </p>
                      }
                      className={`faq-panel ${activeKey === item.key ? "active" : ""}`}
                   >
-                     <p className="px-2 description-1 text-[#44433F]">{item.answer}</p>
+                     <p className="xl:p-5 lg:p-4 md:p-3 p-2 description1 text-[#212121]">{item.answer}</p>
                   </Collapse.Panel>
                ))}
             </Collapse>

@@ -168,8 +168,23 @@ const Navbar = ({ textColor = "text-black" }) => {
 
       return { shortText, tooltipText };
    }
+   function getFormattedLocation2(rawLocation) {
+      if (!rawLocation) return { shortText: "Select Location", tooltipText: "" };
+
+      const parts = rawLocation.split(',');
+      const location = parts.length > 1
+         ? parts.slice(1).map(part => part.trim()).join(', ')
+         : rawLocation.trim();
+
+      const isLong = location.length > 12;
+      const shortText2 = isLong ? location.slice(0, 12) + '...' : location;
+      const tooltipText2 = isLong ? location : '';
+
+      return { shortText2, tooltipText2 };
+   }
 
    const { shortText, tooltipText } = getFormattedLocation(locationName);
+   const { shortText2, tooltipText2 } = getFormattedLocation2(locationName);
 
    return (
       <div className="w-full font-lato overflow-hidden relative z-50"
@@ -236,11 +251,20 @@ const Navbar = ({ textColor = "text-black" }) => {
                   onClick={() => setIsModalOpen(true)}
                >
 
-                  <Tooltip title={tooltipText || null}>
-                     <div className="description1 text-[#212121]">
-                        {shortText}
-                     </div>
-                  </Tooltip>
+                  <div className="hidden md:flex">
+                     <Tooltip title={tooltipText || null}>
+                        <div className="description1 text-[#212121]">
+                           {shortText}
+                        </div>
+                     </Tooltip>
+                  </div>
+                  <div className="flex md:hidden">
+                     <Tooltip title={tooltipText2 || null}>
+                        <div className="description1 text-[#212121]">
+                           {shortText2}
+                        </div>
+                     </Tooltip>
+                  </div>
                   <button
                      className=""
                      aria-label="Select location"

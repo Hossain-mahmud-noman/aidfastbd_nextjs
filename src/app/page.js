@@ -51,9 +51,9 @@ export default async function Home() {
         <FAQ />
         <Blog />
         <Contact />
-        <AidComponent />
+        {/* <AidComponent />
         <Nearest />
-        <BottomNavigation active="/" />
+        <BottomNavigation active="/" /> */}
       </div>
     </>
   );

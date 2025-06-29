@@ -6,7 +6,7 @@ import { Form } from "antd";
 import { FiMail } from "react-icons/fi";
 
 const Contact = () => {
-   const [form] = Form.useForm(); // ✅ use correct destructuring
+   const [form] = Form.useForm(); 
 
    const handleSubmit = async (values) => {
       console.log(values);
@@ -14,8 +14,7 @@ const Contact = () => {
 
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 bg-[url('/home/contact/bg.png')] bg-no-repeat bg-cover bg-center">
-         <div className="flex xl:gap-[94px] lg:gap-8 gap-5 aid-container py-10 lg:py-16 xl:py-20">
-            {/* Left Content */}
+         <div className="flex flex-col md:flex-row xl:gap-[94px] lg:gap-8 gap-5 aid-container py-10 lg:py-16 xl:py-20">
             <div className="flex-1 mt-5">
                <h1 className="text-white heading1">Contact Us</h1>
                <p className="text-white description2 mt-2 max-w-[477px]">
@@ -33,7 +32,6 @@ const Contact = () => {
                </div>
             </div>
 
-            {/* Right Form Card */}
             <div className="flex-1 shadow-custom-light bg-white rounded-lg lg:rounded-2xl xl:rounded-[24px] xl:p-10 lg:p-6 p-5">
                <h4 className="heading3 text-[#1A1A1A]">
                   {"Request a quote — let's work together!"}

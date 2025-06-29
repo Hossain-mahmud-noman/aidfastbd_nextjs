@@ -82,13 +82,13 @@ const Service = () => {
 
    return (
       <section className="mt-5 lg:mt-6 xl:mt-8 aid-container">
-         <div className="flex items-center justify-between">
+         <div className="flex items-center justify-between gap-2">
             <div>
                <h1 className="text-[#212121] heading1">Services Of AisFast</h1>
                <p className="text-[#061C3D] description2 mt-3 lg;mt-4">AidFastBD unites medical and support services nationwide to simplify your healthcare</p>
             </div>
             <Link href={"/service"} className="flex items-center gap-1.5">
-               <p className="text-[#1087EF] description2"> More Srvices</p>
+               <p className="text-[#1087EF] description2 whitespace-pre"> More Srvices</p>
                <FaArrowRightLong className="description1 text-[#1087EF]" />
             </Link>
          </div>
@@ -102,9 +102,9 @@ const Service = () => {
                   >
                      <Image
                         src={item.image}
-                        width={76}
-                        height={76}
-                        className="object-contain"
+                        width={100}
+                        height={100}
+                        className="h-12 w-12 md:w-[76px] md:h-[76px] object-contain"
                         alt="Service image"
                      />
                      <h4 className="heading3 mt-6 text-[#061C3D]">{item.heading}</h4>

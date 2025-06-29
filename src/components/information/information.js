@@ -37,11 +37,11 @@ const Information = () => {
                            src={Item.image}
                            width={100}
                            height={100}
-                           className="w-12 h-12 object-fill mx-auto"
+                           className="w-8 md:w-12 h-8 md:h-12 object-fill mx-auto"
                            alt="Service image"
                         />
                         <h4 className="heading3 mt-4 md:mt-5 xl:mt-6 text-[#061C3D] text-center">{Item.heading}</h4>
-                        <h4 className="description1 mt-2 md:mt-3 text-[#42526B] text-center whitespace-pre">{Item.description}</h4>
+                        <h4 className="description1 mt-2 md:mt-3 text-[#42526B] text-center sm:whitespace-pre">{Item.description}</h4>
                      </div>
                   ))
                }

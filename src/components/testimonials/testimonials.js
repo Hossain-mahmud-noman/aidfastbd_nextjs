@@ -94,7 +94,7 @@ const Testimonials = () => {
                   {data.map((item, index) => (
                      <SwiperSlide key={index} >
                         <div className="max-w-4xl mx-auto flex items-center justify-center">
-                           <div className="w-full mx-auto ">
+                           <div className="w-full mx-12">
                               <Image
                                  src={item.image}
                                  width={100}
@@ -103,7 +103,7 @@ const Testimonials = () => {
                                  className="w-[68px] h-[68px] rounded-full object-fill mx-auto"
                               />
                               <p className="mt-2 description2 text-white text-center">{item.user}</p>
-                              <p className="mt-3 lg:mt-4 xl:mt-[18px] description1 text-white text-center max-w-[731px] mx-auto">{item.comment}</p>
+                              <p className="mt-3 lg:mt-4 xl:mt-[18px] description1 text-white text-center max-w-[731px] mx-4">{item.comment}</p>
                               <Rate count={item.rate} defaultValue={item.rate} className="mt-4 lg:mt-5 text-[#FFA500] text-center flex items-center justify-center" />
                            </div>
                         </div>
