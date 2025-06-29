@@ -9,7 +9,8 @@ import AidComponent from '../components/AidComponent';
 import Service from '../components/service/service.js'
 import AbmulenceService from '../components/ambulenceService/abmulenceService.js'
 import Information from '../components/information/information.js'
-import MobileApp from '../components//mobileApp/mobileApp.js'
+import MobileApp from '../components/mobileApp/mobileApp.js'
+import Testimonials from '../components/testimonials/testimonials.js'
 const fetchCarousel = async () => {
 
   try {
@@ -43,6 +44,7 @@ export default async function Home() {
         <AbmulenceService />
         <Information />
         <MobileApp />
+        <Testimonials />
         <AidComponent />
         <Nearest />
         <BottomNavigation active="/" />
