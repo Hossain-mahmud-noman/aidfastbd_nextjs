@@ -72,13 +72,13 @@ const AmbulenceService = () => {
    return (
       <section className="mt-16 md:mt-24 lg:mt-28 xl:mt-[180px] aid-container">
          <div className="flex items-center flex-col md:flex-row xl:gap-[72px] lg:gap-12 gap-5">
-               <Image
-                  src="/home/service/ambulence.png"
-                  width={1000}
-                  height={1000}
-                  alt="Abmulence"
-                  className="w-full md:w-[429px] xl:h-[303px] lg:h-[280px] h-[200px] object-fill"
-               />
+            <Image
+               src="/home/service/ambulence.png"
+               width={1000}
+               height={1000}
+               alt="Abmulence"
+               className="w-full md:w-[429px] xl:h-[303px] lg:h-[280px] h-[200px] object-fill"
+            />
             <div className="w-full">
                <h1 className="heading1 text-[#212B36]">Get Ambulance Service at Home</h1>
                <p className="description2 text[#061C3D] mt-4 md:mt-5 lg:mt-6 xl:mt-[30px]">Get licensed ambulance service delivered to your doorstep within Dhaka in the fastest time, with discounts. Book online now</p>
