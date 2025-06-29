@@ -7,7 +7,8 @@ import Carousel from '../components/Carousel';
 import BottomNavigation from "../components/BottomNavigation";
 import AidComponent from '../components/AidComponent';
 import Service from '../components/service/service.js'
-import AbmulenceService from '../components//ambulenceService/abmulenceService.js'
+import AbmulenceService from '../components/ambulenceService/abmulenceService.js'
+import Information from '../components/information/information.js'
 const fetchCarousel = async () => {
 
   try {
@@ -39,6 +40,7 @@ export default async function Home() {
         <Hero />
         <Service />
         <AbmulenceService />
+        <Information />
         <AidComponent />
         <Nearest />
         <BottomNavigation active="/" />
