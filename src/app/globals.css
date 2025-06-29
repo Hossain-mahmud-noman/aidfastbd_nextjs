@@ -58,3 +58,33 @@ body {
 .heading3 {
   @apply xl:text-2xl lg:text-xl text-[18px] font-inter font-semibold;
 }
+/* faq.css */
+
+.custom-collapse {
+  background-color: transparent;
+}
+
+.faq-panel {
+  background-color: transparent;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.faq-panel.active {
+  background-color: #F8FCFF;
+}
+
+.faq-question {
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.faq-panel.active .faq-question {
+  border-bottom: none;
+}
+
+.rotate-icon {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}

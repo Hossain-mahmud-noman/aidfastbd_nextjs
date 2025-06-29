@@ -1,7 +1,6 @@
 'use client'
 
 import Image from "next/image"
-import Link from "next/link"
 import { useEffect, useRef } from "react"
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -97,7 +96,7 @@ const Testimonials = () => {
 
    ]
    return (
-      <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20  bg-[#1087EF] rouonded-[12px]">
+      <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 bg-[#1087EF] rouonded-[12px]">
          <div className="aid-container py-6 md:py-7 lg:py-8 xl:py-10 w-full">
             <div className="w-full relative">
                <button
