@@ -22,8 +22,8 @@ const Hero = () => {
                </p>
 
                <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="bg-[#1087EF] text-white px-6 py-3 description2 hover:bg-blue-700 transition-all duration-300">
-                     অ্যাপয়েন্টমেন্ট নিন →
+                  <button className="bg-[#1087EF] text-white px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300">
+                     অ্যাপয়েন্টমেন্ট নিন  →
                   </button>
                   <button className="text-[#1087EF] font-medium underline hover:text-blue-800 transition">
                      একটি কল নির্ধারণ করুন

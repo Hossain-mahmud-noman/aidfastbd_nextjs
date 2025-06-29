@@ -55,6 +55,6 @@ body {
 .heading2 {
   @apply xl:text-3xl lg:text-2xl md:text-xl text-base font-inter font-semibold;
 }
-.heading2 {
+.heading3 {
   @apply xl:text-2xl lg:text-xl text-[18px] font-inter font-semibold;
 }

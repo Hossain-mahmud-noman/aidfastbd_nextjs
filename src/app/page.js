@@ -6,7 +6,8 @@ import Hero from "../components/hero/hero.js";
 import Carousel from '../components/Carousel';
 import BottomNavigation from "../components/BottomNavigation";
 import AidComponent from '../components/AidComponent';
-
+import Service from '../components/service/service.js'
+import AbmulenceService from '../components//ambulenceService/abmulenceService.js'
 const fetchCarousel = async () => {
 
   try {
@@ -36,6 +37,8 @@ export default async function Home() {
       <div style={{ paddingBlockEnd: "70px" }} className="font-[family-name:var(--font-geist-sans)] pt-16">
         {/* <Carousel data={data} /> */}
         <Hero />
+        <Service />
+        <AbmulenceService />
         <AidComponent />
         <Nearest />
         <BottomNavigation active="/" />
