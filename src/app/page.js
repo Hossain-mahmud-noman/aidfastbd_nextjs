@@ -13,6 +13,7 @@ import MobileApp from '../components/mobileApp/mobileApp.js'
 import Testimonials from '../components/testimonials/testimonials.js'
 import FAQ from '../components/faq/faq.js'
 import Blog from '../components/blog/blog.js'
+import Contact from '../components/contact/contact.js'
 const fetchCarousel = async () => {
 
   try {
@@ -49,6 +50,7 @@ export default async function Home() {
         <Testimonials />
         <FAQ />
         <Blog />
+        <Contact />
         <AidComponent />
         <Nearest />
         <BottomNavigation active="/" />
