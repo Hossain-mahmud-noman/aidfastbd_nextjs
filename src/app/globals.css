@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -46,18 +47,23 @@ body {
 .description1 {
   @apply lg:text-base md:text-sm sm:text-base font-inter font-normal;
 }
+
 .description2 {
   @apply xl:text-[18px] lg:text-base text-sm font-inter font-medium;
 }
+
 .heading1 {
   @apply xl:text-5xl lg:text-4xl md:text-3xl text-2xl font-inter font-bold;
 }
+
 .heading2 {
   @apply xl:text-3xl lg:text-2xl md:text-xl text-base font-inter font-semibold;
 }
+
 .heading3 {
   @apply xl:text-2xl lg:text-xl text-[18px] font-inter font-semibold;
 }
+
 /* faq.css */
 
 .custom-collapse {
@@ -75,16 +81,46 @@ body {
 }
 
 .faq-question {
-  border-bottom: 1px solid #e5e5e5;
-  padding-bottom: 10px;
+  border-block-end: 1px solid #e5e5e5;
+  padding-block-end: 10px;
   transition: all 0.3s ease;
 }
 
 .faq-panel.active .faq-question {
-  border-bottom: none;
+  border-block-end: none;
 }
 
 .rotate-icon {
   transform: rotate(180deg);
   transition: transform 0.3s ease;
 }
+
+
+.dashinput {
+  border: 1px solid #e8eae8;
+  color: #05073c !important;
+  inline-size: 100%;
+}
+.dashinput::placeholder {
+  color: #717171 !important;
+  opacity: 1;
+}
+
+.dashinput .ant-form-item .ant-form-item-label>label {
+  color: #212121 !important;
+  font-size: 14px !important;
+}
+
+.ant-form-item-control textarea {
+  margin-block-start: 4px !important;  
+}
+
+
+
+.ant-form-item-label > label {
+  margin-block-end: 1px !important;  
+  font-size: 14px;
+  color: #05073c !important;
+  font-weight: 500;
+}
+

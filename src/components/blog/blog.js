@@ -7,32 +7,32 @@ import { FaArrowRightLong } from "react-icons/fa6"
 const Blog = () => {
    const data = [
       {
-         "image": "/services/doctor.png",
-         "heading": "General Physicians",
-         "description": "Consult experienced doctors for primary health concerns.",
+         image: "/home/blog/b1.png",
+         heading: "When to See a General Physician: Early Signs You Shouldn’t Ignore",
+         description: "Discover the key symptoms that signal when it’s time to consult a general physician, and how early intervention can make all the difference.",
          time: 2
       },
       {
-         "image": "/services/ambulance.png",
-         "heading": "Ambulance Services",
-         "description": "Get emergency ambulance support anywhere in the country.",
+         image: "/home/blog/b2.png",
+         heading: "How Fast Ambulance Access Can Save Lives",
+         description: "Explore the critical role of ambulance response time in emergencies and how technology is helping reduce delays across Bangladesh.",
          time: 3
       },
       {
-         "image": "/services/medicine.png",
-         "heading": "Pharmacy Delivery",
-         "description": "Order medicines online and receive them at your doorstep.",
+         image: "/home/blog/b3.png",
+         heading: "The Future of Pharmacy: Online Medicine Delivery in Bangladesh",
+         description: "Learn how digital pharmacy services are making healthcare more accessible and what you should know before ordering medicines online.",
          time: 6
       },
+   ];
 
-   ]
 
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 aid-container">
          <div className="flex items-center justify-between">
             <div>
                <h1 className="text-[#212121] heading1">Browse updated blogs</h1>
-               <p className="text-[#061C3D] description2 mt-3 lg:mt-4">Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy</p>
+               <p className="text-[#061C3D] description2 mt-3 lg:mt-4 max-w-[834px]">Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy</p>
             </div>
             <Link href={"/service"} className="flex items-center gap-1.5">
                <p className="text-[#1087EF] description2"> More Blog</p>
@@ -61,7 +61,7 @@ const Blog = () => {
                                        width={100}
                                        height={100}
                                        alt="Logo"
-                                       className="w-6 h-6 object-fill p-1"
+                                       className="object-fill"
                                     />
 
                                  </div>
@@ -69,7 +69,7 @@ const Blog = () => {
                               </div>
                               <p className="text-xs text-[#717070]">{Item.time} Hours ago</p>
                            </div>
-                           <h4 className="text-xs mt-3 lg:mt-4 text-[#42526B] ">{Item.description}</h4>
+                           <h4 className="text-xs text-[#42526B] text-justify">{Item.description}</h4>
                         </div>
                      </div>
                   ))
