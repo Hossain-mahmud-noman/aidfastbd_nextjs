@@ -28,73 +28,43 @@ const Testimonials = () => {
    };
    const data = [
       {
-         image: "/home/testimonials/t1.png",
+         image: "/home/testimonials/t1.jpg",
          user: "Halima Khatun",
-         comment: "its a great ",
+         comment: "AidFastBD helped me book a doctor within minutes. The service is quick and efficient!",
          rate: 5
       },
       {
-         image: "/home/testimonials/t1.png",
-         user: "Halima Khatun",
-         comment: "its a great ",
+        image: "/home/testimonials/t2.jpg",
+         user: "Md. Riaz Uddin",
+         comment: "I needed an ambulance late at night and got one in just 15 minutes. Great platform!",
          rate: 5
       },
       {
-         image: "/home/testimonials/t1.png",
-         user: "Halima Khatun",
-         comment: "its a great ",
+         image: "/home/testimonials/t3.jpg",
+         user: "Jannatul Ferdous",
+         comment: "The online consultation was smooth, and the doctor was very kind and professional.",
+         rate: 4
+      },
+      {
+         image: "/home/testimonials/t4.jpg",
+         user: "Sajjad Hossain",
+         comment: "Very helpful for elderly people. My parents could consult with doctors from home.",
          rate: 5
       },
       {
-         image: "/home/testimonials/t1.png",
-         user: "Halima Khatun",
-         comment: "its a great ",
-         rate: 5
+         image: "/home/testimonials/t5.jpg",
+         user: "Fatema Akter",
+         comment: "Ordered medicine through the app — delivery was fast and affordable. Highly recommended.",
+         rate: 4
       },
       {
-         image: "/home/testimonials/t1.png",
-         user: "Halima Khatun",
-         comment: "its a great ",
+         image: "/home/testimonials/t6.jpg",
+         user: "Nurul Islam",
+         comment: "A lifesaver during emergencies. Booking services online has never been easier.",
          rate: 5
       },
-      {
-         image: "/home/testimonials/t1.png",
-         user: "Halima Khatun",
-         comment: "its a great ",
-         rate: 5
-      },
-      {
-         image: "/home/testimonials/t1.png",
-         user: "Halima Khatun",
-         comment: "its a great ",
-         rate: 5
-      },
-      {
-         image: "/home/testimonials/t1.png",
-         user: "Halima Khatun",
-         comment: "its a great ",
-         rate: 5
-      },
-      {
-         image: "/home/testimonials/t1.png",
-         user: "Halima Khatun",
-         comment: "its a great ",
-         rate: 5
-      },
-      {
-         image: "/home/testimonials/t1.png",
-         user: "Halima Khatun",
-         comment: "its a great ",
-         rate: 5
-      },
-      {
-         image: "/home/testimonials/t1.png",
-         user: "Halima Khatun",
-         comment: "its a great ",
-         rate: 5
-      },
+   ];
 
-   ]
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 bg-[#1087EF] rouonded-[12px]">
          <div className="aid-container py-6 md:py-7 lg:py-8 xl:py-10 w-full">
@@ -128,7 +98,7 @@ const Testimonials = () => {
                                  width={100}
                                  height={100}
                                  alt={item.user}
-                                 className="w-[86px] h-[68px] rounded-full object-fill mx-auto"
+                                 className="w-[68px] h-[68px] rounded-full object-fill mx-auto"
                               />
                               <p className="mt-2 description2 text-white text-center">{item.user}</p>
                               <p className="mt-3 lg:mt-4 xl:mt-[18px] description1 text-white text-center">{item.comment}</p>
