@@ -7,7 +7,7 @@ import { FaArrowRightLong } from "react-icons/fa6"
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Keyboard, Mousewheel, Navigation, Pagination } from "swiper/modules";
+import { Keyboard, Navigation, Pagination } from "swiper/modules";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go"
 const AmbulenceService = () => {
    const swiperRef = useRef(null);
@@ -64,7 +64,7 @@ const AmbulenceService = () => {
                      }}
                      loop={true}
                      mousewheel={true}
-                     modules={[Keyboard, Navigation, Mousewheel, Pagination]}
+                     modules={[Keyboard, Navigation, Pagination]}
                      ref={swiperRef}
                      className="w-full"
                   >

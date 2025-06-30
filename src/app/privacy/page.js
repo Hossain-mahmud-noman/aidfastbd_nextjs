@@ -5,14 +5,13 @@ import { appname } from "../../utils/constants";
 
 
 export const metadata = {
-  title: "Privacy Policy | " + appname,
+    title: "Privacy Policy | " + appname,
 };
 
 function page() {
     return (
         <>
-            <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title="Privacy Policy" ></AppBar>
-            <div className="pt-16 aid-container">
+            <div className="py-10 aid-container">
                 <br></br>
                 <b >1. INTRODUCTION</b><br></br>
                 On behalf of (us, we, AIDFAST which also includes its affiliates) is the author and publisher of the internet resource www.aidfastbd.com (Website) on the world wide web and mobile applications (Mobile Applications) AIDFAST and AIDFAST for Providers. This privacy policy (Privacy Policy) explains how we collect, use, share, disclose and protect personal information about the End-User(s)/User(s)/Provider(s)/Practioner(s) as (defined in Agreement) as (You, Your(s)). We created this Privacy Policy to demonstrate our commitment to the protection of your privacy and your personal information. Your use of and access to the services are subject to this Privacy Policy.

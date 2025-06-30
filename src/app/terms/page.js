@@ -1,6 +1,4 @@
 import React from 'react'
-import AppBar from '../../components/AppBar';
-import { FaArrowLeft } from "react-icons/fa";
 import { appname } from "../../utils/constants";
 
 export const metadata = {
@@ -10,9 +8,7 @@ export const metadata = {
 function page() {
     return (
         <>
-            <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Terms and Condition' ></AppBar>
-
-            <div className="pt-16 mt-6 aid-container">
+            <div className="py-10 mt-6 aid-container">
                 <b>1. Acceptance of Terms</b>
                 <p>By using AidFastBD.com, you confirm that you are at least 18 years of age or have the consent of a parent or guardian. Your use of the Website indicates your acceptance of these Terms, which may be updated periodically. Please check back regularly for updates.</p>
 

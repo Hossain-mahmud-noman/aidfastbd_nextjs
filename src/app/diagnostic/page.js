@@ -1,4 +1,4 @@
-import BottomNavigation from "../../components/BottomNavigation"
+
 import LayoutAppBar from "../../components/LayoutAppBar";
 import SearchDiagnostic from "../../components/search/SearchDiagnostic";
 import { appname, map_key } from "../../utils/constants";
@@ -12,13 +12,11 @@ async function DiagnosticPage() {
 
   return (
     <>
-      <LayoutAppBar route="/diagnostic"  api_key={map_key}></LayoutAppBar>
-      <div style={{ paddingBlockEnd: "70px" }} className="font-[family-name:var(--font-geist-sans)] pt-20">
-        <SearchDiagnostic></SearchDiagnostic>
+      <div className="pt-10">
+        <SearchDiagnostic />
         <div className="aid-container mx-auto px-2">
-          <DiagnosticList nextPage={1}></DiagnosticList>
+          <DiagnosticList nextPage={1} />
         </div>
-        <BottomNavigation active="/diagnostic"></BottomNavigation>
       </div>
     </>
   )

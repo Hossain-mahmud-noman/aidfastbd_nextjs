@@ -1,7 +1,5 @@
 import { appname } from '../../../utils/constants';
 import React from 'react'
-import AppBar from '../../../components/AppBar';
-import { FaArrowLeft } from "react-icons/fa";
 import Dentalprofile from '../../../components/profile/Dentalprofile';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -33,8 +31,7 @@ async function Page() {
 
     return (
         <>
-            <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Dental Clinic Profile' ></AppBar>
-            <div className="pt-16">
+            <div className="py-10">
                 <Dentalprofile token={token} user={user} ></Dentalprofile>
             </div>
 

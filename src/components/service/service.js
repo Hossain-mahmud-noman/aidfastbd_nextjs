@@ -16,67 +16,67 @@ const Service = () => {
          "image": "/home/service/s2.png",
          "heading": "Diagonistick Center",
          "description": "Get emergency ambulance support anywhere in the country.",
-         "link": "/diagonistick"
+         "link": "/diagnostic"
       },
       {
          "image": "/home/service/s3.png",
          "heading": "Dental Clinik",
          "description": "Order medicines online and receive them at your doorstep.",
-         "link": "/doctor"
+         "link": "/dental"
       },
       {
          "image": "/home/service/s4.png",
          "heading": "Blood Bank",
          "description": "Book lab tests and get reports from trusted labs.",
-         "link": "/doctor"
+         "link": "/blood"
       },
       {
          "image": "/home/service/s5.png",
          "heading": "Ambulence Service",
          "description": "Consult doctors via video call from the comfort of your home.",
-         "link": "/doctor"
+         "link": "/ambulance"
       },
       {
          "image": "/home/service/s6.png",
          "heading": "Pharmacy Service",
          "description": "Access top diagnostic centers for accurate health checkups.",
-         "link": "/doctor"
+         "link": "/pharmacy"
       },
       {
          "image": "/home/service/s7.png",
          "heading": "Physiotherapy Center",
          "description": "Hire professional nursing care at home for patients.",
-         "link": "/doctor"
+         "link": "/physiotherapy-center"
       },
       {
          "image": "/home/service/s8.png",
          "heading": "Eye care Center",
          "description": "Get counseling and support for mental wellness.",
-         "link": "/doctor"
+         "link": "/eye-care-center"
       },
       {
          "image": "/home/service/s9.png",
          "heading": "Drug Rehabilitation Center",
          "description": "Book physical therapy sessions at clinics or home.",
-         "link": "/doctor"
+         "link": "/drug-de-addiction"
       },
       {
          "image": "/home/service/s10.png",
          "heading": "Nursing Care home",
          "description": "Explore affordable health insurance plans.",
-         "link": "/doctor"
+         "link": "/nursing-home-care"
       },
       {
          "image": "/home/service/s11.png",
          "heading": "Haring Care Center",
          "description": "Find and request blood donors quickly and reliably.",
-         "link": "/doctor"
+         "link": "/hearing-care-center"
       },
       {
          "image": "/home/service/s12.png",
          "heading": "Emmergency Service",
          "description": "Rent or purchase essential medical equipment.",
-         "link": "/doctor"
+         "link": "/emergency"
       }
    ]
 

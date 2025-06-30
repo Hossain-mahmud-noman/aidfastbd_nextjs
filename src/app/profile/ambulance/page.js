@@ -1,7 +1,5 @@
 import { appname } from '../../../utils/constants';
 import React from 'react'
-import AppBar from '../../../components/AppBar';
-import { FaArrowLeft } from "react-icons/fa";
 import { cookies } from 'next/headers';
 import AmbulanceProfile from '../../../components/profile/AmbulanceProfile'
 import { redirect } from 'next/navigation';
@@ -32,8 +30,7 @@ async function Page() {
 
     return (
         <>
-            <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Ambulance Profile' ></AppBar>
-            <div className="pt-16 aid-container">
+            <div className="py-10 aid-container">
                 <AmbulanceProfile token={token} user={user}></AmbulanceProfile>
             </div>
 

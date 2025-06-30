@@ -165,4 +165,3 @@ async function page({ params }) {
 
 export default page
 
-// https://api.aidfastbd.com/api/GeneralWeb/GetAllAmbulanceList?pageNumber=1&pageSize=1&ambulanceInformationId=04fe71cc-c628-4748-435f-08dc0f459b35

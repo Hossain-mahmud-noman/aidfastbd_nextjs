@@ -1,7 +1,5 @@
 import { appname, base_endpoint, headerx } from '../../../utils/constants';
 import React from 'react'
-import AppBar from '../../../components/AppBar';
-import { FaArrowLeft } from "react-icons/fa";
 import PharmacyProfile from '../../../components/profile/PharmacyProfile';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -12,12 +10,9 @@ export const metadata = {
 
 
 
-// Function to check if the user is logged in
 const checkLogin = async () => {
-    const tokenCookie = cookies().get('token')?.value ?? ""; // Retrieve token cookie
-    const userCookie = cookies().get('user')?.value;
+    const tokenCookie = cookies().get('token')?.value ?? ""; 
     const user = userCookie ? JSON.parse(userCookie) : null;
-
 
     let data = null;
     let isRegister=false;
@@ -33,25 +28,18 @@ const checkLogin = async () => {
     }
 
     return { token: tokenCookie, user: user,isRegister:isRegister };
-
 };
-
 
 async function Page() {
 
     const { token, user,isRegister } = await checkLogin();
-    // If no user, redirect to login
     if (!user) {
         redirect('/login');
     }
 
-
-
-
     return (
         <>
-            <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Pharmacy Profile' ></AppBar>
-            <div className="pt-16">
+            <div className="py-10">
                 <PharmacyProfile isRegister={isRegister} token={token} user={user}></PharmacyProfile>
             </div>
 

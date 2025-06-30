@@ -11,16 +11,7 @@ export const metadata = {
 function Page() {
   return (
     <>
-      <LayoutAppBar
-        title="Dental Clinics"
-        leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        route="/dental"
-        api_key={map_key}
-      />
-      <div
-        style={{ insetBlockEnd: "70px" }}
-        className="font-[family-name:var(--font-geist-sans)] pt-20"
-      >
+      <div className="pt-10" >
         <div className="aid-container ">
           <DentalDataLoad />
         </div>

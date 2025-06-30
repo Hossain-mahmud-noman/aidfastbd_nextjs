@@ -21,7 +21,6 @@ const checkLogin = async () => {
 
 };
 
-
 async function Page() {
 
     const { token, user } = await checkLogin();
@@ -30,16 +29,11 @@ async function Page() {
         redirect('/login');
     }
 
-
-
-
     return (
         <>
-            <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Doctor Profile' ></AppBar>
-            <div className="pt-16">
+            <div className="py-10">
                 <DoctorProfile token={token} user={user}></DoctorProfile>
             </div>
-
         </>
     )
 }

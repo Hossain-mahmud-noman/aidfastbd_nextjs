@@ -10,7 +10,7 @@ export const metadata = {
     title: "Blood Bank Profile | " + appname,
 };
 
-// Function to check if the user is logged in
+
 const checkLogin = async () => {
     const tokenCookie = cookies().get('token')?.value ?? ""; // Retrieve token cookie
     const userCookie = cookies().get('user')?.value;
@@ -30,8 +30,7 @@ async function Page() {
 
     return (
         <>
-            <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Blood Bank Profile' ></AppBar>
-            <div className="pt-16">
+            <div className="py-10">
                 <BloodProfile token={token} user={user}></BloodProfile>
             </div>
 

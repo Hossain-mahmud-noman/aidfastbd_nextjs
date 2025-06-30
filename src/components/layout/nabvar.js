@@ -215,7 +215,7 @@ const Navbar = ({ textColor = "text-black" }) => {
                   textColor={textColor}
                />
                <NavItem
-                  path="/diagonistick"
+                  path="/diagnostic"
                   label={("Diagonistick")}
                   pathname={pathname}
                   textColor={textColor}
@@ -227,8 +227,8 @@ const Navbar = ({ textColor = "text-black" }) => {
                   textColor={textColor}
                />
                <NavItem
-                  path="/eye-care-center"
-                  label={("Eye Care Cente")}
+                  path="/dental"
+                  label={("Dental")}
                   pathname={pathname}
                   textColor={textColor}
                />
