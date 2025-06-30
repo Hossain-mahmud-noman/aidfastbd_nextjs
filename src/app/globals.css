@@ -156,3 +156,17 @@ body {
   color: #05073c !important;
   font-weight: 500;
 }
+
+.expert {
+  .swiper-pagination {
+    @apply w-full !mt-[40px] flex justify-center items-center gap-1 relative z-10;
+  }
+
+  .swiper-pagination-bullet {
+    @apply rounded-full w-[31px] h-[6px] bg-[#1087EF] cursor-pointer opacity-30;
+  }
+
+  .swiper-pagination-bullet-active {
+    @apply rounded-full w-[31px] h-[6px] bg-[#1087EF] cursor-pointer opacity-100;
+  }
+}

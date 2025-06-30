@@ -2,6 +2,7 @@ import { base_endpoint, map_key } from "../utils/constants"
 import Nearest from '../components/Nearest';
 import LayoutAppBar from '../components/LayoutAppBar';
 import Hero from "../components/hero/hero.js";
+import About from "../components/about/about.js";
 import Carousel from '../components/Carousel';
 import BottomNavigation from "../components/BottomNavigation";
 import AidComponent from '../components/AidComponent';
@@ -37,11 +38,11 @@ export default async function Home() {
 
   return (
     <>
-      
       {/* <LayoutAppBar api_key={map_key} /> */}
       <div style={{ paddingBlockEnd: "70px" }} className="font-[family-name:var(--font-geist-sans)] pt-16">
         {/* <Carousel data={data} /> */}
         <Hero />
+        <About />
         {/* <Service />
         <AbmulenceService />
         <Information />
