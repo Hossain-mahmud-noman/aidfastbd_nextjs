@@ -1,7 +1,6 @@
 import { base_endpoint, map_key } from "../utils/constants"
 import Nearest from '../components/Nearest';
 import LayoutAppBar from '../components/LayoutAppBar';
-import Navbar from "../components/layout/nabvar.js";
 import Hero from "../components/hero/hero.js";
 import Carousel from '../components/Carousel';
 import BottomNavigation from "../components/BottomNavigation";
@@ -38,19 +37,19 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar />
+      
       {/* <LayoutAppBar api_key={map_key} /> */}
       <div style={{ paddingBlockEnd: "70px" }} className="font-[family-name:var(--font-geist-sans)] pt-16">
         {/* <Carousel data={data} /> */}
         <Hero />
-        <Service />
+        {/* <Service />
         <AbmulenceService />
         <Information />
         <MobileApp />
         <Testimonials />
         <FAQ />
         <Blog />
-        <Contact />
+        <Contact /> */}
         {/* <AidComponent /> */}
         {/* <Nearest /> */}
         {/* <BottomNavigation active="/" />  */}
