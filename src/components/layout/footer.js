@@ -59,7 +59,7 @@ const Footer = () => {
       },
    ];
    return (
-      <div className="bg-[#1087EF] w-full xl:pt-10 lg:pt-9 md:pt-7 pt-5 pb-1">
+      <div className="bg-[#1087EF] w-full xl:pt-10 lg:pt-9 md:pt-7 pt-5 pb-1 mt-10">
          <div className="relative max-w-[1440px] mx-auto ">
             <div className="absolute top-1/2 -left-3">
                <Image
@@ -181,7 +181,7 @@ const Footer = () => {
             <div className="xl:my-7 lg:my-6 md:my-5 my-4 flex flex-col sm:flex-row items-center justify-between ">
                <p className="text-white description-2 mt-3 sm:mt-0">
                   Copyright © {currentYear || new Date().getFullYear()} All rights
-                  reserved <Link className="text-black" href="/">AidFast</Link>
+                  reserved <Link className="text-black/70 description2" href="/">AidFast</Link>
                </p>
                <div className="flex items-center gap-3 md:gap-4 xl:gap-10 mt-3 md:mt-0">
                   <Link href="/privacy" className="text-white description1">
