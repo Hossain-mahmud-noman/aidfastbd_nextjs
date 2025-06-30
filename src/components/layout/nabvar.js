@@ -9,7 +9,7 @@ import {
    IoChevronDownOutline,
    IoMenuOutline,
 } from "react-icons/io5";
-import { FiMapPin, FiSearch, FiTarget, FiX } from "react-icons/fi";
+import { FiSearch, FiTarget, FiX } from "react-icons/fi";
 import { map_key } from "../../utils/constants.js";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { setMap } from "../../redux/features/locationSlice.js";
@@ -25,7 +25,7 @@ const Navbar = ({ textColor = "text-black" }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [mapCenter, setMapCenter] = useState({ lat, lng });
    const [searchLocation, setSearchLocation] = useState("");
-
+   let name = 'Unknown Location'
    const [error, setError] = useState(null);
    const [locationName, setLocationName] = useState(name);
 
