@@ -4,16 +4,21 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import FormInput from "../../form/input";
 import { Form } from "antd";
 import { FiMail } from "react-icons/fi";
+import { toast, Toaster } from "sonner";
 
 const Contact = () => {
-   const [form] = Form.useForm(); 
+   const [form] = Form.useForm();
 
    const handleSubmit = async (values) => {
-      console.log(values);
+      toast.success("Thank you for reaching out! I’ll get back to you as soon as possible.")
+      form.resetFields();
    };
 
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 bg-[url('/home/contact/bg.png')] bg-no-repeat bg-cover bg-center">
+         <Toaster
+            position="top-right"
+         />
          <div className="flex flex-col md:flex-row xl:gap-[94px] lg:gap-8 gap-5 aid-container py-10 lg:py-16 xl:py-20">
             <div className="flex-1 mt-5">
                <h1 className="text-white heading1">Contact Us</h1>

@@ -37,7 +37,7 @@ const Hero = () => {
                      <p className="description2 text-white">Book Appinnment</p>
                      <FaArrowRightLong className="text-white description1" />
                   </Link>
-                  <Link href="tel: 01980445424" className="group bg-[#EEF8FF] border-2 border-primary px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
+                  <Link href="tel: +8801738548662" className="group bg-[#EEF8FF] border-2 border-primary px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
                      <BiSolidPhoneCall className="description2 text-primary group-hover:!text-white transition-all duration-300" />
                      <p className="description2 text-primary group-hover:text-white transition-all duration-300">Make a call</p>
                   </Link>
@@ -91,7 +91,7 @@ const Hero = () => {
                </div>
             </div>
          </div>
-         <div className="relative w-full aid-container mt-4 md:mt-5 lg:mt-6 xl:mt-[30px]">
+         {/* <div className="relative w-full aid-container mt-4 md:mt-5 lg:mt-6 xl:mt-[30px]">
             <div className="relative w-full">
                <button
                   className="absolute left-5 top-1/2 transform -translate-y-1/2"
@@ -116,7 +116,7 @@ const Hero = () => {
                   {("Search")}
                </button>
             </div>
-         </div>
+         </div> */}
       </section>
    )
 }

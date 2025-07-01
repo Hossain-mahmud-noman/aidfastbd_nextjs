@@ -21,42 +21,42 @@ const Footer = () => {
 
    const navLinks1 = [
       { name: "Doctor", link: "/doctor" },
-      { name: "Diagonistick", link: "/diagonistick" },
+      { name: "Diagonistick", link: "/diagnostic" },
       { name: "Blood Bank", link: "/blood" },
       { name: "Dental", link: "/dental" },
-      { name: "Ambulence", link: "/mbulence" },
+      { name: "Ambulence", link: "/ambulance" },
       { name: "Pharmacy", link: "/pharmacy" },
    ]
    const navLinks2 = [
       { name: "Blog", link: "/blog" },
-      { name: "Physiotherapy Center", link: "/phy" },
-      { name: "Nursing Care Home", link: "/nursing" },
-      { name: "Eye Care Center", link: "/ete" },
-      { name: "Drug Rehabilitation", link: "/drug" },
-      { name: "Haring Care Center", link: "/hearing" },
+      { name: "Physiotherapy Center", link: "/physiotherapy-center" },
+      { name: "Nursing Care Home", link: "/nursing-home-care" },
+      { name: "Eye Care Center", link: "/eye-care-center" },
+      { name: "Drug Rehabilitation", link: "/drug-de-addiction" },
+      { name: "Haring Care Center", link: "/hearing-care-center" },
    ]
    const navLinks3 = [
-      { name: "Dhaka-1209, Bangladesh", link: "/privacyPolicy", icon: <PiMapPinAreaBold /> },
-      { name: "info@aidfastbd.com", link: "/termsCondition", icon: <MdOutlineEmail /> },
-      { name: "01980445424", link: "/quote", icon: <BiPhoneCall /> },
+      { name: "Dhaka-1209, Bangladesh", link: "https://maps.app.goo.gl/k5caWFQUjbj88H5T7", icon: <PiMapPinAreaBold /> },
+      { name: "contact@aidfastbd.com", link: "mailto: contact@aidfastbd.com", icon: <MdOutlineEmail /> },
+      { name: "+8801738548662", link: "tel: +880 1738-548662", icon: <BiPhoneCall /> },
    ]
    const navIcons = [
       {
          icon: FaWhatsapp,
-         link: '/'
+         link: 'tel: +880 1738-548662'
       },
       {
          icon: FaFacebookF,
-         link: '/'
+         link: 'https://www.facebook.com/profile.php?id=61552667941624'
       },
-      {
-         icon: FaTwitter,
-         link: '/'
-      },
-      {
-         icon: FaLinkedin,
-         link: '/'
-      },
+      // {
+      //    icon: FaTwitter,
+      //    link: '/'
+      // },
+      // {
+      //    icon: FaLinkedin,
+      //    link: '/'
+      // },
    ];
    return (
       <div className="bg-[#1087EF] w-full xl:pt-10 lg:pt-9 md:pt-7 pt-5 pb-1 mt-10">
@@ -111,14 +111,14 @@ const Footer = () => {
                            className="object-contain"
                         />
                      </Link>
-                     <Link href="/www.google.com" className="relative w-[150px] h-[50px]">
+                     {/* <Link href="/www.google.com" className="relative w-[150px] h-[50px]">
                         <Image
                            src="/home/service/apple.png"
                            fill
                            alt="App Store"
                            className="object-contain"
                         />
-                     </Link>
+                     </Link> */}
                   </div>
                </div>
                <div className="w-full md:w-[70%] lg:w-[65%] mt-5 sm:mt-0">
@@ -129,7 +129,7 @@ const Footer = () => {
                         <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-5">
                            {navLinks1?.map((item, index) => (
                               <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 descruiption1 text-white transform duration-300 hover:text-black cursor-pointer">
-                                 <Link className="text-center" href={item?.link}>{item?.name}</Link>
+                                 <Link target="_blank" className="text-center" href={item?.link}>{item?.name}</Link>
                               </li>
                            ))}
                         </ul>
@@ -139,7 +139,7 @@ const Footer = () => {
                         <ul className="xl:mt-[60px] lg:mt-12 md:mt-10 mt-8">
                            {navLinks2?.map((item, index) => (
                               <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 description1 text-white transform duration-300 hover:text-black cursor-pointer">
-                                 <Link className="" href={item?.link}>{item?.name}</Link>
+                                 <Link target="_blank" className="" href={item?.link}>{item?.name}</Link>
                               </li>
                            ))}
                         </ul>
@@ -150,7 +150,7 @@ const Footer = () => {
                         <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-5">
                            {navLinks3?.map((item, index) => (
                               <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 descruiption1 text-white transform duration-300 hover:text-black cursor-pointer">
-                                 <Link className="flex items-center gap-2" href={item?.link}>
+                                 <Link className="flex items-center gap-2" target="_blank" href={item?.link}>
                                     {item.icon}
                                     {item?.name}
                                  </Link>
@@ -184,10 +184,10 @@ const Footer = () => {
                   reserved <Link className="text-black/70 description2" href="/">AidFast</Link>
                </p>
                <div className="flex items-center gap-3 md:gap-4 xl:gap-10 mt-3 md:mt-0">
-                  <Link href="/privacy" className="text-white description1">
+                  <Link target="_blank" href="/privacy" className="text-white description1">
                      Privacy and Policy
                   </Link>
-                  <Link href="/privacy" className="text-white description1">
+                  <Link target="_blank" href="/privacy" className="text-white description1">
                      Terms and Conditions
                   </Link>
                </div>

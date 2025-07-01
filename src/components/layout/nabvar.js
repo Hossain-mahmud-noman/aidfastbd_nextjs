@@ -17,10 +17,10 @@ const Navbar = ({ textColor = "text-black" }) => {
    const pathname = usePathname();
    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
    const pagesItems = [
-      { path: "/about", label: "About" },
-      { path: "/contact", label: "Contact" },
-      { path: "/privacyPolicy", label: "Privacy Policy" },
-      { path: "/termsCondition", label: "Terms & Conditions" },
+      { path: "/blog", label: "Blog" },
+      { path: "/service", label: "Service" },
+      { path: "/privacy", label: "Privacy Policy" },
+      { path: "/privacy", label: "Terms & Conditions" },
    ];
    const i18n = useI18n()
    return (
@@ -44,7 +44,7 @@ const Navbar = ({ textColor = "text-black" }) => {
                </div>
             </Link>
             {/* Desktop Menu */}
-            <ul className=" description1 list-none xl:gap-10 gap-4 items-center hidden lg:flex">
+            <ul className=" description1 list-none xl:gap-5 gap-4 items-center hidden lg:flex">
                <NavItem
                   path="/doctor"
                   label={i18n.t("Doctor")}
@@ -58,8 +58,8 @@ const Navbar = ({ textColor = "text-black" }) => {
                   textColor={textColor}
                />
                <NavItem
-                  path="/blood"
-                  label={i18n.t("Blood Bank")}
+                  path="/pharmacy"
+                  label={i18n.t("Pharmacy")}
                   pathname={pathname}
                   textColor={textColor}
                />
@@ -70,8 +70,8 @@ const Navbar = ({ textColor = "text-black" }) => {
                   textColor={textColor}
                />
                <NavItem
-                  path="/blog"
-                  label={i18n.t("Blog")}
+                  path="/ambulance"
+                  label={i18n.t("Ambulance")}
                   pathname={pathname}
                   textColor={textColor}
                />
@@ -100,6 +100,7 @@ const Navbar = ({ textColor = "text-black" }) => {
             onClose={() => setIsDrawerOpen(false)}
             open={isDrawerOpen}
             className="lg:hidden"
+            width={250}
          >
             <div className="flex flex-col gap-4">
                <Link
@@ -107,35 +108,35 @@ const Navbar = ({ textColor = "text-black" }) => {
                   className="text-lg"
                   onClick={() => setIsDrawerOpen(false)}
                >
-                  {("Doctor")}
+                  {i18n.t("Doctor")}
                </Link>
                <Link
-                  href="/Diagonostick"
+                  href="/diagnostic"
                   className="text-lg"
                   onClick={() => setIsDrawerOpen(false)}
                >
-                  {("diagonostick")}
+                  {i18n.t("Diagnostic")}
                </Link>
                <Link
-                  href="/blood"
+                  href="/pharmacy"
                   className="text-lg"
                   onClick={() => setIsDrawerOpen(false)}
                >
-                  {("Blood Bank")}
+                  {i18n.t("Pharmacy")}
                </Link>
                <Link
                   href="/dental"
                   className="text-lg"
                   onClick={() => setIsDrawerOpen(false)}
                >
-                  {("Dental")}
+                  {i18n.t("Dental")}
                </Link>
                <Link
-                  href="/blog"
+                  href="/ambulance"
                   className="text-lg"
                   onClick={() => setIsDrawerOpen(false)}
                >
-                  {("Blog")}
+                  {i18n.t("Ambulance")}
                </Link>
                <MobileDropdown title="Pages" items={pagesItems} />
             </div>
@@ -190,8 +191,7 @@ const MobileDropdown = ({ title, items }) => {
       <div className="w-full">
          <button
             onClick={() => setOpen(!open)}
-            className="description1 flex justify-between items-center w-full py-2"
-         >
+            className="description2 flex justify-between items-center w-full py-2">
             {title}
             <IoChevronDownOutline
                className={`transition-transform duration-300 ${open ? "rotate-180" : ""
@@ -207,8 +207,8 @@ const MobileDropdown = ({ title, items }) => {
                      href={item.path}
                      onClick={() => location.assign(item.path)}
                      className={`py-2 text-sm ${pathname === item.path
-                        ? "text-primary description1"
-                        : "description1"
+                        ? "text-primary description2"
+                        : "description2"
                         } hover:text-primary`}
                   >
                      {item.label.toUpperCase()}

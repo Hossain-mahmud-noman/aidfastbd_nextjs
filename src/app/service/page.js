@@ -87,10 +87,6 @@ const Service = () => {
                <h1 className="text-[#212121] heading1">Services Of AisFast</h1>
                <p className="text-[#061C3D] description2 mt-3 lg;mt-4">AidFastBD unites medical and support services nationwide to simplify your healthcare</p>
             </div>
-            <Link href={"/service"} target="_blank" className="flex items-center gap-1.5">
-               <p className="text-[#1087EF] description2 whitespace-pre"> More Srvices</p>
-               <FaArrowRightLong className="description1 text-[#1087EF]" />
-            </Link>
          </div>
          <div className="mt-8 md:mt-12 lg:mt-14 xl:mt-[70px]">
             <div className="grid lg:grid-cols-3 grid-cols-2 xl:gap-6 lg:gap-5 md:gap-4 gap-4">

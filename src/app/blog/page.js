@@ -34,10 +34,7 @@ const Blog = () => {
                <h1 className="text-[#212121] heading1">Browse updated blogs</h1>
                <p className="text-[#061C3D] description2 mt-3 lg:mt-4 max-w-[834px]">Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy</p>
             </div>
-            <Link href={"/blog"} target="_blank" className="flex items-center gap-1.5">
-               <p className="text-[#1087EF] description2"> More Blog</p>
-               <FaArrowRightLong className="description1 text-[#1087EF]" />
-            </Link>
+            
          </div>
          <div className="mt-8 md:mt-12 lg:mt-14 xl:mt-[70px]">
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:gap-6 lg:gap-5 md:gap-4 gap-2">

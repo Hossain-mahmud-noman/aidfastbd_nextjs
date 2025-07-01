@@ -9,7 +9,9 @@
     "Contact": "Contact",
     "Privacy & Policy": "Privacy & Policy",
     "Terms & Conditions": "Terms & Conditions",
-    "Dental": "Dental"
+    "Dental": "Dental",
+    "Pharmacy": "Pharmacy",
+    "Ambulance": "Ambulance"
   },
   "bn": {
     "Doctor": "ডাক্তার",
@@ -21,6 +23,8 @@
     "Contact": "যোগাযোগ",
     "Privacy & Policy": "প্রাইভেসি ও নীতিমালা",
     "Terms & Conditions": "শর্তাবলি ও নিয়মাবলি",
-    "Dental": "ডেন্টাল"
+    "Dental": "ডেন্টাল",
+    "Pharmacy": "ফার্মেসি",
+    "Ambulance": "অ্যাম্বুলেন্স"
   }
 }

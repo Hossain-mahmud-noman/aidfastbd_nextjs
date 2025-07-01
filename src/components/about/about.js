@@ -9,7 +9,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Keyboard, Navigation, Pagination } from "swiper/modules";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go"
+import { useRouter } from "next/navigation"
 const AmbulenceService = () => {
+   const router = useRouter()
    const swiperRef = useRef(null);
    useEffect(() => {
       if (swiperRef.current && swiperRef.current.swiper) {
@@ -44,7 +46,7 @@ const AmbulenceService = () => {
          <div className="flex items-center flex-col md:flex-row xl:gap-[72px] lg:gap-12 gap-5">
             <div className="w-full md:w-[40%] expert"
                style={{
-                  backgroundImage: `url('/home/bg.png')`,
+                  backgroundImage: `url('/home/hbg.png')`,
                   backgroundRepeat: 'no-repeat',
                   backgroundPosition: 'center',
                   backgroundSize: 'contain',
@@ -76,7 +78,7 @@ const AmbulenceService = () => {
                                  width={1000}
                                  height={1000}
                                  alt="Abmulence"
-                                 className="w-[261px] lg:h-[330px] md:h-[280px]  object-fill rounded-b-full"
+                                 className="w-[261px] lg:h-[330px] md:h-[280px] h-[280px] object-fill rounded-b-full"
                               />
                            </div>
                         </SwiperSlide>
@@ -123,11 +125,14 @@ const AmbulenceService = () => {
                   </div>
                </div>
                <div className="mt-7 md:mt-8 lg:mt-10 xl:mt-12">
-                  <button href="tel: 01980445424" className="bg-[#1087EF] px-4 md:px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
+                  <button
+                     onClick={() => {
+                        router.push("https://play.google.com/store/apps/details?id=com.aidfastbd.app")
+                     }}
+                     className="bg-[#1087EF] px-4 md:px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
                      <p className="description2 text-white whitespace-pre">Explore More</p>
                      <FaArrowRightLong className="text-white description2" />
                   </button>
-
                </div>
             </div>
          </div>

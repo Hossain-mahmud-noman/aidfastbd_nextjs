@@ -29,25 +29,25 @@ const Testimonials = () => {
    const data = [
       {
          image: "/home/testimonials/t1.jpg",
-         user: "Halima Khatun",
+         user: "Abrar Fahim",
          comment: "Thanks to AidFastBD, I was able to consult a qualified doctor without stepping out of my house. It’s truly a revolutionary service for busy people like me.",
          rate: 5
       },
       {
          image: "/home/testimonials/t2.jpg",
-         user: "Md. Riaz Uddin",
+         user: "Roksona Tabassum",
          comment: "In an emergency, AidFastBD’s ambulance reached us faster than I expected. Their service is dependable and life-saving.",
          rate: 5
       },
       {
          image: "/home/testimonials/t3.jpg",
-         user: "Jannatul Ferdous",
+         user: "Musfiq Rahman",
          comment: "From doctor appointments to lab tests, everything was seamless. I felt cared for every step of the way. Highly recommended!",
          rate: 5
       },
       {
          image: "/home/testimonials/t4.jpg",
-         user: "Sajjad Hossain",
+         user: "JannatunFerdous",
          comment: "AidFastBD has made healthcare simpler for my parents. They no longer have to wait in long queues — everything is just a few taps away.",
          rate: 5
       },
@@ -63,7 +63,6 @@ const Testimonials = () => {
          comment: "This is what modern healthcare should look like. AidFastBD brings hospitals, doctors, and support to your fingertips.",
          rate: 5
       },
-     
    ];
 
 
