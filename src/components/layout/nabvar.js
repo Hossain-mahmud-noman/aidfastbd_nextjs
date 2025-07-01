@@ -9,18 +9,19 @@ import {
    IoChevronDownOutline,
 } from "react-icons/io5";
 import Location from "./location/location.js";
+import Language from "./language/language.js";
+import { useI18n } from "../../context/i18n.js";
 
 const Navbar = ({ textColor = "text-black" }) => {
    const pathname = usePathname();
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
    const pagesItems = [
       { path: "/about", label: ("About") },
       { path: "/contact", label: ("Contact") },
       { path: "/privacyPolicy", label: ("Privacy Policy") },
       { path: "/termsCondition", label: ("Terms & Conditions") },
    ];
-
-
+   const i18n = useI18n()
    return (
       <div className="w-full font-lato overflow-hidden relative z-50"
          style={{
@@ -45,13 +46,13 @@ const Navbar = ({ textColor = "text-black" }) => {
             <ul className=" description1 list-none xl:gap-10 gap-4 items-center hidden lg:flex">
                <NavItem
                   path="/doctor"
-                  label={("Doctor")}
+                  label={i18n.t("Doctor")}
                   pathname={pathname}
                   textColor={textColor}
                />
                <NavItem
                   path="/diagnostic"
-                  label={("Diagonistick")}
+                  label={i18n.t("Diagonistick")}
                   pathname={pathname}
                   textColor={textColor}
                />
@@ -79,7 +80,10 @@ const Navbar = ({ textColor = "text-black" }) => {
                   textColor={textColor}
                />
             </ul>
-            <Location />
+            <div className="flex items-center gap-1">
+               <Location />
+               <Language />
+            </div>
          </div>
 
          <Drawer
@@ -130,7 +134,6 @@ const Navbar = ({ textColor = "text-black" }) => {
 
             </div>
          </Drawer>
-
       </div>
    );
 };

@@ -4,6 +4,7 @@ import "./globals.css";
 import StoreProvider from './StoreProvider';
 import Navbar from "../components/layout/nabvar.js";
 import Footer from "../components/layout/footer.js";
+import I18nProvider from "../context/i18n.js";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,9 +40,11 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <StoreProvider>
-          <Navbar />
-          {children}
-          <Footer />
+          <I18nProvider >
+            <Navbar />
+            {children}
+            <Footer />
+          </I18nProvider>
         </StoreProvider>
       </body>
     </html>

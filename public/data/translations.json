@@ -1,0 +1,24 @@
+{
+  "en": {
+    "Doctor": "Doctor",
+    "Diagnostic": "Diagnostic",
+    "Blood Bank": "Blood Bank",
+    "Eye Care Center": "Eye Care Center",
+    "Blog": "Blog",
+    "Page": "Page",
+    "Contact": "Contact",
+    "Privacy & Policy": "Privacy & Policy",
+    "Terms & Conditions": "Terms & Conditions"
+  },
+  "bn": {
+    "Doctor": "ডাক্তার",
+    "Diagnostic": "ডায়াগনস্টিক",
+    "Blood Bank": "ব্লাড ব্যাংক",
+    "Eye Care Center": "চোখের যত্ন কেন্দ্র",
+    "Blog": "ব্লগ",
+    "Page": "পৃষ্ঠা",
+    "Contact": "যোগাযোগ",
+    "Privacy & Policy": "প্রাইভেসি ও নীতিমালা",
+    "Terms & Conditions": "শর্তাবলি ও নিয়মাবলি"
+  }
+}
