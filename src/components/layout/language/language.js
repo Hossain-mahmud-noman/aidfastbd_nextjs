@@ -1,5 +1,10 @@
 import { useI18n } from "../../../context/i18n.js"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@radix-ui/react-dropdown-menu"
 import { Button } from "antd"
 import { FaLanguage } from "react-icons/fa6"
 
@@ -15,7 +20,8 @@ const Language = () => {
             className="flex items-center gap-2 text-primary hover:text-landingPink transition-colors duration-200 px-3 py-1.5 rounded-full border border-white/20 hover:border-landingPink/30"
           >
             <FaLanguage className="text-xl text-landingPink" />
-            <span className="text-sm font-medium">
+            {/* Show text only on md and up */}
+            <span className="text-sm font-medium hidden md:inline">
               {i18n?.language === "bn" ? "বাংলা" : "English"}
             </span>
             <span className="sr-only">Toggle language</span>
@@ -29,12 +35,7 @@ const Language = () => {
             className="flex items-center gap-2 px-3 py-2 text-sm text-white hover:text-landingPink hover:bg-white/5 rounded-md cursor-pointer transition-colors duration-200"
             onClick={() => i18n?.changeLanguage("en")}
           >
-            <span
-              className={`${i18n?.language === "en"
-                ? "text-landingPink"
-                : "text-white"
-                }`}
-            >
+            <span className={i18n?.language === "en" ? "text-landingPink" : "text-white"}>
               English
             </span>
             {i18n?.language === "en" && (
@@ -45,12 +46,7 @@ const Language = () => {
             className="flex items-center gap-2 px-3 py-2 text-sm text-white hover:text-landingPink hover:bg-white/5 rounded-md cursor-pointer transition-colors duration-200"
             onClick={() => i18n?.changeLanguage("bn")}
           >
-            <span
-              className={`${i18n?.language === "bn"
-                ? "text-landingPink"
-                : "text-white"
-                }`}
-            >
+            <span className={i18n?.language === "bn" ? "text-landingPink" : "text-white"}>
               বাংলা
             </span>
             {i18n?.language === "bn" && (

@@ -24,7 +24,7 @@ const DiagnosticCenterCard = ({ diagnostic }) => {
                             blurDataURL="https://user-images.githubusercontent.com/160484/173871411-4d27b6dd-af89-4568-863c-c59b1242ce74.png"
                             priority={false}
                             alt={diagnostic.name}
-                            className="w-40 h-36 sm:w-52 sm:h-52 object-cover rounded-full" // Fixed sizes
+                            className="w-40 h-36 sm:w-52 sm:h-52 object-cover rounded-full" 
                         />
                     </div>
 

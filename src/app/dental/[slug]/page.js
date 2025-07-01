@@ -23,7 +23,7 @@ export async function generateMetadata({ params }) {
     ? image_base_endpoint + data?.profileImageUrl
     : "/images/doctor.jpg";
 
-  
+
   return {
     title: `${data?.name} | ${appname}`,
     description: `${data.name ?? ""} ${data?.location ?? ""}`.slice(0, 150),

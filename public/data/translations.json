@@ -5,10 +5,11 @@
     "Blood Bank": "Blood Bank",
     "Eye Care Center": "Eye Care Center",
     "Blog": "Blog",
-    "Page": "Page",
+    "Pages": "Page",
     "Contact": "Contact",
     "Privacy & Policy": "Privacy & Policy",
-    "Terms & Conditions": "Terms & Conditions"
+    "Terms & Conditions": "Terms & Conditions",
+    "Dental": "Dental"
   },
   "bn": {
     "Doctor": "ডাক্তার",
@@ -16,9 +17,10 @@
     "Blood Bank": "ব্লাড ব্যাংক",
     "Eye Care Center": "চোখের যত্ন কেন্দ্র",
     "Blog": "ব্লগ",
-    "Page": "পৃষ্ঠা",
+    "Pages": "পৃষ্ঠা",
     "Contact": "যোগাযোগ",
     "Privacy & Policy": "প্রাইভেসি ও নীতিমালা",
-    "Terms & Conditions": "শর্তাবলি ও নিয়মাবলি"
+    "Terms & Conditions": "শর্তাবলি ও নিয়মাবলি",
+    "Dental": "ডেন্টাল"
   }
 }

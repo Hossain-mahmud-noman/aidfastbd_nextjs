@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { Dropdown, Drawer } from "antd";
 import {
    IoChevronDownOutline,
+   IoMenuOutline,
 } from "react-icons/io5";
 import Location from "./location/location.js";
 import Language from "./language/language.js";
@@ -16,10 +17,10 @@ const Navbar = ({ textColor = "text-black" }) => {
    const pathname = usePathname();
    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
    const pagesItems = [
-      { path: "/about", label: ("About") },
-      { path: "/contact", label: ("Contact") },
-      { path: "/privacyPolicy", label: ("Privacy Policy") },
-      { path: "/termsCondition", label: ("Terms & Conditions") },
+      { path: "/about", label: "About" },
+      { path: "/contact", label: "Contact" },
+      { path: "/privacyPolicy", label: "Privacy Policy" },
+      { path: "/termsCondition", label: "Terms & Conditions" },
    ];
    const i18n = useI18n()
    return (
@@ -29,10 +30,10 @@ const Navbar = ({ textColor = "text-black" }) => {
             boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.08)'
          }}
       >
-         <div className="aid-container flex flex-row justify-between items-center md:py-[18px] py-4 lg:px-0 bg-[#FFFFFF] text-[#061C3D]" >
+         <div className="aid-container flex flex-row justify-between items-center md:py-[18px] py-1 lg:px-0 bg-[#FFFFFF] text-[#061C3D]" >
             {/* Logo */}
             <Link href="/">
-               <div className="sm:w-[133px] sm:h-[40px] w-[153px] h-[46px] flex justify-start items-center -ml-2 lg:ml-0 mt-1">
+               <div className="md:w-[133px] w-[100px] h-[80px] md:h-[40px] lg:w-[153px] lg:h-[46px]  flex justify-start items-center -ml-2 lg:ml-0 mt-1">
                   <Image
                      src="/logo.png"
                      width={153}
@@ -52,30 +53,30 @@ const Navbar = ({ textColor = "text-black" }) => {
                />
                <NavItem
                   path="/diagnostic"
-                  label={i18n.t("Diagonistick")}
+                  label={i18n.t("Diagnostic")}
                   pathname={pathname}
                   textColor={textColor}
                />
                <NavItem
                   path="/blood"
-                  label={("Blood Bank")}
+                  label={i18n.t("Blood Bank")}
                   pathname={pathname}
                   textColor={textColor}
                />
                <NavItem
                   path="/dental"
-                  label={("Dental")}
+                  label={i18n.t("Dental")}
                   pathname={pathname}
                   textColor={textColor}
                />
                <NavItem
                   path="/blog"
-                  label={("Blog")}
+                  label={i18n.t("Blog")}
                   pathname={pathname}
                   textColor={textColor}
                />
                <DropdownMenuTrigger
-                  label={("Pages")}
+                  label={i18n.t("Pages")}
                   items={pagesItems}
                   textColor={textColor}
                />
@@ -83,6 +84,12 @@ const Navbar = ({ textColor = "text-black" }) => {
             <div className="flex items-center gap-1">
                <Location />
                <Language />
+               <button
+                  className={`lg:hidden text-primary text-2xl `}
+                  onClick={() => setIsDrawerOpen(true)}
+               >
+                  <IoMenuOutline className="text-2xl relative z-50 ml-2 sm:ml-0" />
+               </button>
             </div>
          </div>
 
@@ -131,7 +138,6 @@ const Navbar = ({ textColor = "text-black" }) => {
                   {("Blog")}
                </Link>
                <MobileDropdown title="Pages" items={pagesItems} />
-
             </div>
          </Drawer>
       </div>

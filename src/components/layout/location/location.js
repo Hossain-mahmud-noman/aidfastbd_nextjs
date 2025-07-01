@@ -15,6 +15,7 @@ const Location = () => {
    let lng = 90.4125;
 
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
    const [mapCenter, setMapCenter] = useState({ lat, lng });
    const [searchLocation, setSearchLocation] = useState("");
    let name = 'Unknown Location'
@@ -204,12 +205,6 @@ const Location = () => {
                      alt="Location" />
                </button>
             </div>
-            <button
-               className={`lg:hidden text-primary text-2xl `}
-               onClick={() => setIsDrawerOpen(true)}
-            >
-               <IoMenuOutline className="text-2xl relative z-50 ml-2 sm:ml-0" />
-            </button>
          </div>
          {isModalOpen && (
             <div className="fixed inset-0 z-50 overflow-y-auto">

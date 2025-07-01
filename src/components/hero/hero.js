@@ -3,35 +3,43 @@
 import { Avatar } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { BiSolidPhoneCall } from 'react-icons/bi'
 import { FaArrowRightLong } from 'react-icons/fa6'
+import { IoSearch } from 'react-icons/io5'
 
 const Hero = () => {
+   const router = useRouter();
+   const [searchTerm, setSearchTerm] = useState()
+   const hamdleInput = () => {
+      router.push(`/doctor?name=${searchTerm}`)
+   }
    return (
       <section className="">
          <div className="bg-[#EEF8FF] rounded-[10px] xl:rounded-[20px] aid-container mx-auto flex flex-col md:flex-row items justify-between gap-8 md:gap-2 lg:gap-4 xl:gap-10 items-center overflow-hidden">
             {/* Left Side Content */}
             <div className='xl:pl-10 lg:pl-8 pl-5'>
                <span className="mt-5 md:mt-5 description2 text-[#1087EF] font-semibold bg-[#7AC1FF2E] px-3 py-1 rounded-md inline-block mb-4">
-                  AidFast-এ আপনাকে স্বাগতম
+                  Welcome to AidFast
                </span>
 
-               <h1 className="heading2 text-[#212121] mb-4 ">
-                  স্বাস্থ্যসেবা খুঁজে পাওয়া নিয়ে আর <span className="text-[#1087EF]">দুশ্চিন্তা</span> নয়
+               <h1 className="heading2 text-[#212121] mb-4 capitalize">
+                  No more <span className="text-[#1087EF]">worries</span>  about finding healthcare
                </h1>
 
                <p className="text-gray-600 mb-6 leading-relaxed">
-                  আমরা আপনাকে সঠিক ডাক্তার, হাসপাতাল ও সেবাগুলো খুঁজে পেতে সহায়তা করি—আপনার ও আপনার পরিবারের জন্য।
+                  We help you find the right doctors, hospitals, and services—for you and your family.
                </p>
 
                <div className="flex flex-col sm:flex-row gap-4">
-                   <Link href="tel: 01980445424" className="bg-[#1087EF] px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
+                  <Link href="/doctor" className="bg-[#1087EF] px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
                      <p className="description2 text-white">Book Appinnment</p>
                      <FaArrowRightLong className="text-white description1" />
                   </Link>
-                  <Link href="tel: 01980445424" className="bg-[#1087EF]  px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
-                     <BiSolidPhoneCall className="text-white description2" />
-                     <p className="description2 text-white">Make a call</p>
+                  <Link href="tel: 01980445424" className="group bg-[#EEF8FF] border-2 border-primary px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
+                     <BiSolidPhoneCall className="description2 text-primary group-hover:!text-white transition-all duration-300" />
+                     <p className="description2 text-primary group-hover:text-white transition-all duration-300">Make a call</p>
                   </Link>
                </div>
 
@@ -43,7 +51,7 @@ const Hero = () => {
                      <Avatar size={40} src="/home/hero/d4.png" />
                   </Avatar.Group>
                   <p className="text-sm text-gray-600">
-                     ১২০০+ রোগীর বিশ্বাসে রেটিং ৫/৫
+                     Rated 5/5 by the trust of 1200+ patients.
                   </p>
                </div>
             </div>
@@ -61,8 +69,8 @@ const Hero = () => {
                      />
                   </div>
                   <div className="absolute top-4 right-4 bg-white shadow-[12px] rounded-xl px-2 py-2 text-center">
-                     <p className="description2 text-[#252525]">২৪+</p>
-                     <p className="text-[10px] text-[#555555]">ঘন্টা জরুরি সার্ভিস</p>
+                     <p className="description2 text-[#252525]">24+</p>
+                     <p className="text-[10px] text-[#555555]">Hours Emergency Service</p>
                   </div>
 
                   <div className="absolute bottom-1/4 lg:bottom-1/2 left-4 bg-white shadow-md rounded-xl px-2 py-2 text-center">
@@ -75,12 +83,38 @@ const Hero = () => {
                            </Avatar.Group>
                         </div>
                         <div>
-                           <p className="description2 text-[#252525] text-left">৩০+</p>
-                           <p className="text-[10px] text-[#555555]">অভিজ্ঞ ডাক্তার</p>
+                           <p className="description2 text-[#252525] text-left">200+</p>
+                           <p className="text-[10px] text-[#555555]">Experienced Doctor</p>
                         </div>
                      </div>
                   </div>
                </div>
+            </div>
+         </div>
+         <div className="relative w-full aid-container mt-4 md:mt-5 lg:mt-6 xl:mt-[30px]">
+            <div className="relative w-full">
+               <button
+                  className="absolute left-5 top-1/2 transform -translate-y-1/2"
+                  aria-label="Search Icon"
+               >
+                  <IoSearch className="h-5 w-5 text-primary" />
+               </button>
+
+               <input
+                  type="search"
+                  placeholder={("Search here")}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full text-black border rounded-[10px] py-3 pl-12 pr-[110px] focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+               />
+
+               <button
+                  className="text-white text-base font-semibold rounded-r-[10px] py-3 px-6 absolute right-0 top-1/2 transform -translate-y-1/2 max-w-[104px] bg-primary"
+                  aria-label="Search"
+                  onClick={hamdleInput}
+               >
+                  {("Search")}
+               </button>
             </div>
          </div>
       </section>

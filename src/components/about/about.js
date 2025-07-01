@@ -30,17 +30,17 @@ const AmbulenceService = () => {
    };
    const data = [
       {
-         image: "/home/d.png",
+         image: "/home/d1.png",
       },
       {
-         image: "/home/doctor.png"
+         image: "/home/d2.png"
       },
       {
-         image: "/home/d.png",
+         image: "/home/d3.png",
       },
    ];
    return (
-      <section className="mt-16 md:mt-24 lg:mt-28 xl:mt-[180px] aid-container">
+      <section className="mt-8 md:mt-16 lg:mt-20 xl:mt-[109px] aid-container">
          <div className="flex items-center flex-col md:flex-row xl:gap-[72px] lg:gap-12 gap-5">
             <div className="w-full md:w-[40%] expert"
                style={{
