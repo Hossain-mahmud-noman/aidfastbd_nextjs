@@ -100,8 +100,6 @@ const AmbulenceService = () => {
                      <GoArrowRight size={20} />
                   </button>
                </div>
-
-
             </div>
             <div className="w-full md:w-[60%] mt-10 md:mt-0">
                <div className="flex items-center gap-2">
