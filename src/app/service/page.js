@@ -1,8 +1,7 @@
 'use client'
-
 import Image from "next/image"
 import Link from "next/link"
-import { FaArrowRightLong } from "react-icons/fa6"
+import CommonService from '../../components/common/service.js'
 
 const Service = () => {
    const data = [
@@ -85,7 +84,7 @@ const Service = () => {
          <div className="flex items-center justify-between gap-2">
             <div>
                <h1 className="text-[#212121] heading1">Services Of AisFast</h1>
-               <p className="text-[#061C3D] description2 mt-3 lg;mt-4">AidFastBD unites medical and support services nationwide to simplify your healthcare</p>
+               <p className="text-[#061C3D] description2 mt-3 lg:mt-4">AidFastBD unites medical and support services nationwide to simplify your healthcare</p>
             </div>
          </div>
          <div className="mt-8 md:mt-12 lg:mt-14 xl:mt-[70px]">
@@ -109,7 +108,9 @@ const Service = () => {
                   </Link>
                ))}
             </div>
-
+         </div>
+         <div className="lg:mt-10 mt-8 mt">
+            <CommonService />
          </div>
       </section>
    )
