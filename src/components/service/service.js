@@ -3,92 +3,95 @@
 import Image from "next/image"
 import Link from "next/link"
 import { FaArrowRightLong } from "react-icons/fa6"
+import { useI18n } from '../../context/i18n.js'
 
 const Service = () => {
+   const i18n = useI18n();
    const data = [
       {
          image: "/home/service/s1.png",
-         heading: "Appointment of Doctor",
-         description: "Consult experienced doctors for primary health concerns.",
+         heading: i18n.t("Doctor Appointment"),
+         description: i18n.t("Doctor Appointment Description"),
          link: "/doctor",
       },
       {
          image: "/home/service/s2.png",
-         heading: "Diagnostic Center",
-         description: "Get emergency ambulance support anywhere in the country.",
+         heading: i18n.t("Diagnostic Centers and Hospitals"),
+         description: i18n.t("Diagnostic Centers Description"),
          link: "/diagnostic",
       },
       {
          image: "/home/service/s3.png",
-         heading: "Dental Clinic",
-         description: "Order medicines online and receive them at your doorstep.",
+         heading: i18n.t("Dental Clinic"),
+         description: i18n.t("Dental Clinic Description"),
          link: "/dental",
       },
       {
          image: "/home/service/s4.png",
-         heading: "Blood Bank",
-         description: "Book lab tests and get reports from trusted labs.",
+         heading: i18n.t("Blood Bank and Donor Club"),
+         description: i18n.t("Blood Bank Description"),
          link: "/blood",
       },
       {
          image: "/home/service/s5.png",
-         heading: "Ambulance Service",
-         description: "Consult doctors via video call from the comfort of your home.",
+         heading: i18n.t("Ambulance Service"),
+         description: i18n.t("Ambulance Service Description"),
          link: "/ambulance",
       },
       {
          image: "/home/service/s6.png",
-         heading: "Pharmacy Service",
-         description: "Access top diagnostic centers for accurate health checkups.",
+         heading: i18n.t("Pharmacy and Medicine Delivery"),
+         description: i18n.t("Pharmacy Description"),
          link: "/pharmacy",
       },
       {
          image: "/home/service/s7.png",
-         heading: "Physiotherapy Center",
-         description: "Hire professional nursing care at home for patients.",
+         heading: i18n.t("Physiotherapy Center"),
+         description: i18n.t("Physiotherapy Description"),
          link: "/physiotherapy-center",
       },
       {
          image: "/home/service/s8.png",
-         heading: "Eye Care Center",
-         description: "Get counseling and support for mental wellness.",
+         heading: i18n.t("Eye Care Center"),
+         description: i18n.t("Eye Care Description"),
          link: "/eye-care-center",
       },
       {
          image: "/home/service/s9.png",
-         heading: "Drug Rehabilitation",
-         description: "Book physical therapy sessions at clinics or home.",
+         heading: i18n.t("Drug Rehabilitation Center"),
+         description: i18n.t("Rehab Description"),
          link: "/drug-de-addiction",
       },
       {
          image: "/home/service/s10.png",
-         heading: "Nursing Care Home",
-         description: "Explore affordable health insurance plans.",
+         heading: i18n.t("Nursing Home Care"),
+         description: i18n.t("Nursing Description"),
          link: "/nursing-home-care",
       },
       {
          image: "/home/service/s11.png",
-         heading: "Hearing Care Center",
-         description: "Find and request blood donors quickly and reliably.",
+         heading: i18n.t("Hearing Aid Center"),
+         description: i18n.t("Hearing Description"),
          link: "/hearing-care-center",
       },
       {
          image: "/home/service/s12.png",
-         heading: "Emergency Service",
-         description: "Rent or purchase essential medical equipment.",
+         heading: i18n.t("Emergency Services"),
+         description: i18n.t("Emergency Description"),
          link: "/emergency",
       }
    ];
+
 
    return (
       <section className="mt-5 lg:mt-6 xl:mt-8 aid-container">
          <div className="flex items-center justify-between gap-2">
             <div>
-               <h1 className="text-[#212121] heading1">Services Of AisFast</h1>
-               <p className="text-[#061C3D] description2 mt-3 lg;mt-4">AidFastBD unites medical and support services nationwide to simplify your healthcare</p>
+               <h1 className="text-[#212121] heading1">{i18n.t("AidFastBD Services")}</h1>
+               <p className="text-[#061C3D] description2 mt-3 lg;mt-4">{i18n.t("AidFastBD Services Description")}</p>
             </div>
             <Link href={"/service"} target="_blank" className="flex items-center gap-1.5">
-               <p className="text-[#1087EF] description2 whitespace-pre"> More Srvices</p>
+               <p className="text-[#1087EF] description2 whitespace-pre"> {i18n.t("Explore More")}</p>
                <FaArrowRightLong className="description1 text-[#1087EF]" />
             </Link>
          </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import Image from "next/image"
+import { useI18n } from '../../context/i18n.js'
 import { useEffect, useRef } from "react"
 import { FaCheckCircle } from "react-icons/fa"
 import { FaArrowRightLong } from "react-icons/fa6"
@@ -12,6 +13,7 @@ import { GoArrowLeft, GoArrowRight } from "react-icons/go"
 import { useRouter } from "next/navigation"
 const AmbulenceService = () => {
    const router = useRouter()
+   const i18n = useI18n();
    const swiperRef = useRef(null);
    useEffect(() => {
       if (swiperRef.current && swiperRef.current.swiper) {
@@ -104,22 +106,22 @@ const AmbulenceService = () => {
             <div className="w-full md:w-[60%] mt-10 md:mt-0">
                <div className="flex items-center gap-2">
                   <div className="bg-primary w-20 h-1 -mt-1"></div>
-                  <h1 className="heading3 text-primary">About AidFastBD</h1>
+                  <h1 className="heading3 text-primary">{i18n.t("About Us")}</h1>
                </div>
-               <h1 className="heading1 mt-4 xl:mt-[22px] text-[#212B36]">We provide you with your desired service</h1>
-               <p className="description1 text-[#5F5F5F] mt-4 xl:mt-[22px]">We offer patients quick access to doctor appointments, ambulance services, pharmacy, and diagnostic test bookings. Our mission is to make healthcare in Bangladesh more accessible to everyone. Your health is our priority — AidFastBD is always ready to serve</p>
+               <h1 className="heading1 mt-4 xl:mt-[22px] text-[#212B36]">{i18n.t("We provide the service you need")}</h1>
+               <p className="description1 text-[#5F5F5F] mt-4 xl:mt-[22px]">{i18n.t("We offer fast doctor appointments, ambulance, pharmacy, and test booking services for patients. Our goal is to make Bangladesh's healthcare system more accessible to everyone. Your health is our priority — AidFastBD is always ready")}</p>
                <div className="">
                   <div className="flex items-center gap-3 mt-4 xl:mt-[22px]">
                      <FaCheckCircle className="text-primary description2" />
-                     <p className="text-[#000A2D] description1">Reduced anxiety</p>
+                     <p className="text-[#000A2D] description1">{i18n.t("Reduced signs of anxiety")}</p>
                   </div>
                   <div className="flex items-center gap-3 mt-4 lg:mt-[18px]">
                      <FaCheckCircle className="text-primary description2" />
-                     <p className="text-[#000A2D] description1">Better stress control</p>
+                     <p className="text-[#000A2D] description1">{i18n.t("Improved stress management")}</p>
                   </div>
                   <div className="flex items-center gap-3 mt-4 lg:mt-[16px]">
                      <FaCheckCircle className="text-primary description2" />
-                     <p className="text-[#000A2D] description1">Better mental control</p>
+                     <p className="text-[#000A2D] description1">{i18n.t("Better emotional control")}</p>
                   </div>
                </div>
                <div className="mt-7 md:mt-8 lg:mt-10 xl:mt-12">
@@ -128,7 +130,7 @@ const AmbulenceService = () => {
                         router.push("https://play.google.com/store/apps/details?id=com.aidfastbd.app")
                      }}
                      className="bg-[#1087EF] px-4 md:px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
-                     <p className="description2 text-white whitespace-pre">Explore More</p>
+                     <p className="description2 text-white whitespace-pre">{i18n.t("Explore More")}</p>
                      <FaArrowRightLong className="text-white description2" />
                   </button>
                </div>

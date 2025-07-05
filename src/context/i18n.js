@@ -6,19 +6,19 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 const I18nContext = createContext(undefined);
 
 const I18nProvider = ({ children }) => {
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState("bn");
   const [translations, setTranslations] = useState({});
   const pathName = usePathname();
 
   useEffect(() => {
     if (pathName) {
       const savedLang = localStorage.getItem("lang");
-      if (savedLang === "en" || savedLang === "bn") {
+      if (savedLang === "bn" || savedLang === "en") {
         setLanguage(savedLang);
       } else {
-        setLanguage("en");
+        setLanguage("bn");
       }
-      loadTranslations(savedLang || "en");
+      loadTranslations(savedLang || "bn");
     }
   }, [pathName]);
 
@@ -56,7 +56,7 @@ export const useI18n = () => {
   const context = useContext(I18nContext);
   if (!context) {
     return {
-      language: "en",
+      language: "bn",
       lang_suffix: "",
       t: (key) => key || "",
       changeLanguage: () => {},
