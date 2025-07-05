@@ -116,7 +116,7 @@ const CommonService = () => {
                      width={1000}
                      height={1000}
                      alt="Abmulence"
-                     className="w-full md:w-[429px] xl:h-[303px] lg:h-[280px] h-[200px] object-fill"
+                     className="w-full md:w-[429px] xl:h-[303px] lg:h-[280px] h-[300px] object-fill"
                   />
                   <div className="w-full">
                      <h1 className="heading1 text-[#212B36]">{item.heading}</h1>
