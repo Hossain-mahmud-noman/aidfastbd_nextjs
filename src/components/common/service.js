@@ -4,105 +4,106 @@ import Image from "next/image"
 import Link from "next/link"
 import { BiSolidPhoneCall } from "react-icons/bi"
 import { FaArrowRightLong } from "react-icons/fa6"
+import { useI18n } from "../../context/i18n"
 
 const CommonService = () => {
-
+   const i18n = useI18n()
    const data = [
       {
          image: "/common/s1.png",
-         heading: "Book an appointment now to consult a specialist doctor",
-         description: "Book an appointment with trusted and experienced doctors at your preferred date and time. Get fast and reliable healthcare services with AidFastBD",
+         heading: i18n.t("Book Specialist Doctor"),
+         description: i18n.t("Book Specialist Doctor Description"),
          link: "/doctor",
          call: "tel:+8801738548662",
-         slug: "Book Appointment"
+         slug: i18n.t("Book Appointment")
       },
       {
          image: "/common/s2.png",
-         heading: "Diagnostic and hospital services at your doorstep",
-         description: "Get the best care you need with AidFastBD. Book tests or treatment at your preferred center quickly and easily.",
+         heading: i18n.t("Diagnostics and Hospitals at Your Doorstep"),
+         description: i18n.t("Diagnostics and Hospitals Description"),
          link: "/diagnostic",
          call: "tel:+8801738548662",
-         slug: "Book Diagnostic"
+         slug: i18n.t("Book Diagnostic")
       },
       {
          image: "/common/ambulence.png",
-         heading: "Get ambulance service from your home",
-         description: "Get licensed ambulance service delivered to your doorstep within Dhaka in the fastest time — with discounts. Book online now",
+         heading: i18n.t("Ambulance Service from Home"),
+         description: i18n.t("Ambulance Service Description2"),
          link: "/ambulance",
          call: "tel:+8801738548662",
-         slug: "Book Ambulance"
+         slug: i18n.t("Book Ambulance")
       },
       {
          image: "/common/s3.png",
-         heading: "Trusted dental clinics for your oral care",
-         description: "Take proper care of your teeth with experienced dental specialists. Get safe and comfortable treatment at a modern dental clinic",
+         heading: i18n.t("Trusted Dental Clinics"),
+         description: i18n.t("Trusted Dental Clinics Description"),
          link: "/dental",
          call: "tel:+8801738548662",
-         slug: "Book Dental Care"
+         slug: i18n.t("Book Dental Care")
       },
       {
          image: "/common/s4.png",
-         heading: "Blood Donor Club — Save Lives, Donate Blood",
-         description: "Blood donation is a noble deed. Find donors and blood banks near you quickly with AidFastBD, and save lives with ease.",
+         heading: i18n.t("Blood Donor Club"),
+         description: i18n.t("Blood Donor Club Description"),
          link: "/blood",
          call: "tel:+8801738548662",
-         slug: "Find Donor"
+         slug: i18n.t("Find Donor")
       },
       {
          image: "/common/s5.png",
-         heading: "Medicine Delivery — Fast and Secure",
-         description: "Find pharmacies, check medicine prices, and order now. Get the right medicines delivered to your home as per your prescription",
+         heading: i18n.t("Medicine Delivery"),
+         description: i18n.t("Medicine Delivery Description"),
          link: "/pharmacy",
          call: "tel:+8801738548662",
-         slug: "Order Medicine"
+         slug: i18n.t("Order Medicine")
       },
       {
          image: "/common/s6.png",
-         heading: "Get modern physiotherapy care near you",
-         description: "With advanced physiotherapy technology and expert care, regain your normal life quickly. Physiotherapy centers are now easily accessible.",
+         heading: i18n.t("Modern Physiotherapy"),
+         description: i18n.t("Modern Physiotherapy Description"),
          link: "/physiotherapy-center",
          call: "tel:+8801738548662",
-         slug: "Book Physiotherapy"
+         slug: i18n.t("Book Physiotherapy")
       },
       {
          image: "/common/s7.png",
-         heading: "Trusted eye care centers for your vision health",
-         description: "Get accurate treatment from specialist eye doctors using modern equipment. No more worries about minor or major eye problems",
+         heading: i18n.t("Eye Care Support"),
+         description: i18n.t("Eye Care Support Description"),
          link: "/eye-care-center",
          call: "tel:+8801738548662",
-         slug: "Book Eye Checkup"
+         slug: i18n.t("Book Eye Checkup")
       },
       {
          image: "/common/s8.png",
-         heading: "A trusted place for drug rehabilitation",
-         description: "Get accurate therapy and rehabilitation with expert psychiatrists and compassionate care. Move forward gradually on the path to wellness in a calm and healthy setting",
+         heading: i18n.t("Drug Rehabilitation"),
+         description: i18n.t("Drug Rehabilitation Description"),
          link: "/drug-de-addiction",
          call: "tel:+8801738548662",
-         slug: "Get Rehab Help"
+         slug: i18n.t("Get Rehab Help")
       },
       {
          image: "/common/s9.png",
-         heading: "Compassionate nursing care for the elderly and sick",
-         description: "24/7 care by experienced nurses and a caring team. Safe and comfortable nursing services for your loved ones, now at your fingertips",
+         heading: i18n.t("Nursing Home Care2"),
+         description: i18n.t("Nursing Home Care Description"),
          link: "/nursing-home-care",
          call: "tel:+8801738548662",
-         slug: "Book Nursing Care"
+         slug: i18n.t("Book Nursing Care")
       },
       {
          image: "/common/s10.png",
-         heading: "Restore your hearing safely",
-         description: "Consult experienced audiologists for accurate solutions. Don’t wait with hearing issues — get safe treatment today",
+         heading: i18n.t("Hearing Aid Support"),
+         description: i18n.t("Hearing Aid Support Description"),
          link: "/hearing-care-center",
          call: "tel:+8801738548662",
-         slug: "Consult Audiologist"
+         slug: i18n.t("Consult Audiologist")
       },
       {
          image: "/common/s11.png",
-         heading: "Emergency services 24/7",
-         description: "Get the emergency services you need quickly and easily. Contact us anytime in any urgent situation — we are here by your side",
+         heading: i18n.t("Emergency Service 24/7"),
+         description: i18n.t("Emergency Service Description"),
          call: "tel:+8801738548662",
-         slug: "Call Emergency"
-      },
+         slug: i18n.t("Call Emergency")
+      }
    ];
 
 
@@ -129,7 +130,7 @@ const CommonService = () => {
                         {
                            item.link && (
                               <Link href={item.link} target="_blank" className="group bg-white border-2 border-primary px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
-                                 <p className="description2 text-primary group-hover:text-white transition-all duration-300 whitespace-pre">Explore More</p>
+                                 <p className="description2 text-primary group-hover:text-white transition-all duration-300 whitespace-pre">{i18n.t("Learn More")}</p>
                                  <FaArrowRightLong className="description2 text-primary group-hover:text-white transition-all duration-300" />
                               </Link>
                            )

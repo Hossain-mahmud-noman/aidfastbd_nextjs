@@ -1,30 +1,33 @@
 'use client'
 
 import Image from "next/image"
+import { useI18n } from "../../context/i18n";
 
 const Information = () => {
+   const i18n = useI18n()
    const data = [
       {
-         "image": "/home/info/i1.png",
-         "heading": "7900+",
-         "description": "Active Users Nationwide"
+         image: "/home/info/i1.png",
+         heading: i18n.t("7900+"),
+         description: i18n.t("Active Users Nationwide")
       },
       {
-         "image": "/home/info/i2.png",
-         "heading": "94%",
-         "description": "Received 5-Star Feedback"
+         image: "/home/info/i2.png",
+         heading: i18n.t("94%"),
+         description: i18n.t("Received 5-Star Feedback")
       },
       {
-         "image": "/home/info/i3.png",
-         "heading": "29+",
-         "description": "Trusted Healthcare Services"
+         image: "/home/info/i3.png",
+         heading: i18n.t("29+"),
+         description: i18n.t("Trusted Healthcare Services")
       },
       {
-         "image": "/home/info/i4.png",
-         "heading": "1200+",
-         "description": "App Installs Across Devices"
+         image: "/home/info/i4.png",
+         heading: i18n.t("1200+"),
+         description: i18n.t("App Installs Across Devices")
       }
-   ]
+   ];
+
 
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-[97px]  bg-[#F8FCFF]">

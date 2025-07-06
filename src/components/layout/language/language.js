@@ -6,10 +6,12 @@ import {
   DropdownMenuTrigger
 } from "@radix-ui/react-dropdown-menu"
 import { Button } from "antd"
+import Image from "next/image.js"
 import { FaLanguage } from "react-icons/fa6"
 
 const Language = () => {
   const i18n = useI18n()
+  console.log("🚀 ~ Language ~ i18n:", i18n)
   return (
     <div>
       <DropdownMenu>
@@ -19,11 +21,18 @@ const Language = () => {
             size="sm"
             className="flex items-center gap-2 text-primary hover:text-landingPink transition-colors duration-200 px-3 py-1.5 rounded-full border border-white/20 hover:border-landingPink/30"
           >
-            <FaLanguage className="text-xl text-landingPink" />
+            {/* <FaLanguage className="text-xl text-landingPink" /> */}
+            <Image
+              src={i18n.language === "en" ? "/en.jpg" : "/bn.JPG"}
+              width={40}
+              height={40}
+              alt="Language"
+              className="rounded-full w-7 h-7 object-cover"
+            />
             {/* Show text only on md and up */}
-            <span className="text-sm font-medium hidden md:inline">
+            {/* <span className="text-sm font-medium hidden md:inline">
               {i18n?.language === "bn" ? "বাংলা" : "English"}
-            </span>
+            </span> */}
             <span className="sr-only">Toggle language</span>
           </Button>
         </DropdownMenuTrigger>

@@ -57,7 +57,7 @@ body {
 }
 
 .heading1 {
-  @apply xl:text-5xl lg:text-4xl md:text-3xl text-2xl font-inter font-bold;
+  @apply xl:text-5xl lg:text-4xl md:text-3xl text-2xl font-inter font-bold leading-10;
 }
 
 .heading2 {

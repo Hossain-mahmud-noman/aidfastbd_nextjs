@@ -9,9 +9,11 @@ import { PiMapPinAreaBold } from "react-icons/pi";
 import { MdOutlineEmail } from "react-icons/md";
 import { BiPhoneCall } from "react-icons/bi";
 import { FaLinkedin } from "react-icons/fa";
+import { useI18n } from "../../context/i18n";
 
 
 const Footer = () => {
+   const i18n = useI18n();
    const [currentYear, setCurrentYear] = useState(null);
    useEffect(() => {
       if (typeof window !== "undefined") {
@@ -20,26 +22,41 @@ const Footer = () => {
    }, []);
 
    const navLinks1 = [
-      { name: "Doctor", link: "/doctor" },
-      { name: "Diagonistick", link: "/diagnostic" },
-      { name: "Blood Bank", link: "/blood" },
-      { name: "Dental", link: "/dental" },
-      { name: "Ambulence", link: "/ambulance" },
-      { name: "Pharmacy", link: "/pharmacy" },
-   ]
+      { name: i18n.t("Doctor"), link: "/doctor" },
+      { name: i18n.t("Diagnostic"), link: "/diagnostic" },
+      { name: i18n.t("Blood Bank"), link: "/blood" },
+      { name: i18n.t("Dental"), link: "/dental" },
+      { name: i18n.t("Ambulance"), link: "/ambulance" },
+      { name: i18n.t("Pharmacy"), link: "/pharmacy" },
+   ];
+
    const navLinks2 = [
-      { name: "Blog", link: "/blog" },
-      { name: "Physiotherapy Center", link: "/physiotherapy-center" },
-      { name: "Nursing Care Home", link: "/nursing-home-care" },
-      { name: "Eye Care Center", link: "/eye-care-center" },
-      { name: "Drug Rehabilitation", link: "/drug-de-addiction" },
-      { name: "Haring Care Center", link: "/hearing-care-center" },
-   ]
+      { name: i18n.t("Blog"), link: "/blog" },
+      { name: i18n.t("Physiotherapy Center"), link: "/physiotherapy-center" },
+      { name: i18n.t("Nursing Care Home"), link: "/nursing-home-care" },
+      { name: i18n.t("Eye Care Center"), link: "/eye-care-center" },
+      { name: i18n.t("Drug Rehabilitation"), link: "/drug-de-addiction" },
+      { name: i18n.t("Hearing Care Center"), link: "/hearing-care-center" },
+   ];
+
    const navLinks3 = [
-      { name: "Dhaka-1209, Bangladesh", link: "https://maps.app.goo.gl/k5caWFQUjbj88H5T7", icon: <PiMapPinAreaBold /> },
-      { name: "contact@aidfastbd.com", link: "mailto: contact@aidfastbd.com", icon: <MdOutlineEmail /> },
-      { name: "+8801738548662", link: "tel: +880 1738-548662", icon: <BiPhoneCall /> },
-   ]
+      {
+         name: i18n.t("Dhaka-1209, Bangladesh"),
+         link: "https://maps.app.goo.gl/k5caWFQUjbj88H5T7",
+         icon: <PiMapPinAreaBold />,
+      },
+      {
+         name: "contact@aidfastbd.com",
+         link: "mailto:contact@aidfastbd.com",
+         icon: <MdOutlineEmail />,
+      },
+      {
+         name: "+8801738548662",
+         link: "tel:+8801738548662",
+         icon: <BiPhoneCall />,
+      },
+   ];
+
    const navIcons = [
       {
          icon: FaWhatsapp,
@@ -100,8 +117,8 @@ const Footer = () => {
                      width={137}
                      height={34}
                   />
-                  <p className="description1 mt-4 text-white md:max-w-[326px]">The one and only trusted destination for reliable healthcare services — the AidFast healthcare platform.</p>
-                  <p className="description1 mt-4 text-white ">Download AidFast App</p>
+                  <p className="description1 mt-4 text-white md:max-w-[326px]">{i18n.t("AidFast Tagline")}</p>
+                  <p className="description1 mt-4 text-white ">{i18n.t("Download AidFast App")}</p>
                   <div className="mt-4 lg:mt-5 xl:mt-8 flex items-center gap-3 md:gap-4 xl:gap-5">
                      <Link href="/www.google.com" className="relative w-[150px] h-[50px]">
                         <Image
@@ -125,7 +142,7 @@ const Footer = () => {
                   <div className="flex flex-col sm:flex-row justify-between ">
                      {/* first part */}
                      <div className="flex flex-col items-center sm:items-start">
-                        <h3 className="description3 text-white mt-4 sm:mt-0">Services</h3>
+                        <h3 className="description3 text-white mt-4 sm:mt-0">{i18n.t("Services")}</h3>
                         <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-5">
                            {navLinks1?.map((item, index) => (
                               <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 descruiption1 text-white transform duration-300 hover:text-black cursor-pointer">
@@ -146,7 +163,7 @@ const Footer = () => {
                      </div>
                      {/* third part */}
                      <div className="flex flex-col items-center sm:items-start">
-                        <h3 className="description3 text-white mt-8 sm:mt-0">Address</h3>
+                        <h3 className="description3 text-white mt-8 sm:mt-0">{i18n.t("Address")}</h3>
                         <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-5">
                            {navLinks3?.map((item, index) => (
                               <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 descruiption1 text-white transform duration-300 hover:text-black cursor-pointer">
@@ -161,13 +178,13 @@ const Footer = () => {
                                  const IconComponent = item.icon;
                                  return (
                                     <Link
-                                       className="border border-white rounded-full transition-all duration-300 w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 flex items-center justify-center"
+                                       className="group border border-white rounded-full transition-all duration-300 w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:border-black"
                                        key={index}
                                        href={item.link}
                                        target="_blank"
                                        rel="noopener noreferrer"
                                     >
-                                       <IconComponent className="text-white text-base lg:text-xl" />
+                                       <IconComponent className="text-white text-base lg:text-xl group-hover:text-black transition-all duration-300" />
                                     </Link>
                                  );
                               })}
@@ -180,15 +197,14 @@ const Footer = () => {
             <div className="xl:mt-14 lg:mt-12 md:mt-10 mt-5 bg-white w-full h-[1px]"> </div>
             <div className="xl:my-7 lg:my-6 md:my-5 my-4 flex flex-col sm:flex-row items-center justify-between ">
                <p className="text-white description-2 mt-3 sm:mt-0">
-                  Copyright © {currentYear || new Date().getFullYear()} All rights
-                  reserved <Link className="text-black/70 description2" href="/">AidFast</Link>
+                  {i18n.t("Copyright")} © {currentYear || new Date().getFullYear()} {i18n.t("All rights reserved")} <Link className="text-black/70 description2 hover:text-white/50 transition-all duration-300" href="/">AidFast</Link>
                </p>
                <div className="flex items-center gap-3 md:gap-4 xl:gap-10 mt-3 md:mt-0">
-                  <Link target="_blank" href="/privacy" className="text-white description1">
-                     Privacy and Policy
+                  <Link target="_blank" href="/privacy" className="text-white description1 hover:text-black transition-all duration-300">
+                     {i18n.t("Privacy & Policy")}
                   </Link>
-                  <Link target="_blank" href="/privacy" className="text-white description1">
-                     Terms and Conditions
+                  <Link target="_blank" href="/privacy" className="text-white description1 hover:text-black transition-all duration-300">
+                     {i18n.t("Terms & Conditions")}
                   </Link>
                </div>
             </div>
