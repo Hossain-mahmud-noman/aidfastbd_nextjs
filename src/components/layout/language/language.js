@@ -11,7 +11,6 @@ import { FaLanguage } from "react-icons/fa6"
 
 const Language = () => {
   const i18n = useI18n()
-  console.log("🚀 ~ Language ~ i18n:", i18n)
   return (
     <div>
       <DropdownMenu>
