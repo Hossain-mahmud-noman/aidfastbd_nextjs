@@ -26,7 +26,7 @@ const Language = () => {
               width={40}
               height={40}
               alt="Language"
-              className="rounded-full w-7 h-7 object-cover"
+              className="rounded-full w-6 h-6 md:w-8 md:h-8 object-cover"
             />
             {/* Show text only on md and up */}
             {/* <span className="text-sm font-medium hidden md:inline">

@@ -162,8 +162,8 @@ const Location = () => {
          ? parts.slice(1).map(part => part.trim()).join(', ')
          : rawLocation.trim();
 
-      const isLong = location.length > 12;
-      const shortText2 = isLong ? location.slice(0, 12) + '...' : location;
+      const isLong = location.length > 10;
+      const shortText2 = isLong ? location.slice(0, 10) + '..' : location;
       const tooltipText2 = isLong ? location : '';
 
       return { shortText2, tooltipText2 };
@@ -171,7 +171,7 @@ const Location = () => {
 
    const { shortText, tooltipText } = getFormattedLocation(locationName);
    const { shortText2, tooltipText2 } = getFormattedLocation2(locationName);
-   
+
    return (
       <div>
          <div className="flex gap-0 sm:gap-2 items-center">
@@ -202,7 +202,8 @@ const Location = () => {
                      src="/home/map.png"
                      width={30}
                      height={30}
-                     alt="Location" />
+                     alt="Location"
+                     className="h-6 w-6 md:h-8 md:w-8" />
                </button>
             </div>
          </div>
