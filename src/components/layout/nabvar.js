@@ -11,6 +11,7 @@ import {
 } from "react-icons/io5";
 import Location from "./location/location.js";
 import Language from "./language/language.js";
+import LoginPage from "./loginPage/login.js"
 import { useI18n } from "../../context/i18n.js";
 
 const Navbar = ({ textColor = "text-black" }) => {
@@ -84,11 +85,12 @@ const Navbar = ({ textColor = "text-black" }) => {
             <div className="flex items-center gap-1">
                <Location />
                <Language />
+               <LoginPage />
                <button
                   className={`lg:hidden text-primary text-2xl `}
                   onClick={() => setIsDrawerOpen(true)}
                >
-                  <IoMenuOutline className="text-2xl relative z-50 ml-2 sm:ml-0" />
+                  <IoMenuOutline className="text-2xl relative z-50 ml-1 sm:ml-0" />
                </button>
             </div>
          </div>
