@@ -14,7 +14,7 @@ import Language from "./language/language.js";
 import LoginPage from "./loginPage/login.js"
 import { useI18n } from "../../context/i18n.js";
 
-const Navbar = ({ textColor = "text-black" }) => {
+const Navbar = ({ textColor = "text-black"}) => {
    const i18n = useI18n()
    const pathname = usePathname();
    const [isDrawerOpen, setIsDrawerOpen] = useState(false);

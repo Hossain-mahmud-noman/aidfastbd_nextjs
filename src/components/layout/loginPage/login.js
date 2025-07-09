@@ -7,16 +7,30 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useI18n } from '../../../context/i18n';
 import handleLogout from '../../../context/logout'
+import { getUserProfile } from '../../../context/getUserProfile'
+import Image from 'next/image';
 const Login = () => {
   const [user, setUser] = useState(null);
   const i18n = useI18n();
   const router = useRouter();
+  const [image, setImage] = useState(null)
+
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem('id');
     setUser(storedUser);
+    fetchProfile()
   }, [i18n]);
 
+
+  const fetchProfile = async () => {
+    const profile = await getUserProfile();
+    if (profile) {
+      setImage(
+        profile.imageUrl !== "" ? "https://api.aidfastbd.com/" + profile.imageUrl : ""
+      );
+    }
+  };
 
   const items = [
     {
@@ -37,8 +51,17 @@ const Login = () => {
     <div>
       {user ? (
         <Dropdown menu={{ items }} trigger={['hover']} placement="bottomRight">
-          <div className="cursor-pointer h-6 w-6 md:h-8 md:w-8 rounded-full bg-primary flex items-center justify-center">
-            <FaUserDoctor className="text-white" />
+          <div className="cursor-pointer h-6 w-6 md:h-8 md:w-8 rounded-full bg-primary flex items-center justify-center overflow-hidden">
+            {
+              image ?
+                <Image
+                  src={image}
+                  width={100}
+                  height={100}
+                  alt='user'
+                /> :
+                <FaUserDoctor className="text-white" />
+            }
           </div>
         </Dropdown>
       ) : (

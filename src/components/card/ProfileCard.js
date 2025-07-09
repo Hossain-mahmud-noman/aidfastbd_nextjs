@@ -1,36 +1,45 @@
 'use client';
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaCamera } from "react-icons/fa";
-
+import { toast } from "sonner";
 const ProfileCard = ({ token, user }) => {
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
   const [address, setAddress] = useState("");
+  const router = useRouter()
 
   // Fetch user profile
   const fetchProfile = async () => {
     try {
       const res = await fetch(
-        `https://api.aidfastbd.com/api/Auth/GetAllUserProfile?userId=${user.id}`
+        `https://api.aidfastbd.com/api/Auth/GetAllUserProfile?userId=${user.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (res.status === 200) {
         const data = await res.json();
-        
         const profile = data[0];
         setName(profile.name || "");
         setEmail(profile.userName || "");
         setAge(profile.age || "");
         setAddress(profile.address || "");
-        setImage(profile.imageUrl !== "" ? "https://api.aidfastbd.com/" + profile.imageUrl : "");
+        setImage(
+          profile.imageUrl !== "" ? "https://api.aidfastbd.com/" + profile.imageUrl : ""
+        );
       }
     } catch (err) {
       console.error("Error fetching profile:", err);
     }
   };
+
 
   // Update user profile
   const updateProfile = async () => {
@@ -50,18 +59,22 @@ const ProfileCard = ({ token, user }) => {
         "https://api.aidfastbd.com/api/Auth/UpdateUserProfile",
         {
           method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           body: formData,
         }
       );
 
       if (res.status === 200) {
         await fetchProfile();
-        alert("Profile updated successfully!");
+        toast.success("Profile updated successfully!")
+        router.push("/profile")
       } else {
-        alert("Failed to update profile.");
+        toast.error("Failed to update profile.");
       }
     } catch (err) {
-      console.error("Error updating profile:", err);
+      toast.error("Error updating profile:", err);
     }
   };
 
@@ -82,8 +95,8 @@ const ProfileCard = ({ token, user }) => {
   }, []);
 
   return (
-    <div className="bg-gray-100 min-h-screen flex py-2 px-4 justify-center">
-      <div className="w-full max-w-sm bg-white rounded-lg shadow-lg p-6">
+    <div className=" flex py-2 px-4 justify-center">
+      <div className="w-full max-w-sm rounded-lg shadow-custom-light p-6">
         {/* Profile Picture */}
         <div className="relative flex justify-center">
           <div className="w-28 h-28 rounded-full bg-gradient-to-r from-teal-500 to-blue-500 flex items-center justify-center">
@@ -103,8 +116,8 @@ const ProfileCard = ({ token, user }) => {
             htmlFor="imageUpload"
             className="absolute bottom-1 right-20 bg-white p-2 rounded-full shadow-md cursor-pointer"
           >
-          <FaCamera></FaCamera>
-       
+            <FaCamera />
+
           </label>
           <input
             type="file"

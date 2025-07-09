@@ -50,7 +50,7 @@ const LoginForm = () => {
 
           if (ret.status == 200) {
             localStorage.setItem("token", data.tokenString);
-            localStorage.setItem("user", data.user?.id);
+            localStorage.setItem("id", data.user?.id);
 
             toast.success("User login Successfully");
             setTimeout(() => router.push("/profile"), 1000);

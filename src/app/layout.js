@@ -6,6 +6,8 @@ import Navbar from "../components/layout/nabvar.js";
 import Footer from "../components/layout/footer.js";
 import I18nProvider from "../context/i18n.js";
 import { Toaster } from 'sonner';
+import ClientLayout from "./ClientLayout"; // 👈 New client component
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -39,14 +41,7 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <StoreProvider>
-          <I18nProvider >
-            <Navbar />
-            <Toaster position="top-right" />
-            {children}
-            <Footer />
-          </I18nProvider>
-        </StoreProvider>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
