@@ -25,7 +25,7 @@ const Navbar = ({ textColor = "text-black" }) => {
       { path: "/privacy", label: i18n.t("Terms & Conditions") },
    ];
    return (
-      <div className="w-full font-lato overflow-hidden relative z-50"
+      <div className="w-full font-lato overflow-hidden relative z-20"
          style={{
             background: '#FFF',
             boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.08)'
@@ -90,7 +90,7 @@ const Navbar = ({ textColor = "text-black" }) => {
                   className={`lg:hidden text-primary text-2xl `}
                   onClick={() => setIsDrawerOpen(true)}
                >
-                  <IoMenuOutline className="text-2xl relative z-50 ml-1 sm:ml-0" />
+                  <IoMenuOutline className="text-2xl relative z-20 ml-1 sm:ml-0" />
                </button>
             </div>
          </div>

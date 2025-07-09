@@ -1,6 +1,4 @@
 import { appname } from "../../utils/constants";
-import AppBar from '../../components/AppBar';
-import { FaArrowLeft } from "react-icons/fa";
 
 import LoginForm from '../../components/forms/LoginForm';
 

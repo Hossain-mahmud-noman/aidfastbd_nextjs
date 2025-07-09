@@ -3,26 +3,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   FaUser, FaCalendarAlt, FaHeart, FaInfoCircle, FaShieldAlt, FaLock,
-  FaHistory, FaSignInAlt, FaSignOutAlt
+  FaHistory, FaSignInAlt
 } from 'react-icons/fa';
 import { MdOutlinePolicy } from 'react-icons/md';
-import { toast, Toaster } from 'sonner';
 const MoreMenu = ({ token = "" }) => {
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    const res = await fetch("/api/logout", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' }
-    });
-
-    if (res.status === 200) {
-      toast.success("Logout successful");
-      setTimeout(() => router.push("/"), 1000);
-    } else {
-      toast.error("Logout failed");
-    }
-  };
 
   const MenuItem = ({ icon, text, href = "", onClick }) => {
     const content = (
@@ -34,13 +18,11 @@ const MoreMenu = ({ token = "" }) => {
         <span className="text-gray-700 font-medium">{text}</span>
       </div>
     );
-
     return href && href !== "/logout" ? <Link href={href}>{content}</Link> : content;
   };
 
   return (
     <div className="min-h-screen mt-6">
-      <Toaster position="top-right" />
       {token !== "" && (
         <div className="mb-4">
           <h3 className="font-semibold text-gray-500 mb-3">General</h3>
@@ -70,7 +52,6 @@ const MoreMenu = ({ token = "" }) => {
           ) : (
             <>
               <MenuItem icon={<FaLock />} href="/reset" text="Reset Password" />
-              <MenuItem icon={<FaSignOutAlt />} text="Logout" onClick={handleLogout} />
             </>
           )}
         </div>

@@ -5,7 +5,7 @@ import StoreProvider from './StoreProvider';
 import Navbar from "../components/layout/nabvar.js";
 import Footer from "../components/layout/footer.js";
 import I18nProvider from "../context/i18n.js";
-
+import { Toaster } from 'sonner';
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -42,6 +42,7 @@ export default function RootLayout({ children }) {
         <StoreProvider>
           <I18nProvider >
             <Navbar />
+            <Toaster position="top-right" />
             {children}
             <Footer />
           </I18nProvider>

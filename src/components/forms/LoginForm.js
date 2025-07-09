@@ -33,32 +33,41 @@ const LoginForm = () => {
 
       const data = await response.json();
       if (response.status == 200) {
-        if (data['tokenString'] != "INVALID") {
+        if (data['tokenString'] !== "INVALID") {
           const payload = data['user'];
           payload['mobileNoOrEmail'] = mobileNo;
+
           const ret = await fetch("/api/login", {
-            method: "POST", headers: {
+            method: "POST",
+            headers: {
               'Content-Type': 'application/json'
-            }, body: JSON.stringify({
-              user: payload, token: data['tokenString']
+            },
+            body: JSON.stringify({
+              user: payload,
+              token: data['tokenString']
             })
-          })
+          });
 
           if (ret.status == 200) {
-            toast.success("Logout successful");
-            setTimeout(() => router.push("/"), 1000);
+            localStorage.setItem("token", data.tokenString);
+            localStorage.setItem("user", data.user?.id);
+
+            toast.success("User login Successfully");
+            setTimeout(() => router.push("/profile"), 1000);
           } else {
-            toast.error("Logout failed");
+            toast.error("Login failed");
             setError('Login failed');
           }
         } else {
-          toast.error("Logout failed");
+          toast.error("Login failed");
           setError('Login failed');
         }
-      } else {
-        toast.error("Logout failed");
+      }
+      else {
+        toast.error("Login failed");
         setError('Login failed');
       }
+
 
     } catch (err) {
       toast.error(err.message);

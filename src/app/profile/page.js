@@ -10,9 +10,8 @@ export const metadata = {
   title: "My Profile | " + appname,
 };
 
-// Function to check if the user is logged in
 const checkLogin = async () => {
-  const tokenCookie = cookies().get('token')?.value ?? ""; // Retrieve token cookie
+  const tokenCookie = cookies().get('token')?.value ?? "";
   const userCookie = cookies().get('user')?.value;
   const user = userCookie ? JSON.parse(userCookie) : null;
 
@@ -33,15 +32,13 @@ const checkLogin = async () => {
 async function page() {
 
   const { user, data } = await checkLogin();
-  // If no user, redirect to login
   if (!user) {
     redirect('/login');
   }
 
   return (
     <>
-      <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='My Profile' ></AppBar>
-      <div className="pt-16 aid-container">
+      <div className="pt-10 aid-container">
         <ProfileMenu data={data}></ProfileMenu>
       </div>
     </>
