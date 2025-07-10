@@ -15,13 +15,15 @@ import DiagnosticProfileDoctors from './diagnostic/DiagnosticProfileDoctors';
 function DiagnosticProfile({ token, user }) {
   const [profileData, setProfileData] = useState(null);
 
+
   const getProfileData = async () => {
     headerx['Authorization'] = `Bearer ${token}`;
     const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllDiagnosticCenterList?userid=${user.id}`, { headers: headerx });
 
     const data = await res.json();
+    console.log("🚀 ~ getProfileData ~ data:", data)
     if (res.status == 200) {
-      if(data.data[0] !==null){
+      if (data.data[0] !== null) {
         setProfileData(data.data[0]);
       }
 
@@ -32,7 +34,7 @@ function DiagnosticProfile({ token, user }) {
 
     //
   }
-
+  console.log("🚀 ~ DiagnosticProfile ~ profileData:", profileData)
 
   useEffect(() => {
     getProfileData();

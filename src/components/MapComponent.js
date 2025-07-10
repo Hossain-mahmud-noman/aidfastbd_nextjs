@@ -11,7 +11,6 @@ const containerStyle = {
 };
 
 function MapComponent({ onLocationSelect, lat, lon }) {
-  console.log("🚀 ~ MapComponent ~ lat, lon:", lat, lon)
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: map_key, 
     libraries: ["places"], 

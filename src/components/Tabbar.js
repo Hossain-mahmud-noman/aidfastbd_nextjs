@@ -23,7 +23,7 @@ const TabBar = ({ tabs }) => {
     return (
         <div className="flex flex-col w-full h-full aid-container">
             {/* Tab Bar */}
-            <div className="flex items-center justify-center overflow-x-auto aid-container whitespace-nowrap border-b border-gray-200 bg-white left-0 right-0 z-[10000]">
+            <div className="flex items-center justify-center overflow-x-auto aid-container whitespace-nowrap border-b border-gray-200 bg-white left-0 right-0 ">
                 {tabs.map((tab, index) => (
                     <button
                         key={index}

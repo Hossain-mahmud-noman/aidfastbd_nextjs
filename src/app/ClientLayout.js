@@ -32,14 +32,14 @@ const ClientLayout = ({ children }) => {
 
     return (
         // <AuthProvider>
-            <StoreProvider>
-                <I18nProvider>
-                    <Navbar profileImage={image} />
-                    <Toaster position="top-right" />
-                    {children}
-                    <Footer />
-                </I18nProvider>
-            </StoreProvider>
+        <StoreProvider>
+            <I18nProvider>
+                <Navbar />
+                <Toaster position="top-right" />
+                {children}
+                <Footer />
+            </I18nProvider>
+        </StoreProvider>
         // </AuthProvider>
     );
 };

@@ -14,13 +14,14 @@ import Language from "./language/language.js";
 import LoginPage from "./loginPage/login.js"
 import { useI18n } from "../../context/i18n.js";
 
-const Navbar = ({ textColor = "text-black"}) => {
+const Navbar = ({ textColor = "text-black" }) => {
    const i18n = useI18n()
    const pathname = usePathname();
    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
    const pagesItems = [
       { path: "/blog", label: i18n.t("Blog") },
       { path: "/service", label: i18n.t("Services") },
+      { path: "/more", label: i18n.t("Additional Content") },
       { path: "/privacy", label: i18n.t("Privacy & Policy") },
       { path: "/privacy", label: i18n.t("Terms & Conditions") },
    ];
@@ -65,14 +66,14 @@ const Navbar = ({ textColor = "text-black"}) => {
                   textColor={textColor}
                />
                <NavItem
-                  path="/dental"
-                  label={i18n.t("Dental")}
+                  path="/ambulance"
+                  label={i18n.t("Ambulance")}
                   pathname={pathname}
                   textColor={textColor}
                />
                <NavItem
-                  path="/ambulance"
-                  label={i18n.t("Ambulance")}
+                  path="/emergency"
+                  label={i18n.t("Emergency")}
                   pathname={pathname}
                   textColor={textColor}
                />

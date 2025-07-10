@@ -5,7 +5,7 @@ import { image_base_endpoint } from '../../../utils/constants';
 import { FaCalendarAlt } from "react-icons/fa";
 import MapComponent from '../../MapComponent';
 import Image from 'next/image';
-
+import { toast } from 'sonner';
 function InputField({ label, placeholder, type = "text", value, onChange, required = false, maxLength = 255, name }) {
   return (
     <div className="mb-4">
@@ -56,6 +56,7 @@ function Dropdown({ label, options, value, onChange, required = false }) {
 }
 
 function DiagnosticProfileBasic({ data, token, user }) {
+console.log("🚀 ~ DiagnosticProfileBasic ~ data:", data, token, user)
 
   const [selectedCover, setSelectedCover] = useState(null);
 
@@ -148,7 +149,7 @@ function DiagnosticProfileBasic({ data, token, user }) {
       form.append('Contact', formData.contactNo);
       form.append('RegistrationNumber', formData.registrationNo);
       form.append('ServiceTime', formData.serviceTime);
-      form.append('EstablishedYear', date); // Ensure `date` is in "YYYY-MM-DD" format
+      form.append('EstablishedYear', date); 
       form.append('Notice', formData.organizationNotice);
       form.append('OwnerName', formData.ownerName);
       form.append('OwnerMobileNumber', formData.ownerMobileNo);
@@ -158,62 +159,54 @@ function DiagnosticProfileBasic({ data, token, user }) {
       form.append('IsOpen', availablityStatus === "true");
       form.append('Latitude', latitude);
       form.append('Longitude', longitude);
-      form.append('UserId', user?.id); // Ensure `user` contains a valid `id`
+      form.append('UserId', user?.id); 
 
       if (selectedLogo) {
         if (typeof selectedLogo === 'string' && !selectedLogo.startsWith(image_base_endpoint)) {
-          // If it's a URL (not a local file), fetch it and convert to a blob
           const blob = await fetch(selectedLogo).then((res) => res.blob());
-          // Append the fetched image as a blob with a name for the file
-          form.append('ProfileImageFile', blob, 'image.jpg');  // You can add dynamic filename extensions here if needed
+          form.append('ProfileImageFile', blob, 'image.jpg');  
         } else if (selectedLogo instanceof File) {
-          // If selectedLogo is already a File object, just append it
           form.append('ProfileImageFile', selectedLogo);
         }
       }
 
       if (selectedCover) {
         if (typeof selectedCover === 'string' && !selectedCover.startsWith(image_base_endpoint)) {
-          // If it's a URL (not a local file), fetch it and convert to a blob
           const blob = await fetch(selectedCover).then((res) => res.blob());
           form.append('CoverImageFile', blob, 'coverImage.jpg');
         } else if (selectedCover instanceof File) {
-          // If coverImage is already a File object, just append it
           form.append('CoverImageFile', selectedCover);
         }
       }
 
       if (ownerImage) {
         if (typeof ownerImage === 'string' && !ownerImage.startsWith(image_base_endpoint)) {
-          // If it's a URL (not a local file), fetch it and convert to a blob
           const blob = await fetch(ownerImage).then((res) => res.blob());
           form.append('OwnerImageFile', blob, 'ownerImage.jpg');
         } else if (ownerImage instanceof File) {
-          // If ownerImage is already a File object, just append it
           form.append('OwnerImageFile', ownerImage);
         }
       }
-      // API call
       const response = await fetch(
         'https://api.aidfastbd.com/api/GeneralInformation/DiagnosticCenterRegistration',
         {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${token}`, // Ensure `token` is valid
+            Authorization: `Bearer ${token}`, 
           },
-          body: form, // Use `FormData` directly for the request body
+          body: form, 
         }
       );
       // Handle response
       if (response.ok) {
-        alert('Profile Updated Successfully');
+        toast.success("Profile Updated Successfully")
       } else {
         const errorData = await response.json();
-        alert(`Error: ${errorData.message || 'An error occurred'}`);
+        toast.error(`Error: ${errorData.message || 'An error occurred, Pleasy Try again'}`);
       }
     } catch (error) {
       console.error('Error updating profile:', error);
-      alert('Failed to update profile. Please try again.');
+      toast.error('Failed to update profile. Please try again.');
     }
   };
 
