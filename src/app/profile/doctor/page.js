@@ -32,7 +32,7 @@ async function Page() {
     return (
         <>
             <div className="py-10">
-                <DoctorProfile token={token} user={user}></DoctorProfile>
+                <DoctorProfile token={token} user={user} />
             </div>
         </>
     )

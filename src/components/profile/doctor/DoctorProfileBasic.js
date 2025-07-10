@@ -5,6 +5,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
 
+import { toast } from "sonner";
 // Reusable InputField component
 function InputField({
   label,
@@ -61,6 +62,7 @@ function Dropdown({ label, options, value, onChange, required = false }) {
 }
 
 function DoctorProfileBasic({ data, user, token }) {
+  console.log("🚀 ~ DoctorProfileBasic ~ data:", data)
   const [specialities, setSpecialities] = useState([]);
   const [gender, setGender] = useState("");
   const [BMDCType, setBMDCType] = useState("");
@@ -186,6 +188,8 @@ function DoctorProfileBasic({ data, user, token }) {
     formData.append("Qualification", otherDegree);
     formData.append("Experience", experienceAfterMbbs);
 
+    console.log("form data", formData)
+
     if (selectedLogo) {
       if (
         typeof selectedLogo === "string" &&
@@ -210,16 +214,22 @@ function DoctorProfileBasic({ data, user, token }) {
             Authorization: `Bearer ${token}`,
             // No need to specify Content-Type for FormData
           },
-          body: formData, // Pass the FormData object directly
+          body: formData,
         }
       );
 
-      if (!response.ok) throw new Error("Error saving/updating profile");
+      if (!response.ok) {
+        toast.error("Something went wrong!, Please Try Again");
+      }
+
       const result = await response.json();
+      toast.success("Profile saved successfully!");
     } catch (error) {
+      toast.error("Something went wrong!, Please Try Again");
       console.error("Error submitting the form:", error);
-    }
-  };
+
+    };
+  }
 
   return (
     <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">

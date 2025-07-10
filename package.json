@@ -26,6 +26,7 @@
     "redux": "^5.0.1",
     "sharp": "^0.33.5",
     "sonner": "^2.0.3",
+    "sweetalert2": "^11.22.2",
     "swiper": "^11.2.10"
   },
   "devDependencies": {

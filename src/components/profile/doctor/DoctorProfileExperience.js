@@ -2,14 +2,14 @@
 
 import { headerx } from '../../../utils/constants';
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 
 function DoctorProfileExperience({ data, user, token }) {
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [experienceList, setExperienceList] = useState(data || []);
 
   const [experience, setExperience] = useState({
-    id: null, // Used for update identification
+    id: null,
     officeName: '',
     designation: '',
     department: '',
@@ -84,21 +84,42 @@ function DoctorProfileExperience({ data, user, token }) {
 
       if (response.ok) {
         if (isUpdate) {
+          toast.success("Experience Information updated successfully!");
           setExperienceList((prevList) =>
-            prevList.map((item) => (item.id === experience.id ? body : item))
+            prevList.map((item) =>
+              item.id === experience.id
+                ? {
+                    ...item,
+                    officeName: experience.officeName,
+                    designation: experience.designation,
+                    department: experience.department,
+                    startDate: experience.employmentFrom,
+                    endDate: experience.employmentTo,
+                    period: experience.period,
+                  }
+                : item
+            )
           );
         } else {
-          setExperienceList((prevList) => [...prevList, body]);
+          toast.success("Experience Information saved successfully!");
+          setExperienceList((prevList) => [
+            ...prevList,
+            {
+              ...body,
+              startDate: experience.employmentFrom,
+              endDate: experience.employmentTo,
+            },
+          ]);
         }
         setIsModalOpen(false);
         resetForm();
       } else {
         console.error('Failed to save experience:', await response.text());
-        alert('Failed to save experience. Please try again.');
+        toast.error("Failed to save experience. Please try again.");
       }
     } catch (error) {
       console.error('Error saving experience:', error);
-      alert('An error occurred while saving the experience.');
+      toast.error("Failed to save experience. Please try again.");
     }
   };
 
@@ -106,39 +127,40 @@ function DoctorProfileExperience({ data, user, token }) {
     <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
       <p>You can add or update your experience details below.</p>
 
-      {isModalOpen == false ? <>
+      {isModalOpen == false ? (
+        <>
+          <button
+            onClick={() => {
+              resetForm();
+              setIsModalOpen(true);
+            }}
+            className="mt-4 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition"
+          >
+            Add New Experience
+          </button>
 
-        <button
-          onClick={() => {
-            resetForm();
-            setIsModalOpen(true);
-          }}
-          className="mt-4 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition"
-        >
-          Add New Experience
-        </button>
-
-        <ul className="mt-4">
-          {experienceList.map((exp, idx) => (
-            <li key={idx} className="mb-2 border-b pb-2">
-              <p><strong>Institute:</strong> {exp.officeName}</p>
-              <p><strong>Designation:</strong> {exp.designation}</p>
-              <p><strong>Department:</strong> {exp.department}</p>
-              <p><strong>Period:</strong> {exp.period}</p>
-              <p>
-                <strong>From:</strong> {exp.startDate ? new Date(exp.startDate).toLocaleDateString() : 'N/A'} <strong>To:</strong> {exp.endDate ? new Date(exp.endDate).toLocaleDateString() : 'Present'}
-              </p>
-              <button
-                onClick={() => openEditModal(exp)}
-                className="mt-2 bg-yellow-500 text-white p-1 rounded-md hover:bg-yellow-600 transition"
-              >
-                Edit
-              </button>
-            </li>
-          ))}
-        </ul>
-
-      </> : (
+          <ul className="mt-4">
+            {experienceList.map((exp, idx) => (
+              <li key={idx} className="mb-2 border-b pb-2">
+                <p><strong>Institute:</strong> {exp.officeName}</p>
+                <p><strong>Designation:</strong> {exp.designation}</p>
+                <p><strong>Department:</strong> {exp.department}</p>
+                <p><strong>Period:</strong> {exp.period}</p>
+                <p>
+                  <strong>From:</strong> {exp.startDate ? new Date(exp.startDate).toLocaleDateString() : 'N/A'}{' '}
+                  <strong>To:</strong> {exp.endDate ? new Date(exp.endDate).toLocaleDateString() : 'Present'}
+                </p>
+                <button
+                  onClick={() => openEditModal(exp)}
+                  className="mt-2 bg-yellow-500 text-white p-1 rounded-md hover:bg-yellow-600 transition"
+                >
+                  Edit
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
         <div className="bg-white rounded-lg w-full max-w-md md:mx-auto">
           <h2 className="text-xl font-semibold mb-4">
             {experience.id ? 'Update Experience' : 'Add New Experience'}

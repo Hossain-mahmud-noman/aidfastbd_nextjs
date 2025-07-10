@@ -6,36 +6,37 @@ import { map_key } from "../utils/constants";
 
 // Define container style for the map
 const containerStyle = {
-  width: "100%",
-  height: "400px",
+  "inline-size": "100%",
+  "block-size": "400px",
 };
 
 function MapComponent({ onLocationSelect, lat, lon }) {
+  console.log("🚀 ~ MapComponent ~ lat, lon:", lat, lon)
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: map_key, // Replace with your API key
-    libraries: ["places"], // Load the Places library
+    googleMapsApiKey: map_key, 
+    libraries: ["places"], 
   });
 
   const [markerPosition, setMarkerPosition] = useState({
-    lat: lat ?? 23.8103, // Default latitude (e.g., Dhaka, Bangladesh)
-    lng: lon ?? 90.4125, // Default longitude (e.g., Dhaka, Bangladesh)
+    lat: lat ?? 23.8103, 
+    lng: lon ?? 90.4125, 
   });
 
-  const [zoomLevel, setZoomLevel] = useState(13); // Default zoom level
-  const autocompleteRef = useRef(null); // Ref for Autocomplete input
+  const [zoomLevel, setZoomLevel] = useState(13); 
+  const autocompleteRef = useRef(null); 
 
   const handleMapClick = (event) => {
     const lat = event.latLng.lat();
     const lng = event.latLng.lng();
     setMarkerPosition({ lat, lng });
-    onLocationSelect(lat, lng); // Pass coordinates to parent component
+    onLocationSelect(lat, lng);
   };
 
   const handleMarkerDrag = (event) => {
     const newLat = event.latLng.lat();
     const newLng = event.latLng.lng();
     setMarkerPosition({ lat: newLat, lng: newLng });
-    onLocationSelect(newLat, newLng); // Update parent with new coordinates
+    onLocationSelect(newLat, newLng); 
   };
 
   const handlePlaceChanged = () => {
@@ -49,8 +50,8 @@ function MapComponent({ onLocationSelect, lat, lon }) {
         const newLat = lat();
         const newLng = lng();
         setMarkerPosition({ lat: newLat, lng: newLng });
-        setZoomLevel(16); // Zoom in on the selected location
-        onLocationSelect(newLat, newLng); // Pass coordinates to parent component
+        setZoomLevel(16); 
+        onLocationSelect(newLat, newLng);
       }
     }
   };
@@ -60,7 +61,7 @@ function MapComponent({ onLocationSelect, lat, lon }) {
     if (lat !== undefined && lon !== undefined) {
 
       setMarkerPosition({ lat, lng: lon });
-      setZoomLevel(16); // Adjust zoom for closer look at the selected location
+      setZoomLevel(16); 
     }
   }, [lat, lon]);
 
@@ -68,7 +69,6 @@ function MapComponent({ onLocationSelect, lat, lon }) {
 
   return (
     <div>
-      {/* Autocomplete Search Input */}
       <Autocomplete
         className="z-[1000000]"
         onLoad={(ref) => (autocompleteRef.current = ref)}
@@ -80,8 +80,6 @@ function MapComponent({ onLocationSelect, lat, lon }) {
           className="w-full p-2 mb-4 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
         />
       </Autocomplete>
-
-      {/* Map Component */}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={markerPosition}

@@ -4,21 +4,18 @@ import React, { useState, useRef } from 'react';
 
 const TabBar = ({ tabs }) => {
     const [activeTab, setActiveTab] = useState(0);
-    const tabRefs = useRef([]); // To store references to tab elements
-
+    const tabRefs = useRef([]); 
     const handleTabClick = (index) => {
         setActiveTab(index);
 
-        // Scroll the active tab into view horizontally
         tabRefs.current[index]?.scrollIntoView({
             behavior: 'smooth',
-            inline: 'center', // Centers the tab horizontally
+            inline: 'center', 
         });
 
-        // Scroll the tab content to the top
         document.documentElement.scrollTo({
-            top: 0, // Scroll to the top of the page
-            behavior: 'smooth', // Smooth scrolling
+            "inset-block-start": 0, 
+            behavior: 'smooth', 
         });
     };
 
@@ -26,11 +23,11 @@ const TabBar = ({ tabs }) => {
     return (
         <div className="flex flex-col w-full h-full aid-container">
             {/* Tab Bar */}
-            <div className="mt-6 flex items-center justify-center overflow-x-auto aid-container whitespace-nowrap border-b border-gray-200 fixed bg-white left-0 right-0 z-[10000]">
+            <div className="flex items-center justify-center overflow-x-auto aid-container whitespace-nowrap border-b border-gray-200 bg-white left-0 right-0 z-[10000]">
                 {tabs.map((tab, index) => (
                     <button
                         key={index}
-                        ref={(el) => (tabRefs.current[index] = el)} // Store tab references
+                        ref={(el) => (tabRefs.current[index] = el)} 
                         onClick={() => handleTabClick(index)}
                         className={`px-4 py-2 mr-2 text-xl font-medium ${activeTab === index
                             ? 'border-b-2 border-blue-500 text-blue-500'

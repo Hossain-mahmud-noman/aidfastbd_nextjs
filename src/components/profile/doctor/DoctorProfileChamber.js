@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MapComponent from '../../MapComponent';
-
-
+import { toast } from 'sonner';
+import Swal from 'sweetalert2';
 // Reusable InputField component
 function InputField({ label, placeholder, value, onChange, type = "text", required = false }) {
   return (
@@ -27,6 +27,7 @@ function InputField({ label, placeholder, value, onChange, type = "text", requir
 }
 
 function DoctorProfileChamber({ data, user, token }) {
+  console.log("🚀 ~ DoctorProfileChamber ~ data:", data)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [chamberName, setChamberName] = useState('');
   const [address, setAddress] = useState('');
@@ -94,8 +95,8 @@ function DoctorProfileChamber({ data, user, token }) {
       location: address,
       notice: noticeNumber,
       userId: user.id,
-      lat: latitude.toString(), // Convert to string
-      lon: longitude.toString(), // Convert to string
+      lat: latitude.toString(),
+      lon: longitude.toString(),
       additionalInfo
         :
         "",
@@ -139,11 +140,13 @@ function DoctorProfileChamber({ data, user, token }) {
         const result = await response.json();
 
         if (!editingChamber) {
+          toast.success("Chamber Information Save successfully")
           setChamberList((prev) => [...prev, {
             id: result.id, chamberTimeDetails
               : updatedChamber['timeDetails'], ...updatedChamber,
           }]);
         } else {
+          toast.success("Chamber Information update successfully")
           setChamberList((prev) =>
             prev.map((chamber) =>
               chamber.id === editingChamber.id ? { ...chamber, ...updatedChamber } : chamber
@@ -161,18 +164,27 @@ function DoctorProfileChamber({ data, user, token }) {
     }
   };
 
-  const handleDelete = async (id) => {
-    // Define the API URL (this would typically be in your environment/config)
-    const apiUrl = 'https://api.aidfastbd.com/api/GeneralInformation/ChamberInformationDelete';
 
-    // Prepare the payload for DELETE request
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "This chamber will be permanently deleted.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+    });
+
+    if (!result.isConfirmed) return;
+
+    const apiUrl = 'https://api.aidfastbd.com/api/GeneralInformation/ChamberInformationDelete';
     const payload = {
       id: id,
       isDeleted: true
     };
 
     try {
-      // Make the DELETE request using fetch
       const response = await fetch(apiUrl, {
         method: 'DELETE',
         headers: {
@@ -182,24 +194,20 @@ function DoctorProfileChamber({ data, user, token }) {
         body: JSON.stringify(payload),
       });
 
-
-      // If successful, process the response data
       const data = await response.json();
 
-      if (response.status == 200) {
-        // Assuming you have some state management to update the UI, 
-        // like updating your chamberList.
-        alert("Chamber deleted successfully!");
-        // Remove the deleted chamber from the list (update your state)
+      if (response.status === 200) {
+        Swal.fire('Deleted!', 'Chamber deleted successfully.', 'success');
         setChamberList((prevList) => prevList.filter((chamber) => chamber.id !== id));
       } else {
-        alert('Failed to delete chamber.');
+        Swal.fire('Error', 'Failed to delete chamber.', 'error');
       }
     } catch (error) {
       console.error('Error deleting chamber:', error);
-      alert('An error occurred while deleting the chamber.');
+      Swal.fire('Error', 'An error occurred while deleting the chamber.', 'error');
     }
   };
+
 
   useEffect(() => {
     if (editingChamber) {
@@ -211,25 +219,48 @@ function DoctorProfileChamber({ data, user, token }) {
         return acc;
       }, {});
 
-      setVisitingHours(visitingHoursData);  // Only set visiting hours when editing a chamber
+      setVisitingHours(visitingHoursData);
     }
   }, [editingChamber]);
 
   const handleEdit = (chamber) => {
-    
     setEditingChamber(chamber);
-    setChamberName(chamber.name);
-    setAddress(chamber.location);
-    setNoticeNumber(chamber.notice);
-    setPhoneNumber(chamber.phoneNumber); // Update the phone number when editing
+    setChamberName(chamber.name || '');
+    setAddress(chamber.location || '');
+    setNoticeNumber(chamber.notice || '');
+    setFee(chamber.fee || '');
+    setOldPatientFee(chamber.oldPatient || '');
+    setReportShowFee(chamber.reportShow || '');
+    setFloor(chamber.floor || '');
+    setRoomNo(chamber.room || '');
+    setPhoneNumber(chamber.phoneNumber || '');
+    setLatitude(+chamber.lat || null);
+    setLongitude(+chamber.lon || null);
 
-    // Preselect latitude and longitude when editing a chamber
-    setLatitude(chamber.lat);
-    setLongitude(chamber.lon);
+    const visitingHoursData = {
+      Sat: { morning: '', evening: '' },
+      Sun: { morning: '', evening: '' },
+      Mon: { morning: '', evening: '' },
+      Tue: { morning: '', evening: '' },
+      Wed: { morning: '', evening: '' },
+      Thu: { morning: '', evening: '' },
+      Fri: { morning: '', evening: '' },
+    };
 
-    // Set modal to open
+    chamber.chamberTimeDetails?.forEach((timeDetail) => {
+      const day = timeDetail.dayName.charAt(0) + timeDetail.dayName.slice(1).toLowerCase(); // e.g., 'SAT' -> 'Sat'
+      if (visitingHoursData[day]) {
+        visitingHoursData[day] = {
+          morning: timeDetail.dayTime || '',
+          evening: timeDetail.eveningTime || '',
+        };
+      }
+    });
+
+    setVisitingHours(visitingHoursData);
     setIsModalOpen(true);
   };
+
 
 
 
@@ -238,8 +269,6 @@ function DoctorProfileChamber({ data, user, token }) {
       <p className="text-xs text-red-500 mb-4">
         ** Add a Chamber and Set Chamber location on map otherwise patients cannot see your profile on the user end **
       </p>
-
-
 
       {isModalOpen == false ? <>
         <button
@@ -254,7 +283,7 @@ function DoctorProfileChamber({ data, user, token }) {
 
         {/* Chamber List */}
         <div className="mt-6">
-          {chamberList?.map((chamber,index) => (
+          {chamberList?.map((chamber, index) => (
             <div key={`chamber_id_${index}`} className="mb-6 p-4 border rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold">{chamber.name}</h3>
               <p className="text-sm text-gray-500">{chamber.location}</p>

@@ -3,11 +3,9 @@
 import React, { useState } from 'react';
 import { image_base_endpoint } from '../../../utils/constants';
 import Image from 'next/image';
-
+import { toast } from 'sonner';
 function DoctorProfileInfo({ data, user, token }) {
-
-
-    
+    console.log("🚀 ~ DoctorProfileInfo ~ data:", data)
     const [selectedImage, setSelectedImage] = useState(data?.imageUrl !== undefined ? image_base_endpoint + data?.imageUrl : null);
     const [title, setTitle] = useState(data?.title);
     const [details, setDetails] = useState(data?.details);
@@ -60,14 +58,16 @@ function DoctorProfileInfo({ data, user, token }) {
             });
 
             const result = await response.json();
+            console.log("🚀 ~ handleSubmit ~ result:", result)
             if (response.ok) {
-                alert('Profile updated successfully!');
+                toast.success("Profile information updated successfully!")
             } else {
-                alert(`Error: ${result?.message || 'Failed to update profile'}`);
+                toast.error(`Error: ${result?.message || 'Failed to update profile information'}`)
             }
         } catch (error) {
             console.error('Error submitting the form:', error);
-            alert('An error occurred while updating the profile.');
+            toast.error("An error occurred while updating the profile.")
+
         } finally {
             setIsSubmitting(false);
         }
