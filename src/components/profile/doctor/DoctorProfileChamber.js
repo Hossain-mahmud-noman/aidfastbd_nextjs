@@ -27,7 +27,6 @@ function InputField({ label, placeholder, value, onChange, type = "text", requir
 }
 
 function DoctorProfileChamber({ data, user, token }) {
-  console.log("🚀 ~ DoctorProfileChamber ~ data:", data)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [chamberName, setChamberName] = useState('');
   const [address, setAddress] = useState('');
@@ -265,7 +264,7 @@ function DoctorProfileChamber({ data, user, token }) {
 
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-md rounded-lg w-full max-w-3xl mx-auto p-6">
       <p className="text-xs text-red-500 mb-4">
         ** Add a Chamber and Set Chamber location on map otherwise patients cannot see your profile on the user end **
       </p>

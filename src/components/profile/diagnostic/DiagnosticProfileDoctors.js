@@ -96,7 +96,7 @@ function DiagnosticProfileDoctors({ data, user, token }) {
   }, [searchTerm]);
 
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-3xl mx-auto">
       <h1 className="text-lg font-bold mb-4">
         Add Doctor profile of your Diagnostic/Hospital (if any)
       </h1>
@@ -139,7 +139,7 @@ function DiagnosticProfileDoctors({ data, user, token }) {
       </div>
 
       {showPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded shadow-lg w-96">
             <h2 className="text-lg font-bold mb-4">Select a Doctor</h2>
             <input
@@ -154,7 +154,7 @@ function DiagnosticProfileDoctors({ data, user, token }) {
             ) : (
               <div
                 className="overflow-y-auto"
-                style={{ maxHeight: "300px" }} // Set max height for scroll
+                style={{ "maxblock-size": "300px" }} // Set max height for scroll
               >
                 <ul>
                   {allDoctors.map((doctor) => (

@@ -62,7 +62,6 @@ function Dropdown({ label, options, value, onChange, required = false }) {
 }
 
 function DoctorProfileBasic({ data, user, token }) {
-  console.log("🚀 ~ DoctorProfileBasic ~ data:", data)
   const [specialities, setSpecialities] = useState([]);
   const [gender, setGender] = useState("");
   const [BMDCType, setBMDCType] = useState("");
@@ -232,7 +231,7 @@ function DoctorProfileBasic({ data, user, token }) {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-md rounded-lg w-full max-w-3xl mx-auto p-6">
       <h2 className="text-xs font-semibold text-gray-700 mb-4">
         Add a Profile Picture
       </h2>
@@ -262,11 +261,11 @@ function DoctorProfileBasic({ data, user, token }) {
       </div>
 
       {/* Name Section */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+      <div className="mb-4 w-full">
+        <label className="block text-sm font-medium text-gray-700 mb-2 w-full">
           Name in English
         </label>
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full border">
           <InputField
             label="First Name"
             value={firstName}

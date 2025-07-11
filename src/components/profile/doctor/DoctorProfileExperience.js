@@ -124,7 +124,7 @@ function DoctorProfileExperience({ data, user, token }) {
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-md rounded-lg w-full max-w-3xl mx-auto p-6">
       <p>You can add or update your experience details below.</p>
 
       {isModalOpen == false ? (

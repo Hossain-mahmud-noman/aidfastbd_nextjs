@@ -48,9 +48,8 @@ function PharmacyProfile({ token, user, isRegister }) {
 
   ];
 
-
   return (
-    <div>
+    <div >
       <TabBar tabs={tabs}></TabBar>
     </div>
   )

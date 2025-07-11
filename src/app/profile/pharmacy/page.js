@@ -8,10 +8,9 @@ export const metadata = {
     title: "Pharmacy Profile | " + appname,
 };
 
-
-
 const checkLogin = async () => {
     const tokenCookie = cookies().get('token')?.value ?? ""; 
+    const userCookie = cookies().get('user')?.value ?? ""; 
     const user = userCookie ? JSON.parse(userCookie) : null;
 
     let data = null;
@@ -39,8 +38,8 @@ async function Page() {
 
     return (
         <>
-            <div className="py-10">
-                <PharmacyProfile isRegister={isRegister} token={token} user={user}></PharmacyProfile>
+            <div className="py-10 ">
+                <PharmacyProfile isRegister={isRegister} token={token} user={user} />
             </div>
 
         </>

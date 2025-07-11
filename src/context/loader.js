@@ -1,21 +1,16 @@
 'use client';
 
-import { FaHeartbeat } from "react-icons/fa";
-
 const Loader = () => {
   return (
     <div className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center">
-      <div className="w-48 h-48 mb-4">
-        <video
-          src="/loading.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-contain"
+      <div className="w-full max-w-md mb-4">
+        <img
+          src="/loading.gif"
+          alt="Loading"
+          className="w-full h-auto"
         />
       </div>
-      <p className="text-primary font-semibold text-lg animate-pulse">
+      <p className="text-primary font-semibold text-lg md:text-3xl lg:text-5xl xl:text-8xl animate-pulse">
         Loading AidFast...
       </p>
     </div>

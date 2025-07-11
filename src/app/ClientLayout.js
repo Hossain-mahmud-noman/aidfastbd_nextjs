@@ -8,9 +8,15 @@ import { Toaster } from "sonner";
 import { getUserProfile } from "../context/getUserProfile.js";
 import Loader from '../context/loader.js'
 import { AuthProvider } from "../context/AuthContext.js";
+import { map_key } from "../utils/constants.js";
+import { useLoadScript } from "@react-google-maps/api";
 const ClientLayout = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [image, setImage] = useState("");
+
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: map_key
+    });
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -27,7 +33,7 @@ const ClientLayout = ({ children }) => {
 
         fetchProfile();
     }, []);
-
+    if (!isLoaded) return <Loader />;
     if (loading) return <Loader />;
 
     return (

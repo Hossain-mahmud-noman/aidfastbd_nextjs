@@ -103,7 +103,7 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
   }, [searchTerm]);
 
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-3xl mx-auto">
       <h1 className="text-lg font-bold mb-4">
         Add Ambulance profile of your Diagnostic Center or Hospital.
       </h1>
@@ -151,7 +151,7 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
 
       {/* Popup Modal */}
       {showPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded shadow-lg w-96 max-h-[80vh] overflow-y-auto">
             <h2 className="text-lg font-bold mb-4">Select an Ambulance</h2>
             <input

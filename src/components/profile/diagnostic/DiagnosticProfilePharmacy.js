@@ -100,7 +100,7 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
   }, [searchTerm]);
 
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-3xl mx-auto">
       <h1 className="text-lg font-bold mb-4">
         Add Pharmacy profile of your Diagnostic Center or Hospital.
       </h1>

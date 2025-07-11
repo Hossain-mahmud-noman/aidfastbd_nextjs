@@ -56,10 +56,7 @@ function Dropdown({ label, options, value, onChange, required = false }) {
 }
 
 function DiagnosticProfileBasic({ data, token, user }) {
-console.log("🚀 ~ DiagnosticProfileBasic ~ data:", data, token, user)
-
   const [selectedCover, setSelectedCover] = useState(null);
-
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [ownerImage, setOwnerImage] = useState(null);
   const [availablityStatus, setAvailablityStatus] = useState("");
@@ -149,7 +146,7 @@ console.log("🚀 ~ DiagnosticProfileBasic ~ data:", data, token, user)
       form.append('Contact', formData.contactNo);
       form.append('RegistrationNumber', formData.registrationNo);
       form.append('ServiceTime', formData.serviceTime);
-      form.append('EstablishedYear', date); 
+      form.append('EstablishedYear', date);
       form.append('Notice', formData.organizationNotice);
       form.append('OwnerName', formData.ownerName);
       form.append('OwnerMobileNumber', formData.ownerMobileNo);
@@ -159,12 +156,12 @@ console.log("🚀 ~ DiagnosticProfileBasic ~ data:", data, token, user)
       form.append('IsOpen', availablityStatus === "true");
       form.append('Latitude', latitude);
       form.append('Longitude', longitude);
-      form.append('UserId', user?.id); 
+      form.append('UserId', user?.id);
 
       if (selectedLogo) {
         if (typeof selectedLogo === 'string' && !selectedLogo.startsWith(image_base_endpoint)) {
           const blob = await fetch(selectedLogo).then((res) => res.blob());
-          form.append('ProfileImageFile', blob, 'image.jpg');  
+          form.append('ProfileImageFile', blob, 'image.jpg');
         } else if (selectedLogo instanceof File) {
           form.append('ProfileImageFile', selectedLogo);
         }
@@ -192,9 +189,9 @@ console.log("🚀 ~ DiagnosticProfileBasic ~ data:", data, token, user)
         {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
-          body: form, 
+          body: form,
         }
       );
       // Handle response
@@ -212,7 +209,7 @@ console.log("🚀 ~ DiagnosticProfileBasic ~ data:", data, token, user)
 
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-md rounded-lg w-full max-w-3xl mx-auto p-6">
       <h2 className="text-xs font-semibold text-gray-700 mb-4">Add a Profile Picture or Logo</h2>
 
       <div className="flex justify-center mb-6">
@@ -307,7 +304,7 @@ console.log("🚀 ~ DiagnosticProfileBasic ~ data:", data, token, user)
         name="location"
       />
       <div className="mb-4 border">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Select Chamber Location</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2 ">Select Chamber Location</label>
         <MapComponent
           lat={latitude}
           lon={longitude}

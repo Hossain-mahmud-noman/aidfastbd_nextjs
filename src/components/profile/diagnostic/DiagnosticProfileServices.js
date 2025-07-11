@@ -151,7 +151,7 @@ function DiagnosticProfileServices({ data, token, user }) {
       remarks: newData.imgList,
       isDeleted: false,
       id: selectedService?.id,
-      diagnosticCenterUserId:  user?.id || "",
+      diagnosticCenterUserId: user?.id || "",
     };
 
     try {
@@ -173,12 +173,12 @@ function DiagnosticProfileServices({ data, token, user }) {
         isUpdating
           ? prev.map((s) => {
             if (s.id === payload.id) {
-              return { ...s, ...payload }; // Update the service object with the new payload
+              return { ...s, ...payload };
             } else {
-              return s; // Return the service as is if not the one being updated
+              return s; 
             }
           })
-          : [...prev, { ...payload, id: responseData.id }] // Add new service if it's not an update
+          : [...prev, { ...payload, id: responseData.id }] 
       );
 
     } catch (error) {
@@ -190,10 +190,7 @@ function DiagnosticProfileServices({ data, token, user }) {
 
 
   const handleDelete = (section, data) => {
-    // Create a copy of the data and add 'isDelete' field
     const payload = { ...data, isDelete: true };
-
-    // Make the fetch request to the API
     fetch("https://api.aidfastbd.com/api/GeneralInformation/UpdateDiagnosticCenterServices", {
       method: "PUT",
       headers: {
@@ -202,12 +199,11 @@ function DiagnosticProfileServices({ data, token, user }) {
       },
       body: JSON.stringify(payload),
     })
-      .then((response) => response.json()) // Handle the response
+      .then((response) => response.json()) 
       .then((responseData) => {
-        // If deletion is successful, update the state
         setDatax((prevData) => ({
           ...prevData,
-          [section]: prevData[section].filter((item) => item.id !== data.id), // Use item.id to filter
+          [section]: prevData[section].filter((item) => item.id !== data.id), 
         }));
 
       })
@@ -226,25 +222,23 @@ function DiagnosticProfileServices({ data, token, user }) {
       let healthPackage = [];
       let bedCategory = [];
 
-      // Iterate over the data array
       data.forEach((item) => {
         if (item.serviceType === "Diabetics Screening Package") {
           screeningPackage = [...screeningPackage, item];
         } else if (item.serviceType === "OT List") {
-          otList = [...otList, item]; // Append item to otList
+          otList = [...otList, item]; 
         }
         else if (item.serviceType === "Investigation") {
-          investigation = [...investigation, item]; // Append item to otList
+          investigation = [...investigation, item]; 
         }
         else if (item.serviceType === "BED Category") {
-          bedCategory = [...bedCategory, item]; // Append item to otList
+          bedCategory = [...bedCategory, item]; 
         }
         else if (item.serviceType === "Health Package") {
-          healthPackage = [...healthPackage, item]; // Append item to otList
+          healthPackage = [...healthPackage, item]; 
         }
       });
 
-      // Update state with consolidated data
       setDatax((prevDatax) => ({
         ...prevDatax,
         screeningPackage,
@@ -300,43 +294,43 @@ function DiagnosticProfileServices({ data, token, user }) {
   );
 
   return (
-    <div className="p-4 pt-0">
+    <div className="p-4 pt-0 max-w-3xl mx-auto">
       {isModalOpen ? (
         <ServiceForm
-        isDental={false}
-        initialData={selectedService==null?null:{
-          title: selectedService?.serviceName || "",
-          details: selectedService?.price || "",
-          imgList: selectedService?.remarks
-          ? selectedService.remarks.split(",").map(i => i.trim())
-          : []
-                }}
-        
+          isDental={false}
+          initialData={selectedService == null ? null : {
+            title: selectedService?.serviceName || "",
+            details: selectedService?.price || "",
+            imgList: selectedService?.remarks
+              ? selectedService.remarks.split(",").map(i => i.trim())
+              : []
+          }}
+
           onSubmit={handleFormSubmit}
           token={token}
           discard={() => setIsModalOpen(false)}
         />
       ) : (
         <>
-         {services
-  ?.filter(service => service.serviceType === "heading")
-  .map(service => (
-            <div key={service.id} className="relative bg-purple-100 p-4 rounded-lg shadow-md mb-3">
-              <h3 className="text-lg font-bold">{service.serviceName}</h3>
-              <p className="text-gray-600">{service.price}</p>
-              <div className="flex mt-2">
-                { service.remarks.split(",").map(i => i.trim()).map((img, index) => 
-                   <Image width={100} height={100} key={index} src={img} alt="Service" className="w-10 h-10 mr-1 rounded" />
-                )}
+          {services
+            ?.filter(service => service.serviceType === "heading")
+            .map(service => (
+              <div key={service.id} className="relative bg-purple-100 p-4 rounded-lg shadow-md mb-3">
+                <h3 className="text-lg font-bold">{service.serviceName}</h3>
+                <p className="text-gray-600">{service.price}</p>
+                <div className="flex mt-2">
+                  {service.remarks.split(",").map(i => i.trim()).map((img, index) =>
+                    <Image width={100} height={100} key={index} src={img} alt="Service" className="w-10 h-10 mr-1 rounded" />
+                  )}
+                </div>
+                <button
+                  onClick={() => handleEditService(service)}
+                  className="absolute top-2 right-2 bg-blue-500 text-white p-3 rounded"
+                >
+                  🖊
+                </button>
               </div>
-              <button
-                onClick={() => handleEditService(service)}
-                className="absolute top-2 right-2 bg-blue-500 text-white p-3 rounded"
-              >
-                🖊
-              </button>
-            </div>
-          ))}
+            ))}
           <button
             onClick={handleAddService}
             className="fixed bottom-5 left-5 bg-purple-500 text-white px-4 py-2 rounded-full"
@@ -349,7 +343,7 @@ function DiagnosticProfileServices({ data, token, user }) {
 
       {dialogState.show && (
         <div
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
           role="dialog"
           aria-modal="true"
         >

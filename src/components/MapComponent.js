@@ -15,6 +15,7 @@ function MapComponent({ onLocationSelect, lat, lon }) {
     googleMapsApiKey: map_key, 
     libraries: ["places"], 
   });
+  console.log("🚀 ~ MapComponent ~ isLoaded:", isLoaded)
 
   const [markerPosition, setMarkerPosition] = useState({
     lat: lat ?? 23.8103, 

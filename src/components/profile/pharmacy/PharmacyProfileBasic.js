@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { base_endpoint, headerx, image_base_endpoint } from '../../../utils/constants';
 import MapComponent from '../../MapComponent';
 import Image from 'next/image';
-
+import { toast } from 'sonner';
 function InputField({ label, placeholder, type = "text", value, onChange, required = false }) {
   return (
     <div className="mb-4">
@@ -25,7 +25,7 @@ function InputField({ label, placeholder, type = "text", value, onChange, requir
 
 function PharmacyProfileBasic({ data, isRegister, token, user }) {
   const [selectedLogo, setSelectedLogo] = useState(null);
-  const [coverImage, setCoverImage] = useState(null); // Added cover image state
+  const [coverImage, setCoverImage] = useState(null);
   const [ownerImage, setOwnerImage] = useState(null);
   const [availablityStatus, setAvailablityStatus] = useState("");
 
@@ -82,43 +82,33 @@ function PharmacyProfileBasic({ data, isRegister, token, user }) {
     formData.append('UserId', user?.id);
 
 
-    // Check if selectedLogo is a string (URL) and not a local file
     if (selectedLogo) {
       if (typeof selectedLogo === 'string' && !selectedLogo.startsWith(image_base_endpoint)) {
-        // If it's a URL (not a local file), fetch it and convert to a blob
         const blob = await fetch(selectedLogo).then((res) => res.blob());
-        // Append the fetched image as a blob with a name for the file
-        formData.append('ProfileImageFile', blob, 'image.jpg');  // You can add dynamic filename extensions here if needed
+        formData.append('ProfileImageFile', blob, 'image.jpg');
       } else if (selectedLogo instanceof File) {
-        // If selectedLogo is already a File object, just append it
         formData.append('ProfileImageFile', selectedLogo);
       }
     }
-    // Handle coverImage
     if (coverImage) {
       if (typeof coverImage === 'string' && !coverImage.startsWith(image_base_endpoint)) {
-        // If it's a URL (not a local file), fetch it and convert to a blob
         const blob = await fetch(coverImage).then((res) => res.blob());
         formData.append('CoverImageFile', blob, 'coverImage.jpg');
       } else if (coverImage instanceof File) {
-        // If coverImage is already a File object, just append it
         formData.append('CoverImageFile', coverImage);
       }
     }
 
-    // Handle ownerImage
     if (ownerImage) {
       if (typeof ownerImage === 'string' && !ownerImage.startsWith(image_base_endpoint)) {
-        // If it's a URL (not a local file), fetch it and convert to a blob
         const blob = await fetch(ownerImage).then((res) => res.blob());
         formData.append('OwnerImageFile', blob, 'ownerImage.jpg');
       } else if (ownerImage instanceof File) {
-        // If ownerImage is already a File object, just append it
         formData.append('OwnerImageFile', ownerImage);
       }
     }
 
-    
+
     try {
       const url = `${base_endpoint}/GeneralInformation/PharmacyRegistration`;
 
@@ -127,28 +117,27 @@ function PharmacyProfileBasic({ data, isRegister, token, user }) {
         headers: {
           "Authorization": `Bearer ${token}`,
         },
-        body: formData, // Sending FormData as the body
+        body: formData,
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        alert("Profile saved successfully!");
+        toast.success("Profile saved successfully!");
       } else {
-        // Check for validation errors and show them
         if (result.errors) {
           let errorMessages = "Please address the following errors:\n";
           for (const field in result.errors) {
             errorMessages += `${field}: ${result.errors[field].join(", ")}\n`;
           }
-          alert(errorMessages);
+          toast.error(errorMessages);
         } else {
-          alert(`Error: ${result.message || 'An unknown error occurred'}`);
+          toast.error(`Error: ${result.message || 'An unknown error occurred'}`);
         }
       }
     } catch (error) {
       console.error(error);
-      alert("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.");
     }
   };
 
@@ -169,7 +158,7 @@ function PharmacyProfileBasic({ data, isRegister, token, user }) {
       setOwnerMobileNumber(data.ownerMobileNumber || '');
       setOwnerNID(data.ownerNID || '');
 
-      
+
       setLatitude(data.lat || '');
       setLongitude(data.lon || '');
       setIsOpen(data.isOpen || false);
@@ -178,7 +167,7 @@ function PharmacyProfileBasic({ data, isRegister, token, user }) {
   }, [data]);
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-md rounded-lg w-full p-6 border max-w-3xl mx-auto">
       <h2 className="text-xs font-semibold text-gray-700 mb-4">Add a Profile Picture or Logo</h2>
       <div className="flex justify-center mb-6">
         <div className="relative">

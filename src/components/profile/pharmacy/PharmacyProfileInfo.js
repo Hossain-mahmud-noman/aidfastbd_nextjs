@@ -82,7 +82,7 @@ function PharmacyProfileInfo({ data, user, token }) {
   }, [data]);
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-md rounded-lg w-full p-6 max-w-3xl mx-auto">
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Add a short title about your Pharmacy

@@ -118,7 +118,7 @@ function PharmacyProfileDrugList({ token, user, data }) {
   }, [data]);
 
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-3xl mx-auto">
       <h2 className="text-lg font-bold mb-4">Pharmacy Drug List</h2>
       <div className="overflow-x-auto">
         {drugs.length > 0 ? (
@@ -171,7 +171,7 @@ function PharmacyProfileDrugList({ token, user, data }) {
       </button>
 
       {showDialog && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded shadow-md w-full max-w-md">
             <h3 className="text-lg font-bold mb-2">
               {editIndex !== null ? "Edit Drug" : "Add New Drug"}

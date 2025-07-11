@@ -171,3 +171,14 @@ body {
     @apply rounded-full w-[31px] h-[6px] bg-[#1087EF] cursor-pointer opacity-100;
   }
 }
+
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}

@@ -96,7 +96,7 @@ function DiagnosticProfileInfo({ data, user, token }) {
   }, [data]);
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-md rounded-lg w-full max-w-3xl mx-auto p-6">
       {/* Title Section */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
