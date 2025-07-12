@@ -265,7 +265,7 @@ function DoctorProfileBasic({ data, user, token }) {
         <label className="block text-sm font-medium text-gray-700 mb-2 w-full">
           Name in English
         </label>
-        <div className="flex gap-2 w-full border">
+        <div className="flex gap-2 w-full">
           <InputField
             label="First Name"
             value={firstName}

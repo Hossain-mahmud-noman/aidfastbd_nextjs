@@ -99,7 +99,7 @@ const DiagnosticList = () => {
           {loading && (
             <div className="flex items-center space-x-2 text-indigo-600">
               <FaSpinner className="animate-spin text-xl" />
-              <span>Loading more diagnostics...</span>
+              <span>Loading Diagnostics...</span>
             </div>
           )}
         </div>

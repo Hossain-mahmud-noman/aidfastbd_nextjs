@@ -10,9 +10,9 @@ export const metadata = {
 };
 
 
-// Function to check if the user is logged in
+
 const checkLogin = async () => {
-    const tokenCookie = cookies().get('token')?.value ?? ""; // Retrieve token cookie
+    const tokenCookie = cookies().get('token')?.value ?? ""; 
     const userCookie = cookies().get('user')?.value;
     const user = userCookie ? JSON.parse(userCookie) : null;
     return { token: tokenCookie, user: user };

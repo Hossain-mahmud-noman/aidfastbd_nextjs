@@ -1,8 +1,9 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
-
+import { toast } from "sonner";
 function DiagnosticProfileInfo({ data, user, token }) {
+  console.log("🚀 ~ DiagnosticProfileInfo ~ data:", data)
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState(data?.title || "");
   const [details, setDetails] = useState(data?.details || "");
@@ -25,7 +26,6 @@ function DiagnosticProfileInfo({ data, user, token }) {
     const updatedList = [...imgList];
     updatedList.splice(index, 1);
     setImgList(updatedList);
-    // Optional: Call API to remove the image on the server.
   };
 
   const handleImageUpload = async () => {
@@ -51,11 +51,11 @@ function DiagnosticProfileInfo({ data, user, token }) {
         setImgList([...imgList, result]);
         setSelectedImage(null);
       } else {
-        alert(result?.message || "Failed to upload image");
+        toast.error(result?.message || "Failed to upload image");
       }
     } catch (error) {
       console.error("Image upload error:", error);
-      alert("An error occurred while uploading the image.");
+      toast.error("An error occurred while uploading the image.");
     }
   };
 
@@ -75,13 +75,13 @@ function DiagnosticProfileInfo({ data, user, token }) {
 
       const result = await response.json();
       if (response.ok) {
-        alert("Profile updated successfully!");
+        toast.success("Profile updated successfully!");
       } else {
-        alert(result?.message || "Failed to update profile");
+        toast.error(result?.message || "Failed to update profile");
       }
     } catch (error) {
       console.error("Form submission error:", error);
-      alert("An error occurred while updating the profile.");
+      toast.error("An error occurred while updating the profile.");
     } finally {
       setIsSubmitting(false);
     }

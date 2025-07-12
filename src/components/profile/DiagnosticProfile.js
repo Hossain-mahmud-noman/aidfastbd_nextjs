@@ -32,9 +32,8 @@ function DiagnosticProfile({ token, user }) {
       window.location.href = "/login";
     }
 
-    //
   }
-  console.log("🚀 ~ DiagnosticProfile ~ profileData:", profileData)
+
 
   useEffect(() => {
     getProfileData();
