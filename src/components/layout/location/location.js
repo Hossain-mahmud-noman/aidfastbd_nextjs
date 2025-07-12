@@ -121,8 +121,14 @@ const Location = () => {
     fetchCurrentLocation();
   }, []);
 
-  const formattedShortLocation = locationName.length > 20 ? locationName.slice(0, 20) + "..." : locationName;
-  const formattedShortLocationMobile = locationName.length > 6 ? locationName.slice(0, 6) + "..." : locationName;
+  const cleanLocationName = locationName.replace(/^[^,]+,\s*/, '');
+
+  const formattedShortLocation =
+    cleanLocationName.length > 20 ? cleanLocationName.slice(0, 20) + "..." : cleanLocationName;
+
+  const formattedShortLocationMobile =
+    cleanLocationName.length > 6 ? cleanLocationName.slice(0, 6) + "..." : cleanLocationName;
+
 
   return (
     <div>
