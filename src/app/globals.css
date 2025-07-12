@@ -177,8 +177,12 @@ body {
   display: none;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;  
+  scrollbar-width: none;     
+}
+
+.selected {
+  background-color: #3b82f6; 
+  color: white;
 }

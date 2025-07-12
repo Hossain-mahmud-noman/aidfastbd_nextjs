@@ -1,90 +1,119 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import AmbulanceCard from '../AmbulanceCard';
-import { getAmbulanceList } from '../../utils/func';
-import { FaSpinner } from "react-icons/fa";
+import { FaSpinner } from 'react-icons/fa';
 
+const AmbulanceList = () => {
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const loaderRef = useRef(null);
+  const firstLoadRef = useRef(false);
 
-function AmbulanceList({ location, nextPage }) {
-    const dispatch = useDispatch();
-    const { data, loading, page, error } = useSelector((state) => state.ambulance);
-    const loader = useRef(null);
-    // let x = 0;
+  const fetchAmbulances = async (pageNumber) => {
+    if (loading || !hasMore) return;
+    try {
+      setLoading(true);
 
-    // useEffect(() => {
-    //     if (data.length == 0 && nextPage == 2 && x == 0) {
-    //         x = 1;
-    //         getAmbulanceList({ dispatch, lat: location.lat, lon: location.lng, page: nextPage })
-    //     }
-    // }, [])
+      const lat = localStorage.getItem('lat') || '';
+      const lon = localStorage.getItem('lon') || '';
 
+      const res = await axios.get(
+        `https://api.aidfastbd.com/api/GeneralWeb/GetAllAmbulanceList?pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`
+      );
 
+      const response = res.data;
+      const newData = response?.data || [];
 
+      setData((prev) => [...prev, ...newData]);
 
-    const handleObserver = (entities) => {
-        const target = entities[0];
-        if (target.isIntersecting && !loading && nextPage !== -1) {
-            // getAmbulanceList({ dispatch, lat: location.lat, lon: location.lng, page: page })
-            getAmbulanceList({ dispatch, lat: localStorage.getItem("lat"), lon: localStorage.getItem("lon"), page: page })
+      const totalRecords = response?.totalRecords || 0;
+      const pageSize = response?.pageSize || 15;
+      const totalPages = Math.ceil(totalRecords / pageSize);
+
+      if (pageNumber >= totalPages) {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error('Failed to fetch ambulance data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Load first page only once
+  useEffect(() => {
+    if (!firstLoadRef.current) {
+      fetchAmbulances(1);
+      firstLoadRef.current = true;
+    }
+  }, []);
+
+  // Infinite scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && hasMore && !loading) {
+          const nextPage = page + 1;
+          setPage(nextPage);
+          fetchAmbulances(nextPage);
         }
+      },
+      { root: null, rootMargin: '0px', threshold: 1.0 }
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
     };
+  }, [loading, hasMore, page]);
 
-    useEffect(() => {
-        const options = {
-            root: null,
-            rootMargin: "20px",
-            threshold: 1.0
-        };
+  return (
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">Ambulance List</h1>
 
-        const observer = new IntersectionObserver(handleObserver, options);
+      {data.length === 0 && !loading ? (
+        <div className="h-[300px] w-full flex items-center justify-center text-2xl text-gray-500">
+          No data available
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-3">
+          {data.map((d, index) => (
+            <AmbulanceCard key={`${d.id}-${index}`} data={d} />
+          ))}
+        </div>
+      )}
 
-        if (loader.current) {
-            observer.observe(loader.current);
-        }
+      {hasMore && (
+        <div
+          ref={loaderRef}
+          className="flex items-center justify-center p-4 mt-6"
+          role="status"
+        >
+          {loading && (
+            <div className="flex items-center space-x-2 text-indigo-600">
+              <FaSpinner className="animate-spin text-xl" />
+              <span>Loading ambulances...</span>
+            </div>
+          )}
+        </div>
+      )}
 
-        return () => {
-            if (loader.current) {
-                observer.unobserve(loader.current);
-            }
-        };
-    }, [loading]);
+      {!hasMore && data.length > 0 && (
+        <div className="text-center text-gray-500 mt-6">
+          No more ambulances.
+        </div>
+      )}
+    </div>
+  );
+};
 
-
-    return (
-        <>
-            {/* {loading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <p>{error}</p>
-            ) :  */}
-
-            <>
-                {loading == false && data.length == 0 ? <div className='h-[300px] w-full flex items-center justify-center text-2xl'>No data available</div> : <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-                    {data.map((d) => (
-                        <AmbulanceCard key={d.id} data={d}></AmbulanceCard>
-                    ))}
-                </div>}
-
-
-                <div
-                    ref={loader}
-                    className="flex items-center justify-center p-4 mt-6"
-                    role="status"
-                    aria-label="Loading more content"
-                >
-                    {loading && (
-                        <div className="flex items-center space-x-2">
-                            <FaSpinner className="animate-spin text-indigo-600 text-2xl" />
-                            <span className="text-gray-600">Loading ambulances...</span>
-                        </div>
-                    )}
-                </div>
-            </>
-            {/* } */}
-        </>
-    )
-}
-
-export default AmbulanceList
+export default AmbulanceList;

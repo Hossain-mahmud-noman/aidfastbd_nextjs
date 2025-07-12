@@ -8,8 +8,10 @@ export const metadata = {
 async function page() {
   return (
     <>
-      <div  className=" pt-10">
-        <SearchAmbulance />
+      <div className=" pt-10">
+        <div className="aid-container">
+          <SearchAmbulance />
+        </div>
         <div className="aid-container mx-auto px-2">
           <AmbulanceList nextPage={1} />
         </div>

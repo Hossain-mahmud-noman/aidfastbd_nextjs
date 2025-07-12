@@ -11,7 +11,9 @@ async function page() {
     return (
         <>
             <div className=" pt-10">
-                <SearchPharmacy />
+                <div className="aid-container">
+                    <SearchPharmacy />
+                </div>
                 <div className="aid-container mx-auto px-2">
                     <PharmacyList nextPage={1} />
                 </div>

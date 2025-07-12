@@ -1,74 +1,113 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import DoctorCard from '../DoctorCard';
-import { getDoctorList } from '../../utils/func';
-import { FaSpinner } from "react-icons/fa";
+import { FaSpinner } from 'react-icons/fa';
 
-function DoctorList({ location, nextPage }) {
-  const dispatch = useDispatch();
-  const { data, loading, page, error } = useSelector((state) => state.doctor);
-  const loader = useRef(null);
+const Doctor = () => {
+  const [doctors, setDoctors] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const loaderRef = useRef(null);
+  const firstLoadRef = useRef(false); // ✅ prevent double fetching on first scroll
 
-  const handleObserver = (entities) => {
-    const target = entities[0];
-    if (target.isIntersecting && !loading && nextPage !== -1) {
-      getDoctorList({ dispatch, lat: localStorage.getItem("lat"), lon: localStorage.getItem("lon"), page: page })
+  const fetchDoctors = async (pageNumber) => {
+    if (loading || !hasMore) return;
+    try {
+      setLoading(true);
 
+      const lat = localStorage.getItem('lat') || '';
+      const lon = localStorage.getItem('lon') || '';
+
+      const res = await axios.get(
+        `https://api.aidfastbd.com/api/GeneralWeb/GetDoctorSearchList?pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`
+      );
+
+      const response = res.data;
+      const newDoctors = response?.data || [];
+
+      setDoctors((prev) => [...prev, ...newDoctors]);
+
+      const totalRecords = response?.totalRecords || 0;
+      const pageSize = response?.pageSize || 15;
+      const totalPages = Math.ceil(totalRecords / pageSize);
+
+      if (pageNumber >= totalPages) {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error('Failed to fetch doctors:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
+  // ✅ First page fetch only once on mount
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "20px",
-      threshold: 1.0
-    };
+    if (!firstLoadRef.current) {
+      fetchDoctors(1);
+      firstLoadRef.current = true;
+    }
+  }, []);
 
-    const observer = new IntersectionObserver(handleObserver, options);
+  // ✅ Only call setPage (which causes fetch) on intersection, starting from page 2
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !loading && hasMore) {
+          setPage((prev) => {
+            const nextPage = prev + 1;
+            fetchDoctors(nextPage); // directly fetch instead of letting `useEffect` call it again
+            return nextPage;
+          });
+        }
+      },
+      { root: null, rootMargin: '0px', threshold: 1.0 }
+    );
 
-    if (loader.current) {
-      observer.observe(loader.current);
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
     }
 
     return () => {
-      if (loader.current) {
-        observer.unobserve(loader.current);
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
       }
     };
-  }, [loading]);
-
+  }, [loading, hasMore]);
 
   return (
-    <>
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">Doctors List</h1>
 
-      <>
-        {loading == false && data.length == 0 ? <div className='h-[300px] w-full flex items-center justify-center text-2xl'>No data available</div> :
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-            {
-              data.map((d, index) => (
-                <DoctorCard key={d.id + index} doctor={d} />
-              ))
-            }
-          </div>}
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {doctors.map((doc, index) => (
+          <DoctorCard key={`${doc.id}-${index}`} doctor={doc} />
+        ))}
+      </div>
 
+      {hasMore && (
         <div
-          ref={loader}
-          className="flex items-center justify-center p-4 mt-6"
+          ref={loaderRef}
+          className="flex items-center justify-center py-6"
           role="status"
-          aria-label="Loading more content"
         >
           {loading && (
-            <div className="flex items-center space-x-2">
-              <FaSpinner className="animate-spin text-indigo-600 text-2xl" />
-              <span className="text-gray-600">Loading doctors...</span>
+            <div className="flex items-center space-x-2 text-indigo-600">
+              <FaSpinner className="animate-spin text-xl" />
+              <span>Loading more doctors...</span>
             </div>
           )}
         </div>
-      </>
-    </>
-  )
-}
+      )}
 
-export default DoctorList
+      {!hasMore && (
+        <div className="text-center text-gray-500 mt-6">No more doctors.</div>
+      )}
+    </div>
+  );
+};
+
+export default Doctor;

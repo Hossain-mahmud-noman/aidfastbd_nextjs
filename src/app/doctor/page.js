@@ -1,7 +1,5 @@
-import BottomNavigation from "../../components/BottomNavigation"
 import SearchDoctor from "../../components/search/SearchDoctor";
-import { appname, base_endpoint, map_key } from "../../utils/constants";
-import LayoutAppBar from "../../components/LayoutAppBar";
+import { appname, base_endpoint, } from "../../utils/constants";
 import DoctorList from '../../components/list/DoctorList';
 
 export const metadata = {
@@ -25,13 +23,13 @@ async function DoctorPage() {
   const speciality = await fetchSpecialityData();
   return (
     <>
-      {/* <LayoutAppBar route="/doctor" api_key={map_key} /> */}
-      <div  className="font-[family-name:var(--font-geist-sans)] pt-10">
-        <SearchDoctor specialityData={speciality} />
-        <div className="aid-container mx-auto px-2">
-          <DoctorList nextPage={1}/>
+      <div className="font-[family-name:var(--font-geist-sans)] pt-10">
+        <div className="aid-container">
+          <SearchDoctor specialityData={speciality} />
         </div>
-        {/* <BottomNavigation active="/doctor" /> */}
+        <div className="aid-container mx-auto px-2">
+          <DoctorList nextPage={1} />
+        </div>
       </div>
     </>
   )

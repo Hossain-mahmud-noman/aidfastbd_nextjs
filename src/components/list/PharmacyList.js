@@ -1,93 +1,117 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import PharmacyCard from '../PharmacyCard';
-import { getPharmacyList } from '../../utils/func';
-import { FaSpinner } from "react-icons/fa";
+import { FaSpinner } from 'react-icons/fa';
 
+const PharmacyList = () => {
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const loaderRef = useRef(null);
+  const firstLoadRef = useRef(false);
 
-function PharmacyList({ location, nextPage }) {
-    const dispatch = useDispatch();
+  const fetchPharmacies = async (pageNumber) => {
+    if (loading || !hasMore) return;
+    try {
+      setLoading(true);
 
-    const { data, loading, page, error } = useSelector((state) => state.pharmacy);
+      const lat = localStorage.getItem('lat') || '';
+      const lon = localStorage.getItem('lon') || '';
 
+      const res = await axios.get(
+        `https://api.aidfastbd.com/api/GeneralWeb/GetAllPharmacyList?pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`
+      );
 
-    const loader = useRef(null);
-    // let x = 0;
-    // useEffect(() => {
-    //     if (data.length == 0 && nextPage == 2 && x == 0) {
-    //         x = 1;
-    //         getPharmacyList({ dispatch, lat: location.lat, lon: location.lng, page: nextPage })
-    //     }
-    // }, [])
+      const response = res.data;
+      const newData = response?.data || [];
 
+      setData((prev) => [...prev, ...newData]);
 
+      const totalRecords = response?.totalRecords || 0;
+      const pageSize = response?.pageSize || 15;
+      const totalPages = Math.ceil(totalRecords / pageSize);
 
+      if (pageNumber >= totalPages) {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error('Failed to fetch pharmacy data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handleObserver = (entities) => {
-        const target = entities[0];
-        if (target.isIntersecting && !loading && nextPage !== -1) {
-            // getPharmacyList({ dispatch, lat: location.lat, lon: location.lng, page: page })
-            getPharmacyList({ dispatch, lat: localStorage.getItem("lat"), lon: localStorage.getItem("lon"), page: page })
-            
+  useEffect(() => {
+    if (!firstLoadRef.current) {
+      fetchPharmacies(1);
+      firstLoadRef.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && hasMore && !loading) {
+          const nextPage = page + 1;
+          setPage(nextPage);
+          fetchPharmacies(nextPage);
         }
+      },
+      { root: null, rootMargin: '0px', threshold: 1.0 }
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
     };
+  }, [hasMore, loading, page]);
 
-    useEffect(() => {
-        const options = {
-            root: null,
-            rootMargin: "20px",
-            threshold: 1.0
-        };
+  return (
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">Pharmacies</h1>
 
-        const observer = new IntersectionObserver(handleObserver, options);
+      {data.length === 0 && !loading ? (
+        <div className="h-[300px] w-full flex items-center justify-center text-2xl text-gray-500">
+          No data available
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+          {data.map((d, index) => (
+            <PharmacyCard key={`${d.id}-${index}`} data={d} />
+          ))}
+        </div>
+      )}
 
-        if (loader.current) {
-            observer.observe(loader.current);
-        }
+      {hasMore && (
+        <div
+          ref={loaderRef}
+          className="flex items-center justify-center p-4 mt-6"
+          role="status"
+        >
+          {loading && (
+            <div className="flex items-center space-x-2 text-indigo-600">
+              <FaSpinner className="animate-spin text-xl" />
+              <span>Loading pharmacies...</span>
+            </div>
+          )}
+        </div>
+      )}
 
-        return () => {
-            if (loader.current) {
-                observer.unobserve(loader.current);
-            }
-        };
-    }, [loading]);
+      {!hasMore && data.length > 0 && (
+        <div className="text-center text-gray-500 mt-6">
+          No more pharmacies.
+        </div>
+      )}
+    </div>
+  );
+};
 
-
-    return (
-        <>
-            {/* {loading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <p>{error}</p>
-            ) :  */}
-
-            <>
-                {loading == false && data.length == 0 ? <div className='h-[300px] w-full flex items-center justify-center text-2xl'>No data available</div> : <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-                    {data.map((d) => (
-                        <PharmacyCard key={d.id} data={d}></PharmacyCard>
-                    ))}
-                </div>}
-
-
-                <div
-                    ref={loader}
-                    className="flex items-center justify-center p-4 mt-6"
-                    role="status"
-                    aria-label="Loading more content"
-                >
-                    {loading && (
-                        <div className="flex items-center space-x-2">
-                            <FaSpinner className="animate-spin text-indigo-600 text-2xl" />
-                            <span className="text-gray-600">Loading pharmacies...</span>
-                        </div>
-                    )}
-                </div>
-            </>
-            {/* } */}
-        </>
-    )
-}
-
-export default PharmacyList
+export default PharmacyList;
