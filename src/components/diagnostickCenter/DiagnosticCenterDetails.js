@@ -12,6 +12,7 @@ import DiagnosticTabs from "../tabs/DiagnosticTabs";
 import FloatingCallButton from "../FloatingCallButton";
 
 const DiagnosticCenterDetails = ({ data }) => {
+  console.log("🚀 ~ DiagnosticCenterDetails ~ data:", data)
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
 
