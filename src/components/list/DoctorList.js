@@ -11,7 +11,7 @@ const Doctor = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const loaderRef = useRef(null);
-  const firstLoadRef = useRef(false); // ✅ prevent double fetching on first scroll
+  const firstLoadRef = useRef(false); 
 
   const fetchDoctors = async (pageNumber) => {
     if (loading || !hasMore) return;
@@ -44,7 +44,6 @@ const Doctor = () => {
     }
   };
 
-  // ✅ First page fetch only once on mount
   useEffect(() => {
     if (!firstLoadRef.current) {
       fetchDoctors(1);
@@ -52,14 +51,13 @@ const Doctor = () => {
     }
   }, []);
 
-  // ✅ Only call setPage (which causes fetch) on intersection, starting from page 2
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !loading && hasMore) {
           setPage((prev) => {
             const nextPage = prev + 1;
-            fetchDoctors(nextPage); // directly fetch instead of letting `useEffect` call it again
+            fetchDoctors(nextPage); 
             return nextPage;
           });
         }

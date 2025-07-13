@@ -1,7 +1,5 @@
-import LayoutAppBar from "../../components/LayoutAppBar";
 import SearchBlood from "../../components/search/SearchBlood";
-import { FaArrowLeft } from "react-icons/fa";
-import { appname, map_key } from "../../utils/constants";
+import { appname } from "../../utils/constants";
 import BloodList from "../../components/list/BloodList";
 
 
@@ -14,8 +12,7 @@ async function page() {
 
   return (
     <>
-      <div className="pt-10">
-        <SearchBlood />
+      <div className="">
         <div className="aid-container mx-auto">
           <BloodList nextPage={1} />
         </div>

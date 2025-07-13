@@ -308,15 +308,12 @@ const SearchDoctor = ({ specialityData = [] }) => {
 
       <div className='mb-10'>
         <h3 className="text-lg ml-3 mb-2">Speciality</h3>
-
         <div className="w-full overflow-x-scroll">
           <div className="flex gap-3 px-4">
             {specialityData.map((speciality, index) => (
               <div
                 key={index}
                 onClick={async () => {
-
-
                   try {
                     setSpLoading(true);
                     let Specialty = "";
