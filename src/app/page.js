@@ -20,7 +20,6 @@ export default async function Home() {
         <About />
         <Service />
         <CommonService />
-        {/* <AbmulenceService /> */}
         <Information />
         <MobileApp />
         <Testimonials />
