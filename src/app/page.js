@@ -2,7 +2,6 @@
 import Hero from "../components/hero/hero.js";
 import About from "../components/about/about.js";
 import Service from '../components/service/service.js'
-import AbmulenceService from '../components/ambulenceService/abmulenceService.js'
 import CommonService from '../components/common/service.js'
 import Information from '../components/information/information.js'
 import MobileApp from '../components/mobileApp/mobileApp.js'
