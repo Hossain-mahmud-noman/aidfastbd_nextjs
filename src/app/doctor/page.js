@@ -1,7 +1,6 @@
-import SearchDoctor from "../../components/search/SearchDoctor";
 import { appname, base_endpoint, } from "../../utils/constants";
 import DoctorList from '../../components/list/DoctorList';
-
+import DoctorCategory from '../../components/category/DoctorCategory.js'
 export const metadata = {
   title: "Doctors | " + appname,
 };
@@ -23,13 +22,9 @@ async function DoctorPage() {
   const speciality = await fetchSpecialityData();
   return (
     <>
-      <div className="font-[family-name:var(--font-geist-sans)] pt-10">
-        <div className="aid-container">
-          <SearchDoctor specialityData={speciality} />
-        </div>
-        <div className="aid-container mx-auto px-2">
-          <DoctorList nextPage={1} />
-        </div>
+      <div className="aid-container pt-10">
+        <DoctorCategory specialityData={speciality} />
+        <DoctorList nextPage={1} />
       </div>
     </>
   )

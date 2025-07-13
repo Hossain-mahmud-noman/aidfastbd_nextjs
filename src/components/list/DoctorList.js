@@ -11,7 +11,7 @@ const Doctor = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const loaderRef = useRef(null);
-  const firstLoadRef = useRef(false); 
+  const firstLoadRef = useRef(false);
 
   const fetchDoctors = async (pageNumber) => {
     if (loading || !hasMore) return;
@@ -57,7 +57,7 @@ const Doctor = () => {
         if (entry.isIntersecting && !loading && hasMore) {
           setPage((prev) => {
             const nextPage = prev + 1;
-            fetchDoctors(nextPage); 
+            fetchDoctors(nextPage);
             return nextPage;
           });
         }
@@ -77,9 +77,8 @@ const Doctor = () => {
   }, [loading, hasMore]);
 
   return (
-    <div className="p-4">
+    <div className="">
       <h1 className="text-xl font-bold mb-4">Doctors List</h1>
-
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {doctors.map((doc, index) => (
           <DoctorCard key={`${doc.id}-${index}`} doctor={doc} />
