@@ -8,7 +8,7 @@ const DiagnosticCenterCard = ({ diagnostic }) => {
     const imageUrl = diagnostic.profileImageUrl !== null && diagnostic.profileImageUrl !== "" ? `${image_base_endpoint}${diagnostic.profileImageUrl}` : defaultImageUrl;
 
     return (
-        <Link href={"/diagnostic/" + diagnostic.userId}>
+        <Link href={"/diagnostic/" + diagnostic.id}>
             <div
                 className="flex flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
                 aria-label={`Diagnostic ${diagnostic.name} information card`}

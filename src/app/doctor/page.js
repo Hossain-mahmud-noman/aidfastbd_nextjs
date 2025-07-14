@@ -1,6 +1,7 @@
 import { appname, base_endpoint, } from "../../utils/constants";
 import DoctorList from '../../components/list/DoctorList';
 import DoctorCategory from '../../components/category/DoctorCategory.js'
+import SearchDoctor from "../../components/search/SearchDoctor";
 export const metadata = {
   title: "Doctors | " + appname,
 };
@@ -23,7 +24,8 @@ async function DoctorPage() {
   return (
     <>
       <div className="aid-container pt-10">
-        <DoctorCategory specialityData={speciality} />
+        {/* <DoctorCategory specialityData={speciality} /> */}
+        <SearchDoctor specialityData={speciality} />
         <DoctorList nextPage={1} />
       </div>
     </>

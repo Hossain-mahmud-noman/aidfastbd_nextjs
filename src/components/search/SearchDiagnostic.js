@@ -1,58 +1,34 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { FiSearch } from "react-icons/fi";
-import { setName, setRating, setRank, setIcu, setOt, setEmergency, setNameOptions } from '../../redux/features/diagnosticSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { getDiagnosticList } from '../../utils/func';
 import { MdCancel } from "react-icons/md";
 import { FaAngleDown } from "react-icons/fa6";
+import DiagnosticCenterCard from '../DiagnosticCenterCard';
 
-export const SearchableDropdown = ({ label, options, dispatch, onSelect }) => {
+export const SearchableDropdown = ({ label, options, value, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  const handleOptionClick = (option) => {
-
-    switch (label) {
-      case "Name":
-        dispatch(setName(option));
-        break;
-      case "Rating":
-        dispatch(setRating(option));
-        break;
-      case "Popularity Rank":
-        dispatch(setRank(option));
-        break;
-      case "Emergency":
-        dispatch(setEmergency(option));
-        break;
-      case "Emergency ICU":
-        dispatch(setIcu(option));
-        break; case "Emergency OT":
-        dispatch(setOt(option));
-        break;
-      default:
-        break;
-    }
-    setIsOpen(false);
-  };
-
   const filteredOptions = options.filter((option) =>
     option.text.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleOptionClick = (option) => {
+    onChange(option);
+    setIsOpen(false);
+  };
+
   return (
     <div className="relative">
       <label className="text-gray-700">{label}</label>
-      <div
-        className="border border-gray-300 rounded-lg px-3 py-2 flex items-center justify-between cursor-pointer focus:border-blue-500"
-      >
-        <span onClick={toggleDropdown} style={{ width: "100%" }}>{onSelect?.text || `Select ${label.toLowerCase()}`}</span>
-        <span className="text-gray-500">{onSelect ? <MdCancel onClick={() => {
-          handleOptionClick(null);
-        }}></MdCancel> : <FaAngleDown />}
+      <div className="border border-gray-300 rounded-lg px-3 py-2 flex items-center justify-between cursor-pointer">
+        <span onClick={toggleDropdown} style={{ "inline-size": '100%' }}>
+          {value?.text || `Select ${label.toLowerCase()}`}
+        </span>
+        <span className="text-gray-500">
+          {value ? <MdCancel onClick={() => handleOptionClick(null)} /> : <FaAngleDown />}
         </span>
       </div>
 
@@ -88,142 +64,96 @@ export const SearchableDropdown = ({ label, options, dispatch, onSelect }) => {
 
 const SearchDiagnostic = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [searchResult, setSearchResult] = useState([]);
+
+  const [nameOptions, setNameOptions] = useState([]);
+  const [filters, setFilters] = useState({
+    name: null,
+    emergency: null,
+    icu: null,
+    ot: null,
+    rating: null,
+    rank: null
+  });
 
   const togglePopup = () => setIsOpen(!isOpen);
 
-  const dispatch = useDispatch();
-  const { nameOptions, name, icu, ot, rating, emergency, rank } = useSelector((state) => state.diagnostic);
-
-  const fetchDropdownList = async () => {
+  const fetchNameOptions = async () => {
     try {
-      const response = await
-        fetch(`https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=DiagnosticCenter`,);
-      if (response.status === 200) {
-        const data = await response.json();
-        dispatch(setNameOptions(data));
-      }
-      else {
-        dispatch(setNameOptions([]));
-
-      }
+      const response = await fetch(`https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=DiagnosticCenter`);
+      const data = await response.json();
+      setNameOptions(data);
     } catch (err) {
       console.error(err);
-      dispatch(setNameOptions([]));
     }
-  }
+  };
 
-  let x = 0
   useEffect(() => {
-    if (x == 0) {
-      fetchDropdownList();
-      x = 1;
-    }
+    fetchNameOptions();
   }, []);
 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    setHasSearched(true);
+
+    const queryParams = new URLSearchParams();
+    if (filters.name?.value) queryParams.append("userId", filters.name.value);
+    if (filters.emergency?.value) queryParams.append("emergency", filters.emergency.value);
+    if (filters.icu?.value) queryParams.append("emergencyICU", filters.icu.value);
+    if (filters.ot?.value) queryParams.append("emergencyOT", filters.ot.value);
+    if (filters.rating?.value) queryParams.append("ratngs", filters.rating.value);
+    if (filters.rank?.value) queryParams.append("popularity", filters.rank.value);
+
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralWeb/GetAllDiagnosticCenterList?pageNumber=1&pageSize=20&${queryParams}`);
+    const data = await res.json();
+    setSearchResult(data?.data || []);
+    togglePopup();
+  };
 
   return (
     <>
-
-
-      <div onClick={togglePopup}
-        className="relative flex items-center ml-3 mr-3 mb-3">
-        <div className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-all duration-300 shadow-lg pr-12"
-        >        Search Diagnostic
+      <div onClick={togglePopup} className="relative flex items-center ml-3 mr-3 mb-3">
+        <div className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 shadow-lg pr-12">
+          Search Diagnostic
         </div>
-
-        <button
-          className="absolute right-0 mr-2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors duration-300 transform hover:scale-105"
-        >
+        <button className="absolute right-0 mr-2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transform hover:scale-105">
           <FiSearch className="w-5 h-5" />
         </button>
       </div>
+
       {isOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-[10000]">
           <div className="bg-white rounded-lg w-11/12 max-w-md p-6 shadow-lg overflow-y-auto max-h-[90vh]">
-            <button
-              onClick={togglePopup}
-              className="text-gray-500 float-right text-xl"
-            >
-              &times;
-            </button>
-            <h2 className="text-center text-lg font-semibold mb-2">
-              Search Diagnostic
-            </h2>
-            <p className="text-center text-red-500 mb-4 text-sm">
-              ** search by one or multiple criteria **
-            </p>
+            <button onClick={togglePopup} className="text-gray-500 float-right text-xl">&times;</button>
+            <h2 className="text-center text-lg font-semibold mb-2">Search Diagnostic</h2>
+            <p className="text-center text-red-500 mb-4 text-sm">** search by one or multiple criteria **</p>
 
-            <form className="space-y-4" onSubmit={(e) => {
-              e.preventDefault();
-              getDiagnosticList({ dispatch: dispatch,isSearch:true, emergency: emergency?.value, diagnostic: name?.value, rating: rating?.value, rank: rank?.value, ot: ot?.value, icu: icu?.value });
-              togglePopup();
-            }}>
-              <SearchableDropdown
-                onSelect={name}
-                label="Name"
-                options={nameOptions}
-                dispatch={dispatch}
-              />
-              <SearchableDropdown
-                label="Rating"
-                onSelect={rating}
-
-                dispatch={dispatch}
-                options={[{ value: 1, text: '1 Star' },
-                { value: 2, text: '2 Star' },
-                { value: 3, text: '3 Star' },
-                { value: 4, text: '4 Star' },
-                { value: 5, text: '5 Star' },]}
-              />
-              <SearchableDropdown
-                onSelect={rank}
-
-                dispatch={dispatch}
-                label="Popularity Rank"
-                options={[{ value: 1, text: 'Rank 1' },
-                { value: 2, text: 'Rank 2' },
-                { value: 3, text: 'Rank 3' },
-                { value: 4, text: 'Rank 4' },]}
-              />
-
-              <SearchableDropdown
-                dispatch={dispatch}
-                label="Emergency"
-                onSelect={emergency}
-
-                options={[{ value: 'yes', text: 'Yes' },
-                { value: 'no', text: 'No' }
-                ]}
-              />
-
-              <SearchableDropdown
-                dispatch={dispatch}
-                label="Emergency ICU"
-                onSelect={icu}
-
-                options={[{ value: 'yes', text: 'Yes' },
-                { value: 'no', text: 'No' }
-                ]}
-              />
-
-              <SearchableDropdown
-                dispatch={dispatch}
-                label="Emergency OT"
-                onSelect={ot}
-
-                options={[{ value: 'yes', text: 'Yes' },
-                { value: 'no', text: 'No' }
-                ]}
-              />
-              <button
-                type="submit"
-                className="w-full bg-blue-500 text-white py-2 rounded-lg mt-4 hover:bg-blue-600"
-              >
-                Search
-              </button>
+            <form className="space-y-4" onSubmit={handleSearch}>
+              <SearchableDropdown label="Name" options={nameOptions} value={filters.name} onChange={(val) => setFilters(f => ({ ...f, name: val }))} />
+              <SearchableDropdown label="Rating" options={[1, 2, 3, 4, 5].map(v => ({ value: v, text: `${v} Star` }))} value={filters.rating} onChange={(val) => setFilters(f => ({ ...f, rating: val }))} />
+              <SearchableDropdown label="Popularity Rank" options={[1, 2, 3, 4].map(v => ({ value: v, text: `Rank ${v}` }))} value={filters.rank} onChange={(val) => setFilters(f => ({ ...f, rank: val }))} />
+              <SearchableDropdown label="Emergency" options={[{ value: 'yes', text: 'Yes' }, { value: 'no', text: 'No' }]} value={filters.emergency} onChange={(val) => setFilters(f => ({ ...f, emergency: val }))} />
+              <SearchableDropdown label="Emergency ICU" options={[{ value: 'yes', text: 'Yes' }, { value: 'no', text: 'No' }]} value={filters.icu} onChange={(val) => setFilters(f => ({ ...f, icu: val }))} />
+              <SearchableDropdown label="Emergency OT" options={[{ value: 'yes', text: 'Yes' }, { value: 'no', text: 'No' }]} value={filters.ot} onChange={(val) => setFilters(f => ({ ...f, ot: val }))} />
+              <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg mt-4 hover:bg-blue-600">Search</button>
             </form>
-
           </div>
+        </div>
+      )}
+
+      {hasSearched && (
+        <div className="mb-10">
+          <h3 className="text-lg ml-3 mb-2">Search Results</h3>
+          {searchResult.length === 0 ? (
+            <p className="text-center text-gray-500">No diagnostic centers found</p>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 px-3">
+              {searchResult.map((item, index) => (
+                <DiagnosticCenterCard key={index} diagnostic={item} />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </>
