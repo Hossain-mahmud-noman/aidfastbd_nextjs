@@ -24,7 +24,7 @@ async function DoctorPage() {
   return (
     <>
       <div className="aid-container pt-10">
-        {/* <DoctorCategory specialityData={speciality} /> */}
+        <DoctorCategory specialityData={speciality} />
         <SearchDoctor specialityData={speciality} />
         <DoctorList nextPage={1} />
       </div>

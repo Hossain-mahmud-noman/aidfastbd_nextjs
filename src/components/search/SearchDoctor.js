@@ -112,7 +112,7 @@ const SearchDoctor = ({ specialityData = [] }) => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    setHasSearched(true); // ✅ user has performed a search
+    setHasSearched(true); 
 
     const queryParams = new URLSearchParams();
     if (filters.name?.value) queryParams.append("DoctorId", filters.name.value);
@@ -133,7 +133,7 @@ const SearchDoctor = ({ specialityData = [] }) => {
   return (
     <>
       {/* Search Button */}
-      <div onClick={togglePopup} className="relative flex items-center mb-3">
+      <div onClick={togglePopup} className="relative flex items-center mb-3 mt-2">
         <div className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 shadow-lg pr-12">
           Search Doctor
         </div>
