@@ -174,7 +174,7 @@ const SearchPharmacy = () => {
         </div>
       )}
 
-      {hasSearched && (
+      {/* {hasSearched && (
         <div className="mb-10">
           <h3 className="text-lg ml-3 mb-2">Search Results</h3>
           {results?.length === 0 ? (
@@ -187,7 +187,7 @@ const SearchPharmacy = () => {
             </div>
           )}
         </div>
-      )}
+      )} */}
     </>
   );
 };
