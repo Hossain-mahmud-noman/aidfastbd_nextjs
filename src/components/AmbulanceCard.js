@@ -5,15 +5,15 @@ import Link from 'next/link';
 
 const AmbulanceCard = ({ data }) => {
     const defaultImageUrl = "/images/ambulance.jpg";
-    const imageUrl = data.profileImageUrl ? `${image_base_endpoint}${data.profileImageUrl}` : defaultImageUrl;
+    const imageUrl = data?.profileImageUrl ? `${image_base_endpoint}${data?.profileImageUrl}` : defaultImageUrl;
 
     return (
 
-        <Link href={"/ambulance/" + data.userId}>
+        <Link href={"/ambulance/" + data?.userId}>
 
             <div
                 className="flex flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
-                aria-label={`Ambulance ${data.name} information card`}
+                aria-label={`Ambulance ${data?.name} information card`}
             >
                 <div className="flex-1 pl-3 pt-3 pr-3 pb-1">
                     {/* Centering the image */}
@@ -25,16 +25,16 @@ const AmbulanceCard = ({ data }) => {
                             placeholder="blur"
                             blurDataURL="https://user-images.githubusercontent.com/160484/173871411-4d27b6dd-af89-4568-863c-c59b1242ce74.png"
                             priority={false}
-                            alt={data.name}
+                            alt={data?.name}
                             className="w-40 h-36 sm:w-52 sm:h-52 object-cover rounded-full" // Fixed sizes
                         />
                     </div>
 
-                    <h3 className="text-md mt-2 text-black mb-1 line-clamp-3">{data.name}</h3>
+                    <h3 className="text-md mt-2 text-black mb-1 line-clamp-3">{data?.name}</h3>
                     <div className="flex items-center">
                         <FaStar className="text-yellow-500 mr-1" />
                         <span className="text-xs sm:text-sm md:text-base text-gray-600">
-                            {data.averageRating} ({data.totalRating} ratings)
+                            {data?.averageRating} ({data?.totalRating} ratings)
                         </span>
                     </div>
                 </div>

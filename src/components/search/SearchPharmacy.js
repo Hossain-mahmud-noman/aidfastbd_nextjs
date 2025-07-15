@@ -97,7 +97,7 @@ const SearchPharmacy = () => {
     try {
       const response = await fetch(`https://api.aidfastbd.com/api/GeneralWeb/GetAllPharmacyList${query}`);
       const data = await response.json();
-      setResults(data?.data?.[0] || []);
+      setResults(data?.data || []);
 
     } catch (err) {
       console.error(err);
@@ -174,20 +174,20 @@ const SearchPharmacy = () => {
         </div>
       )}
 
-      {/* {hasSearched && (
+      {hasSearched && (
         <div className="mb-10">
           <h3 className="text-lg ml-3 mb-2">Search Results</h3>
           {results?.length === 0 ? (
-            <p className="text-center text-gray-500">No diagnostic centers found</p>
+            <p className="text-center text-gray-500">No Pharmacy found</p>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 px-3">
               {results?.map((item, index) => (
-                <PharmacyCard key={index} diagnostic={item} />
+                <PharmacyCard key={index} data={item} />
               ))}
             </div>
           )}
         </div>
-      )} */}
+      )}
     </>
   );
 };
