@@ -123,14 +123,14 @@ const CommonService = () => {
                      <h1 className="heading1 text-[#212B36]">{item.heading}</h1>
                      <p className="description2 text-[#061C3D] mt-4 md:mt-5 lg:mt-6 xl:mt-[30px]">{item.description}</p>
                      <div className="mt-7 md:mt-8 lg:mt-10 xl:mt-12 flex items-center gap-3 md:gap-4 xl:gap-10">
-                        <Link href="tel: +8801738548662" target="_blank" className="bg-[#1087EF] px-4 md:px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
+                        <Link href="tel: +8801738548662" target="_blank" className="bg-[#1087EF] px-3 md:px-6 py-2 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
                            <BiSolidPhoneCall className="text-white description2" />
-                           <p className="description2 text-white whitespace-pre">{item.slug}</p>
+                           <p className="description5 text-white whitespace-pre">{item.slug}</p>
                         </Link>
                         {
                            item.link && (
-                              <Link href={item.link} target="_blank" className="group bg-white border-2 border-primary px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
-                                 <p className="description2 text-primary group-hover:text-white transition-all duration-300 whitespace-pre">{i18n.t("Learn More")}</p>
+                              <Link href={item.link} target="_blank" className="group bg-white border-2 border-primary md:px-6 px-3 py-2 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
+                                 <p className="description5 text-primary group-hover:text-white transition-all duration-300 whitespace-pre">{i18n.t("Learn More")}</p>
                                  <FaArrowRightLong className="description2 text-primary group-hover:text-white transition-all duration-300" />
                               </Link>
                            )
