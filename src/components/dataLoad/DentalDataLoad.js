@@ -32,7 +32,7 @@ const DentalDataLoad = () => {
   };
 
   const handleDataLoad = (data, isLoading) => {
-    setGenericData(data);
+    setGenericData(data.data);
     setLoading(isLoading);
   };
 
