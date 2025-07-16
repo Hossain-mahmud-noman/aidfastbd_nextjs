@@ -102,13 +102,13 @@ const Service = () => {
                      href={item.link}
                      key={index}
                      target="_blank"
-                     className="flex flex-col justify-start items-center border border-[#3056D321] bg-white xl:rounded-2xl lg:rounded-xl rounded-lg p-6 mx-auto w-full text-center"
+                     className="hover:scale-105 transition-all hover:border-primary duration-300 flex flex-col justify-start items-center border border-[#3056D321] bg-white xl:rounded-2xl lg:rounded-xl rounded-lg p-6 mx-auto w-full text-center"
                   >
                      <Image
                         src={item.image}
                         width={100}
                         height={100}
-                        className="h-12 w-12 md:w-[76px] md:h-[76px] object-contain"
+                        className="h-12 w-12 md:w-[76px] md:h-[76px] object-contain animate-pulse"
                         alt="Service image"
                      />
                      <h4 className="heading3 mt-6 text-[#061C3D]">{item.heading}</h4>
