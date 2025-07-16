@@ -79,7 +79,7 @@ const Doctor = () => {
   return (
     <div className="">
       <h1 className="text-xl font-bold mb-4">Doctors List</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {doctors.map((doc, index) => (
           <DoctorCard key={`${doc.id}-${index}`} doctor={doc} />
         ))}

@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 export default function ShowOriginalImage({ image, slug = "doctor" }) {
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [dimensions, setDimensions] = useState({ "inline-size": 0, "block-size": 0 });
   useEffect(() => {
     const img = new window.Image();
     img.src = image;
     img.onload = () => {
       setDimensions({
-        width: img.naturalWidth,
-        height: img.naturalHeight,
+        "inline-size": img.naturalWidth,
+        "block-size": img.naturalHeight,
       });
     };
   }, []);

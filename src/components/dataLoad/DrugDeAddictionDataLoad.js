@@ -74,7 +74,7 @@ const DrugDeAddictionDataLoad = () => {
             No data available
           </div>
         ) : (
-          <div className="mt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {genericData?.map((d, index) => (
               <ServiceCard slug="drug-de-addiction" key={index} data={d} />
             ))}
