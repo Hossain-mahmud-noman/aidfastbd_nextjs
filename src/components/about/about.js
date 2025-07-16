@@ -129,7 +129,7 @@ const AmbulenceService = () => {
                      onClick={() => {
                         router.push("https://play.google.com/store/apps/details?id=com.aidfastbd.app")
                      }}
-                     className="bg-[#1087EF] px-4 md:px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
+                     className="bg-[#1087EF] hover:scale-105 px-4 md:px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
                      <p className="description2 text-white whitespace-pre">{i18n.t("Explore More")}</p>
                      <FaArrowRightLong className="text-white description2" />
                   </button>

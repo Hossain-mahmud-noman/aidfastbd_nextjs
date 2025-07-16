@@ -35,11 +35,11 @@ const Hero = () => {
                </p>
 
                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href="/doctor" className="bg-[#1087EF] px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
+                  <Link href="/doctor" className="hover:scale-105 bg-[#1087EF] px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
                      <p className="description2 text-white">{i18n.t("Book Appointment")}</p>
                      <FaArrowRightLong className="text-white description1" />
                   </Link>
-                  <Link href="tel: +8801738548662" className="group bg-[#EEF8FF] border-2 border-primary px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
+                  <Link href="tel: +8801738548662" className="hover:scale-105 group bg-[#EEF8FF] border-2 border-primary px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
                      <BiSolidPhoneCall className="description2 text-primary group-hover:!text-white transition-all duration-300" />
                      <p className="description2 text-primary group-hover:text-white transition-all duration-300">{i18n.t("Call Now")}</p>
                   </Link>
