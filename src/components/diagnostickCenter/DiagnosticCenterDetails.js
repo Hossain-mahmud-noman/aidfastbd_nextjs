@@ -12,7 +12,7 @@ import DiagnosticTabs from "../tabs/DiagnosticTabs";
 import FloatingCallButton from "../FloatingCallButton";
 
 const DiagnosticCenterDetails = ({ data }) => {
-  console.log("🚀 ~ DiagnosticCenterDetails ~ data:", data)
+  
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
 
@@ -35,13 +35,13 @@ const DiagnosticCenterDetails = ({ data }) => {
         <meta property="og:title" content={`${data?.name}  | ${appname}`} />
         <meta property="og:description" content={`${data?.diagnosticCenterAdditionalInfo?.title ?? ""} ${data?.diagnosticCenterAdditionalInfo?.details ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/diagnostic/${data?.userId}`} />
+        <meta property="og:url" content={`${frontend_url}/diagnostic/${data?.id}`} />
       </Head>
       <>
         <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Diagnostic Detail' trailingComponents={
           <div className='flex'>
             <ProfileQR id={data?.id} type={"Diagnostic"} />
-            <FavouriteToggle isFill={data?.isFavourite} userId={user?.userId} id={data?.id} type={2} token={token} />
+            <FavouriteToggle isFill={data?.isFavourite} userId={user?.id} id={data?.id} type={2} token={token} />
             <ShareButton link={`${frontend_url}/diagnostic/${data?.id}`} />
           </div>}
         />

@@ -27,7 +27,7 @@ export async function generateMetadata({ params }) {
       title: `${data?.name}  | ${appname}`,
       description: `${data?.diagnosticCenterAdditionalInfo?.title ?? ""} ${data?.diagnosticCenterAdditionalInfo?.details ?? ""}`,
       images: [profile],
-      url: `${frontend_url}/diagnostic/${data.userId}`,
+      url: `${frontend_url}/diagnostic/${data.id}`,
     },
   };
 }
