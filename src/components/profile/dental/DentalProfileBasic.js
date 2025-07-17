@@ -5,7 +5,7 @@ import { image_base_endpoint } from '../../../utils/constants';
 import { FaCalendarAlt } from "react-icons/fa";
 import MapComponent from '../../MapComponent';
 import Image from 'next/image';
-
+import { toast } from 'sonner';
 function InputField({ label, placeholder, type = "text", value, onChange, required = false, maxLength = 255, name }) {
   return (
     <div className="mb-4">
@@ -108,7 +108,7 @@ function DentalProfileBasic({ data, token, user }) {
         ownerNID: data.ownerNID || "",
       });
       setAvailablityStatus(data.isOpen);
-    
+
     }
   }, [data]);
 
@@ -136,8 +136,8 @@ function DentalProfileBasic({ data, token, user }) {
     try {
       // Create form data object
       const form = new FormData();
-      form.append('ServiceType','1');
-      form.append('CenterInformation','test');
+      form.append('ServiceType', '1');
+      form.append('CenterInformation', 'test');
       form.append('Name', formData.dentalCenterEnglish);
       form.append('NameBn', formData.dentalCenterBangla);
       form.append('Location', formData.location);
@@ -145,48 +145,41 @@ function DentalProfileBasic({ data, token, user }) {
       form.append('Contact', formData.contactNo);
       form.append('RegistrationNumber', formData.registrationNo);
       form.append('ServiceTime', formData.serviceTime);
-      form.append('EstablishedYear', date); // Ensure `date` is in "YYYY-MM-DD" format
+      form.append('EstablishedYear', date);
 
       form.append('Notice', formData.organizationNotice);
       form.append('OwnerName', formData.ownerName);
       form.append('OwnerMobileNumber', formData.ownerMobileNo);
       form.append('OwnerNID', formData.ownerNID);
-     
+
       form.append('IsOpen', availablityStatus === "true");
       form.append('Latitude', latitude);
       form.append('Longitude', longitude);
-      form.append('UserId', user?.id); // Ensure `user` contains a valid `id`
+      form.append('UserId', user?.id); 
 
       if (selectedLogo) {
         if (typeof selectedLogo === 'string' && !selectedLogo.startsWith(image_base_endpoint)) {
-          // If it's a URL (not a local file), fetch it and convert to a blob
           const blob = await fetch(selectedLogo).then((res) => res.blob());
-          // Append the fetched image as a blob with a name for the file
-          form.append('ProfileImageFile', blob, 'image.jpg');  // You can add dynamic filename extensions here if needed
+          form.append('ProfileImageFile', blob, 'image.jpg'); 
         } else if (selectedLogo instanceof File) {
-          // If selectedLogo is already a File object, just append it
           form.append('ProfileImageFile', selectedLogo);
         }
       }
 
       if (selectedCover) {
         if (typeof selectedCover === 'string' && !selectedCover.startsWith(image_base_endpoint)) {
-          // If it's a URL (not a local file), fetch it and convert to a blob
           const blob = await fetch(selectedCover).then((res) => res.blob());
           form.append('CoverImageFile', blob, 'coverImage.jpg');
         } else if (selectedCover instanceof File) {
-          // If coverImage is already a File object, just append it
           form.append('CoverImageFile', selectedCover);
         }
       }
 
       if (ownerImage) {
         if (typeof ownerImage === 'string' && !ownerImage.startsWith(image_base_endpoint)) {
-          // If it's a URL (not a local file), fetch it and convert to a blob
           const blob = await fetch(ownerImage).then((res) => res.blob());
           form.append('OwnerImageFile', blob, 'ownerImage.jpg');
         } else if (ownerImage instanceof File) {
-          // If ownerImage is already a File object, just append it
           form.append('OwnerImageFile', ownerImage);
         }
       }
@@ -196,29 +189,29 @@ function DentalProfileBasic({ data, token, user }) {
         {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${token}`, // Ensure `token` is valid
+            Authorization: `Bearer ${token}`, 
           },
-          body: form, // Use `FormData` directly for the request body
+          body: form, 
         }
       );
       // Handle response
       if (response.ok) {
-        alert('Profile Updated Successfully');
+        toast.success('Profile Updated Successfully');
       } else {
         const errorData = await response.json();
-        alert(`Error: ${errorData.message || 'An error occurred'}`);
+        toast.error(`Error: ${errorData.message || 'Failed to update profile. Please try again'}`);
       }
     } catch (error) {
       console.error('Error updating profile:', error);
-      alert('Failed to update profile. Please try again.');
+      toast.error('Failed to update profile. Please try again.');
     }
   };
 
- 
+
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       <h2 className="text-xs font-semibold text-gray-700 mb-4">Add a Profile Picture or Logo</h2>
-    
+
       <div className="flex justify-center mb-6">
         <div className="relative">
           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
@@ -313,8 +306,8 @@ function DentalProfileBasic({ data, token, user }) {
       <div className="mb-4 border">
         <label className="block text-sm font-medium text-gray-700 mb-2">Select Dental Map Location</label>
         <MapComponent
-        lat={latitude}
-        lon={longitude}
+          lat={latitude}
+          lon={longitude}
           onLocationSelect={(lat, lon) => {
             setLatitude(lat);
             setLongitude(lon);
@@ -389,8 +382,8 @@ function DentalProfileBasic({ data, token, user }) {
         Any kind of small information you want to highlight, Give in notice.
       </p>
 
- 
-     
+
+
 
       <Dropdown
         label="Open"

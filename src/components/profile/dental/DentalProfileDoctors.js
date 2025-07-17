@@ -97,7 +97,7 @@ function DentalProfileDoctors({ data, user, token }) {
   }, [searchTerm]);
 
   return (
-    <div className="p-4">
+    <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       <h1 className="text-lg font-bold mb-4">
         Add Doctor profile of your Dental Clinic
       </h1>
@@ -155,7 +155,7 @@ function DentalProfileDoctors({ data, user, token }) {
             ) : (
               <div
                 className="overflow-y-auto"
-                style={{ maxHeight: "300px" }} // Set max height for scroll
+                style={{ "maxblock-size": "300px" }} // Set max height for scroll
               >
                 <ul>
                   {allDoctors.map((doctor) => (

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
-
+import { toast } from "sonner";
 function DentalProfileInfo({ data, user, token }) {
   
   const [selectedImage, setSelectedImage] = useState(null);
@@ -51,12 +51,13 @@ function DentalProfileInfo({ data, user, token }) {
       if (response.ok) {
         setImgList([...imgList, result]);
         setSelectedImage(null);
+        toast.success("File Uploaded Successfully")
       } else {
-        alert(result?.message || "Failed to upload image");
+        toast.error(result?.message || "Failed to upload image");
       }
     } catch (error) {
       console.error("Image upload error:", error);
-      alert("An error occurred while uploading the image.");
+      toast.error("An error occurred while uploading the image.");
     }
   };
 
@@ -78,13 +79,13 @@ function DentalProfileInfo({ data, user, token }) {
 
       const result = await response.json();
       if (response.ok) {
-        alert("Profile updated successfully!");
+        toast.success("Profile updated successfully!");
       } else {
-        alert(result?.message || "Failed to update profile");
+        toast.error(result?.message || "Failed to update profile");
       }
     } catch (error) {
       console.error("Form submission error:", error);
-      alert("An error occurred while updating the profile.");
+      toast.error("An error occurred while updating the profile.");
     } finally {
       setIsSubmitting(false);
     }
@@ -93,14 +94,14 @@ function DentalProfileInfo({ data, user, token }) {
   useEffect(() => {
     
     if (data) {
-      setTitle(data[0].title || "");
-      setDetails(data[0].details || "");
-      setImgList(data[0].imgList || []);
+      setTitle(data[0]?.title || "");
+      setDetails(data[0]?.details || "");
+      setImgList(data[0]?.imgList || []);
     }
   }, [data]);
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       {/* Title Section */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import ServiceForm from "../../../components/forms/ServiceForm";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function DentalProfileServices({ data, token, user }) {
+  console.log("🚀 ~ DentalProfileServices ~ data:", data)
   const [services, setServices] = useState(data);
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,7 +34,9 @@ export default function DentalProfileServices({ data, token, user }) {
 
     try {
       const response = await fetch(
-        isUpdating ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateGenericService_Services" : "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericService_Services",
+        isUpdating
+          ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateGenericService_Services"
+          : "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericService_Services",
         {
           method: isUpdating ? "PUT" : "POST",
           headers: {
@@ -45,28 +49,30 @@ export default function DentalProfileServices({ data, token, user }) {
 
       const responseData = await response.json();
 
+      if (!response.ok) {
+        throw new Error(responseData?.message || "Something went wrong!");
+      }
+
       setServices((prev) =>
         isUpdating
-          ? prev.map((s) => {
-            if (s.id === payload.id) {
-              return { ...s, ...payload }; // Update the service object with the new payload
-            } else {
-              return s; // Return the service as is if not the one being updated
-            }
-          })
-          : [...prev, { ...payload, id: responseData.id }] // Add new service if it's not an update
+          ? prev.map((s) => (s.id === payload.id ? { ...s, ...payload } : s))
+          : [...prev, { ...payload, id: responseData.id }]
       );
-      
+
+      toast.success(
+        isUpdating ? "Service updated successfully!" : "New service added successfully!"
+      );
     } catch (error) {
-      alert(`Error: ${error.message}`);
+      toast.error(`Error: ${error.message}`);
     } finally {
       setIsModalOpen(false);
     }
   };
 
 
+
   return (
-    <div className="p-4 pt-0">
+    <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       {isModalOpen ? (
         <ServiceForm
           initialData={selectedService}
