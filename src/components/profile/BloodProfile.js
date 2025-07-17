@@ -38,9 +38,7 @@ function BloodProfile({ token, user }) {
     { label: 'Info', content: <BloodProfileInfo data={profileData?.bloodBankAdditionalInfo} user={user} token={token}></BloodProfileInfo> },
     { label: 'Services', content: <BloodProfileServices data={profileData?.bloodBankServices} user={user} token={token}></BloodProfileServices> },
 
-
   ];
-
 
   return (
     <div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
+import { toast } from "sonner";
+import Swal from 'sweetalert2';
 function BloodProfileServices({ data, user, token }) {
 
   const [bloodGroups, setBloodGroups] = useState([]);
@@ -25,7 +26,7 @@ function BloodProfileServices({ data, user, token }) {
     setFormData({
       serviceName: "",
       price: "",
-      serviceType: dataSet === "bloodGroups" ? "BloodBank" : "BloodProduct", // Set serviceType dynamically
+      serviceType: dataSet === "bloodGroups" ? "BloodBank" : "BloodProduct",
     });
     setEditIndex(null);
     setCurrentDataSet(dataSet);
@@ -35,7 +36,7 @@ function BloodProfileServices({ data, user, token }) {
     setShowDialog(true);
     const data = dataSet === "bloodGroups" ? bloodGroups : bloodProducts;
 
-    setFormData({ ...data[index], serviceType: dataSet === "bloodGroups" ? "BloodBank" : "BloodProduct" });  // Populate the form with the data to be edited
+    setFormData({ ...data[index], serviceType: dataSet === "bloodGroups" ? "BloodBank" : "BloodProduct" });
     setEditIndex(index);
     setCurrentDataSet(dataSet);
   };
@@ -44,19 +45,19 @@ function BloodProfileServices({ data, user, token }) {
     const data = currentDataSet === "bloodGroups" ? bloodGroups : bloodProducts;
     try {
       const payload = {
-        id: formData.id, // The ID of the item to edit or create
+        id: formData.id,
         bloodBankInformationUserId: user.id,
-        serviceType: formData.serviceType, // This should be 'BloodBank' or 'BloodProduct'
-        serviceName: formData.serviceName, // e.g. B+, O-, etc.
-        price: formData.price, // The price for the service/product
-        remarks: "", // Optional remarks (if needed)
-        isDelete: false, // Mark it as not deleted
+        serviceType: formData.serviceType,
+        serviceName: formData.serviceName,
+        price: formData.price,
+        remarks: "",
+        isDelete: false,
       };
 
       const response = await fetch(
         editIndex !== null ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateBloodBankServices" : "https://api.aidfastbd.com/api/GeneralInformation/SaveBloodBankServices",
         {
-          method: editIndex !== null ? "PUT" : "POST", // PUT if editing, POST if adding
+          method: editIndex !== null ? "PUT" : "POST",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -72,22 +73,23 @@ function BloodProfileServices({ data, user, token }) {
           const updatedData = data.map((item, idx) =>
             idx === editIndex ? payload : item
           );
+          toast.success("Services Updated SUccessfully")
           setBloodData(updatedData);
         } else {
           payload['id'] = responseData.id;
-          // If it’s a new entry
+          toast.success("Services Created SUccessfully")
           setBloodData([...data, payload]);
         }
 
-        setShowDialog(false); // Close the dialog modal after success
+        setShowDialog(false);
       } else {
         const errorData = await response.json();
         console.error("Error saving blood service", errorData);
-        alert("Error saving data");
+        toast.error("Error saving data");
       }
     } catch (error) {
       console.error("Error during the API request", error);
-      alert("An unexpected error occurred");
+      toast.error("An unexpected error occurred");
     }
   };
 
@@ -99,8 +101,21 @@ function BloodProfileServices({ data, user, token }) {
     }
   };
 
+  
+
   const handleDelete = async (index, dataSet) => {
-    if (window.confirm("Are you sure you want to delete this item?")) {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you really want to delete this item?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+    });
+
+    if (result.isConfirmed) {
       const data = dataSet === "bloodGroups" ? bloodGroups : bloodProducts;
       const itemToDelete = data[index];
 
@@ -110,8 +125,8 @@ function BloodProfileServices({ data, user, token }) {
           serviceType: itemToDelete.serviceType,
           serviceName: itemToDelete.serviceName,
           price: itemToDelete.price,
-          remarks: "", // Optional
-          isDelete: true, // Mark the item as deleted
+          remarks: "",
+          isDelete: true,
         };
 
         const response = await fetch(
@@ -127,18 +142,20 @@ function BloodProfileServices({ data, user, token }) {
 
         if (response.status === 200) {
           const updatedData = data.filter((_, idx) => idx !== index);
+          toast.success("Service deleted successfully");
           setBloodData(updatedData);
         } else {
           const errorData = await response.json();
           console.error("Error deleting blood service", errorData);
-          alert("Error deleting item");
+          toast.error("Error deleting item");
         }
       } catch (error) {
         console.error("Error during the API request", error);
-        alert("An unexpected error occurred");
+        toast.error("An unexpected error occurred");
       }
     }
   };
+
 
   const renderTable = (data, dataSet) => (
     <div className="overflow-x-auto">

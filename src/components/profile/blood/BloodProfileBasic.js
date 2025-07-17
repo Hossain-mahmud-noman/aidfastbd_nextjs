@@ -3,7 +3,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import MapComponent from '../../MapComponent';
 import { image_base_endpoint } from '../../../utils/constants';
 import Image from 'next/image';
-
+import { toast } from 'sonner';
 function InputField({ label, placeholder, type = "text", value, onChange, required = false, maxLength }) {
   return (
     <div className="mb-4">
@@ -26,7 +26,7 @@ function InputField({ label, placeholder, type = "text", value, onChange, requir
 }
 
 function BloodProfileBasic({ data, user, token }) {
-
+  console.log("🚀 ~ BloodProfileBasic ~ data:", data)
 
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [selectedCover, setSelectedCover] = useState(null);
@@ -35,7 +35,6 @@ function BloodProfileBasic({ data, user, token }) {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-
   const [emergencyContact, setEmergencyContact] = useState("");
   const [location, setLocation] = useState("");
   const [registrationNo, setRegistrationNo] = useState("");
@@ -52,11 +51,11 @@ function BloodProfileBasic({ data, user, token }) {
     const file = event.target.files[0];
     if (file) {
       if (file.size > 2 * 1024 * 1024) {
-        alert("File size should be less than 2MB");
+        toast.error("File size should be less than 2MB");
         return;
       }
       if (!file.type.startsWith('image/')) {
-        alert("Please select an image file");
+        toast.warning("Please select an image file");
         return;
       }
       const reader = new FileReader();
@@ -66,7 +65,6 @@ function BloodProfileBasic({ data, user, token }) {
   };
 
   const handleSubmit = async () => {
-    // Check required fields are filled
     const errors = {};
     if (!name) errors.name = "Club name is required.";
     if (!location) errors.location = "Location is required.";
@@ -82,7 +80,7 @@ function BloodProfileBasic({ data, user, token }) {
     setFormErrors(errors);
 
     if (Object.keys(errors).length > 0) {
-      alert("Please fill all required fields.");
+      toast.warning("Please fill all required fields.");
       return;
     }
 
@@ -106,34 +104,27 @@ function BloodProfileBasic({ data, user, token }) {
 
     if (selectedLogo) {
       if (typeof selectedLogo === 'string' && !selectedLogo.startsWith(image_base_endpoint)) {
-        // If it's a URL (not a local file), fetch it and convert to a blob
         const blob = await fetch(selectedLogo).then((res) => res.blob());
-        // Append the fetched image as a blob with a name for the file
-        formData.append('ProfileImageFile', blob, 'image.jpg');  // You can add dynamic filename extensions here if needed
+        formData.append('ProfileImageFile', blob, 'image.jpg');
       } else if (selectedLogo instanceof File) {
-        // If selectedLogo is already a File object, just append it
         formData.append('ProfileImageFile', selectedLogo);
       }
     }
 
     if (selectedCover) {
       if (typeof selectedCover === 'string' && !selectedCover.startsWith(image_base_endpoint)) {
-        // If it's a URL (not a local file), fetch it and convert to a blob
         const blob = await fetch(selectedCover).then((res) => res.blob());
         formData.append('CoverImageFile', blob, 'coverImage.jpg');
       } else if (selectedCover instanceof File) {
-        // If coverImage is already a File object, just append it
         formData.append('CoverImageFile', selectedCover);
       }
     }
 
     if (ownerImage) {
       if (typeof ownerImage === 'string' && !ownerImage.startsWith(image_base_endpoint)) {
-        // If it's a URL (not a local file), fetch it and convert to a blob
         const blob = await fetch(ownerImage).then((res) => res.blob());
         formData.append('OwnerImageFile', blob, 'ownerImage.jpg');
       } else if (ownerImage instanceof File) {
-        // If ownerImage is already a File object, just append it
         formData.append('OwnerImageFile', ownerImage);
       }
     }
@@ -148,13 +139,19 @@ function BloodProfileBasic({ data, user, token }) {
       });
 
       if (response.ok) {
-        alert("Blood profile created successfully!");
+        if (data.id) {
+          toast.success("Blood Profile Updated Successfully!");
+        }
+        else {
+          toast.success("Blood Profile Created Successfully!");
+        }
+
       } else {
-        alert("Failed to create blood profile.");
+        toast.error("Failed to create blood profile.");
       }
     } catch (error) {
       console.error("Error during submission:", error);
-      alert("An error occurred while submitting the profile.");
+      toast.error("An error occurred while submitting the profile.");
     }
   };
 
@@ -174,8 +171,8 @@ function BloodProfileBasic({ data, user, token }) {
       setOwnerName(data.ownerName || '');
       setOwnerMobileNumber(data.ownerMobileNumber || '');
       setOwnerNid(data.ownerNID || '');
-      setLatitude(data.latitude || '');
-      setLongitude(data.longitude || '');
+      setLatitude(+data.latitude || '');
+      setLongitude(+data.longitude || '');
       setIsOpen(data.isOpen || false);
     }
   }, [data]);
@@ -183,7 +180,7 @@ function BloodProfileBasic({ data, user, token }) {
 
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       <h2 className="text-xs font-semibold text-gray-700 mb-4">Add a Profile Picture or Logo</h2>
 
       {/* Profile/Logo Picture */}
@@ -301,9 +298,12 @@ function BloodProfileBasic({ data, user, token }) {
           />
         </div>
       </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Select Chamber Location</label>
+
+      <div className="mb-4 border">
+        <label className="block text-sm font-medium text-gray-700 mb-2 ">Select Chamber Location</label>
         <MapComponent
+          lat={latitude}
+          lon={longitude}
           onLocationSelect={(lat, lon) => {
             setLatitude(lat);
             setLongitude(lon);

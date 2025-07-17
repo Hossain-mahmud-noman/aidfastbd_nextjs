@@ -181,3 +181,29 @@ body {
   background-color: #3b82f6; 
   color: white;
 }
+
+
+
+/* Success toast */
+[data-sonner-toast][data-type="success"] {
+  background-color: #e6f4ea !important;
+  color: #276749 !important;
+  border-left: 6px solid #38a169 !important;
+  font-weight: 500;
+}
+
+/* Error toast */
+[data-sonner-toast][data-type="error"] {
+  background-color: #fdecea !important;
+  color: #c53030 !important;
+  border-left: 6px solid #e53e3e !important;
+  font-weight: 500;
+}
+
+/* Warning toast */
+[data-sonner-toast][data-type="warning"] {
+  background-color: #fffbea !important;
+  color: #975a16 !important;
+  border-left: 6px solid #dd6b20 !important;
+  font-weight: 500;
+}

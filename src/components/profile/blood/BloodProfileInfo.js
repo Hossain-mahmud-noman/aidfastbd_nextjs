@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { image_base_endpoint } from '../../../utils/constants';
 import Image from 'next/image';
-
+import { toast } from 'sonner';
 function BloodProfileInfo({ data, user, token }) {
-
-
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState(data?.title);
   const [details, setDetails] = useState(data?.details);
@@ -33,12 +31,11 @@ function BloodProfileInfo({ data, user, token }) {
   };
 
 
-
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
     const formData = new FormData();
-    formData.append('UserId', user?.id || '96afe4ea-6021-4f6f-e116-08dceabe4a3c');
+    formData.append('UserId', user?.id);
     formData.append('Lat', '0');
     formData.append('Lon', '0');
     formData.append('Title', title);
@@ -61,13 +58,13 @@ function BloodProfileInfo({ data, user, token }) {
 
       const result = await response.json();
       if (response.ok) {
-        alert('Profile updated successfully!');
+        toast.success('Profile updated successfully!');
       } else {
-        alert(`Error: ${result?.message || 'Failed to update profile'}`);
+        toast.error(`Error: ${result?.message || 'Failed to update profile'}`);
       }
     } catch (error) {
       console.error('Error submitting the form:', error);
-      alert('An error occurred while updating the profile.');
+      toast.error('An error occurred while updating the profile.');
     } finally {
       setIsSubmitting(false);
     }
@@ -76,16 +73,15 @@ function BloodProfileInfo({ data, user, token }) {
 
   useEffect(() => {
     if (data !== null) {
-      setTitle(data.title);
-      setDetails(data.details);
-      setSelectedImage(data.imageUrl !== null ? image_base_endpoint + data.imageUrl : null)
+      setTitle(data?.title);
+      setDetails(data?.details);
+      setSelectedImage(data?.imageUrl !== null ? image_base_endpoint + data?.imageUrl : null)
     }
   }, [data])
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
 
-      {/* BCS Section */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">Add a short title about your blood bank/donor club</label>
         <input
@@ -97,7 +93,6 @@ function BloodProfileInfo({ data, user, token }) {
         />
       </div>
 
-      {/* BCS Section */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">Describe  breif about it</label>
         <textarea
@@ -110,13 +105,11 @@ function BloodProfileInfo({ data, user, token }) {
         />
       </div>
 
-      {/* Image Section */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Add a picture of your diagnostic center or hospital
         </label>
 
-        {/* Preview Section */}
         <div className="mb-4 flex justify-center items-center border rounded-md p-4 bg-gray-50">
           {selectedImage ? (
             <Image
@@ -155,7 +148,7 @@ function BloodProfileInfo({ data, user, token }) {
           )}
         </div>
 
-        {/* File Input */}
+
         <input
           type="file"
           accept="image/*"
@@ -164,7 +157,7 @@ function BloodProfileInfo({ data, user, token }) {
         />
       </div>
 
-      {/* Submit Button */}
+
       <button
         className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition"
         onClick={handleSubmit}
