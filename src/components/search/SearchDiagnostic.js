@@ -105,7 +105,7 @@ const SearchDiagnostic = () => {
     if (filters.rating?.value) queryParams.append("ratngs", filters.rating.value);
     if (filters.rank?.value) queryParams.append("popularity", filters.rank.value);
 
-    const res = await fetch(`https://api.aidfastbd.com/api/GeneralWeb/GetAllDiagnosticCenterList?pageNumber=1&pageSize=20&${queryParams}`);
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralWeb/GetAllDiagnosticCenterCardInfo?pageNumber=1&pageSize=20&${queryParams}`);
     const data = await res.json();
     setSearchResult(data?.data || []);
     togglePopup();
