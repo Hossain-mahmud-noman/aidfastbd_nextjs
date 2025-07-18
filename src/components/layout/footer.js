@@ -203,7 +203,7 @@ const Footer = () => {
                   <Link target="_blank" href="/privacy" className="text-white description1 hover:text-black transition-all duration-300">
                      {i18n.t("Privacy & Policy")}
                   </Link>
-                  <Link target="_blank" href="/privacy" className="text-white description1 hover:text-black transition-all duration-300">
+                  <Link target="_blank" href="/terms" className="text-white description1 hover:text-black transition-all duration-300">
                      {i18n.t("Terms & Conditions")}
                   </Link>
                </div>
