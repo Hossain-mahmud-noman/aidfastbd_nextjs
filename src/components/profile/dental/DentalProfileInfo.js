@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
 function DentalProfileInfo({ data, user, token }) {
+  console.log("🚀 ~ DentalProfileInfo ~ data:", data)
   
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState(data?.title || "");
@@ -26,7 +27,6 @@ function DentalProfileInfo({ data, user, token }) {
     const updatedList = [...imgList];
     updatedList.splice(index, 1);
     setImgList(updatedList);
-    // Optional: Call API to remove the image on the server.
   };
 
   const handleImageUpload = async () => {

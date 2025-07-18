@@ -4,7 +4,6 @@ import Image from "next/image";
 import { toast } from "sonner";
 
 export default function DentalProfileServices({ data, token, user }) {
-  console.log("🚀 ~ DentalProfileServices ~ data:", data)
   const [services, setServices] = useState(data);
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +19,8 @@ export default function DentalProfileServices({ data, token, user }) {
   };
 
   const handleFormSubmit = async (newData) => {
-    const isUpdating = selectedService != null;
+    const isUpdating = selectedService !== null;
+
     const payload = {
       otherInfo: "heading",
       title: newData.heading,
@@ -60,7 +60,9 @@ export default function DentalProfileServices({ data, token, user }) {
       );
 
       toast.success(
-        isUpdating ? "Service updated successfully!" : "New service added successfully!"
+        isUpdating
+          ? "Service updated successfully!"
+          : "New service added successfully!"
       );
     } catch (error) {
       toast.error(`Error: ${error.message}`);
@@ -68,8 +70,6 @@ export default function DentalProfileServices({ data, token, user }) {
       setIsModalOpen(false);
     }
   };
-
-
 
   return (
     <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
@@ -82,29 +82,55 @@ export default function DentalProfileServices({ data, token, user }) {
         />
       ) : (
         <>
-          {services?.map((service) => (
-            <div key={service.id} className="relative bg-purple-100 p-4 rounded-lg shadow-md mb-3">
-              <h3 className="text-lg font-bold">{service.title}</h3>
-              <p className="text-gray-600">{service.details}</p>
-              <div className="flex mt-2">
-                {service.imgList.map((img, index) => (
-                  <Image width={100} height={100} key={index} src={img.imgUrl} alt="Service" className="w-10 h-10 mr-1 rounded" />
-                ))}
-              </div>
-              <button
-                onClick={() => handleEditService(service)}
-                className="absolute top-2 right-2 bg-blue-500 text-white p-3 rounded"
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-semibold text-gray-800">Dental Services</h2>
+            <button
+              onClick={handleAddService}
+              className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-full transition"
+            >
+              + Add Service
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            {services?.map((service) => (
+              <div
+                key={service.id}
+                className="relative bg-gray-50 border border-purple-200 p-4 rounded-lg shadow-sm"
               >
-                🖊
-              </button>
-            </div>
-          ))}
-          <button
-            onClick={handleAddService}
-            className="fixed bottom-5 left-5 bg-purple-500 text-white px-4 py-2 rounded-full"
-          >
-            New service add (+)
-          </button>
+                <button
+                  onClick={() => handleEditService(service)}
+                  className="absolute top-3 right-3 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full shadow"
+                  title="Edit Service"
+                >
+                  ✎
+                </button>
+
+                <h3 className="text-lg font-semibold text-purple-800 mb-1">
+                  {service.title}
+                </h3>
+                <p className="text-sm text-gray-700 mb-3">{service.details}</p>
+
+                {service.imgList?.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {service.imgList.map((img, index) => (
+                      <div
+                        key={index}
+                        className="w-16 h-16 relative rounded overflow-hidden border"
+                      >
+                        <Image
+                          src={img.imgUrl}
+                          alt="Service"
+                          layout="fill"
+                          objectFit="cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </>
       )}
     </div>

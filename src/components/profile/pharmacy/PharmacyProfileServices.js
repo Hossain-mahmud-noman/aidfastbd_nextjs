@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { headerx } from "../../../utils/constants";
 
 function PharmacyProfileServices({ data, user, token }) {
-  const [services, setServices] = useState(data?.services || ""); // Pre-fill with existing data if available
+  const [services, setServices] = useState(data?.services || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (data) {
+      setServices(data.details || "");
+    }
+  }, [data]);
 
   const handleSave = async () => {
     if (!services.trim()) {
-      alert("Please provide details about your pharmacy services.");
+      toast.error("Please provide details about your pharmacy services.");
       return;
     }
 
@@ -20,8 +27,8 @@ function PharmacyProfileServices({ data, user, token }) {
           method: "POST",
           headers: {
             ...headerx,
-            "Content-Type": "application/json", // Ensure Content-Type is set for JSON data
-            Authorization: `Bearer ${token}`, // Include token for authorization
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             userId: user.id,
@@ -34,54 +41,51 @@ function PharmacyProfileServices({ data, user, token }) {
       const result = await response.json();
 
       if (response.ok) {
-        alert("Profile saved successfully!");
+        toast.success("Pharmacy services saved successfully!");
       } else {
         const errorMessages = result.errors
           ? Object.entries(result.errors)
-            .map(([field, messages]) => `${field}: ${messages.join(", ")}`)
-            .join("\n")
+              .map(([field, messages]) => `${field}: ${messages.join(", ")}`)
+              .join("\n")
           : result.message || "An unknown error occurred";
-        alert(`Error: ${errorMessages}`);
+        toast.error(errorMessages);
       }
     } catch (error) {
       console.error("An error occurred while saving:", error);
-      alert("An error occurred. Please try again.");
+      toast.error("An unexpected error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  useEffect(() => {
-
-    if (data) {
-      setServices(data.details || "")
-    }
-
-  }, [data])
-
   return (
     <div className="bg-white shadow-md rounded-lg w-full max-w-3xl mx-auto p-6">
-      {/* Textarea for Services */}
-      <div className="mb-4">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4">
+        Pharmacy Services
+      </h2>
+
+      <div className="mb-6">
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Pharmacy Services
+          Describe the services your pharmacy offers
         </label>
         <textarea
           value={services}
           onChange={(e) => setServices(e.target.value)}
           rows={8}
-          placeholder="Describe your pharmacy services..."
-          className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-          disabled={isSubmitting} // Disable input while submitting
+          placeholder="e.g. Home delivery, 24/7 service, doctor consultation, etc."
+          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          disabled={isSubmitting}
         />
       </div>
 
-      {/* Submit Button */}
       <button
         onClick={handleSave}
-        className={`w-full p-2 rounded-md transition ${isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600 text-white"
-          }`}
-        disabled={isSubmitting} // Disable button while submitting
+        className={`w-full py-2 font-semibold rounded-md transition ${
+          isSubmitting
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-blue-600 hover:bg-blue-700 text-white"
+        }`}
+        disabled={isSubmitting}
       >
         {isSubmitting ? "Saving..." : "Save / Update"}
       </button>

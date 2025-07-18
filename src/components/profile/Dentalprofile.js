@@ -19,9 +19,9 @@ function DentalProfile({ token, user }) {
 
     const data = await res.json();
     if (res.status == 200) {
-      if(data.data[0] !==null){
+      if (data.data[0] !== null) {
         setProfileData(data.data[0]);
-        
+
       }
 
 
@@ -37,8 +37,7 @@ function DentalProfile({ token, user }) {
     getProfileData();
   }, [token]);
 
-
-
+  
   const tabs = [
     { label: 'Basic', content: <DentalProfileBasic data={profileData} user={user} token={token}></DentalProfileBasic> },
     { label: 'Info', content: <DentalProfileInfo data={profileData?.genericServiceInfos} user={user} token={token}></DentalProfileInfo> },
@@ -49,6 +48,7 @@ function DentalProfile({ token, user }) {
 
   return (
     <div>
+      
       <TabBar tabs={tabs}></TabBar>
     </div>
   )

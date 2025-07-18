@@ -24,6 +24,7 @@ function InputField({ label, placeholder, type = "text", value, onChange, requir
 }
 
 function PharmacyProfileBasic({ data, isRegister, token, user }) {
+  console.log("🚀 ~ PharmacyProfileBasic ~ data:", data)
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [ownerImage, setOwnerImage] = useState(null);
@@ -159,8 +160,8 @@ function PharmacyProfileBasic({ data, isRegister, token, user }) {
       setOwnerNID(data.ownerNID || '');
 
 
-      setLatitude(data.lat || '');
-      setLongitude(data.lon || '');
+      setLatitude(+data.latitude || '');
+      setLongitude(+data.longitude || '');
       setIsOpen(data.isOpen || false);
       setAvailablityStatus(data.availablityStatus || '');
     }
@@ -210,7 +211,7 @@ function PharmacyProfileBasic({ data, isRegister, token, user }) {
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => handleImageChange(e, setCoverImage)} // handle cover image change
+          onChange={(e) => handleImageChange(e, setCoverImage)} 
           className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
         />
       </div>
@@ -291,8 +292,8 @@ function PharmacyProfileBasic({ data, isRegister, token, user }) {
         <span className="ml-2 text-sm text-gray-600">Open Pharmacy</span>
       </div>
 
-      <div className="flex justify-center">
-        <button onClick={handleData} className="bg-blue-500 text-white p-3 rounded-md shadow-md">Save</button>
+      <div className="flex justify-center w-full mt-4 md:mt-6 lg:mt-8">
+        <button onClick={handleData} className="bg-blue-500 text-white p-3 rounded-md shadow-md w-full">Save</button>
       </div>
     </div>
   );

@@ -6,7 +6,6 @@ import Image from 'next/image';
 const DiagnosticCenterCard = ({ diagnostic }) => {
     const defaultImageUrl = "/images/diagnostic.jpg";
     const imageUrl = diagnostic.profileImage !== null && diagnostic.profileImage !== "" ? `${image_base_endpoint}${diagnostic.profileImage}` : defaultImageUrl;
-
     return (
         <Link href={"/diagnostic/" + diagnostic.userId}>
             <div

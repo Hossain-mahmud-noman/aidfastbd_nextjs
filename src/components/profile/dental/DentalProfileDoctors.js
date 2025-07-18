@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
+import { toast } from "sonner";
+import Swal from "sweetalert2";
 
 function DentalProfileDoctors({ data, user, token }) {
-
-  const [doctors, setDoctors] = useState([]); // List of selected doctors
-  const [allDoctors, setAllDoctors] = useState([]); // All available doctors
-  const [showPopup, setShowPopup] = useState(false); // To toggle the doctor selection popup
-  const [searchTerm, setSearchTerm] = useState(""); // Search input state
-  const [loading, setLoading] = useState(false); // Loading state
+  const [doctors, setDoctors] = useState([]);
+  const [allDoctors, setAllDoctors] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Fetch doctor list from API
   const fetchDoctorList = async () => {
@@ -50,16 +51,30 @@ function DentalProfileDoctors({ data, user, token }) {
       if (response.ok) {
         setDoctors([...doctors, doctor]);
         setShowPopup(false);
+        toast.success("Doctor added successfully!");
       } else {
-        alert("Failed to add doctor!");
+        toast.error("Failed to add doctor.");
       }
     } catch (error) {
       console.error("Error saving doctor:", error);
+      toast.error("Something went wrong while adding doctor.");
     }
   };
 
-  // Remove doctor from the list
+  // Remove doctor from the list with confirmation
   const removeDoctor = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to remove this doctor?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, remove it!",
+    });
+
+    if (!result.isConfirmed) return;
+
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveUpdateGenericServiceDoctors",
@@ -78,11 +93,13 @@ function DentalProfileDoctors({ data, user, token }) {
       );
       if (response.ok) {
         setDoctors(doctors.filter((doctor) => doctor.doctorUserId !== id));
+        toast.success("Doctor removed successfully!");
       } else {
-        alert("Failed to remove doctor!");
+        toast.error("Failed to remove doctor.");
       }
     } catch (error) {
       console.error("Error removing doctor:", error);
+      toast.error("Something went wrong while removing doctor.");
     }
   };
 
@@ -109,25 +126,24 @@ function DentalProfileDoctors({ data, user, token }) {
         Add Doctor
       </button>
 
-      <div className="mt-4">
+      <div className="mt-4 space-y-4">
         {doctors.map((doctor) => (
           <div
             key={doctor.id}
             className="border p-4 rounded shadow flex items-center space-x-4"
           >
-            <div>
+            <div className="h-16 w-16 rounded-full overflow-hidden">
+              <Image
+                width={64}
+                height={64}
+                src={`${image_base_endpoint}${doctor.imageUrl}`}
+                alt={doctor.name}
+              />
+            </div>
+            <div className="flex-1">
               <h2 className="font-bold">{doctor.name}</h2>
-              <p className="text-sm text-gray-600">
-                <Image
-                  width={100}
-                  height={100}
-                  src={`${image_base_endpoint}${doctor.imageUrl}`}
-                  alt={doctor.name}
-                  className="h-12 w-12 rounded-full"
-                />
-              </p>
-              <p>{doctor.degree}</p>
-              <p className="text-sm text-gray-600">{doctor.location}</p>
+              <p className="text-sm text-gray-600">{doctor.degree}</p>
+              <p className="text-sm text-gray-500">{doctor.location}</p>
             </div>
             <button
               onClick={() => removeDoctor(doctor.doctorUserId)}
@@ -140,8 +156,8 @@ function DentalProfileDoctors({ data, user, token }) {
       </div>
 
       {showPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded shadow-lg w-96">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded shadow-lg w-96 max-h-[80vh] overflow-y-auto">
             <h2 className="text-lg font-bold mb-4">Select a Doctor</h2>
             <input
               type="text"
@@ -153,29 +169,27 @@ function DentalProfileDoctors({ data, user, token }) {
             {loading ? (
               <p>Loading doctors...</p>
             ) : (
-              <div
-                className="overflow-y-auto"
-                style={{ "maxblock-size": "300px" }} // Set max height for scroll
-              >
-                <ul>
+              <div className="overflow-y-auto max-h-[60vh]">
+                <ul className="space-y-2">
                   {allDoctors.map((doctor) => (
                     <li
                       key={doctor.id}
-                      className="p-2 hover:bg-gray-200 cursor-pointer"
+                      className="p-2 hover:bg-gray-100 cursor-pointer flex gap-3 items-center border rounded"
                       onClick={() => saveDoctor(doctor)}
                     >
-
-                      <p className="text-sm text-gray-600">
+                      <div className="h-12 w-12 rounded-full overflow-hidden">
                         <Image
-                          width={100}
-                          height={100}
+                          width={48}
+                          height={48}
                           src={`${image_base_endpoint}${doctor.imageUrl}`}
                           alt={doctor.name}
-                          className="h-12 w-12 rounded-full"
                         />
-                      </p>
-                      <h3 className="font-bold">{doctor.name}</h3>
-                      <p className="text-sm text-gray-600">{doctor.degree}</p>
+                      </div>
+                      <div>
+                        <h3 className="font-bold">{doctor.name}</h3>
+                        <p className="text-sm text-gray-600">{doctor.degree}</p>
+                        <p className="text-xs text-gray-400">{doctor.location}</p>
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -183,7 +197,7 @@ function DentalProfileDoctors({ data, user, token }) {
             )}
             <button
               onClick={() => setShowPopup(false)}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full"
             >
               Close
             </button>
