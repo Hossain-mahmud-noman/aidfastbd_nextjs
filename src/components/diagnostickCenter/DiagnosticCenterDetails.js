@@ -35,14 +35,14 @@ const DiagnosticCenterDetails = ({ data }) => {
         <meta property="og:title" content={`${data?.name}  | ${appname}`} />
         <meta property="og:description" content={`${data?.diagnosticCenterAdditionalInfo?.title ?? ""} ${data?.diagnosticCenterAdditionalInfo?.details ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/diagnostic/${data?.id}`} />
+        <meta property="og:url" content={`${frontend_url}/diagnostic/${data?.userId}`} />
       </Head>
       <>
         <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Diagnostic Detail' trailingComponents={
           <div className='flex'>
-            <ProfileQR id={data?.id} type={"Diagnostic"} />
-            <FavouriteToggle isFill={data?.isFavourite} userId={user?.id} id={data?.id} type={2} token={token} />
-            <ShareButton link={`${frontend_url}/diagnostic/${data?.id}`} />
+            <ProfileQR id={data?.userId} type={"Diagnostic"} />
+            <FavouriteToggle isFill={data?.isFavourite} userId={user?.userId} id={data?.userId} type={2} token={token} />
+            <ShareButton link={`${frontend_url}/diagnostic/${data?.userId}`} />
           </div>}
         />
         <div className="pt-16 aid-container">

@@ -5,10 +5,10 @@ import Image from 'next/image';
 
 const DiagnosticCenterCard = ({ diagnostic }) => {
     const defaultImageUrl = "/images/diagnostic.jpg";
-    const imageUrl = diagnostic.profileImageUrl !== null && diagnostic.profileImageUrl !== "" ? `${image_base_endpoint}${diagnostic.profileImageUrl}` : defaultImageUrl;
+    const imageUrl = diagnostic.profileImage !== null && diagnostic.profileImage !== "" ? `${image_base_endpoint}${diagnostic.profileImage}` : defaultImageUrl;
 
     return (
-        <Link href={"/diagnostic/" + diagnostic.id}>
+        <Link href={"/diagnostic/" + diagnostic.userId}>
             <div
                 className="flex flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
                 aria-label={`Diagnostic ${diagnostic.name} information card`}
@@ -32,7 +32,7 @@ const DiagnosticCenterCard = ({ diagnostic }) => {
                     <div className="flex items-center">
                         <FaStar className="text-yellow-500 mr-1" />
                         <span className="text-xs sm:text-sm md:text-base text-gray-600">
-                            {diagnostic.averageRating} ({diagnostic.totalRating} ratings)
+                            {diagnostic.rating} (ratings)
                         </span>
                     </div>
                 </div>
@@ -45,8 +45,8 @@ const DiagnosticCenterCard = ({ diagnostic }) => {
                     <button
                         className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center text-sm sm:text-base md:text-lg"
                     >
-                        <FaPhone className="mr-2 text-lg sm:text-xl" /> {/* Responsive icon size */}
-                        <span className="text-sm sm:text-base md:text-lg">Contact</span> {/* Responsive text size */}
+                        <FaPhone className="mr-2 text-lg sm:text-xl" /> 
+                        <span className="text-sm sm:text-base md:text-lg">Contact</span> 
                     </button>
                 </div>
             </div>

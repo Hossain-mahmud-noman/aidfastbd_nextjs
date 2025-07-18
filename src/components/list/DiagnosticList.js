@@ -22,10 +22,10 @@ const DiagnosticList = () => {
       const lat = localStorage.getItem('lat') || '';
       const lon = localStorage.getItem('lon') || '';
 
-      const res = await axios.get(`https://api.aidfastbd.com/api/GeneralWeb/GetAllDiagnosticCenterList?pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`);
+      const res = await axios.get(`https://api.aidfastbd.com/api/GeneralWeb/GetAllDiagnosticCenterCardInfo?pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`);
       const response = res.data;
       const newDiagnostics = response?.data || [];
-
+     
       setData((prev) => [...prev, ...newDiagnostics]);
 
       const totalRecords = response?.totalRecords || 0;
@@ -42,7 +42,7 @@ const DiagnosticList = () => {
     }
   };
 
-  // ✅ First load only
+
   useEffect(() => {
     if (!firstLoadRef.current) {
       fetchDiagnostics(1);
@@ -50,14 +50,14 @@ const DiagnosticList = () => {
     }
   }, []);
 
-  // ✅ Infinite scroll (fetch next page when scrolled)
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && hasMore && !loading) {
           const nextPage = page + 1;
           setPage(nextPage);
-          fetchDiagnostics(nextPage); // directly fetch the next page
+          fetchDiagnostics(nextPage); 
         }
       },
       { root: null, rootMargin: '0px', threshold: 1.0 }

@@ -9,7 +9,7 @@ import DiagnosticCenterDetails from "../../../components/diagnostickCenter/Diagn
 
 export async function generateMetadata({ params }) {
   const res = await fetch(
-    `${base_endpoint}/GeneralWeb/GetAllDiagnosticCenterList?diagnosticCenterId=${params.slug}`,
+    `${base_endpoint}/GeneralWeb/GetAllDiagnosticCenterList?userId=${params.slug}`,
     { cache: "no-store" }
   );
   const json = await res.json();
@@ -27,14 +27,14 @@ export async function generateMetadata({ params }) {
       title: `${data?.name}  | ${appname}`,
       description: `${data?.diagnosticCenterAdditionalInfo?.title ?? ""} ${data?.diagnosticCenterAdditionalInfo?.details ?? ""}`,
       images: [profile],
-      url: `${frontend_url}/diagnostic/${data.id}`,
+      url: `${frontend_url}/diagnostic/${data.userId}`,
     },
   };
 }
 
 export default async function DoctorPage({ params }) {
   const res = await fetch(
-    `${base_endpoint}/GeneralWeb/GetAllDiagnosticCenterList?diagnosticCenterId=${params.slug}`,
+    `${base_endpoint}/GeneralWeb/GetAllDiagnosticCenterList?userId=${params.slug}`,
     { cache: "no-store" }
   );
   const json = await res.json();
