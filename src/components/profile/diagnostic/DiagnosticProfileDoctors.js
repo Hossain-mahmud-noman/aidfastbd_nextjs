@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
+import Swal from "sweetalert2";
+import { toast } from "sonner";
 
 function DiagnosticProfileDoctors({ data, user, token }) {
-  const [doctors, setDoctors] = useState([]); // List of selected doctors
-  const [allDoctors, setAllDoctors] = useState([]); // All available doctors
-  const [showPopup, setShowPopup] = useState(false); // To toggle the doctor selection popup
-  const [searchTerm, setSearchTerm] = useState(""); // Search input state
-  const [loading, setLoading] = useState(false); // Loading state
+  const [doctors, setDoctors] = useState([]);
+  const [allDoctors, setAllDoctors] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Fetch doctor list from API
   const fetchDoctorList = async () => {
     setLoading(true);
     try {
@@ -19,16 +20,15 @@ function DiagnosticProfileDoctors({ data, user, token }) {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      const data = await response.json();
-      setAllDoctors(data || []);
+      const result = await response.json();
+      setAllDoctors(result || []);
     } catch (error) {
-      console.error("Error fetching doctors:", error);
+      toast.error("Error fetching doctors.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Add doctor to the list
   const saveDoctor = async (doctor) => {
     try {
       const response = await fetch(
@@ -47,18 +47,30 @@ function DiagnosticProfileDoctors({ data, user, token }) {
         }
       );
       if (response.ok) {
-        setDoctors([...doctors, doctor]);
+        setDoctors((prev) => [...prev, doctor]);
+        toast.success("Doctor added successfully!");
         setShowPopup(false);
       } else {
-        alert("Failed to add doctor!");
+        toast.error("Failed to add doctor.");
       }
     } catch (error) {
-      console.error("Error saving doctor:", error);
+      toast.error("Error saving doctor.");
     }
   };
 
-  // Remove doctor from the list
   const removeDoctor = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "This doctor will be removed from your profile.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, remove",
+    });
+
+    if (!confirm.isConfirmed) return;
+
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveUpdateDiagnosticCenterDoctors",
@@ -76,12 +88,15 @@ function DiagnosticProfileDoctors({ data, user, token }) {
         }
       );
       if (response.ok) {
-        setDoctors(doctors.filter((doctor) => doctor.doctorUserId !== id));
+        setDoctors((prev) =>
+          prev.filter((doctor) => doctor.doctorUserId !== id)
+        );
+        toast.success("Doctor removed successfully!");
       } else {
-        alert("Failed to remove doctor!");
+        toast.error("Failed to remove doctor.");
       }
     } catch (error) {
-      console.error("Error removing doctor:", error);
+      toast.error("Error removing doctor.");
     }
   };
 
@@ -108,29 +123,27 @@ function DiagnosticProfileDoctors({ data, user, token }) {
         Add Doctor
       </button>
 
-      <div className="mt-4">
+      <div className="mt-4 space-y-4">
         {doctors.map((doctor) => (
           <div
             key={doctor.id}
             className="border p-4 rounded shadow flex items-center space-x-4"
           >
-            <div>
+            <Image
+              width={60}
+              height={60}
+              src={`${image_base_endpoint}${doctor.imageUrl}`}
+              alt={doctor.name}
+              className="rounded-full object-cover"
+            />
+            <div className="flex-1">
               <h2 className="font-bold">{doctor.name}</h2>
-              <p className="text-sm text-gray-600">
-                <Image
-                  width={100}
-                  height={100}
-                  src={`${image_base_endpoint}${doctor.imageUrl}`}
-                  alt={doctor.name}
-                  className="h-12 w-12 rounded-full"
-                />
-              </p>
-              <p>{doctor.degree}</p>
-              <p className="text-sm text-gray-600">{doctor.location}</p>
+              <p className="text-sm text-gray-600">{doctor.degree}</p>
+              <p className="text-sm text-gray-500">{doctor.location}</p>
             </div>
             <button
               onClick={() => removeDoctor(doctor.doctorUserId)}
-              className="text-red-500 hover:text-red-600"
+              className="text-red-600 hover:text-red-800 font-medium"
             >
               Remove
             </button>
@@ -138,9 +151,10 @@ function DiagnosticProfileDoctors({ data, user, token }) {
         ))}
       </div>
 
+      {/* Doctor Selection Modal */}
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-96">
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-md">
             <h2 className="text-lg font-bold mb-4">Select a Doctor</h2>
             <input
               type="text"
@@ -150,39 +164,33 @@ function DiagnosticProfileDoctors({ data, user, token }) {
               className="w-full border px-3 py-2 rounded mb-4"
             />
             {loading ? (
-              <p>Loading doctors...</p>
+              <p className="text-center">Loading doctors...</p>
             ) : (
-              <div
-                className="overflow-y-auto"
-                style={{ "maxblock-size": "300px" }} // Set max height for scroll
-              >
-                <ul>
-                  {allDoctors.map((doctor) => (
-                    <li
-                      key={doctor.id}
-                      className="p-2 hover:bg-gray-200 cursor-pointer"
-                      onClick={() => saveDoctor(doctor)}
-                    >
-
-                      <p className="text-sm text-gray-600">
-                        <Image
-                          width={100}
-                          height={100}
-                          src={`${image_base_endpoint}${doctor.imageUrl}`}
-                          alt={doctor.name}
-                          className="h-12 w-12 rounded-full"
-                        />
-                      </p>
-                      <h3 className="font-bold">{doctor.name}</h3>
+              <ul className="max-h-72 overflow-y-auto divide-y">
+                {allDoctors.map((doctor) => (
+                  <li
+                    key={doctor.id}
+                    className="p-2 flex items-center space-x-3 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => saveDoctor(doctor)}
+                  >
+                    <Image
+                      width={50}
+                      height={50}
+                      src={`${image_base_endpoint}${doctor.imageUrl}`}
+                      alt={doctor.name}
+                      className="rounded-full"
+                    />
+                    <div>
+                      <h3 className="font-semibold">{doctor.name}</h3>
                       <p className="text-sm text-gray-600">{doctor.degree}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             )}
             <button
               onClick={() => setShowPopup(false)}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full"
             >
               Close
             </button>

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
+import Swal from "sweetalert2";
+import { toast } from "sonner";
 
 function DiagnosticProfileBlood({ data, user, token }) {
-  const [bloods, setBloods] = useState([]); // List of selected bloods
-  const [allBloods, setAllBloods] = useState([]); // All available blood banks
-  const [showPopup, setShowPopup] = useState(false); // To toggle the blood selection popup
-  const [searchTerm, setSearchTerm] = useState(""); // Search input state
-  const [loading, setLoading] = useState(false); // Loading state
+  const [bloods, setBloods] = useState(data || []);
+  const [allBloods, setAllBloods] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Fetch blood bank list from API
   const fetchBloodList = async () => {
     setLoading(true);
     try {
@@ -24,13 +25,12 @@ function DiagnosticProfileBlood({ data, user, token }) {
       const data = await response.json();
       setAllBloods(data || []);
     } catch (error) {
-      console.error("Error fetching blood banks:", error);
+      toast.error("Error fetching blood banks.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Add a blood bank
   const addBlood = async (blood) => {
     try {
       const response = await fetch(
@@ -49,18 +49,34 @@ function DiagnosticProfileBlood({ data, user, token }) {
         }
       );
       if (response.ok) {
-        setBloods([...bloods, blood]);
+        toast.success("Blood bank added successfully.");
+        const updated = {
+          bloodBankUserId: blood.value,
+          imageUrl: blood.imageUrl,
+          name: blood.text,
+        };
+        setBloods((prev) => [...prev, updated]);
         setShowPopup(false);
       } else {
-        alert("Failed to add blood bank!");
+        toast.error("Failed to add blood bank.");
       }
     } catch (error) {
-      console.error("Error adding blood bank:", error);
+      toast.error("Error adding blood bank.");
     }
   };
 
-  // Remove a blood bank
   const removeBlood = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "This action will remove the blood bank.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, remove it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (!confirm.isConfirmed) return;
+
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveUpdateDiagnosticCenterBloodBank",
@@ -78,63 +94,56 @@ function DiagnosticProfileBlood({ data, user, token }) {
         }
       );
       if (response.ok) {
-        setBloods(bloods.filter((blood) => blood.value !== id));
+        toast.success("Blood bank removed successfully.");
+        setBloods((prev) => prev.filter((blood) => blood.bloodBankUserId !== id));
       } else {
-        alert("Failed to remove blood bank!");
+        toast.error("Failed to remove blood bank.");
       }
     } catch (error) {
-      console.error("Error removing blood bank:", error);
+      toast.error("Error removing blood bank.");
     }
   };
 
-  // Fetch selected blood banks when `data` updates
   useEffect(() => {
-    if (data) {
-      setBloods(data);
-    }
+    setBloods(data || []);
   }, [data]);
 
-  // Fetch blood banks when the component mounts or the search term changes
   useEffect(() => {
     fetchBloodList();
   }, [searchTerm]);
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="p-4 max-w-3xl mx-auto">
       <h1 className="text-lg font-bold mb-4">
-        Add Blood Bank club profile of your diagnostic center or hospital.
+        Add Blood Bank profile of your Diagnostic/Hospital (if any)
       </h1>
 
-      {/* Button to open blood bank selection popup */}
       <button
         onClick={() => setShowPopup(true)}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
-        Add Blood Bank Club
+        Add Blood Bank
       </button>
 
-      {/* Selected blood banks */}
       <div className="mt-4 space-y-4">
         {bloods.map((blood) => (
           <div
-            key={blood.value}
-            className="border p-4 rounded shadow flex justify-between items-center"
+            key={blood.bloodBankUserId}
+            className="border p-4 rounded shadow flex items-center space-x-4"
           >
-            <div>
+            <Image
+              width={60}
+              height={60}
+              src={`${image_base_endpoint}${blood.imageUrl}`}
+              alt={blood.name}
+              className="rounded-full object-cover"
+            />
+            <div className="flex-1">
               <h2 className="font-bold">{blood.name}</h2>
-              <p className="text-sm text-gray-600">
-                <Image
-                  width={100}
-                  height={100}
-                  src={`${image_base_endpoint}${blood.imageUrl}`}
-                  alt={blood.name}
-                  className="h-12 w-12 rounded-full"
-                />
-              </p>
             </div>
             <button
               onClick={() => removeBlood(blood.bloodBankUserId)}
-              className="text-red-500 hover:text-red-600"
+              className="text-red-600 hover:text-red-800 font-medium"
             >
               Remove
             </button>
@@ -142,10 +151,9 @@ function DiagnosticProfileBlood({ data, user, token }) {
         ))}
       </div>
 
-      {/* Popup Modal */}
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-96 max-h-[80vh] overflow-y-auto">
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-md">
             <h2 className="text-lg font-bold mb-4">Select a Blood Bank</h2>
             <input
               type="text"
@@ -155,32 +163,32 @@ function DiagnosticProfileBlood({ data, user, token }) {
               className="w-full border px-3 py-2 rounded mb-4"
             />
             {loading ? (
-              <p>Loading blood banks...</p>
+              <p className="text-center">Loading blood banks...</p>
             ) : (
-              <ul className="space-y-2">
+              <ul className="max-h-72 overflow-y-auto divide-y">
                 {allBloods.map((blood) => (
                   <li
                     key={blood.value}
-                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                    className="p-2 flex items-center space-x-3 hover:bg-gray-100 cursor-pointer"
                     onClick={() => addBlood(blood)}
                   >
-                    <h3 className="font-bold">{blood.text}</h3>
-                    <p className="text-sm text-gray-600">
-                      <Image
-                        width={100}
-                        height={100}
-                        src={`${image_base_endpoint}${blood.imageUrl}`}
-                        alt={blood.text}
-                        className="h-8 w-8 rounded-full"
-                      />
-                    </p>
+                    <Image
+                      width={50}
+                      height={50}
+                      src={`${image_base_endpoint}${blood.imageUrl}`}
+                      alt={blood.text}
+                      className="rounded-full"
+                    />
+                    <div>
+                      <h3 className="font-semibold">{blood.text}</h3>
+                    </div>
                   </li>
                 ))}
               </ul>
             )}
             <button
               onClick={() => setShowPopup(false)}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full"
             >
               Close
             </button>

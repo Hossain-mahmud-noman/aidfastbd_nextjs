@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
+import Swal from "sweetalert2";
+import { toast } from "sonner";
 
 function DiagnosticProfileAmbulance({ data, user, token }) {
-  const [ambulances, setAmbulances] = useState([]); // Selected ambulances
-  const [allAmbulances, setAllAmbulances] = useState([]); // Available ambulances
-  const [showPopup, setShowPopup] = useState(false); // Popup state
-  const [searchTerm, setSearchTerm] = useState(""); // Search input state
-  const [loading, setLoading] = useState(false); // Loading state
+  const [ambulances, setAmbulances] = useState(data || []);
+  const [allAmbulances, setAllAmbulances] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
 
-
-  const defaultImage=""
-
-  // Fetch ambulance list from API
   const fetchAmbulanceList = async () => {
     setLoading(true);
     try {
@@ -27,13 +25,12 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
       const data = await response.json();
       setAllAmbulances(data || []);
     } catch (error) {
-      console.error("Error fetching ambulances:", error);
+      toast.error("Error loading ambulances.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Add an ambulance
   const addAmbulance = async (ambulance) => {
     try {
       const response = await fetch(
@@ -51,19 +48,37 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
           }),
         }
       );
+
       if (response.ok) {
-        setAmbulances([...ambulances, ambulance]);
+        toast.success("Ambulance added successfully.");
+        const updated = {
+          ambulanceUserId: ambulance.value,
+          imageUrl: ambulance.imageUrl,
+          name: ambulance.text,
+          rating: ambulance.rating ?? "0.0",
+        };
+        setAmbulances((prev) => [...prev, updated]);
         setShowPopup(false);
       } else {
-        alert("Failed to add ambulance!");
+        toast.error("Failed to add ambulance.");
       }
     } catch (error) {
-      console.error("Error adding ambulance:", error);
+      toast.error("Error adding ambulance.");
     }
   };
 
-  // Remove an ambulance
   const removeAmbulance = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "This will remove the ambulance from your profile.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, remove it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (!confirm.isConfirmed) return;
+
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveUpdateDiagnosticCenterAmbulance",
@@ -80,24 +95,24 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
           }),
         }
       );
+
       if (response.ok) {
-        setAmbulances(ambulances.filter((ambulance) => ambulance.value !== id));
+        toast.success("Ambulance removed successfully.");
+        setAmbulances((prev) =>
+          prev.filter((a) => a.ambulanceUserId !== id)
+        );
       } else {
-        alert("Failed to remove ambulance!");
+        toast.error("Failed to remove ambulance.");
       }
     } catch (error) {
-      console.error("Error removing ambulance:", error);
+      toast.error("Error removing ambulance.");
     }
   };
 
-  // Fetch selected ambulances when `data` updates
   useEffect(() => {
-    if (data) {
-      setAmbulances(data);
-    }
+    setAmbulances(data || []);
   }, [data]);
 
-  // Fetch ambulances when the component mounts or search term changes
   useEffect(() => {
     fetchAmbulanceList();
   }, [searchTerm]);
@@ -105,10 +120,9 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
   return (
     <div className="p-4 max-w-3xl mx-auto">
       <h1 className="text-lg font-bold mb-4">
-        Add Ambulance profile of your Diagnostic Center or Hospital.
+        Add Ambulance profile of your Diagnostic/Hospital (if any)
       </h1>
 
-      {/* Button to open ambulance selection popup */}
       <button
         onClick={() => setShowPopup(true)}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -116,32 +130,28 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
         Add Ambulance
       </button>
 
-      {/* Selected ambulances */}
       <div className="mt-4 space-y-4">
         {ambulances.map((ambulance) => (
           <div
-            key={ambulance.value}
-            className="border p-4 rounded shadow flex justify-between items-center"
+            key={ambulance.ambulanceUserId}
+            className="border p-4 rounded shadow flex items-center space-x-4"
           >
-            <div>
+            <Image
+              width={60}
+              height={60}
+              src={`${image_base_endpoint}${ambulance.imageUrl}`}
+              alt={ambulance.name}
+              className="rounded-full object-cover w-14 h-14"
+            />
+            <div className="flex-1">
               <h2 className="font-bold">{ambulance.name}</h2>
-
               <p className="text-sm text-gray-600">
-                <Image
-                  width={48}
-                  height={48}
-                  src={`${image_base_endpoint}${ambulance.imageUrl}`}
-                  alt={ambulance.name}
-                  className="h-12 w-12 rounded-full"
-                />
-              </p>
-              <p className="text-sm text-gray-600">
-                ⭐ {ambulance.rating !== null ? ambulance.rating : "0.0"}
+                ⭐ {ambulance.rating ?? "0.0"}
               </p>
             </div>
             <button
-              onClick={() => removeAmbulance(ambulance.value)}
-              className="text-red-500 hover:text-red-600"
+              onClick={() => removeAmbulance(ambulance.ambulanceUserId)}
+              className="text-red-600 hover:text-red-800 font-medium"
             >
               Remove
             </button>
@@ -149,10 +159,9 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
         ))}
       </div>
 
-      {/* Popup Modal */}
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-96 max-h-[80vh] overflow-y-auto">
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-md max-h-[80vh] overflow-y-auto">
             <h2 className="text-lg font-bold mb-4">Select an Ambulance</h2>
             <input
               type="text"
@@ -162,32 +171,32 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
               className="w-full border px-3 py-2 rounded mb-4"
             />
             {loading ? (
-              <p>Loading ambulances...</p>
+              <p className="text-center">Loading ambulances...</p>
             ) : (
-              <ul className="space-y-2">
+              <ul className="max-h-72 overflow-y-auto divide-y">
                 {allAmbulances.map((ambulance) => (
                   <li
                     key={ambulance.value}
-                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                    className="p-2 flex items-center space-x-3 hover:bg-gray-100 cursor-pointer"
                     onClick={() => addAmbulance(ambulance)}
                   >
-                    <h3 className="font-bold">{ambulance.text}</h3>
-                    <p className="text-sm text-gray-600">
-                      <Image
-                        width={48}
-                        height={48}
-                        src={`${image_base_endpoint}${ambulance.imageUrl}`}
-                        alt={ambulance.text}
-                        className="h-12 w-12 rounded-full"
-                      />
-                    </p>
+                    <Image
+                      width={50}
+                      height={50}
+                      src={`${image_base_endpoint}${ambulance.imageUrl}`}
+                      alt={ambulance.text}
+                      className="rounded-full w-12 h-12"
+                    />
+                    <div>
+                      <h3 className="font-semibold">{ambulance.text}</h3>
+                    </div>
                   </li>
                 ))}
               </ul>
             )}
             <button
               onClick={() => setShowPopup(false)}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full"
             >
               Close
             </button>

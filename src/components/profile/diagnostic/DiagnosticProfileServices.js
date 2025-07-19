@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ServiceForm from "../../../components/forms/ServiceForm";
 import Image from "next/image";
+import { toast } from "sonner";
+import Swal from "sweetalert2";
 
-function DiagnosticProfileServices({ data, token, user }) {
-
-
+function DiagnosticProfileServices({ data = [], token, user }) {
   const [services, setServices] = useState(data);
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,12 +33,13 @@ function DiagnosticProfileServices({ data, token, user }) {
   };
 
   const openDialog = (section, index = null) => {
-
-    //
     setDialogState({
       show: true,
       section,
-      formData: index !== null ? { ...datax[section][index] } : fields[section].reduce((acc, field) => ({ ...acc, [field]: "" }), {}),
+      formData:
+        index !== null
+          ? { ...datax[section][index] }
+          : fields[section].reduce((acc, field) => ({ ...acc, [field]: "" }), {}),
       editIndex: index,
     });
   };
@@ -55,52 +56,52 @@ function DiagnosticProfileServices({ data, token, user }) {
     }));
   };
 
-
   const handleSubmit = () => {
     const { section, formData, editIndex } = dialogState;
 
-    // Check if all required fields are filled (for new entries)
     if (editIndex == null && fields[section].some((field) => !formData[field]?.trim())) {
       alert("All fields are required!");
       return;
     }
 
-    // Prepare the payload for submission
     let payload = {
       ...formData,
       isDelete: false,
       diagnosticCenterUserId: user.id,
     };
 
+    switch (section) {
+      case "screeningPackage":
+        payload.serviceType = "Diabetics Screening Package";
+        break;
+      case "otList":
+        payload.serviceType = "OT List";
+        break;
+      case "investigation":
+        payload.serviceType = "Investigation";
+        break;
+      case "bedCategory":
+        payload.serviceType = "BED Category";
+        break;
+      case "healthPackage":
+        payload.serviceType = "Health Package";
+        break;
+      default:
+        break;
+    }
 
-
-    if (section === "screeningPackage") {
-      payload['serviceType'] = "Diabetics Screening Package";
-    } else if (section === "otList") {
-      payload['serviceType'] = "OT List"; // Append item to otList
-    }
-    else if (section === "investigation") {
-      payload['serviceType'] = "Investigation"; // Append item to otList
-    }
-    else if (section === "bedCategory") {
-      payload['serviceType'] = "BED Category"; // Append item to otList
-    }
-    else if (section === "healthPackage") {
-      payload['serviceType'] = "Health Package"; // Append item to otList
-    }
-    // If editing, include the id in the payload
     if (editIndex !== null) {
-      payload = { ...payload, id: datax[section][editIndex].id }; // Add the id to the payload
+      payload.id = datax[section][editIndex].id;
     }
 
-    // Send the request based on whether it's a PUT (edit) or POST (new entry)
-    const method = editIndex !== null ? "PUT" : "POST"; // Use PUT for editing and POST for adding
-    const url = editIndex !== null
-      ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateDiagnosticCenterServices"
-      : "https://api.aidfastbd.com/api/GeneralInformation/SaveDiagnosticCenterServices";
+    const method = editIndex !== null ? "PUT" : "POST";
+    const url =
+      editIndex !== null
+        ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateDiagnosticCenterServices"
+        : "https://api.aidfastbd.com/api/GeneralInformation/SaveDiagnosticCenterServices";
 
     fetch(url, {
-      method: method,
+      method,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -109,28 +110,24 @@ function DiagnosticProfileServices({ data, token, user }) {
     })
       .then((response) => response.json())
       .then((responseData) => {
-        // After a successful request, update the local state
         setDatax((prevData) => {
           const updatedSection = [...prevData[section]];
-
           if (editIndex !== null) {
-            updatedSection[editIndex] = formData; // Update the existing item at editIndex
+            updatedSection[editIndex] = formData;
           } else {
-            formData['id'] = responseData.id;
-            updatedSection.push(formData); // Add the new entry
+            formData.id = responseData.id;
+            updatedSection.push(formData);
           }
-
           return { ...prevData, [section]: updatedSection };
         });
-        closeDialog(); // Close the dialog after a successful submission
-
+        toast.success(`${editIndex !== null ? "Updated" : "Added"} successfully.`);
+        closeDialog();
       })
       .catch((error) => {
-        console.error("Error occurred during the fetch:", error);
+        toast.error("Error occurred while saving service.");
+        console.error("Error:", error);
       });
   };
-
-
 
   const handleAddService = () => {
     setSelectedService(null);
@@ -156,7 +153,9 @@ function DiagnosticProfileServices({ data, token, user }) {
 
     try {
       const response = await fetch(
-        isUpdating ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateDiagnosticCenterServices" : "https://api.aidfastbd.com/api/GeneralInformation/SaveDiagnosticCenterServices",
+        isUpdating
+          ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateDiagnosticCenterServices"
+          : "https://api.aidfastbd.com/api/GeneralInformation/SaveDiagnosticCenterServices",
         {
           method: isUpdating ? "PUT" : "POST",
           headers: {
@@ -171,119 +170,145 @@ function DiagnosticProfileServices({ data, token, user }) {
 
       setServices((prev) =>
         isUpdating
-          ? prev.map((s) => {
-            if (s.id === payload.id) {
-              return { ...s, ...payload };
-            } else {
-              return s; 
-            }
-          })
-          : [...prev, { ...payload, id: responseData.id }] 
+          ? prev.map((s) => (s.id === payload.id ? { ...s, ...payload } : s))
+          : [...prev, { ...payload, id: responseData.id }]
       );
 
+      toast.success(`Service ${isUpdating ? "updated" : "added"} successfully.`);
     } catch (error) {
-      alert(`Error: ${error.message}`);
+      toast.error(`Error: ${error.message}`);
     } finally {
       setIsModalOpen(false);
     }
   };
 
-
   const handleDelete = (section, data) => {
-    const payload = { ...data, isDelete: true };
-    fetch("https://api.aidfastbd.com/api/GeneralInformation/UpdateDiagnosticCenterServices", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((response) => response.json()) 
-      .then((responseData) => {
-        setDatax((prevData) => ({
-          ...prevData,
-          [section]: prevData[section].filter((item) => item.id !== data.id), 
-        }));
-
-      })
-      .catch((error) => {
-        console.error("Error occurred during the fetch:", error);
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you really want to delete "${data.serviceName}"? This action cannot be undone.`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const payload = { ...data, isDelete: true };
+        fetch("https://api.aidfastbd.com/api/GeneralInformation/UpdateDiagnosticCenterServices", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        })
+          .then((response) => response.json())
+          .then(() => {
+            setDatax((prevData) => ({
+              ...prevData,
+              [section]: prevData[section].filter((item) => item.id !== data.id),
+            }));
+            toast.success("Deleted successfully.");
+          })
+          .catch((error) => {
+            toast.error("Error occurred while deleting service.");
+            console.error("Error:", error);
+          });
+      }
+    });
   };
 
-
   useEffect(() => {
-    if (data) {
-
-      let screeningPackage = [];
-      let otList = [];
-      let investigation = [];
-      let healthPackage = [];
-      let bedCategory = [];
-
+    if (data?.length) {
+      const grouped = {
+        screeningPackage: [],
+        otList: [],
+        investigation: [],
+        healthPackage: [],
+        bedCategory: [],
+      };
       data.forEach((item) => {
-        if (item.serviceType === "Diabetics Screening Package") {
-          screeningPackage = [...screeningPackage, item];
-        } else if (item.serviceType === "OT List") {
-          otList = [...otList, item]; 
-        }
-        else if (item.serviceType === "Investigation") {
-          investigation = [...investigation, item]; 
-        }
-        else if (item.serviceType === "BED Category") {
-          bedCategory = [...bedCategory, item]; 
-        }
-        else if (item.serviceType === "Health Package") {
-          healthPackage = [...healthPackage, item]; 
+        switch (item.serviceType) {
+          case "Diabetics Screening Package":
+            grouped.screeningPackage.push(item);
+            break;
+          case "OT List":
+            grouped.otList.push(item);
+            break;
+          case "Investigation":
+            grouped.investigation.push(item);
+            break;
+          case "BED Category":
+            grouped.bedCategory.push(item);
+            break;
+          case "Health Package":
+            grouped.healthPackage.push(item);
+            break;
+          default:
+            break;
         }
       });
-
-      setDatax((prevDatax) => ({
-        ...prevDatax,
-        screeningPackage,
-        otList,
-        investigation,
-        healthPackage,
-        bedCategory
-      }));
+      setDatax((prev) => ({ ...prev, ...grouped }));
     }
   }, [data]);
 
   const renderTable = (section) => (
-    <div key={section}>
+    <div key={section} className="w-full">
       <h2 className="text-lg font-bold mt-4 mb-2">
         {section
-          .replace(/([A-Z])/g, " $1") // Insert space before capital letters
-          .replace(/^./, str => str.toUpperCase()) // Capitalize the first letter of the entire string
-          .replace(/\b\w/g, c => c.toUpperCase()) // Capitalize the first letter of each word
+          .replace(/([A-Z])/g, " $1")
+          .replace(/^./, (str) => str.toUpperCase())
+          .replace(/\b\w/g, (c) => c.toUpperCase())
           .trim()}
       </h2>
-      <table className="w-full border-collapse border border-gray-300 mb-4">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 px-2 py-1">#</th>
-            {fields[section].map((field) => (
-              <th key={field} className="border border-gray-300 px-2 py-1">{field}</th>
-            ))}
-            <th className="border border-gray-300 px-2 py-1">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {datax[section]?.map((item, index) => (
-            <tr key={index}>
-              <td className="border border-gray-300 px-2 py-1">{index + 1}</td>
+
+      {/* Responsive wrapper */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse border border-gray-300 mb-4">
+          <thead>
+            <tr>
+              <th className="border border-gray-300 px-2 py-1 whitespace-nowrap">#</th>
               {fields[section].map((field) => (
-                <td key={field} className="border border-gray-300 px-2 py-1">{item[field]}</td>
+                <th
+                  key={field}
+                  className="border border-gray-300 px-2 py-1 whitespace-nowrap"
+                >
+                  {field}
+                </th>
               ))}
-              <td className="border border-gray-300 px-2 py-1">
-                <button className="text-blue-500 mr-2" onClick={() => openDialog(section, index)}>Edit</button>
-                <button className="text-red-500" onClick={() => handleDelete(section, item)}>Delete</button>
-              </td>
+              <th className="border border-gray-300 px-2 py-1 whitespace-nowrap">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {(datax[section] || []).map((item, index) => (
+              <tr key={item.id ?? index}>
+                <td className="border border-gray-300 px-2 py-1 whitespace-nowrap">{index + 1}</td>
+                {fields[section].map((field) => (
+                  <td key={field} className="border border-gray-300 px-2 py-1 whitespace-nowrap">
+                    {item[field]}
+                  </td>
+                ))}
+                <td className="border border-gray-300 px-2 py-1 whitespace-nowrap flex items-center justify-between">
+                  <button
+                    className="text-blue-500 mr-2"
+                    onClick={() => openDialog(section, index)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="text-red-500"
+                    onClick={() => handleDelete(section, item)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       <button
         className="bg-green-500 text-white px-4 py-2 rounded"
         onClick={() => openDialog(section)}
@@ -298,14 +323,17 @@ function DiagnosticProfileServices({ data, token, user }) {
       {isModalOpen ? (
         <ServiceForm
           isDental={false}
-          initialData={selectedService == null ? null : {
-            title: selectedService?.serviceName || "",
-            details: selectedService?.price || "",
-            imgList: selectedService?.remarks
-              ? selectedService.remarks.split(",").map(i => i.trim())
-              : []
-          }}
-
+          initialData={
+            selectedService == null
+              ? null
+              : {
+                  title: selectedService?.serviceName || "",
+                  details: selectedService?.price || "",
+                  imgList: selectedService?.remarks
+                    ? selectedService.remarks.split(",").map((i) => i.trim())
+                    : [],
+                }
+          }
           onSubmit={handleFormSubmit}
           token={token}
           discard={() => setIsModalOpen(false)}
@@ -313,15 +341,28 @@ function DiagnosticProfileServices({ data, token, user }) {
       ) : (
         <>
           {services
-            ?.filter(service => service.serviceType === "heading")
-            .map(service => (
-              <div key={service.id} className="relative bg-purple-100 p-4 rounded-lg shadow-md mb-3">
+            ?.filter((service) => service.serviceType === "heading")
+            .map((service) => (
+              <div
+                key={service.id}
+                className="relative bg-purple-100 p-4 rounded-lg shadow-md mb-3"
+              >
                 <h3 className="text-lg font-bold">{service.serviceName}</h3>
                 <p className="text-gray-600">{service.price}</p>
                 <div className="flex mt-2">
-                  {service.remarks.split(",").map(i => i.trim()).map((img, index) =>
-                    <Image width={100} height={100} key={index} src={img} alt="Service" className="w-10 h-10 mr-1 rounded" />
-                  )}
+                  {service.remarks
+                    ?.split(",")
+                    .map((i) => i.trim())
+                    .map((img, index) => (
+                      <Image
+                        width={100}
+                        height={100}
+                        key={index}
+                        src={img}
+                        alt="Service"
+                        className="w-10 h-10 mr-1 rounded"
+                      />
+                    ))}
                 </div>
                 <button
                   onClick={() => handleEditService(service)}
@@ -333,7 +374,7 @@ function DiagnosticProfileServices({ data, token, user }) {
             ))}
           <button
             onClick={handleAddService}
-            className="fixed bottom-5 left-5 bg-purple-500 text-white px-4 py-2 rounded-full"
+            className="bg-purple-500 text-white px-4 py-2 rounded-full"
           >
             New service add (+)
           </button>
@@ -349,11 +390,14 @@ function DiagnosticProfileServices({ data, token, user }) {
         >
           <div className="bg-white p-6 rounded shadow-lg w-96">
             <h2 className="text-lg font-bold mb-4">
-              {dialogState.editIndex !== null ? "Edit" : "Add"} {dialogState.section.replace(/([A-Z])/g, " $1")}
+              {dialogState.editIndex !== null ? "Edit" : "Add"}{" "}
+              {dialogState.section.replace(/([A-Z])/g, " $1")}
             </h2>
             {fields[dialogState.section].map((field) => (
               <div key={field} className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">{field}</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {field}
+                </label>
                 <input
                   type="text"
                   name={field}

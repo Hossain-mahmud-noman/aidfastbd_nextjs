@@ -21,19 +21,16 @@ function DiagnosticProfile({ token, user }) {
     const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllDiagnosticCenterList?userid=${user.id}`, { headers: headerx });
 
     const data = await res.json();
-    console.log("🚀 ~ getProfileData ~ data:", data)
     if (res.status == 200) {
       if (data.data[0] !== null) {
         setProfileData(data.data[0]);
       }
-
 
     } else if (res.status === 401) {
       window.location.href = "/login";
     }
 
   }
-
 
   useEffect(() => {
     getProfileData();

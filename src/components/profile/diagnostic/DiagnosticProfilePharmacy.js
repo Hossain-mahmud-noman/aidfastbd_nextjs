@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
+import Swal from "sweetalert2";
+import { toast } from "sonner";
 
 function DiagnosticProfilePharmacy({ data, user, token }) {
-  const [pharmacys, setPharmacys] = useState([]); // List of selected pharmacies
-  const [allPharmacys, setAllPharmacys] = useState([]); // All available pharmacies
-  const [showPopup, setShowPopup] = useState(false); // To toggle the pharmacy selection popup
-  const [searchTerm, setSearchTerm] = useState(""); // Search input state
-  const [loading, setLoading] = useState(false); // Loading state
+  const [pharmacys, setPharmacys] = useState(data || []);
+  const [allPharmacys, setAllPharmacys] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Fetch pharmacy list from API
   const fetchPharmacyList = async () => {
     setLoading(true);
     try {
@@ -24,13 +25,12 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
       const data = await response.json();
       setAllPharmacys(data || []);
     } catch (error) {
-      console.error("Error fetching pharmacies:", error);
+      toast.error("Error loading associated pharmacies.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Add a pharmacy
   const addPharmacy = async (pharmacy) => {
     try {
       const response = await fetch(
@@ -49,18 +49,34 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
         }
       );
       if (response.ok) {
-        setPharmacys([...pharmacys, pharmacy]);
+        toast.success("Pharmacy added successfully.");
+        const updated = {
+          pharmacyUserId: pharmacy.value,
+          imageUrl: pharmacy.imageUrl,
+          name: pharmacy.text,
+        };
+        setPharmacys((prev) => [...prev, updated]);
         setShowPopup(false);
       } else {
-        alert("Failed to add pharmacy!");
+        toast.error("Failed to add pharmacy.");
       }
     } catch (error) {
-      console.error("Error adding pharmacy:", error);
+      toast.error("Error adding pharmacy.");
     }
   };
 
-  // Remove a pharmacy
   const removePharmacy = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "This will remove the pharmacy from your profile.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, remove it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (!confirm.isConfirmed) return;
+
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveUpdateDiagnosticCenterPharmacy",
@@ -78,23 +94,22 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
         }
       );
       if (response.ok) {
-        setPharmacys(pharmacys.filter((pharmacy) => pharmacy.value !== id));
+        toast.success("Pharmacy removed successfully.");
+        setPharmacys((prev) =>
+          prev.filter((pharmacy) => pharmacy.pharmacyUserId !== id)
+        );
       } else {
-        alert("Failed to remove pharmacy!");
+        toast.error("Failed to remove pharmacy.");
       }
     } catch (error) {
-      console.error("Error removing pharmacy:", error);
+      toast.error("Error removing pharmacy.");
     }
   };
 
-  // Fetch selected pharmacies when `data` updates
   useEffect(() => {
-    if (data) {
-      setPharmacys(data);
-    }
+    setPharmacys(data || []);
   }, [data]);
 
-  // Fetch pharmacies when the component mounts or the search term changes
   useEffect(() => {
     fetchPharmacyList();
   }, [searchTerm]);
@@ -102,10 +117,9 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
   return (
     <div className="p-4 max-w-3xl mx-auto">
       <h1 className="text-lg font-bold mb-4">
-        Add Pharmacy profile of your Diagnostic Center or Hospital.
+        Add Pharmacy profile of your Diagnostic/Hospital (if any)
       </h1>
 
-      {/* Button to open pharmacy selection popup */}
       <button
         onClick={() => setShowPopup(true)}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -113,31 +127,25 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
         Add Pharmacy
       </button>
 
-      {/* Selected pharmacies */}
       <div className="mt-4 space-y-4">
         {pharmacys.map((pharmacy) => (
           <div
-            key={pharmacy.value}
-            className="border p-4 rounded shadow flex justify-between items-center"
+            key={pharmacy.pharmacyUserId}
+            className="border p-4 rounded shadow flex items-center space-x-4"
           >
-            <div>
+            <Image
+              width={60}
+              height={60}
+              src={`${image_base_endpoint}${pharmacy.imageUrl}`}
+              alt={pharmacy.name}
+              className="rounded-full object-cover w-14 h-14"
+            />
+            <div className="flex-1">
               <h2 className="font-bold">{pharmacy.name}</h2>
-              <p className="text-sm text-gray-600">
-                <Image
-                  width={100}
-                  height={100}
-                  src={`${image_base_endpoint}${pharmacy.imageUrl}`}
-                  alt={pharmacy.name}
-                  className="h-12 w-12 rounded-full"
-                />
-              </p>
-              <p className="text-sm text-gray-600">
-                ⭐ {pharmacy.rating !==null?pharmacy.rating:"0.0"}
-              </p>
             </div>
             <button
-              onClick={() => removePharmacy(pharmacy.value)}
-              className="text-red-500 hover:text-red-600"
+              onClick={() => removePharmacy(pharmacy.pharmacyUserId)}
+              className="text-red-600 hover:text-red-800 font-medium"
             >
               Remove
             </button>
@@ -145,10 +153,9 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
         ))}
       </div>
 
-      {/* Popup Modal */}
       {showPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded shadow-lg w-96 max-h-[80vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-md">
             <h2 className="text-lg font-bold mb-4">Select a Pharmacy</h2>
             <input
               type="text"
@@ -158,26 +165,32 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
               className="w-full border px-3 py-2 rounded mb-4"
             />
             {loading ? (
-              <p>Loading pharmacies...</p>
+              <p className="text-center">Loading pharmacies...</p>
             ) : (
-              <ul className="space-y-2">
+              <ul className="max-h-72 overflow-y-auto divide-y">
                 {allPharmacys.map((pharmacy) => (
                   <li
                     key={pharmacy.value}
-                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                    className="p-2 flex items-center space-x-3 hover:bg-gray-100 cursor-pointer"
                     onClick={() => addPharmacy(pharmacy)}
                   >
-                    <h3 className="font-bold">{pharmacy.text}</h3>
-                    <p className="text-sm text-gray-600">
-                      ⭐ {pharmacy.rating} ({pharmacy.reviews} reviews)
-                    </p>
+                    <Image
+                      width={50}
+                      height={50}
+                      src={`${image_base_endpoint}${pharmacy.imageUrl}`}
+                      alt={pharmacy.text}
+                      className="rounded-full w-12 h-12"
+                    />
+                    <div>
+                      <h3 className="font-semibold">{pharmacy.text}</h3>
+                    </div>
                   </li>
                 ))}
               </ul>
             )}
             <button
               onClick={() => setShowPopup(false)}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full"
             >
               Close
             </button>
