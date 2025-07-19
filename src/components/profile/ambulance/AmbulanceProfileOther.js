@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { toast } from "sonner";
 function AmbulanceProfileOther({ data, user, token }) {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
@@ -15,7 +15,7 @@ function AmbulanceProfileOther({ data, user, token }) {
 
   const handleSave = async () => {
     if (!title.trim() || !details.trim()) {
-      alert("Both fields are required!");
+      toast.warning("Both fields are required!");
       return;
     }
 
@@ -42,21 +42,21 @@ function AmbulanceProfileOther({ data, user, token }) {
 
       if (response.ok) {
         const result = await response.json();
-        alert("Other facility information saved successfully!");
+        toast.success("Other facility information saved successfully!");
       } else {
         console.error("Error saving other facility info:", response.statusText);
-        alert("Failed to save other facility information.");
+        toast.error("Failed to save other facility information.");
       }
     } catch (error) {
       console.error("Network error:", error);
-      alert("An error occurred while saving the information.");
+      toast.error("An error occurred while saving the information.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       {/* Title Section */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">

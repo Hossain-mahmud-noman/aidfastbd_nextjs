@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { toast } from "sonner";
 // Reusable InputField Component
 function InputField({ label, placeholder, type = "text", value, onChange, required = false }) {
   return (
@@ -43,7 +43,7 @@ function AmbulanceProfileDriver({ data, user, token }) {
   const handleSubmit = async () => {
     // Validation
     if (!driverName || !mobileNumber || !driverNID || dropdownData === "") {
-      alert("Please fill in all required fields.");
+      toast.warning("Please fill in all required fields.");
       return;
     }
 
@@ -69,21 +69,21 @@ function AmbulanceProfileDriver({ data, user, token }) {
 
       if (response.ok) {
         const result = await response.json();
-        alert("Driver information saved successfully!");
+        toast.success("Driver information saved successfully!");
       } else {
         console.error("Error saving driver info:", response.statusText);
-        alert("Failed to save driver information.");
+        toast.error("Failed to save driver information.");
       }
     } catch (error) {
       console.error("Network error:", error);
-      alert("An error occurred while saving the information.");
+      toast.error("An error occurred while saving the information.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       {/* Driver Name */}
       <InputField
         label="Driver Name"

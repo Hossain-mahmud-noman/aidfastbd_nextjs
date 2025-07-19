@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { base_endpoint, image_base_endpoint } from '../../../utils/constants';
 import MapComponent from '../../MapComponent';
 import Image from 'next/image';
-
+import { toast } from 'sonner';
 
 function InputField({ label, placeholder, type = "text", value, onChange, required = false }) {
   return (
@@ -48,7 +48,7 @@ function AmbulanceProfileBasic({ data, user, token }) {
     const file = event.target.files[0];
     if (file) {
       if (file.size > 2 * 1024 * 1024) {
-        alert("File size should be less than 2MB");
+        toast.warning("File size should be less than 2MB");
         return;
       }
       const reader = new FileReader();
@@ -59,7 +59,7 @@ function AmbulanceProfileBasic({ data, user, token }) {
 
   const handleData = async () => {
     if (!name || !nameBn || !location || !ownerName || !ownerMobileNumber) {
-      alert("Please fill in all required fields");
+      toast.warning("Please fill in all required fields");
       return;
     }
 
@@ -82,38 +82,29 @@ function AmbulanceProfileBasic({ data, user, token }) {
     formData.append('UserId', user?.id);
 
 
-    // Check if selectedLogo is a string (URL) and not a local file
     if (selectedLogo) {
       if (typeof selectedLogo === 'string' && !selectedLogo.startsWith(image_base_endpoint)) {
-        // If it's a URL (not a local file), fetch it and convert to a blob
         const blob = await fetch(selectedLogo).then((res) => res.blob());
-        // Append the fetched image as a blob with a name for the file
-        formData.append('ProfileImageFile', blob, 'image.jpg');  // You can add dynamic filename extensions here if needed
+        formData.append('ProfileImageFile', blob, 'image.jpg');
       } else if (selectedLogo instanceof File) {
-        // If selectedLogo is already a File object, just append it
         formData.append('ProfileImageFile', selectedLogo);
       }
     }
-    // Handle coverImage
+
     if (coverImage) {
       if (typeof coverImage === 'string' && !coverImage.startsWith(image_base_endpoint)) {
-        // If it's a URL (not a local file), fetch it and convert to a blob
         const blob = await fetch(coverImage).then((res) => res.blob());
         formData.append('CoverImageFile', blob, 'coverImage.jpg');
       } else if (coverImage instanceof File) {
-        // If coverImage is already a File object, just append it
         formData.append('CoverImageFile', coverImage);
       }
     }
 
-    // Handle ownerImage
     if (ownerImage) {
       if (typeof ownerImage === 'string' && !ownerImage.startsWith(image_base_endpoint)) {
-        // If it's a URL (not a local file), fetch it and convert to a blob
         const blob = await fetch(ownerImage).then((res) => res.blob());
         formData.append('OwnerImageFile', blob, 'ownerImage.jpg');
       } else if (ownerImage instanceof File) {
-        // If ownerImage is already a File object, just append it
         formData.append('OwnerImageFile', ownerImage);
       }
     }
@@ -127,33 +118,32 @@ function AmbulanceProfileBasic({ data, user, token }) {
         headers: {
           "Authorization": `Bearer ${token}`,
         },
-        body: formData, // Sending FormData as the body
+        body: formData,
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        alert("Profile saved successfully!");
+        toast.success("Profile Saved successfully!");
       } else {
-        // Check for validation errors and show them
         if (result.errors) {
           let errorMessages = "Please address the following errors:\n";
           for (const field in result.errors) {
             errorMessages += `${field}: ${result.errors[field].join(", ")}\n`;
           }
-          alert(errorMessages);
+          toast.error(errorMessages);
         } else {
-          alert(`Error: ${result.message || 'An unknown error occurred'}`);
+          toast.error(`Error: ${result.message || 'An unknown error occurred'}`);
         }
       }
     } catch (error) {
       console.error(error);
-      alert("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.");
     }
   };
 
   useEffect(() => {
-    if (data) {      
+    if (data) {
       setSelectedLogo(image_base_endpoint + data.profileImageUrl);
       setOwnerImage(image_base_endpoint + data.ownerImageUrl);
       setCoverImage(image_base_endpoint + data.coverImageUrl);
@@ -168,14 +158,14 @@ function AmbulanceProfileBasic({ data, user, token }) {
       setOwnerName(data.ownerName || '');
       setOwnerMobileNumber(data.ownerMobileNumber || '');
       setOwnerNID(data.ownerNID || '');
-      setLatitude(data.lat || '');
-      setLongitude(data.lon || '');
+      setLatitude(Number(data.latitude) || '');
+      setLongitude(Number(data.longitude) || '');
       setIsOpen(data.isOpen || false);
     }
   }, [data]);
 
   return (
-    <div className="bg-white shadow-custom-light rounded-lg p-6">
+    <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       <h2 className="text-xs font-semibold text-gray-700 mb-4">Add a Profile Picture or Logo</h2>
       <div className="flex justify-center mb-6">
         <div className="relative">
@@ -285,8 +275,8 @@ function AmbulanceProfileBasic({ data, user, token }) {
         <span className="ml-2 text-sm text-gray-600">Open Ambulance</span>
       </div>
 
-      <div className="flex justify-center">
-        <button onClick={handleData} className="bg-blue-500 text-white p-3 rounded-md shadow-md">Save</button>
+      <div className="flex justify-center w-full">
+        <button onClick={handleData} className="bg-blue-500 text-white p-3 rounded-md shadow-md w-full">Save</button>
       </div>
     </div>
   );

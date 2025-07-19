@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { toast } from "sonner";
 // Reusable InputField Component
 function InputField({ label, placeholder, type = "text", value, onChange, required = false }) {
   return (
@@ -49,7 +49,7 @@ function Dropdown({ label, options, value, onChange, required = false }) {
   );
 }
 
-// Main Component
+
 function AmbulanceProfileInfo({ data, user, token }) {
   const [ambulanceName, setAmbulanceName] = useState("");
   const [ambulanceNumber, setAmbulanceNumber] = useState("");
@@ -57,7 +57,7 @@ function AmbulanceProfileInfo({ data, user, token }) {
   const [dropdownData, setDropdownData] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Populate initial state with props data
+  
   useEffect(() => {
     if (data) {
       setAmbulanceName(data.name || "");
@@ -68,13 +68,13 @@ function AmbulanceProfileInfo({ data, user, token }) {
   }, [data]);
 
   const handleSubmit = async () => {
-    // Validation
+
     if (!ambulanceName || !ambulanceNumber || !dropdownData) {
-      alert("Please fill in all required fields.");
+      toast.warning("Please fill in all required fields.");
       return;
     }
 
-    // Prepare payload
+
     const payload = {
       userId: user.id,
       type: ambulanceType,
@@ -98,21 +98,21 @@ function AmbulanceProfileInfo({ data, user, token }) {
 
       if (response.ok) {
         const result = await response.json();
-        alert("Ambulance information saved successfully!");
+        toast.success("Ambulance information saved successfully!");
       } else {
         console.error("Error saving ambulance:", response.statusText);
-        alert("Failed to save ambulance information.");
+        toast.error("Failed to save ambulance information.");
       }
     } catch (error) {
       console.error("Network error:", error);
-      alert("An error occurred while saving the information.");
+      toast.error("An error occurred while saving the information.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-white rounded-lg w-full p-6 border">
+    <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       {/* Ambulance Name */}
       <InputField
         label="Ambulance Name"

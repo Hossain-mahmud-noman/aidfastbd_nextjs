@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { toast } from "sonner";
 function AmbulanceProfileFacilities({ data, user, token }) {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
@@ -15,7 +15,7 @@ function AmbulanceProfileFacilities({ data, user, token }) {
 
   const handleSave = async () => {
     if (!title.trim() || !details.trim()) {
-      alert("Both fields are required!");
+      toast.warning("Both fields are required!");
       return;
     }
 
@@ -40,21 +40,21 @@ function AmbulanceProfileFacilities({ data, user, token }) {
 
       if (response.ok) {
         const result = await response.json();
-        alert("Facility information saved successfully!");
+        toast.success("Facility information saved successfully!");
       } else {
         console.error("Error saving facility info:", response.statusText);
-        alert("Failed to save facility information.");
+        toast.error("Failed to save facility information.");
       }
     } catch (error) {
       console.error("Network error:", error);
-      alert("An error occurred while saving the information.");
+      toast.error("An error occurred while saving the information.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-6">
+    <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       {/* Title Section */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -87,9 +87,8 @@ function AmbulanceProfileFacilities({ data, user, token }) {
       <button
         onClick={handleSave}
         disabled={isSubmitting}
-        className={`w-full ${
-          isSubmitting ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
-        } text-white p-2 rounded-md transition`}
+        className={`w-full ${isSubmitting ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+          } text-white p-2 rounded-md transition`}
       >
         {isSubmitting ? "Submitting..." : "Save / Update"}
       </button>
