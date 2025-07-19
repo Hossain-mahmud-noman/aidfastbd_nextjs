@@ -46,14 +46,14 @@ const DentalDetails = ({ data }) => {
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
         <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/dental/${data?.id}`} />
+        <meta property="og:url" content={`${frontend_url}/dental/${data?.userId}`} />
       </Head>
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
         title="Dental Detail"
         trailingComponents={
           <div className="flex">
-            <ProfileQR slug={"newService"} id={data?.id} type={"Dental"} />
+            <ProfileQR slug={"newService"} id={data?.userId} type={"Dental"} />
             <FavouriteToggle
               isFill={data?.isFavourite}
               userId={user?.id}
@@ -61,7 +61,7 @@ const DentalDetails = ({ data }) => {
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/dental/${data?.id}`} />
+            <ShareButton link={`${frontend_url}/dental/${data?.userId}`} />
           </div>
         }
       />

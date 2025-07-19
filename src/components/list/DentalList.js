@@ -2,8 +2,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import AmbulanceCard from '../AmbulanceCard';
 import { FaSpinner } from 'react-icons/fa';
+import DentalCard from '../DentalCard';
 
 const DentalList = () => {
   const [data, setData] = useState([]);
@@ -22,7 +22,7 @@ const DentalList = () => {
       const lon = localStorage.getItem('lon') || '';
 
       const res = await axios.get(
-        `https://api.aidfastbd.com/api/GeneralWeb/GetAllAmbulanceList?pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`
+        `https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=1&pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`
       );
 
       const response = res.data;
@@ -38,7 +38,7 @@ const DentalList = () => {
         setHasMore(false);
       }
     } catch (error) {
-      console.error('Failed to fetch ambulance data:', error);
+      console.error('Failed to fetch dental data:', error);
     } finally {
       setLoading(false);
     }
@@ -78,7 +78,7 @@ const DentalList = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Ambulance List</h1>
+      <h1 className="text-xl font-bold mb-4">Dental List</h1>
 
       {data.length === 0 && !loading ? (
         <div className="h-[300px] w-full flex items-center justify-center text-2xl text-gray-500">
@@ -87,7 +87,7 @@ const DentalList = () => {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-3">
           {data.map((d, index) => (
-            <AmbulanceCard key={`${d.id}-${index}`} data={d} />
+            <DentalCard key={`${d.id}-${index}`} data={d} />
           ))}
         </div>
       )}
@@ -101,7 +101,7 @@ const DentalList = () => {
           {loading && (
             <div className="flex items-center space-x-2 text-indigo-600">
               <FaSpinner className="animate-spin text-xl" />
-              <span>Loading ambulances...</span>
+              <span>Loading dental...</span>
             </div>
           )}
         </div>
@@ -109,7 +109,7 @@ const DentalList = () => {
 
       {!hasMore && data.length > 0 && (
         <div className="text-center text-gray-500 mt-6">
-          No more ambulances.
+          No more dentals.
         </div>
       )}
     </div>
