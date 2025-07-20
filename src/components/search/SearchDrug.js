@@ -189,7 +189,7 @@ const SearchDrug = () => {
           {Array.isArray(results) && results.length === 0 ? (
             <p className="text-center text-gray-500">No blood Deug De Addiction Found</p>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 px-3">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-3">
               {results.map((item, index) => (
                 <ServiceCard key={index} slug={'drug-de-addiction'} data={item} />
               ))}
