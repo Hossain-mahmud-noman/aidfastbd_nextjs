@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { MdCancel } from 'react-icons/md';
 import { FaAngleDown } from 'react-icons/fa6';
-import DentalCard from '../DentalCard';
+import ServiceCard from '../ServiceCard';
 
 export const SearchableDropdown = ({ label, options, onSelect, setSelected }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -65,7 +65,7 @@ export const SearchableDropdown = ({ label, options, onSelect, setSelected }) =>
   );
 };
 
-const SearchDental = () => {
+const SearchDrug = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [nameOptions, setNameOptions] = useState([]);
   const [name, setName] = useState(null);
@@ -79,7 +79,7 @@ const SearchDental = () => {
 
   const fetchDropdownList = async () => {
     try {
-      const response = await fetch(`https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=DentalClinic`);
+      const response = await fetch(`https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=Drug`);
       if (response.ok) {
         const data = await response.json();
         setNameOptions(data);
@@ -100,7 +100,7 @@ const SearchDental = () => {
     if (name) query += `&userId=${name.value}`;
 
     try {
-      const response = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=1${query}`);
+      const response = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=2${query}`);
       const data = await response.json();
       setResults(data?.data || []);
     } catch (err) {
@@ -124,7 +124,7 @@ const SearchDental = () => {
     <>
       <div onClick={togglePopup} className="relative flex items-center ml-3 mr-3 mb-3">
         <div className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 shadow-lg pr-12">
-          Search Dental Clinic
+          Search Deug De Addiction
         </div>
         <button className="absolute right-0 mr-2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-all transform hover:scale-105">
           <FiSearch className="w-5 h-5" />
@@ -137,7 +137,7 @@ const SearchDental = () => {
             <button onClick={togglePopup} className="text-gray-500 float-right text-xl">
               &times;
             </button>
-            <h2 className="text-center text-lg font-semibold mb-2">Search Dental Clinic</h2>
+            <h2 className="text-center text-lg font-semibold mb-2">Search Deug De Addiction</h2>
             <p className="text-center text-red-500 mb-4 text-sm">
               ** search by one or multiple criteria **
             </p>
@@ -187,11 +187,11 @@ const SearchDental = () => {
         <div className="mb-10">
           <h3 className="text-lg ml-3 mb-2">Search Results</h3>
           {Array.isArray(results) && results.length === 0 ? (
-            <p className="text-center text-gray-500">No blood Dental Clinic Found</p>
+            <p className="text-center text-gray-500">No blood Deug De Addiction Found</p>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 px-3">
               {results.map((item, index) => (
-                <DentalCard key={index} data={item} />
+                <ServiceCard key={index} slug={'drug-de-addiction'} data={item} />
               ))}
             </div>
           )}
@@ -201,4 +201,4 @@ const SearchDental = () => {
   );
 };
 
-export default SearchDental;
+export default SearchDrug;

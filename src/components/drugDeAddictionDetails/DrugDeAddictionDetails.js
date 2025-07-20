@@ -47,7 +47,7 @@ const DrugDeAddictionDetails = ({ data }) => {
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
         <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/drug-de-addiction/${data?.id}`} />
+        <meta property="og:url" content={`${frontend_url}/drug-de-addiction/${data?.userId}`} />
       </Head>
 
 
@@ -57,19 +57,19 @@ const DrugDeAddictionDetails = ({ data }) => {
         trailingComponents={
           <div className="flex">
             <ProfileQR
-              id={data?.id}
+              id={data?.userId}
               slug={"newService"}
               type={"DrugDeAddiction"}
             />
             <FavouriteToggle
               isFill={data?.isFavourite}
               userId={user?.id}
-              id={data?.id}
+              id={data?.userId}
               type={3}
               token={token}
             />
             <ShareButton
-              link={`${frontend_url}/drug-de-addiction/${data?.id}`}
+              link={`${frontend_url}/drug-de-addiction/${data?.userId}`}
             />
           </div>
         }
@@ -146,8 +146,6 @@ const DrugDeAddictionDetails = ({ data }) => {
         <DentalTabs data={data} />
       </div>
       <FloatingCallButton number={data?.contact} />
-
-
     </>
   );
 };

@@ -65,7 +65,7 @@ export const SearchableDropdown = ({ label, options, onSelect, setSelected }) =>
   );
 };
 
-const SearchDental = () => {
+const SearchNurse = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [nameOptions, setNameOptions] = useState([]);
   const [name, setName] = useState(null);
@@ -79,7 +79,7 @@ const SearchDental = () => {
 
   const fetchDropdownList = async () => {
     try {
-      const response = await fetch(`https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=DentalClinic`);
+      const response = await fetch(`https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=Nurse`);
       if (response.ok) {
         const data = await response.json();
         setNameOptions(data);
@@ -100,7 +100,7 @@ const SearchDental = () => {
     if (name) query += `&userId=${name.value}`;
 
     try {
-      const response = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=1${query}`);
+      const response = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=6${query}`);
       const data = await response.json();
       setResults(data?.data || []);
     } catch (err) {
@@ -201,4 +201,4 @@ const SearchDental = () => {
   );
 };
 
-export default SearchDental;
+export default SearchNurse;
