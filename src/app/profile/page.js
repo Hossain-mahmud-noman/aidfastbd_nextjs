@@ -39,7 +39,7 @@ async function page() {
   return (
     <>
       <div className="pt-10 aid-container">
-        <ProfileMenu data={data}></ProfileMenu>
+        <ProfileMenu data={data} />
       </div>
     </>
   )

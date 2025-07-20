@@ -11,6 +11,7 @@ const ProfileMenu = ({ data }) => {
         { key: 'isAmbulanceProfile', icon: '🚑', label: 'Ambulance', link: '/profile/ambulance' },
         { key: 'isDental', icon: '🦷', label: 'Dental Clinic', link: '/profile/dental' },
         { key: 'isDrug', icon: '🚭', label: 'Drug De-Addiction', link: '/profile/drug' },
+        { key: 'isPhysio', icon: '🧘‍♂️', label: 'Physiotherapy Center', link: '/profile/physioProfile' },
     ];
 
     const activeProfiles = allProfiles.filter(profile => data[profile.key]);
