@@ -14,6 +14,7 @@ import DiaLocation from "../DiaLocation";
 import TextTicker from "../TextTicker";
 
 const PhysiotherapyCenterDetails = ({ data }) => {
+  console.log("🚀 ~ PhysiotherapyCenterDetails ~ data:", data)
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
 
@@ -47,9 +48,8 @@ const PhysiotherapyCenterDetails = ({ data }) => {
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
         <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/physiotherapy-center/${data?.userid}`} />
+        <meta property="og:url" content={`${frontend_url}/physiotherapy-center/${data?.userId}`} />
       </Head>
-
 
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
@@ -58,7 +58,7 @@ const PhysiotherapyCenterDetails = ({ data }) => {
           <div className="flex">
             <ProfileQR
               slug={"newService"}
-              id={data?.userid}
+              id={data?.userId}
               type={"physiotherapy center"}
             />
             <FavouriteToggle
