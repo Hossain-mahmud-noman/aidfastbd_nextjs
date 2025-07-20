@@ -9,10 +9,8 @@ export const metadata = {
 };
 
 
-
-// Function to check if the user is logged in
 const checkLogin = async () => {
-    const tokenCookie = cookies().get('token')?.value ?? ""; // Retrieve token cookie
+    const tokenCookie = cookies().get('token')?.value ?? "";
     const userCookie = cookies().get('user')?.value;
     const user = userCookie ? JSON.parse(userCookie) : null;
     return { token: tokenCookie, user: user };
@@ -24,7 +22,6 @@ async function Page() {
 
 
     const { token, user } = await checkLogin();
-    // If no user, redirect to login
     if (!user) {
         redirect('/login');
     }
@@ -32,7 +29,7 @@ async function Page() {
     return (
         <>
             <div className="py-10">
-                <Dentalprofile token={token} user={user} ></Dentalprofile>
+                <Dentalprofile token={token} user={user} />
             </div>
 
         </>

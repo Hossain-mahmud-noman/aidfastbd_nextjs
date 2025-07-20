@@ -9,12 +9,11 @@ const ProfileMenu = ({ data }) => {
         { key: 'isPharmacyProfile', icon: '💊', label: 'Pharmacy', link: '/profile/pharmacy' },
         { key: 'isBloodBankProfile', icon: '🩸', label: 'Blood Bank & Donor Club', link: '/profile/blood' },
         { key: 'isAmbulanceProfile', icon: '🚑', label: 'Ambulance', link: '/profile/ambulance' },
-         { key: 'isDental', icon: '🦷', label: 'Dental Clinic', link: '/profile/dental' },
+        { key: 'isDental', icon: '🦷', label: 'Dental Clinic', link: '/profile/dental' },
+        { key: 'isDrug', icon: '🚭', label: 'Drug De-Addiction', link: '/profile/drug' },
     ];
 
-    // Separate the active and inactive profiles
     const activeProfiles = allProfiles.filter(profile => data[profile.key]);
-    // Add "General Profile" to the beginning of the active profiles list
     activeProfiles.unshift({ icon: '👤', label: 'General Profile', link: '/profile/general' });
 
     const inactiveProfiles = allProfiles.filter(profile => !data[profile.key]);
