@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { MdCancel } from 'react-icons/md';
 import { FaAngleDown } from 'react-icons/fa6';
-import DentalCard from '../DentalCard';
+import ServiceCard from '../ServiceCard';
 
 export const SearchableDropdown = ({ label, options, onSelect, setSelected }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -191,7 +191,7 @@ const SearchEyeCare = () => {
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 px-3">
               {results.map((item, index) => (
-                <DentalCard key={index} data={item} />
+                <ServiceCard key={index} slug="eye-care-center" data={item} />
               ))}
             </div>
           )}
