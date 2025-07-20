@@ -1,6 +1,7 @@
 import React from "react";
 import { appname } from "../../utils/constants";
 import NursingCareList from "../../components/list/NursingCareList";
+import SearchNurse from "../../components/search/SearchNurse";
 
 export const metadata = {
   title: "Nursing Home Care | " + appname,
@@ -11,6 +12,7 @@ function Page() {
     <>
       <div className=" pt-10" >
         <div className="aid-container">
+          <SearchNurse />
           <NursingCareList />
         </div>
       </div>
