@@ -1,7 +1,8 @@
 import React from "react";
 
 import { appname } from "../../utils/constants";
-import PhysiotherapyCenterDataLoad from "../../components/dataLoad/PhysiotherapyCenterDataLoad";
+
+import PhysioList from "../../components/list/PhysioList";
 
 export const metadata = {
   title: "Physiotherapy Center | " + appname,
@@ -14,7 +15,7 @@ function Page() {
     <>
       <div className=" pt-10">
         <div className="aid-container">
-          <PhysiotherapyCenterDataLoad />
+          <PhysioList />
         </div>
       </div>
     </>

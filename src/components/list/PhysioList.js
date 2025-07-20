@@ -5,7 +5,7 @@ import axios from 'axios';
 import { FaSpinner } from 'react-icons/fa';
 import ServiceCard from '../ServiceCard';
 
-const DeugList = () => {
+const PhysioList = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -13,7 +13,7 @@ const DeugList = () => {
   const loaderRef = useRef(null);
   const firstLoadRef = useRef(false);
 
-  const fetchDrug = async (pageNumber) => {
+  const FetchPhysiotherapy = async (pageNumber) => {
     if (loading || !hasMore) return;
     try {
       setLoading(true);
@@ -22,7 +22,7 @@ const DeugList = () => {
       const lon = localStorage.getItem('lon') || '';
 
       const res = await axios.get(
-        `https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=2&pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`
+        `https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=3&pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`
       );
 
       const response = res.data;
@@ -38,7 +38,7 @@ const DeugList = () => {
         setHasMore(false);
       }
     } catch (error) {
-      console.error('Failed to fetch Drug De Addiction data:', error);
+      console.error('Failed to fetch Physiotherapy  data:', error);
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,7 @@ const DeugList = () => {
   // Load first page only once
   useEffect(() => {
     if (!firstLoadRef.current) {
-      fetchDrug(1);
+      FetchPhysiotherapy(1);
       firstLoadRef.current = true;
     }
   }, []);
@@ -59,7 +59,7 @@ const DeugList = () => {
         if (entry.isIntersecting && hasMore && !loading) {
           const nextPage = page + 1;
           setPage(nextPage);
-          fetchDrug(nextPage);
+          FetchPhysiotherapy(nextPage);
         }
       },
       { root: null, rootMargin: '0px', threshold: 1.0 }
@@ -78,7 +78,7 @@ const DeugList = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Drug De Addiction List List</h1>
+      <h1 className="text-xl font-bold mb-4">Physiotherapy List</h1>
 
       {data.length === 0 && !loading ? (
         <div className="h-[300px] w-full flex items-center justify-center text-2xl text-gray-500">
@@ -87,7 +87,7 @@ const DeugList = () => {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-3">
           {data.map((d, index) => (
-            <ServiceCard key={`${d.id}-${index}`} slug="drug-de-addiction" data={d} />
+            <ServiceCard key={`${d.id}-${index}`} slug="physiotherapy-center" data={d} />
           ))}
         </div>
       )}
@@ -101,7 +101,7 @@ const DeugList = () => {
           {loading && (
             <div className="flex items-center space-x-2 text-indigo-600">
               <FaSpinner className="animate-spin text-xl" />
-              <span>Loading Drug...</span>
+              <span>Loading Physiotherapy...</span>
             </div>
           )}
         </div>
@@ -109,11 +109,11 @@ const DeugList = () => {
 
       {!hasMore && data.length > 0 && (
         <div className="text-center text-gray-500 mt-6">
-          No more Drug De Addictino.
+          No more Physiotherapy.
         </div>
       )}
     </div>
   );
 };
 
-export default DeugList;
+export default PhysioList;

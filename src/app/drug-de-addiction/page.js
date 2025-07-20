@@ -7,7 +7,6 @@ export const metadata = {
 };
 
 
-
 function Page() {
   return (
     <>
