@@ -47,7 +47,7 @@ const EyeCareCenterDetails = ({ data }) => {
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
         <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/eye-care-center/${data?.id}`} />
+        <meta property="og:url" content={`${frontend_url}/eye-care-center/${data?.userId}`} />
       </Head>
 
       <AppBar
@@ -57,7 +57,7 @@ const EyeCareCenterDetails = ({ data }) => {
           <div className="flex">
             <ProfileQR
               slug={"newService"}
-              id={data?.id}
+              id={data?.userId}
               type={"Eye Care Center"}
             />
             <FavouriteToggle
@@ -67,7 +67,7 @@ const EyeCareCenterDetails = ({ data }) => {
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/eye-care-center/${data.id}`} />
+            <ShareButton link={`${frontend_url}/eye-care-center/${data.userId}`} />
           </div>
         }
       />

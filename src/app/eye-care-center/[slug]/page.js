@@ -9,7 +9,7 @@ import EyeCareCenterDetails from "../../../components/eyeCareCenter/EyeCareCente
 
 export async function generateMetadata({ params }) {
   const res = await fetch(
-    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`,
+    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?userId=${params.slug}`,
     { cache: "no-store" }
   );
   const json = await res.json();
@@ -33,14 +33,14 @@ export async function generateMetadata({ params }) {
       title: `${data?.name} | ${appname}`,
       description: `${data?.name ?? ""} ${data?.location ?? ""}`,
       images: [profile],
-      url: `${frontend_url}/eye-care-center/${data.id}`,
+      url: `${frontend_url}/eye-care-center/${data.userId}`,
     },
   };
 }
 
 export default async function DoctorPage({ params }) {
   const res = await fetch(
-    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`,
+    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?userId=${params.slug}`,
     { cache: "no-store" }
   );
   const json = await res.json();
