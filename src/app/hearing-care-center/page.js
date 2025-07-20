@@ -1,8 +1,6 @@
 import React from "react";
-import LayoutAppBar from "../../components/LayoutAppBar";
-import { appname, map_key } from "../../utils/constants";
-import { FaArrowLeft } from "react-icons/fa";
-import HearingCareCenterDataLoad from "../../components/dataLoad/HearingCareCenterDataLoad";
+import { appname } from "../../utils/constants";
+import HearingCareList from "../../components/list/HearingCareList";
 
 export const metadata = {
   title: "Hearing Care Center | " + appname,
@@ -13,7 +11,7 @@ function Page() {
     <>
       <div className="pt-10" >
         <div className="aid-container">
-          <HearingCareCenterDataLoad />
+          <HearingCareList />
         </div>
       </div>
     </>
