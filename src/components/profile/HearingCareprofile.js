@@ -3,10 +3,10 @@
 import { headerx } from '../../utils/constants';
 import React, { useEffect, useState } from 'react'
 import TabBar from '../Tabbar';
-import PhysioProfileBasic from './physioProfile/PhysioProfileBasic';
-import PhysioProfileServices from './physioProfile/PhysioProfileServices';
-import PhysioProfileDoctors from './physioProfile/PhysioProfileDoctors';
-import PhysioProfileInfo from './physioProfile/PhysioProfileInfo';
+import HearingCareProfileBasic from './hearnigCareProfile/HearingCareProfileBasic';
+import HearingCareProfileInfo from './hearnigCareProfile/HearingCareProfileInfo';
+import HearingCareProfileDoctors from './hearnigCareProfile/HearingCareProfileDoctors';
+import HearingCareProfileServices from './hearnigCareProfile/HearingCareProfileServices';
 
 
 function HearingCareprofile({ token, user }) {
@@ -34,10 +34,10 @@ function HearingCareprofile({ token, user }) {
 
   
   const tabs = [
-    { label: 'Basic', content: <PhysioProfileBasic data={profileData} user={user} token={token} /> },
-    { label: 'Info', content: <PhysioProfileInfo data={profileData?.genericServiceInfos} user={user} token={token}/> },
-    { label: 'Doctors', content: <PhysioProfileDoctors data={profileData?.genericServiceDoctors} user={user} token={token}/> },
-    { label: 'Services', content: <PhysioProfileServices data={profileData?.genericServiceDetails} user={user} token={token}/> },
+    { label: 'Basic', content: <HearingCareProfileBasic data={profileData} user={user} token={token} /> },
+    { label: 'Info', content: <HearingCareProfileInfo data={profileData?.genericServiceInfos} user={user} token={token}/> },
+    { label: 'Doctors', content: <HearingCareProfileDoctors data={profileData?.genericServiceDoctors} user={user} token={token}/> },
+    { label: 'Services', content: <HearingCareProfileServices data={profileData?.genericServiceDetails} user={user} token={token}/> },
   ];
 
   return (
