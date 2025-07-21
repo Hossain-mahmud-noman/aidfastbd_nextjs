@@ -13,6 +13,7 @@ const ProfileMenu = ({ data }) => {
         { key: 'isDrug', icon: '🚭', label: 'Drug De-Addiction', link: '/profile/drug' },
         { key: 'isPhysiotherapyProfile', icon: '🧘‍♂️', label: 'Physiotherapy Center', link: '/profile/physioProfile' },
         { key: 'isHearingCareProfile', icon: '🦻', label: 'Hearing Care Center', link: '/profile/hearingCareProfile' },
+        { key: 'isEyeCareProfile', icon: '👁️', label: 'Eye Care Center', link: '/profile/eyeCareProfile' },
     ];
 
     const activeProfiles = allProfiles.filter(profile => data[profile.key]);
