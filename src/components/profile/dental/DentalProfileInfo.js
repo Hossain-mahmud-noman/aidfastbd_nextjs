@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
-function DentalProfileInfo({ data, user, token }) {
+function DentalProfileInfo({ data, user, token, id }) {
   console.log("🚀 ~ DentalProfileInfo ~ data:", data)
   
   const [selectedImage, setSelectedImage] = useState(null);
@@ -66,7 +66,7 @@ function DentalProfileInfo({ data, user, token }) {
 
     const simplifiedData = imgList.map(({ imgUrl, details }) => ({ imgUrl, details }));
 
-    const payload = { "userId": user?.id, "title": title, "imgList": simplifiedData, "deatails": details };
+    const payload = { "userId": user?.id, "title": title, "imgList": simplifiedData, "details": details, "serviceType": 1, "id": id };
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalInfo",
@@ -92,7 +92,7 @@ function DentalProfileInfo({ data, user, token }) {
   };
 
   useEffect(() => {
-    
+
     if (data) {
       setTitle(data[0]?.title || "");
       setDetails(data[0]?.details || "");

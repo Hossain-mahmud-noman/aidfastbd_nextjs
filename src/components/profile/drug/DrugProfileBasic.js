@@ -135,7 +135,7 @@ function DrugProfileBasic({ data, token, user }) {
   const handleSubmit = async () => {
     try {
       const form = new FormData();
-      form.append('ServiceType', '1');
+      form.append('ServiceType', '2');
       form.append('CenterInformation', 'test');
       form.append('Name', formData.dentalCenterEnglish);
       form.append('NameBn', formData.dentalCenterBangla);
@@ -303,7 +303,7 @@ function DrugProfileBasic({ data, token, user }) {
         name="location"
       />
       <div className="mb-4 border">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Select Dental Map Location</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Select Drug De Addiction Map Location</label>
         <MapComponent
           lat={latitude}
           lon={longitude}
@@ -381,9 +381,6 @@ function DrugProfileBasic({ data, token, user }) {
         Any kind of small information you want to highlight, Give in notice.
       </p>
 
-
-
-
       <Dropdown
         label="Open"
         options={[
@@ -393,8 +390,6 @@ function DrugProfileBasic({ data, token, user }) {
         value={availablityStatus}
         onChange={(e) => setAvailablityStatus(e.target.value)}
       />
-
-
 
       <hr className="my-6" />
 

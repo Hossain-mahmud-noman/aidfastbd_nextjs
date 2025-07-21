@@ -65,7 +65,7 @@ function DrugProfileInfo({ data, user, token }) {
 
     const simplifiedData = imgList.map(({ imgUrl, details }) => ({ imgUrl, details }));
 
-    const payload = { "userId": user?.id, "title": title, "imgList": simplifiedData, "deatails": details };
+    const payload = { "userId": user?.id, "title": title, "imgList": simplifiedData, "deatails": details, "serviceType": 2, "id": user?.id };
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalInfo",
@@ -104,7 +104,7 @@ function DrugProfileInfo({ data, user, token }) {
       {/* Title Section */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Dental Title
+          Drug De Addiction Title
         </label>
         <input
           value={title}
@@ -150,7 +150,7 @@ function DrugProfileInfo({ data, user, token }) {
                 onClick={() => handleImageRemove(index)}
                 size={32}
                 className="absolute top-2 right-2 text-red-500 cursor-pointer  group-hover:block"
-                title="Remove Image" // Optional: Tooltip for better accessibility
+                title="Remove Image" 
               />
             </div>
           ))}

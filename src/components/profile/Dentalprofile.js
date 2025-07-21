@@ -21,15 +21,10 @@ function DentalProfile({ token, user }) {
     if (res.status == 200) {
       if (data.data[0] !== null) {
         setProfileData(data.data[0]);
-
       }
-
-
     } else if (res.status === 401) {
       window.location.href = "/login";
     }
-
-    //
   }
 
 
@@ -40,8 +35,8 @@ function DentalProfile({ token, user }) {
   
   const tabs = [
     { label: 'Basic', content: <DentalProfileBasic data={profileData} user={user} token={token}></DentalProfileBasic> },
-    { label: 'Info', content: <DentalProfileInfo data={profileData?.genericServiceInfos} user={user} token={token}></DentalProfileInfo> },
-    { label: 'Doctors', content: <DentalProfileDoctors data={profileData?.genericServiceDoctors} user={user} token={token}></DentalProfileDoctors> },
+    { label: 'Info', content: <DentalProfileInfo id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}></DentalProfileInfo> },
+    { label: 'Doctors', content: <DentalProfileDoctors id={profileData?.id} data={profileData?.genericServiceDoctors} user={user} token={token}></DentalProfileDoctors> },
     { label: 'Services', content: <DentalProfileServices data={profileData?.genericServiceDetails} user={user} token={token}></DentalProfileServices> },
   ];
 

@@ -4,7 +4,8 @@ import Image from "next/image";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 
-function DentalProfileDoctors({ data, user, token }) {
+function DentalProfileDoctors({ data, user, token, id }) {
+  console.log("🚀 ~ DentalProfileDoctors ~ data:", data)
   const [doctors, setDoctors] = useState([]);
   const [allDoctors, setAllDoctors] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -42,9 +43,10 @@ function DentalProfileDoctors({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            genericServiceUserId: user.id,
+            genericServiceUserId: id,
             doctorUserId: doctor.id,
             isDelete: false,
+            serviceType: 1
           }),
         }
       );
@@ -88,6 +90,7 @@ function DentalProfileDoctors({ data, user, token }) {
             genericServiceUserId: user.id,
             doctorUserId: id,
             isDelete: true,
+            serviceType: 1
           }),
         }
       );
