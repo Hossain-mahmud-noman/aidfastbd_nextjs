@@ -3,9 +3,6 @@
 import { headerx } from '../../utils/constants';
 import React, { useEffect, useState } from 'react'
 import TabBar from '../Tabbar';
-import HearingCareProfileInfo from './hearnigCareProfile/HearingCareProfileInfo';
-import HearingCareProfileDoctors from './hearnigCareProfile/HearingCareProfileDoctors';
-import HearingCareProfileServices from './hearnigCareProfile/HearingCareProfileServices';
 import EyeCareProfileBasic from './eyeCareProfile/EyeCareProfileBasic';
 import EyeCareProfileDoctors from './eyeCareProfile/EyeCareProfileDoctors';
 import EyeCareProfileInfo from './eyeCareProfile/EyeCareProfileInfo';

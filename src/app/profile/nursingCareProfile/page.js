@@ -3,6 +3,7 @@ import React from 'react'
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import EyeCareprofile from '../../../components/profile/EyeCareprofile';
+import NursingCareprofile from '../../../components/profile/NursingCareprofile';
 
 export const metadata = {
    title: "Eye Care Center Profile | " + appname,
@@ -28,7 +29,7 @@ async function Page() {
    return (
       <>
          <div className="py-10">
-            <EyeCareprofile token={token} user={user} />
+            <NursingCareprofile token={token} user={user} />
          </div>
       </>
    )

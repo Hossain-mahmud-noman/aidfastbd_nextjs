@@ -14,6 +14,7 @@ const ProfileMenu = ({ data }) => {
         { key: 'isPhysiotherapyProfile', icon: '🧘‍♂️', label: 'Physiotherapy Center', link: '/profile/physioProfile' },
         { key: 'isHearingCareProfile', icon: '🦻', label: 'Hearing Care Center', link: '/profile/hearingCareProfile' },
         { key: 'isEyeCareProfile', icon: '👁️', label: 'Eye Care Center', link: '/profile/eyeCareProfile' },
+        { key: 'isnNrsingCareProfile', icon: '🧑‍⚕️', label: 'Nursing Care Center', link: '/profile/nursingCareProfile' },
     ];
 
     const activeProfiles = allProfiles.filter(profile => data[profile.key]);
