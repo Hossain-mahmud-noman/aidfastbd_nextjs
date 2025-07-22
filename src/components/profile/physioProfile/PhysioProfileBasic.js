@@ -135,7 +135,7 @@ function PhysioProfileBasic({ data, token, user }) {
   const handleSubmit = async () => {
     try {
       const form = new FormData();
-      form.append('ServiceType', '1');
+      form.append('ServiceType', '3');
       form.append('CenterInformation', 'test');
       form.append('Name', formData.dentalCenterEnglish);
       form.append('NameBn', formData.dentalCenterBangla);
@@ -273,7 +273,7 @@ function PhysioProfileBasic({ data, token, user }) {
 
       <InputField
         required
-        label="Dental Clinic Name (English)"
+        label="Physiotherapy Center Name (English)"
         placeholder="Dental Name"
         value={formData.dentalCenterEnglish}
         onChange={handleInputChange}
@@ -282,7 +282,7 @@ function PhysioProfileBasic({ data, token, user }) {
 
       <InputField
         required
-        label="Dental Clinic Name (Bangla)"
+        label="Physiotherapy Center Name (Bangla)"
         placeholder="Dental Name Bangla"
         value={formData.dentalCenterBangla}
         onChange={handleInputChange}

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
 function DentalProfileInfo({ data, user, token, id }) {
-  console.log("🚀 ~ DentalProfileInfo ~ data:", data)
   
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState(data?.title || "");

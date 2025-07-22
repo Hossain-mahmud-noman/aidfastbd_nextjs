@@ -2,8 +2,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
-function DrugProfileInfo({ data, user, token }) {
-  
+function DrugProfileInfo({ data, user, token, id }) {
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState(data?.title || "");
   const [details, setDetails] = useState(data?.details || "");
@@ -65,7 +65,7 @@ function DrugProfileInfo({ data, user, token }) {
 
     const simplifiedData = imgList.map(({ imgUrl, details }) => ({ imgUrl, details }));
 
-    const payload = { "userId": user?.id, "title": title, "imgList": simplifiedData, "deatails": details, "serviceType": 2, "id": user?.id };
+    const payload = { "userId": user?.id, "title": title, "imgList": simplifiedData, "details": details, "serviceType": 2, "id": id };
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalInfo",
@@ -91,7 +91,7 @@ function DrugProfileInfo({ data, user, token }) {
   };
 
   useEffect(() => {
-    
+
     if (data) {
       setTitle(data[0]?.title || "");
       setDetails(data[0]?.details || "");
@@ -150,7 +150,7 @@ function DrugProfileInfo({ data, user, token }) {
                 onClick={() => handleImageRemove(index)}
                 size={32}
                 className="absolute top-2 right-2 text-red-500 cursor-pointer  group-hover:block"
-                title="Remove Image" 
+                title="Remove Image"
               />
             </div>
           ))}

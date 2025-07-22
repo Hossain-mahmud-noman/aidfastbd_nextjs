@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import Swal from "sweetalert2";
 
 function DentalProfileDoctors({ data, user, token, id }) {
-  console.log("🚀 ~ DentalProfileDoctors ~ data:", data)
   const [doctors, setDoctors] = useState([]);
   const [allDoctors, setAllDoctors] = useState([]);
   const [showPopup, setShowPopup] = useState(false);

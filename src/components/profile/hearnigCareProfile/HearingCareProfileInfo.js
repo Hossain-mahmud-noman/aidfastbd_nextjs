@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
-function HearingCareProfileInfo({ data, user, token }) {
+function HearingCareProfileInfo({ data, user, token, id }) {
   
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState(data?.title || "");
@@ -60,35 +60,35 @@ function HearingCareProfileInfo({ data, user, token }) {
     }
   };
 
-  const handleSubmit = async () => {
-    setIsSubmitting(true);
-
-    const simplifiedData = imgList.map(({ imgUrl, details }) => ({ imgUrl, details }));
-
-    const payload = { "userId": user?.id, "title": title, "imgList": simplifiedData, "deatails": details };
-    try {
-      const response = await fetch(
-        "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalInfo",
-        {
-          method: "POST",
-          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        }
-      );
-
-      const result = await response.json();
-      if (response.ok) {
-        toast.success("Profile updated successfully!");
-      } else {
-        toast.error(result?.message || "Failed to update profile");
-      }
-    } catch (error) {
-      console.error("Form submission error:", error);
-      toast.error("An error occurred while updating the profile.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+ const handleSubmit = async () => {
+     setIsSubmitting(true);
+ 
+     const simplifiedData = imgList.map(({ imgUrl, details }) => ({ imgUrl, details }));
+ 
+     const payload = { "userId": user?.id, "title": title, "imgList": simplifiedData, "details": details, "serviceType": 4, "id": id };
+     try {
+       const response = await fetch(
+         "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalInfo",
+         {
+           method: "POST",
+           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+           body: JSON.stringify(payload),
+         }
+       );
+ 
+       const result = await response.json();
+       if (response.ok) {
+         toast.success("Profile updated successfully!");
+       } else {
+         toast.error(result?.message || "Failed to update profile");
+       }
+     } catch (error) {
+       console.error("Form submission error:", error);
+       toast.error("An error occurred while updating the profile.");
+     } finally {
+       setIsSubmitting(false);
+     }
+   };
 
   useEffect(() => {
     

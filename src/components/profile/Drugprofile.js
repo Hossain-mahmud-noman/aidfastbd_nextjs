@@ -35,7 +35,7 @@ function DrugProfile({ token, user }) {
   
   const tabs = [
     { label: 'Basic', content: <DrugProfileBasic data={profileData} user={user} token={token} /> },
-    { label: 'Info', content: <DrugProfileInfo data={profileData?.genericServiceInfos} user={user} token={token}/> },
+    { label: 'Info', content: <DrugProfileInfo  id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}/> },
     { label: 'Doctors', content: <DrugProfileDoctors data={profileData?.genericServiceDoctors} user={user} token={token}/> },
     { label: 'Services', content: <DrugProfileServices data={profileData?.genericServiceDetails} user={user} token={token}/> },
   ];

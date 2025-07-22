@@ -135,7 +135,7 @@ function EyeCareProfileBasic({ data, token, user }) {
   const handleSubmit = async () => {
     try {
       const form = new FormData();
-      form.append('ServiceType', '1');
+      form.append('ServiceType', '5');
       form.append('CenterInformation', 'test');
       form.append('Name', formData.dentalCenterEnglish);
       form.append('NameBn', formData.dentalCenterBangla);

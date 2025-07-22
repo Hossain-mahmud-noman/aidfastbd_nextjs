@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
-function NursingCareProfileInfo({ data, user, token }) {
+function NursingCareProfileInfo({ data, user, token, id }) {
   
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState(data?.title || "");
@@ -60,12 +60,12 @@ function NursingCareProfileInfo({ data, user, token }) {
     }
   };
 
-  const handleSubmit = async () => {
+const handleSubmit = async () => {
     setIsSubmitting(true);
 
     const simplifiedData = imgList.map(({ imgUrl, details }) => ({ imgUrl, details }));
 
-    const payload = { "userId": user?.id, "title": title, "imgList": simplifiedData, "deatails": details };
+    const payload = { "userId": user?.id, "title": title, "imgList": simplifiedData, "details": details, "serviceType": 6, "id": id };
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalInfo",
