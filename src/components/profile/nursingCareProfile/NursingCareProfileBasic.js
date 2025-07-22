@@ -273,7 +273,7 @@ function NursingCareProfileBasic({ data, token, user }) {
 
       <InputField
         required
-        label="Dental Clinic Name (English)"
+        label="Nursing Care Home Name (English)"
         placeholder="Dental Name"
         value={formData.dentalCenterEnglish}
         onChange={handleInputChange}
@@ -282,7 +282,7 @@ function NursingCareProfileBasic({ data, token, user }) {
 
       <InputField
         required
-        label="Dental Clinic Name (Bangla)"
+        label="Nursing Care Home Name (Bangla)"
         placeholder="Dental Name Bangla"
         value={formData.dentalCenterBangla}
         onChange={handleInputChange}
@@ -303,7 +303,7 @@ function NursingCareProfileBasic({ data, token, user }) {
         name="location"
       />
       <div className="mb-4 border">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Select Dental Map Location</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Select Nursing Care Home Map Location</label>
         <MapComponent
           lat={latitude}
           lon={longitude}

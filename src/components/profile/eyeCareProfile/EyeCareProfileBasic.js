@@ -273,7 +273,7 @@ function EyeCareProfileBasic({ data, token, user }) {
 
       <InputField
         required
-        label="Dental Clinic Name (English)"
+        label="Eye Care Center Name (English)"
         placeholder="Dental Name"
         value={formData.dentalCenterEnglish}
         onChange={handleInputChange}
@@ -282,7 +282,7 @@ function EyeCareProfileBasic({ data, token, user }) {
 
       <InputField
         required
-        label="Dental Clinic Name (Bangla)"
+        label="Eye Care Center Name (Bangla)"
         placeholder="Dental Name Bangla"
         value={formData.dentalCenterBangla}
         onChange={handleInputChange}
@@ -303,7 +303,7 @@ function EyeCareProfileBasic({ data, token, user }) {
         name="location"
       />
       <div className="mb-4 border">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Select Dental Map Location</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Select Eye Care Center Map Location</label>
         <MapComponent
           lat={latitude}
           lon={longitude}
@@ -381,9 +381,6 @@ function EyeCareProfileBasic({ data, token, user }) {
         Any kind of small information you want to highlight, Give in notice.
       </p>
 
-
-
-
       <Dropdown
         label="Open"
         options={[
@@ -393,9 +390,7 @@ function EyeCareProfileBasic({ data, token, user }) {
         value={availablityStatus}
         onChange={(e) => setAvailablityStatus(e.target.value)}
       />
-
-
-
+      
       <hr className="my-6" />
 
       <label className="block text-sm font-medium text-gray-700 mb-2">

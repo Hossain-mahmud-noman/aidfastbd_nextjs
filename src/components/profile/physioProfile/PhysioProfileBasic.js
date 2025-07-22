@@ -303,7 +303,7 @@ function PhysioProfileBasic({ data, token, user }) {
         name="location"
       />
       <div className="mb-4 border">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Select Dental Map Location</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Select Physiotherapy Center Map Location</label>
         <MapComponent
           lat={latitude}
           lon={longitude}

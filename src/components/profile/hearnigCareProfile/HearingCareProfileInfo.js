@@ -104,7 +104,7 @@ function HearingCareProfileInfo({ data, user, token, id }) {
       {/* Title Section */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Dental Title
+          Hearing Care Center Title
         </label>
         <input
           value={title}

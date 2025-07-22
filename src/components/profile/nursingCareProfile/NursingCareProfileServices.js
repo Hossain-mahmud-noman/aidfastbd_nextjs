@@ -83,7 +83,7 @@ export default function NursingCareProfileServices({ data, token, user }) {
       ) : (
         <>
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-800">Dental Services</h2>
+            <h2 className="text-xl font-semibold text-gray-800">Nursing Care Home Services</h2>
             <button
               onClick={handleAddService}
               className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-full transition"

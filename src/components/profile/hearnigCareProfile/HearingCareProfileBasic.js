@@ -273,7 +273,7 @@ function HearingCareProfileBasic({ data, token, user }) {
 
       <InputField
         required
-        label="Dental Clinic Name (English)"
+        label="Hearing Care Center Name (English)"
         placeholder="Dental Name"
         value={formData.dentalCenterEnglish}
         onChange={handleInputChange}
@@ -282,7 +282,7 @@ function HearingCareProfileBasic({ data, token, user }) {
 
       <InputField
         required
-        label="Dental Clinic Name (Bangla)"
+        label="Hearing Care Center Name (Bangla)"
         placeholder="Dental Name Bangla"
         value={formData.dentalCenterBangla}
         onChange={handleInputChange}
@@ -303,7 +303,7 @@ function HearingCareProfileBasic({ data, token, user }) {
         name="location"
       />
       <div className="mb-4 border">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Select Dental Map Location</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Select Hearing Care Center Map Location</label>
         <MapComponent
           lat={latitude}
           lon={longitude}

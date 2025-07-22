@@ -273,7 +273,7 @@ function DrugProfileBasic({ data, token, user }) {
 
       <InputField
         required
-        label="Dental Clinic Name (English)"
+        label="Drug De Addiction Name (English)"
         placeholder="Dental Name"
         value={formData.dentalCenterEnglish}
         onChange={handleInputChange}
@@ -282,7 +282,7 @@ function DrugProfileBasic({ data, token, user }) {
 
       <InputField
         required
-        label="Dental Clinic Name (Bangla)"
+        label="Drug De Addiction Name (Bangla)"
         placeholder="Dental Name Bangla"
         value={formData.dentalCenterBangla}
         onChange={handleInputChange}
