@@ -25,11 +25,10 @@ export default function DentalProfileServices({ data, token, user }) {
       otherInfo: "heading",
       title: newData.heading,
       details: newData.details,
-      imgList: newData.imgList,
-      isDeleted: false,
-      serviceType: 1,
+      imgList: newData.imgList || [],
       userId: user?.id,
-      id: selectedService?.id || "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      id: selectedService?.id,
+      ...(isUpdating ? {} : { serviceType: 1 }) 
     };
 
     try {
@@ -43,7 +42,7 @@ export default function DentalProfileServices({ data, token, user }) {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(isUpdating ? payload : [payload]),
+          body: JSON.stringify(payload),
         }
       );
 
