@@ -30,7 +30,7 @@ function DentalProfileDoctors({ data, user, token, id }) {
     }
   };
 
-  // Add doctor to the list
+
   const saveDoctor = async (doctor) => {
     try {
       const response = await fetch(
@@ -62,7 +62,6 @@ function DentalProfileDoctors({ data, user, token, id }) {
     }
   };
 
-  // Remove doctor from the list with confirmation
   const removeDoctor = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",

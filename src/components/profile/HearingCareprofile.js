@@ -36,7 +36,7 @@ function HearingCareprofile({ token, user }) {
   const tabs = [
     { label: 'Basic', content: <HearingCareProfileBasic data={profileData} user={user} token={token} /> },
     { label: 'Info', content: <HearingCareProfileInfo id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}/> },
-    { label: 'Doctors', content: <HearingCareProfileDoctors data={profileData?.genericServiceDoctors} user={user} token={token}/> },
+    { label: 'Doctors', content: <HearingCareProfileDoctors id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token}/> },
     { label: 'Services', content: <HearingCareProfileServices data={profileData?.genericServiceDetails} user={user} token={token}/> },
   ];
 

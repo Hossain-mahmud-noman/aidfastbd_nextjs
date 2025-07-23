@@ -4,7 +4,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 
-function PhysioProfileDoctors({ data, user, token }) {
+function PhysioProfileDoctors({ data, user, token, id }) {
   const [doctors, setDoctors] = useState([]);
   const [allDoctors, setAllDoctors] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -30,7 +30,7 @@ function PhysioProfileDoctors({ data, user, token }) {
     }
   };
 
-  // Add doctor to the list
+
   const saveDoctor = async (doctor) => {
     try {
       const response = await fetch(
@@ -42,9 +42,10 @@ function PhysioProfileDoctors({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            genericServiceUserId: user.id,
+            genericServiceUserId: id,
             doctorUserId: doctor.id,
             isDelete: false,
+            serviceType: 3
           }),
         }
       );
@@ -61,7 +62,6 @@ function PhysioProfileDoctors({ data, user, token }) {
     }
   };
 
-  // Remove doctor from the list with confirmation
   const removeDoctor = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -88,6 +88,7 @@ function PhysioProfileDoctors({ data, user, token }) {
             genericServiceUserId: user.id,
             doctorUserId: id,
             isDelete: true,
+            serviceType: 3
           }),
         }
       );
@@ -103,6 +104,7 @@ function PhysioProfileDoctors({ data, user, token }) {
     }
   };
 
+
   useEffect(() => {
     if (data) {
       setDoctors(data);
@@ -116,7 +118,7 @@ function PhysioProfileDoctors({ data, user, token }) {
   return (
     <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       <h1 className="text-lg font-bold mb-4">
-        Add Doctor profile of your Physiotherapy Center 
+        Add Doctor profile of your Physiotherapy Center
       </h1>
 
       <button

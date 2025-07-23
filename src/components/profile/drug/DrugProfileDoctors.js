@@ -4,7 +4,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 
-function DrugProfileDoctors({ data, user, token }) {
+function DrugProfileDoctors({ data, user, token, id }) {
   const [doctors, setDoctors] = useState([]);
   const [allDoctors, setAllDoctors] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -30,7 +30,7 @@ function DrugProfileDoctors({ data, user, token }) {
     }
   };
 
-  // Add doctor to the list
+
   const saveDoctor = async (doctor) => {
     try {
       const response = await fetch(
@@ -42,9 +42,10 @@ function DrugProfileDoctors({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            genericServiceUserId: user.id,
+            genericServiceUserId: id,
             doctorUserId: doctor.id,
             isDelete: false,
+            serviceType: 2
           }),
         }
       );
@@ -61,7 +62,6 @@ function DrugProfileDoctors({ data, user, token }) {
     }
   };
 
-  // Remove doctor from the list with confirmation
   const removeDoctor = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -88,6 +88,7 @@ function DrugProfileDoctors({ data, user, token }) {
             genericServiceUserId: user.id,
             doctorUserId: id,
             isDelete: true,
+            serviceType: 2
           }),
         }
       );
@@ -102,6 +103,8 @@ function DrugProfileDoctors({ data, user, token }) {
       toast.error("Something went wrong while removing doctor.");
     }
   };
+
+
 
   useEffect(() => {
     if (data) {
