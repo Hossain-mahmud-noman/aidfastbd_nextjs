@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { base_endpoint, headerx } from '../../utils/constants';
-import "react-toastify/dist/ReactToastify.css";
 
 
 function AppointmentBooking({ id, user, token, chambers }) {
