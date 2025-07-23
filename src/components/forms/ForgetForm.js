@@ -1,8 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import OTPVerification from './OTPVerification';
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const ForgetForm = () => {
     const [mobileNo, setMobileNo] = useState('');
@@ -93,7 +91,6 @@ const ForgetForm = () => {
                 </>
             )}
 
-            <ToastContainer style={{top:"100px"}} position="top-right" autoClose={3000} />
         </div>
     );
 };

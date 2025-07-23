@@ -100,7 +100,6 @@ const DoctorDetail = ({ data }) => {
           )}
         </div>
       </div>
-
       <DoctorTabs data={data} />
       <AppointmentBooking
         id={data.userId}
