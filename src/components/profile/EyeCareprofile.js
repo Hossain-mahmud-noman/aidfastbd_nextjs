@@ -15,7 +15,7 @@ function EyeCareprofile({ token, user }) {
   const getProfileData = async () => {
     headerx['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=4&userId=${user.id}`, { headers: headerx });
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=5&userId=${user.id}`, { headers: headerx });
 
     const data = await res.json();
     if (res.status == 200) {
