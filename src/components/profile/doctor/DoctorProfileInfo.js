@@ -5,7 +5,6 @@ import { image_base_endpoint } from '../../../utils/constants';
 import Image from 'next/image';
 import { toast } from 'sonner';
 function DoctorProfileInfo({ data, user, token }) {
-    console.log("🚀 ~ DoctorProfileInfo ~ data:", data)
     const [selectedImage, setSelectedImage] = useState(data?.imageUrl !== undefined ? image_base_endpoint + data?.imageUrl : null);
     const [title, setTitle] = useState(data?.title);
     const [details, setDetails] = useState(data?.details);

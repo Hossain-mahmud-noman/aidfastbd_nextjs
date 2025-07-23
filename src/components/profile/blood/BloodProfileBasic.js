@@ -26,7 +26,6 @@ function InputField({ label, placeholder, type = "text", value, onChange, requir
 }
 
 function BloodProfileBasic({ data, user, token }) {
-  console.log("🚀 ~ BloodProfileBasic ~ data:", data)
 
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [selectedCover, setSelectedCover] = useState(null);

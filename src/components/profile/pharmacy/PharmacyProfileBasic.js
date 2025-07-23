@@ -24,7 +24,6 @@ function InputField({ label, placeholder, type = "text", value, onChange, requir
 }
 
 function PharmacyProfileBasic({ data, isRegister, token, user }) {
-  console.log("🚀 ~ PharmacyProfileBasic ~ data:", data)
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [ownerImage, setOwnerImage] = useState(null);

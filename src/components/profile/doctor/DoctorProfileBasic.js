@@ -187,7 +187,6 @@ function DoctorProfileBasic({ data, user, token }) {
     formData.append("Qualification", otherDegree);
     formData.append("Experience", experienceAfterMbbs);
 
-    console.log("form data", formData)
 
     if (selectedLogo) {
       if (

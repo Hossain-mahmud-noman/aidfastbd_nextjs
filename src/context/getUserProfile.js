@@ -3,7 +3,6 @@
 export const getUserProfile = async () => {
     const token = localStorage.getItem('token')
     const userId = localStorage.getItem('id')
-    console.log("🚀 ~ getUserProfile ~ userId:", userId)
     try {
         const res = await fetch(
             `https://api.aidfastbd.com/api/Auth/GetAllUserProfile?userId=${userId}`,
