@@ -4,7 +4,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 
-function HearingCareProfileDoctors({ data, user, token }) {
+function HearingCareProfileDoctors({ data, user, token, id }) {
   const [doctors, setDoctors] = useState([]);
   const [allDoctors, setAllDoctors] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -30,7 +30,6 @@ function HearingCareProfileDoctors({ data, user, token }) {
     }
   };
 
-  // Add doctor to the list
   const saveDoctor = async (doctor) => {
     try {
       const response = await fetch(
@@ -42,9 +41,10 @@ function HearingCareProfileDoctors({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            genericServiceUserId: user.id,
+            genericServiceUserId: id,
             doctorUserId: doctor.id,
             isDelete: false,
+            serviceType: 4
           }),
         }
       );
@@ -61,7 +61,6 @@ function HearingCareProfileDoctors({ data, user, token }) {
     }
   };
 
-  // Remove doctor from the list with confirmation
   const removeDoctor = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -88,6 +87,7 @@ function HearingCareProfileDoctors({ data, user, token }) {
             genericServiceUserId: user.id,
             doctorUserId: id,
             isDelete: true,
+            serviceType: 4
           }),
         }
       );
