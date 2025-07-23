@@ -4,7 +4,6 @@ import Image from "next/image";
 import { toast } from "sonner";
 
 export default function DentalProfileServices({ data, token, genericServiceId, userId }) {
-  console.log("🚀 ~ DentalProfileServices ~ data:", data)
   const [services, setServices] = useState(data);
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,7 +17,7 @@ export default function DentalProfileServices({ data, token, genericServiceId, u
     setSelectedService(service);
     setIsModalOpen(true);
   };
-
+  console.log('selectedService', selectedService)
   const handleFormSubmit = async (newData) => {
     const isUpdating = selectedService !== null;
 
@@ -32,10 +31,21 @@ export default function DentalProfileServices({ data, token, genericServiceId, u
       })),
       userId: userId,
       id: genericServiceId,
-      ...(isUpdating ? {} : { serviceType: 1 }) // only for create
+      serviceType: 1
+    };
+    const updatingService = {
+      otherInfo: "heading",
+      title: newData.heading,
+      details: newData.details,
+      imgList: (newData.imgList || []).map((img) => ({
+        imgUrl: img.imgUrl,
+        details: img.details || ""
+      })),
+      userId: userId,
+      id: selectedService?.id,
     };
 
-    const payload = isUpdating ? [commonService] : [commonService]; 
+    const payload = isUpdating ? updatingService : [commonService];
 
     try {
       const response = await fetch(
