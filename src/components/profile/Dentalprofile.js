@@ -32,8 +32,6 @@ function DentalProfile({ token, user }) {
     getProfileData();
   }, [token]);
 
-  console.log("dataaaaaaaaaaaaaaaaaaa", profileData)
-
   const tabs = [
     { label: 'Basic', content: <DentalProfileBasic data={profileData} user={user} token={token}></DentalProfileBasic> },
     { label: 'Info', content: <DentalProfileInfo id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}></DentalProfileInfo> },

@@ -21,16 +21,31 @@ export default function DrugProfileServices({ data, token, genericServiceId, use
   const handleFormSubmit = async (newData) => {
     const isUpdating = selectedService !== null;
 
-    const payload = {
+    const commonService = {
       otherInfo: "heading",
       title: newData.heading,
       details: newData.details,
-      imgList: newData.imgList,
-      isDeleted: false,
-      serviceType: 1,
-      userId: user?.id,
-      id: selectedService?.id || "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      imgList: (newData.imgList || []).map((img) => ({
+        imgUrl: img.imgUrl,
+        details: img.details || ""
+      })),
+      userId: userId,
+      id: genericServiceId,
+      serviceType: 1
     };
+    const updatingService = {
+      otherInfo: "heading",
+      title: newData.heading,
+      details: newData.details,
+      imgList: (newData.imgList || []).map((img) => ({
+        imgUrl: img.imgUrl,
+        details: img.details || ""
+      })),
+      userId: userId,
+      id: selectedService?.id,
+    };
+
+    const payload = isUpdating ? updatingService : [commonService];
 
     try {
       const response = await fetch(
@@ -43,7 +58,7 @@ export default function DrugProfileServices({ data, token, genericServiceId, use
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(isUpdating ? payload : [payload]),
+          body: JSON.stringify(payload),
         }
       );
 
@@ -53,10 +68,12 @@ export default function DrugProfileServices({ data, token, genericServiceId, use
         throw new Error(responseData?.message || "Something went wrong!");
       }
 
+      const updatedService = isUpdating ? payload : payload[0];
+
       setServices((prev) =>
         isUpdating
-          ? prev.map((s) => (s.id === payload.id ? { ...s, ...payload } : s))
-          : [...prev, { ...payload, id: responseData.id }]
+          ? prev.map((s) => (s.id === updatedService.id ? { ...s, ...updatedService } : s))
+          : [...prev, { ...updatedService, id: responseData.id }]
       );
 
       toast.success(

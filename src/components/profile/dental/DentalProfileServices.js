@@ -17,7 +17,6 @@ export default function DentalProfileServices({ data, token, genericServiceId, u
     setSelectedService(service);
     setIsModalOpen(true);
   };
-  console.log('selectedService', selectedService)
   const handleFormSubmit = async (newData) => {
     const isUpdating = selectedService !== null;
 

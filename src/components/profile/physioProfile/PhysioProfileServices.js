@@ -19,57 +19,74 @@ export default function PhysioProfileServices({ data, token, genericServiceId, u
   };
 
   const handleFormSubmit = async (newData) => {
-    const isUpdating = selectedService !== null;
-
-    const payload = {
-      otherInfo: "heading",
-      title: newData.heading,
-      details: newData.details,
-      imgList: newData.imgList,
-      isDeleted: false,
-      serviceType: 1,
-      userId: user?.id,
-      id: selectedService?.id || "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    };
-
-    try {
-      const response = await fetch(
-        isUpdating
-          ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateGenericService_Services"
-          : "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericService_Services",
-        {
-          method: isUpdating ? "PUT" : "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(isUpdating ? payload : [payload]),
+      const isUpdating = selectedService !== null;
+  
+      const commonService = {
+        otherInfo: "heading",
+        title: newData.heading,
+        details: newData.details,
+        imgList: (newData.imgList || []).map((img) => ({
+          imgUrl: img.imgUrl,
+          details: img.details || ""
+        })),
+        userId: userId,
+        id: genericServiceId,
+        serviceType: 1
+      };
+      const updatingService = {
+        otherInfo: "heading",
+        title: newData.heading,
+        details: newData.details,
+        imgList: (newData.imgList || []).map((img) => ({
+          imgUrl: img.imgUrl,
+          details: img.details || ""
+        })),
+        userId: userId,
+        id: selectedService?.id,
+      };
+  
+      const payload = isUpdating ? updatingService : [commonService];
+  
+      try {
+        const response = await fetch(
+          isUpdating
+            ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateGenericService_Services"
+            : "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericService_Services",
+          {
+            method: isUpdating ? "PUT" : "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          }
+        );
+  
+        const responseData = await response.json();
+  
+        if (!response.ok) {
+          throw new Error(responseData?.message || "Something went wrong!");
         }
-      );
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData?.message || "Something went wrong!");
+  
+        const updatedService = isUpdating ? payload : payload[0];
+  
+        setServices((prev) =>
+          isUpdating
+            ? prev.map((s) => (s.id === updatedService.id ? { ...s, ...updatedService } : s))
+            : [...prev, { ...updatedService, id: responseData.id }]
+        );
+  
+        toast.success(
+          isUpdating
+            ? "Service updated successfully!"
+            : "New service added successfully!"
+        );
+      } catch (error) {
+        toast.error(`Error: ${error.message}`);
+      } finally {
+        setIsModalOpen(false);
       }
-
-      setServices((prev) =>
-        isUpdating
-          ? prev.map((s) => (s.id === payload.id ? { ...s, ...payload } : s))
-          : [...prev, { ...payload, id: responseData.id }]
-      );
-
-      toast.success(
-        isUpdating
-          ? "Service updated successfully!"
-          : "New service added successfully!"
-      );
-    } catch (error) {
-      toast.error(`Error: ${error.message}`);
-    } finally {
-      setIsModalOpen(false);
-    }
-  };
+    };
 
   return (
     <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
