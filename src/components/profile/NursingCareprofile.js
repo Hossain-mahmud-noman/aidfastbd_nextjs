@@ -37,7 +37,7 @@ function NursingCareprofile({ token, user }) {
     { label: 'Basic', content: <NursingCareProfileBasic data={profileData} user={user} token={token} /> },
     { label: 'Info', content: <NursingCareProfileInfo id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}/> },
     { label: 'Doctors', content: <NursingCareProfileDoctors id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token}/> },
-    { label: 'Services', content: <NursingCareProfileServices data={profileData?.genericServiceDetails} user={user} token={token}/> },
+    { label: 'Services', content: <NursingCareProfileServices genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token}/> },
   ];
 
   return (

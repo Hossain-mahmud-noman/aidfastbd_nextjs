@@ -3,7 +3,7 @@ import ServiceForm from "../../../components/forms/ServiceForm";
 import Image from "next/image";
 import { toast } from "sonner";
 
-export default function NursingCareProfileServices({ data, token, user }) {
+export default function NursingCareProfileServices({ data, token, genericServiceId, userId }) {
   const [services, setServices] = useState(data);
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

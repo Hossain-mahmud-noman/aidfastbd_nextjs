@@ -32,19 +32,19 @@ function DentalProfile({ token, user }) {
     getProfileData();
   }, [token]);
 
-  
+  console.log("dataaaaaaaaaaaaaaaaaaa", profileData)
+
   const tabs = [
     { label: 'Basic', content: <DentalProfileBasic data={profileData} user={user} token={token}></DentalProfileBasic> },
     { label: 'Info', content: <DentalProfileInfo id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}></DentalProfileInfo> },
     { label: 'Doctors', content: <DentalProfileDoctors id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token}></DentalProfileDoctors> },
-    { label: 'Services', content: <DentalProfileServices data={profileData?.genericServiceDetails} user={user} token={token}></DentalProfileServices> },
+    { label: 'Services', content: <DentalProfileServices genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token}></DentalProfileServices> },
   ];
-
 
   return (
     <div>
-      
-      <TabBar tabs={tabs}></TabBar>
+
+      <TabBar tabs={tabs}/>
     </div>
   )
 }

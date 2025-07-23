@@ -3,7 +3,8 @@ import ServiceForm from "../../../components/forms/ServiceForm";
 import Image from "next/image";
 import { toast } from "sonner";
 
-export default function DentalProfileServices({ data, token, user }) {
+export default function DentalProfileServices({ data, token, genericServiceId, userId }) {
+  console.log("🚀 ~ DentalProfileServices ~ data:", data)
   const [services, setServices] = useState(data);
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,15 +22,20 @@ export default function DentalProfileServices({ data, token, user }) {
   const handleFormSubmit = async (newData) => {
     const isUpdating = selectedService !== null;
 
-    const payload = {
+    const commonService = {
       otherInfo: "heading",
       title: newData.heading,
       details: newData.details,
-      imgList: newData.imgList || [],
-      userId: user?.id,
-      id: selectedService?.id,
-      ...(isUpdating ? {} : { serviceType: 1 }) 
+      imgList: (newData.imgList || []).map((img) => ({
+        imgUrl: img.imgUrl,
+        details: img.details || ""
+      })),
+      userId: userId,
+      id: genericServiceId,
+      ...(isUpdating ? {} : { serviceType: 1 }) // only for create
     };
+
+    const payload = isUpdating ? [commonService] : [commonService]; 
 
     try {
       const response = await fetch(
@@ -52,10 +58,12 @@ export default function DentalProfileServices({ data, token, user }) {
         throw new Error(responseData?.message || "Something went wrong!");
       }
 
+      const updatedService = isUpdating ? payload : payload[0];
+
       setServices((prev) =>
         isUpdating
-          ? prev.map((s) => (s.id === payload.id ? { ...s, ...payload } : s))
-          : [...prev, { ...payload, id: responseData.id }]
+          ? prev.map((s) => (s.id === updatedService.id ? { ...s, ...updatedService } : s))
+          : [...prev, { ...updatedService, id: responseData.id }]
       );
 
       toast.success(
@@ -69,6 +77,8 @@ export default function DentalProfileServices({ data, token, user }) {
       setIsModalOpen(false);
     }
   };
+
+
 
   return (
     <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">

@@ -37,7 +37,7 @@ function Physioprofile({ token, user }) {
     { label: 'Basic', content: <PhysioProfileBasic data={profileData} user={user} token={token} /> },
     { label: 'Info', content: <PhysioProfileInfo id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}/> },
     { label: 'Doctors', content: <PhysioProfileDoctors id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token}/> },
-    { label: 'Services', content: <PhysioProfileServices data={profileData?.genericServiceDetails} user={user} token={token}/> },
+    { label: 'Services', content: <PhysioProfileServices genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token}/> },
   ];
 
   return (

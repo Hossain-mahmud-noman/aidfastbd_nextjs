@@ -37,7 +37,7 @@ function EyeCareprofile({ token, user }) {
     { label: 'Basic', content: <EyeCareProfileBasic data={profileData} user={user} token={token} /> },
     { label: 'Info', content: <EyeCareProfileInfo id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}/> },
     { label: 'Doctors', content: <EyeCareProfileDoctors id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token}/> },
-    { label: 'Services', content: <EyeCareProfileServices data={profileData?.genericServiceDetails} user={user} token={token}/> },
+    { label: 'Services', content: <EyeCareProfileServices genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token}/> },
   ];
 
   return (
