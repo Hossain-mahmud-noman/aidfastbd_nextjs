@@ -102,10 +102,9 @@ const DoctorDetail = ({ data }) => {
       </div>
       <DoctorTabs data={data} />
       <AppointmentBooking
-        id={data.userId}
+        id={data?.userId}
         token={token}
-        user={user}
-        chambers={data.chamberInformation}
+        chambers={data?.chamberInformation}
       />
     </>
   );

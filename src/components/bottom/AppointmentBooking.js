@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { base_endpoint, headerx } from '../../utils/constants';
+import { headerx } from '../../utils/constants';
+import { toast } from 'sonner';
+import { getUserProfile } from '../../context/getUserProfile';
 
-
-function AppointmentBooking({ id, user, token, chambers }) {
-
+function AppointmentBooking({ id, token, chambers }) {
+   const [user, setUser] = useState(null)
    const [isOpen, setIsOpen] = useState(false);
    const [formData, setFormData] = useState({
       name: "",
@@ -13,11 +14,20 @@ function AppointmentBooking({ id, user, token, chambers }) {
       mobile: "",
       selectedChamber: "",
       appointmentDate: "",
-      slot: {}
+      slot: null,
    });
 
    const today = new Date().toISOString().split('T')[0];
    const [slots, setSlots] = useState([]);
+
+   const fetchProfile = async () => {
+      const profile = await getUserProfile();
+      console.log("🚀 ~ fetchProfile ~ profile:", profile)
+      setUser(profile)
+   }
+   useEffect(() => {
+      fetchProfile();
+   }, [token])
 
    const toggleModal = () => {
       setIsOpen(!isOpen);
@@ -42,13 +52,15 @@ function AppointmentBooking({ id, user, token, chambers }) {
       setFormData((prev) => ({ ...prev, [name]: value }));
 
       if (name === "selectedChamber") {
-         setFormData((prev) => ({ ...prev, appointmentDate: "", slot: {} }));
+         setFormData((prev) => ({ ...prev, appointmentDate: "", slot: null }));
          setSlots([]);
       }
 
       if (name === "appointmentDate") {
          const selectedDate = new Date(value);
-         const dayName = selectedDate.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase();
+         const dayName = selectedDate
+            .toLocaleDateString("en-US", { weekday: "short" })
+            .toUpperCase();
 
          const chamberId = formData.selectedChamber;
          const chamber = chambers.find((ch) => ch.id === chamberId);
@@ -66,54 +78,65 @@ function AppointmentBooking({ id, user, token, chambers }) {
             setSlots([]);
          }
 
-         setFormData((prev) => ({ ...prev, slot: {} }));
+         setFormData((prev) => ({ ...prev, slot: null }));
       }
    };
 
    const handleSubmit = async (e) => {
-      e.preventDefault();
+      e.preventDefault()
       const { name, age, mobile, selectedChamber, appointmentDate, slot } = formData;
 
-      if (!name || !age || !mobile || !selectedChamber || !appointmentDate || !slot) {
+      if (
+         !name ||
+         !age ||
+         !mobile ||
+         !selectedChamber ||
+         !appointmentDate ||
+         !slot ||
+         !slot.id
+      ) {
          alert("Please fill in all required fields.");
          return;
       }
 
+      const payload = {
+         name: name,
+         age: age,
+         mobileNo: mobile,
+         userId: user.id,
+         doctorInformationId: id,
+         chamberInformationId: selectedChamber,
+         chamberTimeDetailsId: slot.id,
+         appointmentDate: appointmentDate,
+         appointmentTimeSlot: slot.value,
+         isDay: true,
+         isDeleted: false,
+         isConfirmed: true,
+      };
 
-      const payload = JSON.stringify({
-         "name": name,
-         "age": age,
-         "mobileNo": mobile,
-         "userId": user.id,
-         "doctorInformationId": id,
-         "chamberInformationId": selectedChamber,
-         "chamberTimeDetailsId": slot.id,
-         "appointmentDate": appointmentDate,
-         "appointmentTimeSlot": slot.value,
-         // "appointmentTimeSlot": "string",
-         "isDay": true,
-         "isDeleted": false,
-         "isConfirmed": true,
-      })
+      headerx["Authorization"] = `Bearer ${token}`;
 
-      headerx['Authorization'] = `Bearer ${token}`;
       try {
-         const res = await fetch(`${base_endpoint}/GeneralInformation/BookAppointment`, { method: "POST", headers: headerx, body: payload });
+         const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/BookAppointment`, {
+            method: "POST",
+            headers: headerx,
+            body: JSON.stringify(payload),
+         });
 
          const data = await res.json();
 
-         if (res.status == 200) {
-            toast.success("Successfully appoinment booked");
+         if (res.ok) {
+            toast.success("Successfully booked appointment");
          } else {
-            toast.error("Something goes to wrong!");
+            toast.error(data?.message || "Something went wrong!");
          }
       } catch (error) {
-         toast.error("Something goes to wrong!");
+         toast.error("Something went wrong!");
       } finally {
          toggleModal();
       }
-
    };
+
 
    useEffect(() => {
       if (isOpen) document.addEventListener("keydown", handleKeyDown);
@@ -121,7 +144,7 @@ function AppointmentBooking({ id, user, token, chambers }) {
    }, [isOpen]);
 
    return (
-      <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-2">
+      <nav className="fixed bottom-0 left-0 right-0 shadow-lg p-2 z-[10000] aid-container">
          <button
             onClick={toggleModal}
             className="w-full bg-green-500 text-white py-2 px-4 rounded-lg"
@@ -137,7 +160,7 @@ function AppointmentBooking({ id, user, token, chambers }) {
                aria-labelledby="modal-title"
                role="dialog"
             >
-               <div className="bg-white w-full max-w-[90%] md:max-w-md p-6 rounded-lg shadow-lg max-h-[70vh] overflow-y-auto">
+               <div className="bg-white w-full max-w-[90%] md:max-w-md p-6 rounded-lg shadow-lg max-h-[80vh] overflow-y-auto">
                   <div className="flex justify-between items-center border-b pb-2">
                      <h2 id="modal-title" className="text-xl font-semibold">Appointments</h2>
                      <button
@@ -150,7 +173,6 @@ function AppointmentBooking({ id, user, token, chambers }) {
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-
                      {/* Select Chamber */}
                      <div>
                         <label className="block text-gray-700 font-medium mb-2">Select Chamber</label>
@@ -182,18 +204,17 @@ function AppointmentBooking({ id, user, token, chambers }) {
                         />
                      </div>
 
-
                      {/* Select Slot */}
                      <div>
                         <label className="block text-gray-700 font-medium mb-2">Select Slot</label>
                         <select
                            name="slot"
-                           value={formData.slot.id || ""}
+                           value={formData.slot?.id || ""}
                            onChange={(e) => {
                               const selectedSlot = slots.find(slot => slot.id === e.target.value);
                               setFormData((prev) => ({
                                  ...prev,
-                                 slot: selectedSlot || {},
+                                 slot: selectedSlot || null,
                               }));
                            }}
                            className="w-full border border-gray-300 rounded-md px-4 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-500"
@@ -208,7 +229,7 @@ function AppointmentBooking({ id, user, token, chambers }) {
                         </select>
                         {slots.length === 0 && (
                            <p className="text-sm text-red-500 mt-1">
-                              Please select a chamber to view available slots.
+                              Please select a chamber and date to view available slots.
                            </p>
                         )}
                      </div>
