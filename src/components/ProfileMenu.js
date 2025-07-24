@@ -3,7 +3,6 @@
 import React from 'react';
 
 const ProfileMenu = ({ data }) => {
-    console.log("🚀 ~ ProfileMenu ~ data:", data)
     const allProfiles = [
         { key: 'isDoctorProfile', icon: '🩺', label: 'Doctor', link: '/profile/doctor' },
         { key: 'isDiagnosticCenterProfile', icon: '📋', label: 'Diagnostic Center & Hospital', link: '/profile/diagnostic' },

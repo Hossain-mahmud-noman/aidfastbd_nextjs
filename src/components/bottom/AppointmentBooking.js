@@ -22,7 +22,6 @@ function AppointmentBooking({ id, token, chambers }) {
 
    const fetchProfile = async () => {
       const profile = await getUserProfile();
-      console.log("🚀 ~ fetchProfile ~ profile:", profile)
       setUser(profile)
    }
    useEffect(() => {
