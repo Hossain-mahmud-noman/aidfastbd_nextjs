@@ -4,9 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { headerx } from '../../utils/constants';
 import { toast } from 'sonner';
 import { getUserProfile } from '../../context/getUserProfile';
+import { useRouter } from 'next/navigation';
 
 function AppointmentBooking({ id, token, chambers }) {
    const [user, setUser] = useState(null)
+   const router = useRouter();
    const [isOpen, setIsOpen] = useState(false);
    const [formData, setFormData] = useState({
       name: "",
@@ -94,7 +96,7 @@ function AppointmentBooking({ id, token, chambers }) {
          !slot ||
          !slot.id
       ) {
-         alert("Please fill in all required fields.");
+         toast.warning("Please fill in all required fields.");
          return;
       }
 
@@ -126,6 +128,7 @@ function AppointmentBooking({ id, token, chambers }) {
 
          if (res.ok) {
             toast.success("Successfully booked appointment");
+            router.push("/appointments")
          } else {
             toast.error(data?.message || "Something went wrong!");
          }
