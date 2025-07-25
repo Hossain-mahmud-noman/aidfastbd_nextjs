@@ -48,7 +48,7 @@ const PhysiotherapyCenterDetails = ({ data }) => {
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
         <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/physiotherapy-center/${data?.userId}`} />
+        <meta property="og:url" content={`${frontend_url}/physiotherapy-center/${data?.id}`} />
       </Head>
 
       <AppBar
@@ -58,17 +58,17 @@ const PhysiotherapyCenterDetails = ({ data }) => {
           <div className="flex">
             <ProfileQR
               slug={"newService"}
-              id={data?.userId}
+              id={data?.id}
               type={"physiotherapy center"}
             />
             <FavouriteToggle
               isFill={data?.isFavourite}
               userId={user?.id}
-              id={data?.userId}
+              id={data?.id}
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/physiotherapy-center/${data?.userId}`} />
+            <ShareButton link={`${frontend_url}/physiotherapy-center/${data?.id}`} />
           </div>
         }
       />
@@ -143,8 +143,6 @@ const PhysiotherapyCenterDetails = ({ data }) => {
         <DentalTabs data={data} />
       </div>
       <FloatingCallButton number={data?.contact} />
-
-
     </>
   );
 };
