@@ -1,16 +1,28 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import AppointmentCard from "../../components/card/AppointmentCard";
+import { getUserProfile } from "../../context/getUserProfile";
 
-export default function AppointmentClient({ token, userId }) {
+export default function AppointmentClient({ token }) {
   const [data, setData] = useState([]);
+  const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true);
+
+  const fetchProfile = async () => {
+    const profile = await getUserProfile();
+    setUser(profile)
+  }
+  useEffect(() => {
+    fetchProfile();
+  }, [token])
+
+  console.log("userrrrrrrrrrrrr", user)
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
         const res = await fetch(
-          `https://api.aidfastbd.com/api/GeneralInformation/GetAllBookAppointmentList?IsCanceled=false&userId=${userId}`,
+          `https://api.aidfastbd.com/api/GeneralInformation/GetAllBookAppointmentList?IsCanceled=false&userId=${user.id}`,
           {
             method: "GET",
             headers: {
@@ -29,7 +41,7 @@ export default function AppointmentClient({ token, userId }) {
     };
 
     fetchAppointments();
-  }, [token, userId]);
+  }, [token, user]);
 
   if (loading) {
     return <div className="text-center py-10">Loading appointments...</div>;
@@ -41,7 +53,7 @@ export default function AppointmentClient({ token, userId }) {
 
   return (
     <div className="space-y-4">
-      {data.map((e, index) => (
+      {data?.map((e, index) => (
         <AppointmentCard key={index} data={e} token={token} />
       ))}
     </div>

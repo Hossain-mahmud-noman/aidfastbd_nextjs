@@ -743,7 +743,6 @@ export const nursingHomeCareList = async ({ dispatch, isSearch = false, page = 1
 
 export const cancelBooking = async ({ id, token }) => {
   try {
-
     const url = `${base_endpoint}/GeneralInformation/CancelBooking`;
     headerx['Authorization'] = `Bearer ${token}`;
     const response = await

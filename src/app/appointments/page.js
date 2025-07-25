@@ -18,7 +18,7 @@ async function page() {
 
   return (
     <div className="pt-16 pl-2 pr-2 mt-3">
-      <AppointmentClient token={tokenCookie} userId={user.id} />
+      <AppointmentClient token={tokenCookie}  />
     </div>
   );
 }
