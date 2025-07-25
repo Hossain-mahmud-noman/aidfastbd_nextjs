@@ -7,7 +7,7 @@ const DentalCard = ({ data }) => {
   const defaultImageUrl = "/images/dental.png";
   const imageUrl = data.profileImageUrl ? `${image_base_endpoint}${data.profileImageUrl}` : defaultImageUrl;
   return (
-    <Link href={`/dental/` + data.userId}>
+    <Link href={`/dental/` + data.id}>
       <div
         className="shadow-custom-light flex flex-col h-full bg-white rounded-lg  transition-all duration-300 hover:shadow-lg"
         aria-label={`Dental ${data.name} information card`}
