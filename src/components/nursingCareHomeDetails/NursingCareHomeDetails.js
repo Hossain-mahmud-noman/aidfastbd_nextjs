@@ -47,7 +47,7 @@ const NursingCareHomeDetails = ({ data }) => {
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
         <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/nursing-home-care/${data?.userId}`} />
+        <meta property="og:url" content={`${frontend_url}/nursing-home-care/${data?.id}`} />
       </Head>
 
 
@@ -58,17 +58,17 @@ const NursingCareHomeDetails = ({ data }) => {
           <div className="flex">
             <ProfileQR
               slug={"newService"}
-              id={data?.userId}
+              id={data?.id}
               type={"Nursing Home Care Center"}
             />
             <FavouriteToggle
               isFill={data?.isFavourite}
               userId={user?.id}
-              id={data?.userId}
+              id={data?.id}
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/nursing-home-care/${data?.userId}`} />
+            <ShareButton link={`${frontend_url}/nursing-home-care/${data?.id}`} />
           </div>
         }
       />

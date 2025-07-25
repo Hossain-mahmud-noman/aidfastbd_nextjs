@@ -47,7 +47,7 @@ const HearingCareCenterDetails = ({ data }) => {
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
         <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/hearing-care-center/${data?.userId}`} />
+        <meta property="og:url" content={`${frontend_url}/hearing-care-center/${data?.id}`} />
       </Head>
 
       <AppBar
@@ -56,19 +56,19 @@ const HearingCareCenterDetails = ({ data }) => {
         trailingComponents={
           <div className="flex">
             <ProfileQR
-              id={data?.userId}
+              id={data?.id}
               slug={"newService"}
               type={"hearingCareCenter"}
             />
             <FavouriteToggle
               isFill={data?.isFavourite}
               userId={user?.id}
-              id={data?.userId}
+              id={data?.id}
               type={3}
               token={token}
             />
             <ShareButton
-              link={`${frontend_url}/hearing-care-center/${data?.userId}`}
+              link={`${frontend_url}/hearing-care-center/${data?.id}`}
             />
           </div>
         }
