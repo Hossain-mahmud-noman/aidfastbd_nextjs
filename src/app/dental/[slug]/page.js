@@ -9,7 +9,7 @@ import DentalDetails from "../../../components/dental/DentalDetails";
 
 export async function generateMetadata({ params }) {
   const res = await fetch(
-    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=1&id=${params.slug}`,
+    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=1&genericServiceId=${params.slug}`,
     { cache: "no-store" }
   );
   const json = await res.json();
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }) {
 
 export default async function DoctorPage({ params }) {
   const res = await fetch(
-    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?id=${params.slug}`,
+    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`,
     { cache: "no-store" }
   );
   const json = await res.json();

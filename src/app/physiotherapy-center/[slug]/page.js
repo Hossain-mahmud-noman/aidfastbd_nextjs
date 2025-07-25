@@ -10,7 +10,7 @@ import PhysiotherapyCenterDetails from "../../../components/physiotherapyCenter/
 
 export async function generateMetadata({ params }) {
   const res = await fetch(
-    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?userId=${params.slug}`,
+    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`,
     { cache: "no-store" }
   );
   const json = await res.json();
@@ -34,14 +34,14 @@ export async function generateMetadata({ params }) {
       title: `${data?.name} | ${appname}`,
       description: `${data?.name ?? ""} ${data?.location ?? ""}`,
       images: [profile],
-      url: `${frontend_url}/physiotherapy-center/${data.userId}`,
+      url: `${frontend_url}/physiotherapy-center/${data?.id}`,
     },
   };
 }
 
 export default async function PhysiotherapyPage({ params }) {
   const res = await fetch(
-    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?userId=${params.slug}`,
+    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`,
     { cache: "no-store" }
   );
   const json = await res.json();

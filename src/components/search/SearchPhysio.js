@@ -4,6 +4,7 @@ import { FiSearch } from 'react-icons/fi';
 import { MdCancel } from 'react-icons/md';
 import { FaAngleDown } from 'react-icons/fa6';
 import DentalCard from '../DentalCard';
+import ServiceCard from '../ServiceCard';
 
 export const SearchableDropdown = ({ label, options, onSelect, setSelected }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -190,8 +191,8 @@ const SearchPhysio = () => {
             <p className="text-center text-gray-500">No Physiotherapy Center Found</p>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-3">
-              {results.map((item, index) => (
-                <DentalCard key={index} data={item} />
+              {results.map((d, index) => (
+               <ServiceCard key={`${d.id}-${index}`} slug="physiotherapy-center" data={d} />
               ))}
             </div>
           )}
