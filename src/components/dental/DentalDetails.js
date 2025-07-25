@@ -14,7 +14,7 @@ import DiaLocation from "../DiaLocation";
 import TextTicker from "../TextTicker";
 
 const DentalDetails = ({ data }) => {
-  console.log("🚀 ~ DentalDetails ~ data:", data)
+
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
 

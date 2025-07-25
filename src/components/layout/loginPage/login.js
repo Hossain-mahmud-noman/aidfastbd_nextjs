@@ -38,6 +38,14 @@ const Login = () => {
       label: <Link href="/profile">Profile</Link>,
     },
     {
+      key: 't',
+      label: (
+        <Link href='/appointments' className="w-full text-left">
+          Appoinments
+        </Link>
+      ),
+    },
+    {
       key: '2',
       label: (
         <button onClick={() => handleLogout(router)} className="w-full text-left">

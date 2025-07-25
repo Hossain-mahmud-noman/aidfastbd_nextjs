@@ -25,7 +25,7 @@ async function page() {
 
   return (
     <>
-      <div className='py-10'>
+      <div className='py-10 aid-container'>
         <ResetForm user={user} ></ResetForm>
       </div>
     </>

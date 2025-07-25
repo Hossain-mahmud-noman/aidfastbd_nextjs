@@ -16,7 +16,6 @@ export default function AppointmentClient({ token }) {
     fetchProfile();
   }, [token])
 
-  console.log("userrrrrrrrrrrrr", user)
 
   useEffect(() => {
     const fetchAppointments = async () => {

@@ -1,6 +1,5 @@
 'use client';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import {
   FaUser, FaCalendarAlt, FaHeart, FaInfoCircle, FaShieldAlt, FaLock,
   FaHistory, FaSignInAlt
