@@ -8,11 +8,13 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { BiSolidPhoneCall } from 'react-icons/bi'
 import { FaArrowRightLong } from 'react-icons/fa6'
-
+import ContacTactModal from '../../utils/contactModal.js'
 const Hero = () => {
    const router = useRouter();
    const i18n = useI18n();
-   const [searchTerm, setSearchTerm] = useState()
+   const [showModal, setShowModal] = useState(false);
+   const handleOpen = () => setShowModal(true);
+   const handleClose = () => setShowModal(false);
    const hamdleInput = () => {
       router.push(`/doctor?name=${searchTerm}`)
    }
@@ -39,10 +41,11 @@ const Hero = () => {
                      <p className="description2 text-white">{i18n.t("Book Appointment")}</p>
                      <FaArrowRightLong className="text-white description1" />
                   </Link>
-                  <Link href="tel: +8801738548662" className="hover:scale-105 group bg-[#EEF8FF] border-2 border-primary px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
+                  <button onClick={handleOpen}
+                     className="hover:scale-105 group bg-[#EEF8FF] border-2 border-primary px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
                      <BiSolidPhoneCall className="description2 text-primary group-hover:!text-white transition-all duration-300" />
                      <p className="description2 text-primary group-hover:text-white transition-all duration-300">{i18n.t("Call Now")}</p>
-                  </Link>
+                  </button>
                </div>
 
                <div className="flex items-center mt-6 gap-3">
@@ -53,7 +56,7 @@ const Hero = () => {
                      <Avatar size={40} src="/home/hero/d4.png" />
                   </Avatar.Group>
                   <p className="text-sm text-gray-600">
-                    {i18n.t("Trusted by 1200+ patients with 5/5 rating")}
+                     {i18n.t("Trusted by 1200+ patients with 5/5 rating")}
                   </p>
                </div>
             </div>
@@ -119,7 +122,12 @@ const Hero = () => {
                </button>
             </div>
          </div> */}
-      </section>
+          <ContacTactModal
+            contact="+8801738548662"
+            open={showModal}
+            onClose={handleClose}
+         />
+      </section >
    )
 }
 

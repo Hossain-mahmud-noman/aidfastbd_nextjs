@@ -2,6 +2,7 @@
 import Hero from "../components/hero/hero.js";
 import About from "../components/about/about.js";
 import Service from '../components/service/service.js'
+import EmergencyService from '../components/emergencyService/emergencyService.js'
 import CommonService from '../components/common/service.js'
 import Information from '../components/information/information.js'
 import MobileApp from '../components/mobileApp/mobileApp.js'
@@ -16,8 +17,9 @@ export default async function Home() {
     <>
       <div className="font-[family-name:var(--font-geist-sans)] pt-4 md:pt-6 lg:pt-10">
         <Hero />
-        <About />
+        <EmergencyService />
         <Service />
+        <About />
         <CommonService />
         <Information />
         <MobileApp />

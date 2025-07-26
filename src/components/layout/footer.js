@@ -10,11 +10,15 @@ import { MdOutlineEmail } from "react-icons/md";
 import { BiPhoneCall } from "react-icons/bi";
 import { FaLinkedin } from "react-icons/fa";
 import { useI18n } from "../../context/i18n";
+import ContacTactModal from "../../utils/contactModal";
 
 
 const Footer = () => {
    const i18n = useI18n();
    const [currentYear, setCurrentYear] = useState(null);
+   const [showModal, setShowModal] = useState(false);
+   const handleOpen = () => setShowModal(true);
+   const handleClose = () => setShowModal(false);
    useEffect(() => {
       if (typeof window !== "undefined") {
          setCurrentYear(new Date().getFullYear());
@@ -52,7 +56,7 @@ const Footer = () => {
       },
       {
          name: "+8801738548662",
-         link: "tel:+8801738548662",
+         link: handleOpen,
          icon: <BiPhoneCall />,
       },
    ];
@@ -60,7 +64,7 @@ const Footer = () => {
    const navIcons = [
       {
          icon: FaWhatsapp,
-         link: 'tel: +880 1738-548662'
+         link: handleOpen
       },
       {
          icon: FaFacebookF,
@@ -166,28 +170,62 @@ const Footer = () => {
                         <h3 className="description3 text-white mt-8 sm:mt-0">{i18n.t("Address")}</h3>
                         <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-5">
                            {navLinks3?.map((item, index) => (
-                              <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 descruiption1 text-white transform duration-300 hover:text-black cursor-pointer">
-                                 <Link className="flex items-center gap-2" target="_blank" href={item?.link}>
-                                    {item.icon}
-                                    {item?.name}
-                                 </Link>
+                              <li
+                                 key={index}
+                                 className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 descruiption1 text-white transform duration-300 hover:text-black cursor-pointer"
+                              >
+                                 {typeof item.link === "function" ? (
+                                    <button
+                                       onClick={item.link}
+                                       className="flex items-center gap-2 text-left"
+                                       type="button"
+                                    >
+                                       {item.icon}
+                                       {item.name}
+                                    </button>
+                                 ) : (
+                                    <Link
+                                       className="flex items-center gap-2"
+                                       target="_blank"
+                                       href={item.link}
+                                    >
+                                       {item.icon}
+                                       {item.name}
+                                    </Link>
+                                 )}
                               </li>
                            ))}
+
                            <div className="flex justify-center sm:justify-start gap-2 sm:gap-[13px] mt-4 md:mt-5 lg:mt-6">
                               {navIcons.map((item, index) => {
                                  const IconComponent = item.icon;
-                                 return (
+                                 const isFunction = typeof item.link === 'function';
+
+                                 const commonClasses =
+                                    "group border border-white rounded-full transition-all duration-300 w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:border-black";
+
+                                 return isFunction ? (
+                                    <button
+                                       key={index}
+                                       onClick={item.link}
+                                       className={commonClasses}
+                                       type="button"
+                                    >
+                                       <IconComponent className="text-white text-base lg:text-xl group-hover:text-black transition-all duration-300" />
+                                    </button>
+                                 ) : (
                                     <Link
-                                       className="group border border-white rounded-full transition-all duration-300 w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:border-black"
                                        key={index}
                                        href={item.link}
                                        target="_blank"
                                        rel="noopener noreferrer"
+                                       className={commonClasses}
                                     >
                                        <IconComponent className="text-white text-base lg:text-xl group-hover:text-black transition-all duration-300" />
                                     </Link>
                                  );
                               })}
+
                            </div>
                         </ul>
                      </div>
@@ -209,6 +247,11 @@ const Footer = () => {
                </div>
             </div>
          </div>
+         <ContacTactModal
+            contact="+8801738548662"
+            open={showModal}
+            onClose={handleClose}
+         />
       </div>
    );
 };

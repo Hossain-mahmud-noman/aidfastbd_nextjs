@@ -82,9 +82,8 @@ const Service = () => {
       }
    ];
 
-
    return (
-      <section className="mt-5 lg:mt-6 xl:mt-8 aid-container">
+      <section className="mt-8 md:mt-16 lg:mt-20 xl:mt-[109px] aid-container">
          <div className="flex items-center justify-between gap-2">
             <div>
                <h1 className="text-[#212121] heading1">{i18n.t("AidFastBD Services")}</h1>
@@ -116,7 +115,6 @@ const Service = () => {
                   </Link>
                ))}
             </div>
-
          </div>
       </section>
    )
