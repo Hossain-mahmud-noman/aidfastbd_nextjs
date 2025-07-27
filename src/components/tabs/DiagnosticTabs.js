@@ -283,6 +283,7 @@ function DiagnosticTabs({ data }) {
               </p>
             </div>
           )
+          
         )}
       </div>
     </>

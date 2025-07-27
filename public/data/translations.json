@@ -149,7 +149,20 @@
     "Registration No": "Registration No",
     "Service Time": "Service Time",
     "Total Rating": "Total Rating",
-    "Diagnostic Detail": "Diagnostic Detail"
+    "Diagnostic Detail": "Diagnostic Detail",
+    "Others": "Others",
+    "Facilities": "Facilities",
+    "No other facility data available": "No other facility data available",
+    "No facility data available": "No facility data available",
+    "No driver info available": "No driver info available",
+    "No ambulance info available": "No ambulance info available",
+    "Ambulance Name": "Ambulance Name",
+    "Ambulance Type": "Ambulance Type",
+    "Licence Number": "Licence Number",
+    "AC Available": "AC Available",
+    "Driver Name": "Driver Name",
+    "Mobile Number": "Mobile Number",
+    "Ambulance Details": "Ambulance Details"
   },
   "bn": {
     "Doctor": "ডাক্তার",
@@ -301,6 +314,19 @@
     "Registration No": "রেজিস্ট্রেশন নাম্বার",
     "Service Time": "সার্ভিসের সময়",
     "Total Rating": "মোট রেটিং",
-    "Diagnostic Detail": "ডায়াগনস্টিক ডিটেইলস"
+    "Diagnostic Detail": "ডায়াগনস্টিক ডিটেইলস",
+    "Others": "অনান্য",
+    "Facilities": "সুযোগ-সুবিধা",
+    "No other facility data available": "কোনো সুবিধার তথ্য পাওয়া যায়নি",
+    "No facility data available": "অন্য কোনো তথ্য পাওয়া যায়নি",
+    "No driver info available": "কোনো ড্রাইভারের তথ্য পাওয়া যায়নি",
+    "No ambulance info available": "কোনো অ্যাম্বুলেন্স তথ্য পাওয়া যায়নি",
+    "Ambulance Name": "অ্যাম্বুলেন্সের নাম",
+    "Ambulance Type": "অ্যাম্বুলেন্সের ধরন",
+    "Licence Number": "লাইসেন্স নম্বর",
+    "AC Available": "এসি আছে কিনা",
+    "Driver Name": "ড্রাইভারের নাম",
+    "Mobile Number": "মোবাইল নম্বর",
+    "Ambulance Details": "অ্যাম্বুলেন্সের বিস্তারিত তথ্য"
   }
 }
