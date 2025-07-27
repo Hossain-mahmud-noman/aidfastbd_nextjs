@@ -1,4 +1,4 @@
-
+'use client'
 import { image_base_endpoint } from "../utils/constants";
 import TextTicker from "./TextTicker";
 import DiaLocation from "./DiaLocation";
