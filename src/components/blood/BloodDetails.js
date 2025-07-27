@@ -14,14 +14,13 @@ import TextTicker from "../TextTicker";
 import BloodTabs from "../tabs/BloodTabs";
 import { useI18n } from "../../context/i18n";
 import ContacTactModal from "../../utils/contactModal";
+import EmergencyCallButton from "../EmergencyCallButton";
 
 const BloodDetails = ({ data }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const i18n = useI18n()
-  const [showModal, setShowModal] = useState(false);
-  const handleOpen = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
+  
 
   useEffect(() => {
     const tokenCookie = localStorage.getItem("token") ?? "";
@@ -111,25 +110,13 @@ const BloodDetails = ({ data }) => {
               </div>
             </div>
           </div>
-          <div >
-            <button
-              onClick={handleOpen}
-              className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm"
-            >
-              {i18n.t("Call Emergency")}
-            </button>
-          </div>
+          <EmergencyCallButton number={data?.emergencyContactNumber} />
         </div>
       </div>
       <div className='aid-container'>
         <BloodTabs data={data} />
       </div>
       <FloatingCallButton number={data?.contact} />
-      <ContacTactModal
-        contact={data?.emergencyContactNumber}
-        open={showModal}
-        onClose={handleClose}
-      />
     </>
   );
 };

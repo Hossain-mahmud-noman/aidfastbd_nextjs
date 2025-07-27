@@ -12,14 +12,12 @@ import { image_base_endpoint, frontend_url, appname } from "../../utils/constant
 import Head from "next/head";
 import { useI18n } from "../../context/i18n";
 import ContacTactModal from "../../utils/contactModal";
+import EmergencyCallButton from "../EmergencyCallButton";
 
 const DoctorDetail = ({ data }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const i18n = useI18n()
-  const [showModal, setShowModal] = useState(false);
-  const handleOpen = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
 
   useEffect(() => {
     const tokenCookie = localStorage.getItem("token") ?? "";
@@ -96,14 +94,7 @@ const DoctorDetail = ({ data }) => {
             </p>
           </div>
 
-          {data.emergencyNo && (
-            <button
-              onClick={handleOpen}
-              className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm mt-2 inline-block"
-            >
-              {i18n.t("Call Emergency")}
-            </button>
-          )}
+          <EmergencyCallButton number={data?.emergencyNo} />
         </div>
       </div>
       <DoctorTabs data={data} />
@@ -112,11 +103,7 @@ const DoctorDetail = ({ data }) => {
         token={token}
         chambers={data?.chamberInformation}
       />
-      <ContacTactModal
-        contact={data?.emergencyNo}
-        open={showModal}
-        onClose={handleClose}
-      />
+
     </>
   );
 };

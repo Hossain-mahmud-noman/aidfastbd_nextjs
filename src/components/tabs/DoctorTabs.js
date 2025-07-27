@@ -51,7 +51,7 @@ function DoctorTabs({ data }) {
 
   return (
     <>
-      <div className="bg-white shadow-custom-light aid-container my-4 md:my-5 lg:my-8">
+      <div className="bg-white shadow-custom-light  my-4 md:my-5 lg:my-8 aid-container">
         <div className="overflow-x-auto md:overflow-x-visible">
           <div
             className="inline-flex md:grid md:grid-cols-4 md:w-full md:space-x-0 space-x-3"
@@ -77,7 +77,7 @@ function DoctorTabs({ data }) {
 
 
       {/* Conditionally Render Tab Content */}
-      <div className="mt-6">
+      <div className="mt-6 aid-container">
         {activeTab === i18n.t("Information") && (
           <div>
             <h3 className="font-bold text-lg text-black-600">

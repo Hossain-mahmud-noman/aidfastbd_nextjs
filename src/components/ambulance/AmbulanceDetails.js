@@ -15,14 +15,12 @@ import TextTicker from "../TextTicker";
 import AmbulanceTabs from "../tabs/AmbulanceTabs";
 import { useI18n } from "../../context/i18n";
 import ContacTactModal from "../../utils/contactModal";
+import EmergencyCallButton from "../EmergencyCallButton";
 
 const AmbulanceDetails = ({ data }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const i18n = useI18n()
-  const [showModal, setShowModal] = useState(false);
-  const handleOpen = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
 
   useEffect(() => {
     const tokenCookie = localStorage.getItem("token") ?? "";
@@ -114,15 +112,7 @@ const AmbulanceDetails = ({ data }) => {
               </div>
             </div>
           </div>
-          <div >
-            <button
-              onClick={handleOpen}
-
-              className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm"
-            >
-              {i18n.t("Call Emergency")}
-            </button>
-          </div>
+          <EmergencyCallButton number={data?.emergencyContactNumber} />
         </div>
       </div>
       <div className='aid-container'>
@@ -130,11 +120,6 @@ const AmbulanceDetails = ({ data }) => {
       </div>
       <FloatingCallButton number={data?.contactNumber} />
 
-      <ContacTactModal
-        contact={data?.emergencyContactNumber}
-        open={showModal}
-        onClose={handleClose}
-      />
     </>
   );
 };
