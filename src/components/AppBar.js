@@ -7,7 +7,7 @@ const AppBar = ({ title = "AidFast", leadingIcon, trailingComponents }) => {
   const router = useRouter();
   return (
     <header >
-      <div className="aid-container mx-auto top-0 w-full bg-white  shadow-custom-light z-[10000] mt-5 lg:mt-8">
+      <div className="aid-container mx-auto top-0 w-full bg-white rounded-md shadow-custom-light z-[10000] mt-5 lg:mt-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           <div className="flex items-center">
             {leadingIcon ? (

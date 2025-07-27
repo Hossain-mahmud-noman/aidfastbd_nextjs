@@ -12,10 +12,16 @@ import Image from "next/image";
 import DiaLocation from "../DiaLocation";
 import TextTicker from "../TextTicker";
 import PharmacyTabs from "../tabs/PharmacyTabs";
+import { useI18n } from "../../context/i18n";
+import ContacTactModal from "../../utils/contactModal";
 
 const PharmacyDetails = ({ data }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
+  const i18n = useI18n();
+  const [showModal, setShowModal] = useState(false);
+  const handleOpen = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
 
   useEffect(() => {
     const tokenCookie = localStorage.getItem("token") ?? "";
@@ -44,14 +50,14 @@ const PharmacyDetails = ({ data }) => {
         <meta property="og:url" content={`${frontend_url}/pharmacy/${data?.userId}`} />
       </Head>
 
-      <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Pharmacy Detail' trailingComponents={
+      <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title={i18n.t("Pharmacy Detail")} trailingComponents={
         <div className='flex'>
           <ProfileQR id={data?.userId} type={"Pharmacy"} />
           <FavouriteToggle isFill={data?.isFavourite} userId={user?.id} id={data?.userId} type={4} token={token} />
           <ShareButton link={`${frontend_url}/pharmacy/${data?.userId}`} />
         </div>
       } />
-      <div className="pt-16 aid-container">
+      <div className="mt-5 lg:mt-8 aid-container">
         <div className=''>
           <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
             <Image
@@ -62,7 +68,7 @@ const PharmacyDetails = ({ data }) => {
               className="w-full h-full object-fill"
             />
           </div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between my-5 lg:my-8">
             {/* Logo and Name */}
             <div className="flex items-center">
               <Image
@@ -86,31 +92,31 @@ const PharmacyDetails = ({ data }) => {
             </div>
           </div>
 
-          {data?.notice != null ? <TextTicker text={data?.notice}></TextTicker> : null}
+          {data?.notice != null ? <TextTicker text={data?.notice} /> : null}
           {/* Info Section */}
-          <div className="bg-gray-100 p-3 rounded-lg mb-4">
+          <div className="bg-gray-100 p-3 rounded-lg my-5 lg:my-8">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="font-bold">Registration No</p>
+                <p className="font-bold">{i18n.t("Registration No")}</p>
                 <p>{data?.registrationNumber == null ? "N/A" : data?.registrationNumber} </p>
               </div>
               <div>
-                <p className="font-bold">Service Time</p>
+                <p className="font-bold">{i18n.t("Service Time")}</p>
                 <p>{data?.serviceTime}</p>
               </div>
               <div>
-                <p className="font-bold">Total Rating</p>
+                <p className="font-bold">{i18n.t("Total Rating")}</p>
                 <p>{data?.averageRating} ⭐ ({data?.atotalRating} reviews)</p>
               </div>
             </div>
           </div>
           <div >
-            <a
-              href={`tel:${data?.emergencyContactNumber}`}
+            <button
+              onClick={handleOpen}
               className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm"
             >
-              Emergency Call
-            </a>
+              {i18n.t("Call Emergency")}
+            </button>
           </div>
         </div>
       </div>
@@ -118,7 +124,11 @@ const PharmacyDetails = ({ data }) => {
         <PharmacyTabs data={data} />
       </div>
       <FloatingCallButton number={data?.contactNumber} />
-
+      <ContacTactModal
+        contact={data?.emergencyContactNumber}
+        open={showModal}
+        onClose={handleClose}
+      />
     </>
   );
 };

@@ -162,7 +162,17 @@
     "AC Available": "AC Available",
     "Driver Name": "Driver Name",
     "Mobile Number": "Mobile Number",
-    "Ambulance Details": "Ambulance Details"
+    "Ambulance Details": "Ambulance Details",
+    "Drug List": "Drug List",
+    "Equipments": "Equipments",
+    "No information data available": "No information data available",
+    "No services data available": "No services data available",
+    "Pack Size": "Pack Size",
+    "Unit Price": "Unit Price",
+    "Total Taka": "Total Taka",
+    "No drug data available": "No drug data available",
+    "No equipment data available": "No equipment data available",
+    "Pharmacy Detail": "Pharmacy Detail"
   },
   "bn": {
     "Doctor": "ডাক্তার",
@@ -327,6 +337,16 @@
     "AC Available": "এসি আছে কিনা",
     "Driver Name": "ড্রাইভারের নাম",
     "Mobile Number": "মোবাইল নম্বর",
-    "Ambulance Details": "অ্যাম্বুলেন্সের বিস্তারিত তথ্য"
+    "Ambulance Details": "অ্যাম্বুলেন্সের বিস্তারিত তথ্য",
+    "Drug List": "ঔষধের তালিকা",
+    "Equipments": "চিকিৎসা সজঞ্জাম",
+    "No information data available": "কোনও তথ্য পাওয়া যায়নি",
+    "No services data available": "কোনও সেবার তথ্য পাওয়া যায়নি",
+    "Pack Size": "প্যাক সাইজ",
+    "Unit Price": "ইউনিট মূল্য",
+    "Total Taka": "মোট টাকা",
+    "No drug data available": "কোনও ওষুধের তথ্য পাওয়া যায়নি",
+    "No equipment data available": "কোনও যন্ত্রপাতির তথ্য পাওয়া যায়নি",
+    "Pharmacy Detail": "ফার্মেসির বিস্তারিত তথ্য"
   }
 }
