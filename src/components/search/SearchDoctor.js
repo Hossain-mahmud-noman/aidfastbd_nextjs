@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { FiSearch } from "react-icons/fi";
 import { MdCancel } from "react-icons/md";
 import { FaAngleDown } from "react-icons/fa6";
-import Image from 'next/image';
 import DoctorCard from '../DoctorCard';
 import { base_endpoint } from '../../utils/constants';
+import { useI18n } from '../../context/i18n';
 
 const SearchableDropdown = ({ label, options, value, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -65,7 +65,8 @@ const SearchableDropdown = ({ label, options, value, onChange }) => {
 
 const SearchDoctor = ({ specialityData = [] }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false); // ✅ new state
+  const [hasSearched, setHasSearched] = useState(false);
+  const i18n = useI18n()
   const [filters, setFilters] = useState({
     name: null,
     speciality: null,
@@ -112,7 +113,7 @@ const SearchDoctor = ({ specialityData = [] }) => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    setHasSearched(true); 
+    setHasSearched(true);
 
     const queryParams = new URLSearchParams();
     if (filters.name?.value) queryParams.append("DoctorId", filters.name.value);
@@ -135,7 +136,7 @@ const SearchDoctor = ({ specialityData = [] }) => {
       {/* Search Button */}
       <div onClick={togglePopup} className="relative flex items-center mb-3 mt-2">
         <div className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 shadow-lg pr-12">
-          Search Doctor
+          {i18n.t("Nearest Doctors")}
         </div>
         <button className="absolute right-0 mr-2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transform hover:scale-105">
           <FiSearch className="w-5 h-5" />
@@ -175,9 +176,9 @@ const SearchDoctor = ({ specialityData = [] }) => {
       {/* Results - shown only after search */}
       {hasSearched && (
         <div className="mb-10">
-          <h3 className="text-lg ml-3 mb-2">Search Results</h3>
+          <h3 className="text-lg ml-3 mb-2">{i18n.t("Search Results")}</h3>
           {doctorList.length === 0 ? (
-            <p className="text-center text-gray-500">No doctors found</p>
+            <p className="text-center text-gray-500">{i18n.t("No doctors found")}</p>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 px-3">
               {doctorList.map((doctor, index) => (

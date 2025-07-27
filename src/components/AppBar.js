@@ -7,8 +7,8 @@ const AppBar = ({ title = "AidFast", leadingIcon, trailingComponents }) => {
   const router = useRouter();
   return (
     <header >
-      <div className="fixed top-0 left-0 w-full bg-white shadow-md z-[10000]">
-        <div className="flex items-center justify-between h-16">
+      <div className="aid-container mx-auto top-0 w-full bg-white  shadow-custom-light z-[10000] mt-5 lg:mt-8">
+        <div className="flex items-center justify-between h-16 md:h-20">
           <div className="flex items-center">
             {leadingIcon ? (
               <button onClick={() => {
@@ -26,7 +26,7 @@ const AppBar = ({ title = "AidFast", leadingIcon, trailingComponents }) => {
                 {leadingIcon}
               </button>
             ) : null}
-            <h1 className="ml-3 text-xl font-semi text-black">{title}</h1>
+            <h1 className="ml-3 text-sm md:text-base lg:text-xl font-semi text-black">{title}</h1>
           </div>
           <div className="md:flex items-center space-x-4">
             {trailingComponents}

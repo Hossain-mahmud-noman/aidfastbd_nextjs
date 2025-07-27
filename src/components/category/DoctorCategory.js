@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Keyboard, Navigation, Mousewheel } from "swiper/modules";
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
+import { useI18n } from '../../context/i18n';
 
 const DoctorCategory = ({ specialityData = [] }) => {
    const [spData, setSpData] = useState([]);
@@ -33,11 +34,13 @@ const DoctorCategory = ({ specialityData = [] }) => {
          swiperRef.current.swiper.slidePrev();
       }
    };
+   
+   const i18n = useI18n()
 
    return (
       <>
          <div className='mb-1'>
-            <h3 className="text-lg ml-3 mb-2">Speciality</h3>
+            <h3 className="text-lg ml-3 mb-2">{i18n.t("Speciality")}</h3>
             <div className="w-full">
                <div className="w-full">
                   <div className="w-full relative">
@@ -121,7 +124,7 @@ const DoctorCategory = ({ specialityData = [] }) => {
 
             {spActive !== null && spLoading === false && spData.length === 0 ? (
                <div className='h-[180px] w-full flex items-center justify-center text-2xl'>
-                  No data Speciality available
+                  {i18n.t("No data Speciality available")}
                </div>
             ) : (
                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 mt-5 xl:mt-12">
@@ -131,7 +134,7 @@ const DoctorCategory = ({ specialityData = [] }) => {
                </div>
             )}
          </div>
-         {spActive !== null && <h3 className="text-lg ml-3 mb-2">Nearest Doctor</h3>}
+         {spActive !== null && <h3 className="text-lg ml-3 mb-2">{i18n.t("Nearest Doctors")}</h3>}
       </>
    );
 };

@@ -10,10 +10,16 @@ import { FaArrowLeft, FaStar } from "react-icons/fa";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { image_base_endpoint, frontend_url, appname } from "../../utils/constants";
 import Head from "next/head";
+import { useI18n } from "../../context/i18n";
+import ContacTactModal from "../../utils/contactModal";
 
 const DoctorDetail = ({ data }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
+  const i18n = useI18n()
+  const [showModal, setShowModal] = useState(false);
+  const handleOpen = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
 
   useEffect(() => {
     const tokenCookie = localStorage.getItem("token") ?? "";
@@ -43,7 +49,7 @@ const DoctorDetail = ({ data }) => {
       </Head>
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        title="Doctor Detail"
+        title={i18n.t("Doctor Details Information")}
         trailingComponents={
           <div className="flex">
             <ProfileQR id={data?.userId} type="Doctor" />
@@ -59,7 +65,7 @@ const DoctorDetail = ({ data }) => {
         }
       />
 
-      <div className="pt-16 flex flex-col md:flex-row gap-5 md:gap-10 aid-container mt-6">
+      <div className="mt-5 lg:mt-8 flex flex-col md:flex-row gap-5 md:gap-10 aid-container">
         <div className="rounded-xl">
           <ShowOriginalImage image={profile} />
         </div>
@@ -91,12 +97,12 @@ const DoctorDetail = ({ data }) => {
           </div>
 
           {data.emergencyNo && (
-            <a
-              href={`tel:${data.emergencyNo}`}
+            <button
+              onClick={handleOpen}
               className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm mt-2 inline-block"
             >
-              Emergency Call
-            </a>
+              {i18n.t("Call Emergency")}
+            </button>
           )}
         </div>
       </div>
@@ -105,6 +111,11 @@ const DoctorDetail = ({ data }) => {
         id={data?.userId}
         token={token}
         chambers={data?.chamberInformation}
+      />
+      <ContacTactModal
+        contact={data?.emergencyNo}
+        open={showModal}
+        onClose={handleClose}
       />
     </>
   );

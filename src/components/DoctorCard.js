@@ -46,20 +46,17 @@ const DoctorCard = ({ doctor, lat = null, lon = null, id = null }) => {
                         </span>
                     </div>}
 
-
                     <p className="text-sm sm:text-base md:text-lg font-semibold text-green-600">Fee {doctor.doctorFee}</p>
                 </div>
 
-                {/* Divider Line */}
                 <hr className="border-t border-gray-300 my-2" />
 
-                {/* Appointment Button */}
                 <div className='px-2 pb-2'>
                     <button
                         className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center text-sm sm:text-base md:text-lg"
                     >
-                        <FaPhone className="mr-2 text-lg sm:text-xl " /> {/* Responsive icon size */}
-                        <span className="text-sm sm:text-base md:text-lg">Appointment</span> {/* Responsive text size */}
+                        <FaPhone className="mr-2 text-lg sm:text-xl " />
+                        <span className="text-sm sm:text-base md:text-lg">Appointment</span>
                     </button>
                 </div>
             </div>
