@@ -32,7 +32,7 @@ const PharmacyDetails = ({ data }) => {
     setUser(parsedUser);
   }, []);
 
-  const defaultImageUrl = "/images/logo.png";
+  const defaultImageUrl = "/images/pharmacy.jpg";
   const profile = data?.profileImageUrl == null || data?.profileImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.profileImageUrl;
   const cover = data?.coverImageUrl == null || data?.coverImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.coverImageUrl;
 

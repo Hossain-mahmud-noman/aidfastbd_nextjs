@@ -177,7 +177,9 @@
     "No donor data available": "No donor data available",
     "Quantity": "Quantity",
     "Service Name": "Service Name",
-    "Blood Bank Detail": "Blood Bank Detail"
+    "Blood Bank Detail": "Blood Bank Detail",
+    "No doctor data available": "No doctor data available",
+    "Dental Detail": "Dental Detail"
   },
   "bn": {
     "Doctor": "ডাক্তার",
@@ -357,6 +359,8 @@
     "No donor data available": "রক্তদাতার কোনো তথ্য পাওয়া যায়নি",
     "Quantity": "পরিমাণ",
     "Service Name": "সেবার নাম",
-    "Blood Bank Detail": "ব্লাডব্যাংক এর বিস্তারিত"
+    "Blood Bank Detail": "ব্লাডব্যাংক এর বিস্তারিত",
+    "No doctor data available": "কোনো ডাক্তার সংক্রান্ত তথ্য পাওয়া যায়নি",
+    "Dental Detail": "ডেন্টাল এর বিস্তারিত"
   }
 }

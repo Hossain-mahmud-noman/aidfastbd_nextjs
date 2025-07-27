@@ -9,14 +9,19 @@ import { image_base_endpoint, frontend_url, appname } from "../../utils/constant
 import Head from "next/head";
 import DentalTabs from "../tabs/DentalTabs";
 import FloatingCallButton from "../FloatingCallButton";
+import EmergencyCallButton from "../EmergencyCallButton";
 import Image from "next/image";
 import DiaLocation from "../DiaLocation";
 import TextTicker from "../TextTicker";
+import { useI18n } from "../../context/i18n";
 
 const DentalDetails = ({ data }) => {
-
+  const i18n = useI18n()
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const handleOpen = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
 
   useEffect(() => {
     const tokenCookie = localStorage.getItem("token") ?? "";
@@ -51,7 +56,7 @@ const DentalDetails = ({ data }) => {
       </Head>
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        title="Dental Detail"
+        title={i18n.t("Dental Detail")}
         trailingComponents={
           <div className="flex">
             <ProfileQR slug={"newService"} id={data?.id} type={"Dental"} />
@@ -67,7 +72,7 @@ const DentalDetails = ({ data }) => {
         }
       />
 
-      <div className="pt-16 aid-container">
+      <div className="my-5 lg:my-8 aid-container">
         <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
           <Image
             width={1000}
@@ -78,7 +83,7 @@ const DentalDetails = ({ data }) => {
           />
         </div>
 
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between my-5 lg:my-8">
           <div className="flex items-center">
             <Image
               width={1000}
@@ -103,33 +108,8 @@ const DentalDetails = ({ data }) => {
 
         {data?.notice && <TextTicker text={data?.notice} />}
 
-        <div className="bg-gray-100 p-3 rounded-lg mb-4">
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div>
-              <p className="font-bold">Registration No</p>
-              <p>{data?.registrationNumber || "N/A"}</p>
-            </div>
-            <div>
-              <p className="font-bold">Service Time</p>
-              <p>{data?.serviceTime}</p>
-            </div>
-            <div>
-              <p className="font-bold">Total Rating</p>
-              <p>
-                {data?.averageRating} ⭐ ({data?.atotalRating} reviews)
-              </p>
-            </div>
-          </div>
-        </div>
+        <EmergencyCallButton number={data?.emergencyContactNumber} />
 
-        <div>
-          <a
-            href={`tel:${data?.emergencyContactNumber}`}
-            className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm"
-          >
-            Emergency Call
-          </a>
-        </div>
       </div>
       <div className="aid-container mt-6">
         <DentalTabs data={data} />

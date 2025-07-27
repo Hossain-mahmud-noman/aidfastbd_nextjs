@@ -1,24 +1,42 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReviewList from "../ReviewList";
 import DoctorCard from "../DoctorCard";
-import Image from "next/image";
 import ShowOriginalImage from "../list/ShowOriginalImage";
+import { useI18n } from "../../context/i18n";
 function DentalTabs({ data }) {
-  const [activeTab, setActiveTab] = useState("Info");
+  const i18n = useI18n()
+
+  const tabData = [
+    i18n.t("Information"),
+    i18n.t("Doctors"),
+    i18n.t("Services"),
+    i18n.t("Review"),
+  ];
+
+  const [activeTab, setActiveTab] = useState();
+
+  useEffect(() => {
+    setActiveTab(tabData[0]);
+  }, [i18n]);
   return (
     <>
-      <div className="bg-white">
-        <div className="overflow-x-auto scrollbar-hide">
-          <div className="flex justify-start space-x-4 border-b w-full">
-            {["Info", "Doctors", "Services", "Review"].map((tab) => (
+      <div className="bg-white shadow-custom-light aid-container my-4 md:my-5 lg:my-8">
+        <div className="overflow-x-auto md:overflow-x-visible">
+          <div
+            className="inline-flex md:grid md:grid-cols-4 md:w-full md:space-x-0 space-x-3"
+            style={{ "mininline-size": '100%' }}
+          >
+            {tabData.map((tab) => (
               <button
                 key={tab}
-                className={`text-sm font-semibold whitespace-nowrap p-3 ${activeTab === tab
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : "text-gray-500"
-                  }`}
+                className={`
+            text-sm font-semibold whitespace-nowrap border-2 border-primary py-2 px-4 rounded-md md:rounded-none
+            ${activeTab === tab ? "text-white bg-primary" : "text-gray-500"}
+            md:flex md:justify-center
+          `}
                 onClick={() => setActiveTab(tab)}
+                style={{ flex: '1 1 auto' }}
               >
                 {tab}
               </button>
@@ -28,43 +46,44 @@ function DentalTabs({ data }) {
       </div>
 
       {/* Conditionally Render Tab Content */}
-      <div className="mb-[70px] mt-5">
-        {activeTab === "Info" && (
+      <div className="mt-5">
+
+        {activeTab === i18n.t("Information") && (
           <div>
-            {data?.genericServiceInfos !== null && (
+            {data?.genericServiceInfos !== null &&
+              data?.genericServiceInfos?.length > 0 ? (
               <>
-                {" "}
                 <h3 className="font-bold text-lg text-black-600">
                   {data?.genericServiceInfos?.[0]?.title}
                 </h3>
                 <pre className="w-full overflow-x-auto whitespace-pre-wrap">
                   {data?.genericServiceInfos?.[0]?.details}
                 </pre>
-                {data?.genericServiceInfos?.[0]?.imgList !== null &&
-                  data?.genericServiceInfos?.[0]?.imgList?.map((e, id) => {
-                    return (
-                      <div className="w-full mt-3">
-                        {/* <Image
-                          width={1000}
-                          height={1000}
-                          className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"
-                          key={`id: ${id}`}
-                          alt="Image"
-                          src={e.imgUrl}
-                        /> */}
-                        <ShowOriginalImage image={e.imgUrl} />
-                      </div>
-                    );
-                  })}
+                {data?.genericServiceInfos?.[0]?.imgList?.length > 0 &&
+                  data?.genericServiceInfos?.[0]?.imgList.map((e, id) => (
+                    <div key={id} className="w-full mt-3">
+                      <ShowOriginalImage image={e.imgUrl} />
+                    </div>
+                  ))}
               </>
+            ) : (
+              <div
+                className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
+                role="alert"
+              >
+                <p className="text-yellow-700">
+                  {i18n.t("No information data available")}
+                </p>
+              </div>
             )}
           </div>
         )}
-        {activeTab === "Doctors" && (
+
+        {activeTab === i18n.t("Doctors") && (
           <div className="container mx-auto">
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-              {data?.genericServiceDoctors?.map((e, index) => {
-                return (
+            {data?.genericServiceDoctors?.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+                {data?.genericServiceDoctors.map((e, index) => (
                   <DoctorCard
                     id={e?.doctorUserId}
                     lat={data?.latitude}
@@ -72,16 +91,25 @@ function DentalTabs({ data }) {
                     key={`doctor_${index}`}
                     doctor={e}
                   />
-                );
-              })}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div
+                className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
+                role="alert"
+              >
+                <p className="text-yellow-700">
+                  {i18n.t("No doctor data available")}
+                </p>
+              </div>
+            )}
           </div>
         )}
 
-        {activeTab === "Services" && (
+        {activeTab === i18n.t("Services") && (
           <div>
-            {data?.genericServiceDetails.map((service) => {
-              return (
+            {data?.genericServiceDetails?.length > 0 ? (
+              data.genericServiceDetails.map((service) => (
                 <div
                   key={service?.id}
                   className="relative bg-purple-100 p-4 rounded-lg shadow-md mb-3"
@@ -91,28 +119,44 @@ function DentalTabs({ data }) {
                   <div className="mt-2">
                     {service?.imgList?.map((img, index) => (
                       <div key={index} className="mt-3 w-full">
-                        {/* <Image
-                          width={1000}
-                          height={1000}
-                          src={img.imgUrl}
-                          alt="Service"
-                          className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"
-                        /> */}
                         <ShowOriginalImage image={img.imgUrl} />
                       </div>
                     ))}
                   </div>
                 </div>
-              );
-            })}
+              ))
+            ) : (
+              <div
+                className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
+                role="alert"
+              >
+                <p className="text-yellow-700">
+                  {i18n.t("No services data available")}
+                </p>
+              </div>
+            )}
           </div>
         )}
-        {activeTab === "Review" && (
-          <ReviewList
-            reviews={data?.genericServiceReview}
-            averageRating={data?.averageRating}
-            totalRatings={data?.totalRating}
-          ></ReviewList>
+
+        {activeTab === i18n.t("Review") && (
+
+          data?.genericServiceReview?.length > 0 ? (
+            <ReviewList
+              reviews={data?.genericServiceReview}
+              averageRating={data?.averageRating}
+              totalRatings={data?.totalRating}
+            />
+          ) : (
+            <div
+              className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
+              role="alert"
+            >
+              <p className="text-yellow-700">
+                {i18n.t("No review data available")}
+              </p>
+            </div>
+          )
+
         )}
       </div>
     </>

@@ -77,7 +77,7 @@ function DoctorTabs({ data }) {
 
 
       {/* Conditionally Render Tab Content */}
-      <div className="aid-container p-4">
+      <div className="mt-6">
         {activeTab === i18n.t("Information") && (
           <div>
             <h3 className="font-bold text-lg text-black-600">

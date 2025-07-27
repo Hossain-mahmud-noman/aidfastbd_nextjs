@@ -25,7 +25,7 @@ const DiagnosticCenterDetails = ({ data }) => {
     setToken(tokenCookie);
     setUser(parsedUser);
   }, []);
-
+  const defaultImageUrl = '"/images/diagnostic.jpg"'
   const profile = data?.profileImageUrl == null || data?.profileImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.profileImageUrl;
 
   return (
@@ -39,7 +39,7 @@ const DiagnosticCenterDetails = ({ data }) => {
         <meta property="og:url" content={`${frontend_url}/diagnostic/${data?.userId}`} />
       </Head>
       <>
-        <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title={i18n.t("Diagnostic Detail") } trailingComponents={
+        <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title={i18n.t("Diagnostic Detail")} trailingComponents={
           <div className='flex'>
             <ProfileQR id={data?.userId} type={"Diagnostic"} />
             <FavouriteToggle isFill={data?.isFavourite} userId={user?.userId} id={data?.userId} type={2} token={token} />

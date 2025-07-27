@@ -50,7 +50,7 @@ function DiagnosticTabs({ data }) {
       </div>
 
       {/* Conditionally Render Tab Content */}
-      <div className="p-4 mb-[70px]">
+      <div className="mt-6">
         {activeTab === i18n.t("Information") && (
           <div>
             <h3 className="font-bold text-lg text-black-600">

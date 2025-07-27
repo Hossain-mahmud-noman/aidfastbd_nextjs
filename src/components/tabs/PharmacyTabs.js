@@ -48,7 +48,7 @@ function PharmacyTabs({ data }) {
       </div>
 
       {/* Conditionally Render Tab Content */}
-      <div className="mt-6 ">
+      <div className="mt-6">
 
         {activeTab === i18n.t("Information") && (
           <div>
