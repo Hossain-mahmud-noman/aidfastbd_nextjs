@@ -10,12 +10,13 @@ import Head from "next/head";
 import DiagnosticDetail from "../DiagnosticDetail";
 import DiagnosticTabs from "../tabs/DiagnosticTabs";
 import FloatingCallButton from "../FloatingCallButton";
+import { useI18n } from "../../context/i18n";
 
 const DiagnosticCenterDetails = ({ data }) => {
-  
+
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
-
+  const i18n = useI18n()
   useEffect(() => {
     const tokenCookie = localStorage.getItem("token") ?? "";
     const userCookie = localStorage.getItem("user");
@@ -38,7 +39,7 @@ const DiagnosticCenterDetails = ({ data }) => {
         <meta property="og:url" content={`${frontend_url}/diagnostic/${data?.userId}`} />
       </Head>
       <>
-        <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title='Diagnostic Detail' trailingComponents={
+        <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title={i18n.t("Diagnostic Detail") } trailingComponents={
           <div className='flex'>
             <ProfileQR id={data?.userId} type={"Diagnostic"} />
             <FavouriteToggle isFill={data?.isFavourite} userId={user?.userId} id={data?.userId} type={2} token={token} />

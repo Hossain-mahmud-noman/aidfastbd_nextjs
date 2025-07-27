@@ -12,7 +12,6 @@ import ContacTactModal from "../../utils/contactModal";
 
 function DoctorTabs({ data }) {
   const i18n = useI18n()
-
   const [showModal, setShowModal] = useState(false);
   const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);

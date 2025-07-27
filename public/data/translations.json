@@ -136,7 +136,20 @@
     "Open": "Open",
     "Closed": "Closed",
     "No experience data available": "No experience data available",
-    "No review data available": "No review data available"
+    "No review data available": "No review data available",
+    "No Services data available": "No Services data available",
+    "Investigation": "Investigation",
+    "Name": "Name",
+    "Price": "Price",
+    "OT List": "OT List",
+    "Remarks": "Remarks",
+    "Bed Category": "Bed Category",
+    "Health Packages": "Health Packages",
+    "Package Name": "Package Name",
+    "Registration No": "Registration No",
+    "Service Time": "Service Time",
+    "Total Rating": "Total Rating",
+    "Diagnostic Detail": "Diagnostic Detail"
   },
   "bn": {
     "Doctor": "ডাক্তার",
@@ -275,6 +288,19 @@
     "Open": "খোলা",
     "Closed": "বন্ধ",
     "No experience data available": "অভিজ্ঞতা সংক্রান্ত কোনো তথ্য পাওয়া যায়নি",
-    "No review data available" : "রিভিউয়ের কোনো তথ্য পাওয়া যায়নি"
+    "No review data available": "রিভিউয়ের কোনো তথ্য পাওয়া যায়নি",
+    "No Services data available": "কোনো সার্ভিসের তথ্য পাওয়া যায়নি",
+    "Investigation": "ইনভেস্টিগেশন",
+    "Name": "নাম",
+    "Price": "দাম",
+    "OT List": "ওটি তালিকা",
+    "Remarks": "রিমার্ক",
+    "Bed Category": "বেড ক্যাটাগরি",
+    "Health Packages": "স্বাস্থ্য প্যাকেজ",
+    "Package Name": "প্যাকেজের নাম",
+    "Registration No": "রেজিস্ট্রেশন নাম্বার",
+    "Service Time": "সার্ভিসের সময়",
+    "Total Rating": "মোট রেটিং",
+    "Diagnostic Detail": "ডায়াগনস্টিক ডিটেইলস"
   }
 }

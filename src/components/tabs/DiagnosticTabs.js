@@ -1,29 +1,46 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { image_base_endpoint } from "../../utils/constants";
 import DoctorCard from "../DoctorCard";
 import ReviewList from "../ReviewList";
-import Image from "next/image";
 import ShowOriginalImage from "../list/ShowOriginalImage";
+import { useI18n } from "../../context/i18n";
 
 function DiagnosticTabs({ data }) {
-  const [activeTab, setActiveTab] = useState("Info");
+
+  const i18n = useI18n()
+
+  const tabData = [
+    i18n.t("Information"),
+    i18n.t("Doctor"),
+    i18n.t("Services"),
+    i18n.t("Review"),
+  ];
+
+  const [activeTab, setActiveTab] = useState();
+
+  useEffect(() => {
+    setActiveTab(tabData[0]);
+  }, [i18n]);
   return (
     <>
-      <div className="bg-white">
-        <div className="overflow-x-auto scrollbar-hide">
-          <div className="flex justify-start space-x-4 pl-4 pr-4 border-b w-full">
-            {["Info", "Doctor", "Services", "Review"].map((tab) => (
+      <div className="bg-white shadow-custom-light aid-container my-4 md:my-5 lg:my-8">
+        <div className="overflow-x-auto md:overflow-x-visible">
+          <div
+            className="inline-flex md:grid md:grid-cols-4 md:w-full md:space-x-0 space-x-3"
+            style={{ "mininline-size": '100%' }}
+          >
+            {tabData.map((tab) => (
               <button
                 key={tab}
-                className={`text-sm font-semibold whitespace-nowrap p-3 ${activeTab === tab
-                  ? "text-blue-600 border-b-2 border-blue-600"
-                  : "text-gray-500"
-                  }`}
-                onClick={() => {
-                  setActiveTab(tab);
-                }}
+                className={`
+            text-sm font-semibold whitespace-nowrap border-2 border-primary py-2 px-4 rounded-md md:rounded-none
+            ${activeTab === tab ? "text-white bg-primary" : "text-gray-500"}
+            md:flex md:justify-center
+          `}
+                onClick={() => setActiveTab(tab)}
+                style={{ flex: '1 1 auto' }}
               >
                 {tab}
               </button>
@@ -34,7 +51,7 @@ function DiagnosticTabs({ data }) {
 
       {/* Conditionally Render Tab Content */}
       <div className="p-4 mb-[70px]">
-        {activeTab === "Info" && (
+        {activeTab === i18n.t("Information") && (
           <div>
             <h3 className="font-bold text-lg text-black-600">
               {data?.diagnosticCenterAdditionalInfo?.title}
@@ -45,16 +62,6 @@ function DiagnosticTabs({ data }) {
             {data?.diagnosticCenterAdditionalInfo?.imageUrl !== null &&
               data?.diagnosticCenterAdditionalInfo?.imageUrl !== "" && (
                 <div className="w-full mt-3">
-                  {/* <Image
-                    width={1000}
-                    height={1000}
-                    alt="Image"
-                    className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"  
-                    src={
-                      image_base_endpoint +
-                      data?.diagnosticCenterAdditionalInfo?.imageUrl
-                    }
-                  /> */}
                   <ShowOriginalImage image={image_base_endpoint + data?.diagnosticCenterAdditionalInfo?.imageUrl} />
                 </div>
               )}
@@ -76,9 +83,10 @@ function DiagnosticTabs({ data }) {
               })}
           </div>
         )}
-        {activeTab === "Doctor" && (
+
+        {activeTab === i18n.t("Doctor") && (
           <div className="container mx-auto">
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-6">
               {data?.diagnosticCenterDoctors.map((e, index) => {
                 return (
                   <DoctorCard
@@ -94,181 +102,187 @@ function DiagnosticTabs({ data }) {
           </div>
         )}
 
-        {activeTab === "Services" && (
+        {activeTab === i18n.t("Services") && (
           <div className="w-full overflow-x-auto">
             {data?.diagnosticCenterServices.length > 0 ? (
+
+
               <>
+                {/* Heading Section */}
                 <div>
                   {data?.diagnosticCenterServices
                     ?.filter((service) => service.serviceType === "heading")
-                    .map((service) => {
-                      return (
-                        <div
-                          key={service.id}
-                          className="relative bg-purple-100 p-4 rounded-lg shadow-md mb-3"
-                        >
-                          <h3 className="text-lg font-bold">
-                            {service.serviceName}
-                          </h3>
-                          <p className="text-gray-600">{service.price}</p>
-                          <div className="mt-2">
-                            {service.remarks
+                    .map((service) => (
+                      <div
+                        key={service.id}
+                        className="relative bg-purple-100 p-4 rounded-lg shadow-md mb-3"
+                      >
+                        <h3 className="text-lg font-bold">{service.serviceName}</h3>
+                        <p className="text-gray-600">{service.price}</p>
+                        <div className="mt-2">
+                          {service.remarks &&
+                            service.remarks
                               .split(",")
                               .map((i) => i.trim())
                               .map((img, index) => (
                                 <div key={index} className="w-full mt-3">
-                                  {/* <Image
-                                    width={1000}
-                                    height={1000}
-                                    alt="Image"
-                                    key={`imgList_${index}`}
-                                    className="w-full object-fill h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] xl:h-[700px]"
-                                    src={img}
-                                  /> */}
                                   <ShowOriginalImage image={img} />
                                 </div>
                               ))}
-                          </div>
                         </div>
-                      );
-                    })}
+                      </div>
+                    ))}
                 </div>
-                <h3 className="text-lg font-semibold mb-4">Investigation</h3>
-                <table
-                  className="w-full border-collapse table-auto"
-                  role="table"
-                  aria-label="Services Table"
-                >
-                  <thead>
-                    <tr className="bg-gray-100 border-b border-gray-200">
-                      <th
-                        className="p-4 text-left border rounded-tl-lg"
-                        role="columnheader"
-                      >
-                        #
-                      </th>
-                      <th className="p-4 text-left border" role="columnheader">
-                        Name
-                      </th>
 
-                      <th
-                        className="p-4 text-left border rounded-tr-lg"
-                        role="columnheader"
-                      >
-                        Price
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data?.diagnosticCenterServices
-                      .filter((i) => i.serviceType === "Investigation")
-                      .map((service, index) => (
-                        <tr
-                          key={index + 1}
-                          className="hover:bg-gray-50 focus-within:bg-gray-50 transition-colors"
-                          role="row"
-                        >
-                          <td className="p-4 border" role="cell">
-                            {index + 1}
-                          </td>
-                          <td className="p-4 border" role="cell">
-                            {service.serviceName}
-                          </td>
-                          <td className="p-4 border" role="cell">
-                            {service.price}
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-
-                <h3 className="text-lg font-semibold mt-4 mb-4">OT List</h3>
-                <div className="w-full overflow-x-auto">
-                  <table
-                    className="w-full border-collapse table-fixed"
-                    role="table"
-                    aria-label="Operating Theater (OT) Services List"
-                  >
-                    <thead>
-                      <tr className="bg-gray-100 border-b border-gray-200">
-                        <th
-                          className="p-4 text-left border rounded-tl-lg"
-                          role="columnheader"
-                          style={{ inlineSize: "40px" }}
-                        >
-                          #
-                        </th>
-                        <th
-                          className="p-4 text-left border"
-                          role="columnheader"
-                        >
-                          Name
-                        </th>
-                        <th
-                          className="p-4 text-left border"
-                          role="columnheader"
-                        >
-                          Price
-                        </th>
-                        <th
-                          className="p-4 text-left border rounded-tr-lg"
-                          role="columnheader"
-                        >
-                          Remarks
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data?.diagnosticCenterServices
-                        .filter((i) => i.serviceType === "OT List")
-                        .map((service, index) => (
-                          <tr
-                            key={index + 1}
-                            className="hover:bg-gray-50 focus-within:bg-gray-50 transition-colors"
-                            role="row"
-                          >
-                            <td
-                              className="p-4 border text-center"
-                              style={{ inlineSize: "40px" }}
-                              role="cell"
-                            >
-                              {index + 1}
-                            </td>
-                            <td className="p-4 border break-words" role="cell">
-                              {service.serviceName}
-                            </td>
-                            <td className="p-4 border break-words" role="cell">
-                              {service.price}
-                            </td>
-                            <td
-                              className="p-4 border break-words truncate"
-                              role="cell"
-                            >
-                              {service.remarks}
-                            </td>
+                {/* Investigation Table */}
+                {data?.diagnosticCenterServices?.some(
+                  (i) => i.serviceType === "Investigation"
+                ) && (
+                    <>
+                      <h3 className="text-lg font-semibold mb-4 mt-6">{i18n.t("Investigation")}</h3>
+                      <table className="w-full border-collapse table-auto">
+                        <thead>
+                          <tr className="bg-gray-100 border-b border-gray-200">
+                            <th className="p-4 text-left border rounded-tl-lg">#</th>
+                            <th className="p-4 text-left border">{i18n.t("Name")}</th>
+                            <th className="p-4 text-left border rounded-tr-lg">{i18n.t("Price")}</th>
                           </tr>
-                        ))}
-                    </tbody>
-                  </table>
-                </div>
+                        </thead>
+                        <tbody>
+                          {data?.diagnosticCenterServices
+                            .filter((i) => i.serviceType === "Investigation")
+                            .map((service, index) => (
+                              <tr key={service.id} className="hover:bg-gray-50">
+                                <td className="p-4 border">{index + 1}</td>
+                                <td className="p-4 border">{service.serviceName}</td>
+                                <td className="p-4 border">{service.price}</td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </>
+                  )}
+
+                {/* OT List Table */}
+                {data?.diagnosticCenterServices?.some((i) => i.serviceType === "OT List") && (
+                  <>
+                    <h3 className="text-lg font-semibold mt-6 mb-4">{i18n.t("OT List")}</h3>
+                    <table className="w-full border-collapse table-auto">
+                      <thead>
+                        <tr className="bg-gray-100 border-b border-gray-200">
+                          <th className="p-4 text-left border rounded-tl-lg">#</th>
+                          <th className="p-4 text-left border">{i18n.t("Name")}</th>
+                          <th className="p-4 text-left border">{i18n.t("Price")}</th>
+                          <th className="p-4 text-left border rounded-tr-lg">{i18n.t("Remarks")}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data?.diagnosticCenterServices
+                          .filter((i) => i.serviceType === "OT List")
+                          .map((service, index) => (
+                            <tr key={service.id} className="hover:bg-gray-50">
+                              <td className="p-4 border">{index + 1}</td>
+                              <td className="p-4 border">{service.serviceName}</td>
+                              <td className="p-4 border">{service.price}</td>
+                              <td className="p-4 border">
+                                {service.remarks || "—"}
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </>
+                )}
+
+                {/* BED Category Table */}
+                {data?.diagnosticCenterServices?.some(
+                  (i) => i.serviceType === "BED Category"
+                ) && (
+                    <>
+                      <h3 className="text-lg font-semibold mt-6 mb-4">{i18n.t("Bed Category")}</h3>
+                      <table className="w-full border-collapse table-auto">
+                        <thead>
+                          <tr className="bg-gray-100 border-b border-gray-200">
+                            <th className="p-4 text-left border rounded-tl-lg">#</th>
+                            <th className="p-4 text-left border">{i18n.t("Name")}</th>
+                            <th className="p-4 text-left border rounded-tr-lg">{i18n.t("Price")}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {data?.diagnosticCenterServices
+                            .filter((i) => i.serviceType === "BED Category")
+                            .map((service, index) => (
+                              <tr key={service.id} className="hover:bg-gray-50">
+                                <td className="p-4 border">{index + 1}</td>
+                                <td className="p-4 border">{service.serviceName}</td>
+                                <td className="p-4 border">{service.price}</td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </>
+                  )}
+
+                {/* Health Package Table */}
+                {data?.diagnosticCenterServices?.some(
+                  (i) => i.serviceType === "Health Package"
+                ) && (
+                    <>
+                      <h3 className="text-lg font-semibold mt-6 mb-4">{i18n.t("Health Packages")}</h3>
+                      <table className="w-full border-collapse table-auto">
+                        <thead>
+                          <tr className="bg-gray-100 border-b border-gray-200">
+                            <th className="p-4 text-left border rounded-tl-lg">#</th>
+                            <th className="p-4 text-left border">{i18n.t("Package Name")}</th>
+                            <th className="p-4 text-left border rounded-tr-lg">{i18n.t("Price")}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {data?.diagnosticCenterServices
+                            .filter((i) => i.serviceType === "Health Package")
+                            .map((service, index) => (
+                              <tr key={service.id} className="hover:bg-gray-50">
+                                <td className="p-4 border">{index + 1}</td>
+                                <td className="p-4 border">{service.serviceName}</td>
+                                <td className="p-4 border">{service.price}</td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </>
+                  )}
               </>
+
+
             ) : (
               <div
                 className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
                 role="alert"
               >
-                <p className="text-yellow-700">No Services data available.</p>
+                <p className="text-yellow-700">{i18n.t("No Services data available")}</p>
               </div>
             )}
           </div>
         )}
 
-        {activeTab === "Review" && (
-          <ReviewList
-            reviews={data?.diagnosticCenterReview}
-            averageRating={data?.averageRating}
-            totalRatings={data?.totalRating}
-          />
+        {activeTab === i18n.t("Review") && (
+
+          data?.diagnosticCenterReview?.length > 0 ? (
+            <ReviewList
+              reviews={data?.diagnosticCenterReview}
+              averageRating={data?.averageRating}
+              totalRatings={data?.totalRating}
+            />
+          ) : (
+            <div
+              className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
+              role="alert"
+            >
+              <p className="text-yellow-700">
+                {i18n.t("No review data available")}
+              </p>
+            </div>
+          )
         )}
       </div>
     </>

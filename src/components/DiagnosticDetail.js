@@ -3,8 +3,15 @@ import { image_base_endpoint } from "../utils/constants";
 import TextTicker from "./TextTicker";
 import DiaLocation from "./DiaLocation";
 import Image from "next/image";
+import { useI18n } from "../context/i18n";
+import ContacTactModal from "../utils/contactModal";
+import { useState } from "react";
 
 const DiagnosticDetail = ({ data }) => {
+  const i18n = useI18n()
+  const [showModal, setShowModal] = useState(false);
+  const handleOpen = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
   const defaultImageUrl = "/images/diagnostic.jpg";
   const profile = data?.profileImageUrl == null || data?.profileImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.profileImageUrl;
   const cover = data?.coverImageUrl == null || data?.coverImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.coverImageUrl;
@@ -41,7 +48,7 @@ const DiagnosticDetail = ({ data }) => {
               {data?.location !== null && (
                 <span className="text-sm text-gray-500">{data?.location}</span>
               )}
-              <DiaLocation lat={data?.latitude} lon={data?.longitude} ></DiaLocation>
+              <DiaLocation lat={data?.latitude} lon={data?.longitude} />
             </div>
           </div>
         </div>
@@ -53,27 +60,32 @@ const DiagnosticDetail = ({ data }) => {
       <div className="bg-gray-100 p-3 rounded-lg mb-4">
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <p className="font-bold">Registration No</p>
+            <p className="font-bold">{i18n.t("Registration No")}</p>
             <p>{data?.registrationNumber == null ? "N/A" : data?.registrationNumber} </p>
           </div>
           <div>
-            <p className="font-bold">Service Time</p>
+            <p className="font-bold">{i18n.t("Service Time")}</p>
             <p>{data?.serviceTime}</p>
           </div>
           <div>
-            <p className="font-bold">Total Rating</p>
+            <p className="font-bold">{i18n.t("Total Rating")}</p>
             <p>{data?.averageRating} ⭐ ({data?.atotalRating} reviews)</p>
           </div>
         </div>
       </div>
       <div >
-        <a
-          href={`tel:${data?.emergencyContactNumber}`}
+        <button
+          onClick={ handleOpen}
           className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm"
         >
-          Emergency Call
-        </a>
+          {i18n.t("Call Emergency")}
+        </button>
       </div>
+      <ContacTactModal
+        contact={data?.emergencyContactNumber}
+        open={showModal}
+        onClose={handleClose}
+      />
     </div>
   );
 };
