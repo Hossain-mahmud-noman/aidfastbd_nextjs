@@ -172,7 +172,12 @@
     "Total Taka": "Total Taka",
     "No drug data available": "No drug data available",
     "No equipment data available": "No equipment data available",
-    "Pharmacy Detail": "Pharmacy Detail"
+    "Pharmacy Detail": "Pharmacy Detail",
+    "Donor List": "Donor List",
+    "No donor data available": "No donor data available",
+    "Quantity": "Quantity",
+    "Service Name": "Service Name",
+    "Blood Bank Detail": "Blood Bank Detail"
   },
   "bn": {
     "Doctor": "ডাক্তার",
@@ -347,6 +352,11 @@
     "Total Taka": "মোট টাকা",
     "No drug data available": "কোনও ওষুধের তথ্য পাওয়া যায়নি",
     "No equipment data available": "কোনও যন্ত্রপাতির তথ্য পাওয়া যায়নি",
-    "Pharmacy Detail": "ফার্মেসির বিস্তারিত তথ্য"
+    "Pharmacy Detail": "ফার্মেসির বিস্তারিত তথ্য",
+    "Donor List": "রক্তদাতার তালিকা",
+    "No donor data available": "রক্তদাতার কোনো তথ্য পাওয়া যায়নি",
+    "Quantity": "পরিমাণ",
+    "Service Name": "সেবার নাম",
+    "Blood Bank Detail": "ব্লাডব্যাংক এর বিস্তারিত"
   }
 }

@@ -19,8 +19,8 @@ export async function generateMetadata({ params }) {
   if (!data) {
     return { title: "Blood Bank Not Found" };
   }
-
-    const profile = data?.profileImageUrl == null || data?.profileImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.profileImageUrl;
+  const defaultImageUrl = "/images/logo.png";
+  const profile = data?.profileImageUrl == null || data?.profileImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.profileImageUrl;
   return {
     title: `${data?.name} | ${appname}`,
     description: `${data.name ?? ""} ${data?.location ?? ""}`.slice(0, 150),

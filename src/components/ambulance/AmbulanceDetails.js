@@ -33,7 +33,7 @@ const AmbulanceDetails = ({ data }) => {
     setUser(parsedUser);
   }, []);
 
-  const defaultImageUrl = "/images/logo.png";
+  const defaultImageUrl = "/images/ambulance.ipg";
   const profile = data?.profileImageUrl == null || data?.profileImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.profileImageUrl;
   const cover = data?.coverImageUrl == null || data?.coverImageUrl == "" ? defaultImageUrl : image_base_endpoint + data?.coverImageUrl;
 
@@ -60,7 +60,7 @@ const AmbulanceDetails = ({ data }) => {
       }
       />
 
-      <div className="pt-16 aid-container">
+      <div className="my-5 lg:my-8 aid-container">
         <div className=''>
           <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
             <Image

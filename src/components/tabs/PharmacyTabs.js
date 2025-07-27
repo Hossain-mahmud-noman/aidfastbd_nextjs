@@ -162,7 +162,6 @@ function PharmacyTabs({ data }) {
 
         {activeTab === i18n.t("Review") && (
 
-
           data?.pharmacyReview?.length > 0 ? (
             <ReviewList
               reviews={data?.pharmacyReview}
