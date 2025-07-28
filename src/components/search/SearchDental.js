@@ -1,35 +1,48 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { FiSearch } from 'react-icons/fi';
 import { MdCancel } from 'react-icons/md';
 import { FaAngleDown } from 'react-icons/fa6';
+import { FiSearch } from 'react-icons/fi';
 import DentalCard from '../DentalCard';
+import { useI18n } from '../../context/i18n';  
+import { base_endpoint } from '../../utils/constants'; 
+import Image from 'next/image';
 
-export const SearchableDropdown = ({ label, options, onSelect, setSelected }) => {
+// Reusable searchable dropdown component
+const SearchableDropdown = ({ label, options, value, onChange, slug }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-
-  const toggleDropdown = () => setIsOpen(!isOpen);
-
-  const handleOptionClick = (option) => {
-    setSelected(option);
-    setIsOpen(false);
-  };
+  const i18n = useI18n();
 
   const filteredOptions = options.filter((option) =>
     option.text.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleOptionClick = (option) => {
+    onChange(option);
+    setIsOpen(false);
+    setSearchTerm('');
+  };
+
   return (
-    <div className="relative">
-      <label className="text-gray-700">{label}</label>
-      <div className="border border-gray-300 rounded-lg px-3 py-2 flex items-center justify-between cursor-pointer">
-        <span onClick={toggleDropdown} style={{ inlineSize: '100%' }}>
-          {onSelect?.text || `Select ${label.toLowerCase()}`}
+    <div className="relative w-full">
+      {slug !== 'name' && <label className="text-gray-700">{label}</label>}
+      <div
+        className="border border-gray-300 rounded-lg px-3 py-2 flex items-center justify-between cursor-pointer"
+        onClick={() => setIsOpen((prev) => !prev)}
+      >
+        <span style={{ inlineSize: '100%' }}>
+          {value?.text || `${label.toLowerCase()} ${i18n.t('Select')}`}
         </span>
         <span className="text-gray-500">
-          {onSelect ? (
-            <MdCancel onClick={() => handleOptionClick(null)} />
+          {value ? (
+            <MdCancel
+              onClick={(e) => {
+                e.stopPropagation();
+                handleOptionClick(null);
+              }}
+              className="cursor-pointer"
+            />
           ) : (
             <FaAngleDown />
           )}
@@ -40,15 +53,16 @@ export const SearchableDropdown = ({ label, options, onSelect, setSelected }) =>
           <input
             type="text"
             className="w-full px-3 py-2 border-b border-gray-300 focus:outline-none"
-            placeholder="Search..."
+            placeholder={i18n.t('Search...')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            autoFocus
           />
           <ul className="max-h-32 overflow-y-auto">
             {filteredOptions.length > 0 ? (
-              filteredOptions.map((option, index) => (
+              filteredOptions.map((option, idx) => (
                 <li
-                  key={index}
+                  key={idx}
                   onClick={() => handleOptionClick(option)}
                   className="px-3 py-2 hover:bg-blue-100 cursor-pointer"
                 >
@@ -56,7 +70,7 @@ export const SearchableDropdown = ({ label, options, onSelect, setSelected }) =>
                 </li>
               ))
             ) : (
-              <li className="px-3 py-2 text-gray-500">No results found</li>
+              <li className="px-3 py-2 text-gray-500">{i18n.t('No results found')}</li>
             )}
           </ul>
         </div>
@@ -66,130 +80,168 @@ export const SearchableDropdown = ({ label, options, onSelect, setSelected }) =>
 };
 
 const SearchDental = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const i18n = useI18n();
+
+  // Single filters object for all filter fields
+  const [filters, setFilters] = useState({
+    name: null,
+    rating: null,
+    rank: null,
+    emergency: null,
+  });
+
   const [nameOptions, setNameOptions] = useState([]);
-  const [name, setName] = useState(null);
-  const [rating, setRating] = useState(null);
-  const [rank, setRank] = useState(null);
-  const [emergency, setEmergency] = useState(null);
   const [results, setResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const togglePopup = () => setIsOpen(!isOpen);
-
-  const fetchDropdownList = async () => {
-    try {
-      const response = await fetch(`https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=DentalClinic`);
-      if (response.ok) {
-        const data = await response.json();
-        setNameOptions(data);
-      } else {
+  // Load dropdown options once
+  useEffect(() => {
+    fetch(`${base_endpoint}/Dropdown/GetDropDownList?type=DentalClinic`)
+      .then((res) => res.json())
+      .then((data) => setNameOptions(data))
+      .catch((err) => {
+        console.error('Dental dropdown fetch error', err);
         setNameOptions([]);
-      }
+      });
+  }, []);
+
+  // Build query params and fetch search results
+  const handleSearch = async (customFilters = filters) => {
+    const query = new URLSearchParams();
+    query.append('serviceType', '1'); // as per your original API
+
+    query.append('pageNumber', '1');
+    query.append('pageSize', '20');
+
+    if (customFilters.name?.value) query.append('userId', customFilters.name.value);
+    if (customFilters.rank?.value) query.append('popularity', customFilters.rank.value);
+    if (customFilters.rating?.value) query.append('rating', customFilters.rating.value);
+    if (customFilters.emergency?.value) query.append('emergency', customFilters.emergency.value);
+
+    try {
+      const res = await fetch(
+        `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?${query.toString()}`
+      );
+      const data = await res.json();
+      setResults(data?.data || []);
+      setHasSearched(true);
     } catch (err) {
-      console.error(err);
-      setNameOptions([]);
+      console.error('Dental search error', err);
+      setResults([]);
+      setHasSearched(true);
     }
   };
 
-  const fetchBloodList = async () => {
-    let query = `&pageNumber=1&pageSize=20`;
-    if (rank) query += `&popularity=${rank.value}`;
-    if (emergency) query += `&emergency=${emergency.value}`;
-    if (rating) query += `&rating=${rating.value}`;
-    if (name) query += `&userId=${name.value}`;
-
-    try {
-      const response = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=1${query}`);
-      const data = await response.json();
-      setResults(data?.data || []);
-    } catch (err) {
-      console.error(err);
+  // Immediate search when selecting or clearing Name dropdown
+  const onNameChange = (val) => {
+    const updatedFilters = { ...filters, name: val };
+    setFilters(updatedFilters);
+    if (val) {
+      handleSearch(updatedFilters);
+    } else {
+      setHasSearched(false);
       setResults([]);
     }
   };
 
-  useEffect(() => {
-    fetchDropdownList();
-  }, []);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setHasSearched(true);
-    fetchBloodList();
-    togglePopup();
-  };
-
   return (
     <>
-      <div onClick={togglePopup} className="relative flex items-center ml-3 mr-3 mb-3">
-        <div className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 shadow-lg pr-12">
-          Search Dental Clinic
+      {/* Top Name Search */}
+      <div className="flex items-center gap-2 md:gap-3 lg:gap-6 w-full">
+        <div className="w-[70%] md:w-[90%] relative flex items-center mb-3 mt-2">
+          <SearchableDropdown
+            slug="name"
+            label={i18n.t('Name')}
+            options={nameOptions}
+            value={filters.name}
+            onChange={onNameChange}
+          />
         </div>
-        <button className="absolute right-0 mr-2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-all transform hover:scale-105">
-          <FiSearch className="w-5 h-5" />
-        </button>
+
+        {/* Filter Button */}
+        <div
+          onClick={() => setIsFilterOpen(true)}
+          className="w-[30%] md:w-[10%] cursor-pointer flex items-center gap-1 lg:gap-2 border rounded-md justify-center -mt-1"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Enter' && setIsFilterOpen(true)}
+        >
+          <Image src="/filter.png" width={40} height={40} alt="Filter" />
+          <p>{i18n.t('Filter')}</p>
+        </div>
       </div>
 
-      {isOpen && (
+      {/* Filter Modal */}
+      {isFilterOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-[10000]">
           <div className="bg-white rounded-lg w-11/12 max-w-md p-6 shadow-lg overflow-y-auto max-h-[90vh]">
-            <button onClick={togglePopup} className="text-gray-500 float-right text-xl">
+            <button
+              onClick={() => setIsFilterOpen(false)}
+              className="text-gray-500 float-right text-xl"
+              aria-label={i18n.t('Close filter modal')}
+            >
               &times;
             </button>
-            <h2 className="text-center text-lg font-semibold mb-2">Search Dental Clinic</h2>
+            <h2 className="text-center text-lg font-semibold mb-2">{i18n.t('Search Dental Clinics')}</h2>
             <p className="text-center text-red-500 mb-4 text-sm">
-              ** search by one or multiple criteria **
+              ** {i18n.t('search by one or multiple criteria')} **
             </p>
-            <form className="space-y-4" onSubmit={handleSearch}>
-              <SearchableDropdown label="Name" options={nameOptions} onSelect={name} setSelected={setName} />
+            <form
+              className="space-y-4"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSearch();
+                setIsFilterOpen(false);
+              }}
+            >
               <SearchableDropdown
-                label="Rating"
-                options={[
-                  { value: 1, text: '1 Star' },
-                  { value: 2, text: '2 Star' },
-                  { value: 3, text: '3 Star' },
-                  { value: 4, text: '4 Star' },
-                  { value: 5, text: '5 Star' },
-                ]}
-                onSelect={rating}
-                setSelected={setRating}
+                label={i18n.t('Rating')}
+                options={[1, 2, 3, 4, 5].map((v) => ({
+                  value: v,
+                  text: `${v} Star`,
+                }))}
+                value={filters.rating}
+                onChange={(val) => setFilters((f) => ({ ...f, rating: val }))}
               />
               <SearchableDropdown
-                label="Popularity Rank"
-                options={[
-                  { value: 1, text: 'Rank 1' },
-                  { value: 2, text: 'Rank 2' },
-                  { value: 3, text: 'Rank 3' },
-                  { value: 4, text: 'Rank 4' },
-                ]}
-                onSelect={rank}
-                setSelected={setRank}
+                label={i18n.t('Popularity Rank')}
+                options={[1, 2, 3, 4].map((v) => ({
+                  value: v,
+                  text: `Rank ${v}`,
+                }))}
+                value={filters.rank}
+                onChange={(val) => setFilters((f) => ({ ...f, rank: val }))}
               />
               <SearchableDropdown
-                label="Emergency"
+                label={i18n.t('Emergency')}
                 options={[
-                  { value: 'yes', text: 'Yes' },
-                  { value: 'no', text: 'No' },
+                  { value: 'yes', text: i18n.t('Yes') },
+                  { value: 'no', text: i18n.t('No') },
                 ]}
-                onSelect={emergency}
-                setSelected={setEmergency}
+                value={filters.emergency}
+                onChange={(val) => setFilters((f) => ({ ...f, emergency: val }))}
               />
-              <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg mt-4 hover:bg-blue-600">
-                Search
+
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white py-2 rounded-lg mt-4 hover:bg-blue-600"
+              >
+                {i18n.t('Search')}
               </button>
             </form>
           </div>
         </div>
       )}
 
+      {/* Search Results */}
       {hasSearched && (
         <div className="mb-10">
-          <h3 className="text-lg ml-3 mb-2">Search Results</h3>
-          {Array.isArray(results) && results.length === 0 ? (
-            <p className="text-center text-gray-500">No blood Dental Clinic Found</p>
+          <h3 className="text-lg ml-3 mb-2">{i18n.t('Search Results')}</h3>
+          {results.length === 0 ? (
+            <p className="text-center text-gray-500">{i18n.t('No Dental Clinic found')}</p>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 px-3">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-3">
               {results.map((item, index) => (
                 <DentalCard key={index} data={item} />
               ))}

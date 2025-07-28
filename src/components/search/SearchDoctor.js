@@ -8,10 +8,12 @@ import { base_endpoint } from '../../utils/constants';
 import { useI18n } from '../../context/i18n';
 import Image from 'next/image';
 
+// Reusable dropdown
 const SearchableDropdown = ({ label, options, value, onChange, slug }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const toggleDropdown = () => setIsOpen(!isOpen);
+  const i18n = useI18n()
 
   const filteredOptions = options.filter((option) =>
     option.text.toLowerCase().includes(searchTerm.toLowerCase())
@@ -23,18 +25,17 @@ const SearchableDropdown = ({ label, options, value, onChange, slug }) => {
   };
 
   return (
-    <div className="relative">
-      {
-        slug != 'name' && (
-          <label className="text-gray-700">{label}</label>
-        )
-      }
-      <div className="border border-gray-300 rounded-lg px-3 py-2 flex items-center justify-between cursor-pointer">
-        <span onClick={toggleDropdown} style={{ inlineSize: "100%" }}>
-          {value?.text || `Select ${label.toLowerCase()}`}
+    <div className="relative w-full">
+      {slug !== 'name' && <label className="text-gray-700">{label}</label>}
+      <div
+        className="border border-gray-300 rounded-lg px-3 py-2 flex items-center justify-between cursor-pointer"
+        onClick={toggleDropdown}
+      >
+        <span style={{ inlineSize: "100%" }}>
+          {value?.text || `${label.toLowerCase()} ${i18n.t("Select")} `}
         </span>
         <span className="text-gray-500">
-          {value ? <MdCancel onClick={() => handleOptionClick(null)} /> : <FaAngleDown />}
+          {value ? <MdCancel onClick={(e) => { e.stopPropagation(); handleOptionClick(null); }} /> : <FaAngleDown />}
         </span>
       </div>
 
@@ -59,7 +60,7 @@ const SearchableDropdown = ({ label, options, value, onChange, slug }) => {
                 </li>
               ))
             ) : (
-              <li className="px-3 py-2 text-gray-500">No results found</li>
+              <li className="px-3 py-2 text-gray-500">{i18n.t("No results found")}</li>
             )}
           </ul>
         </div>
@@ -69,9 +70,8 @@ const SearchableDropdown = ({ label, options, value, onChange, slug }) => {
 };
 
 const SearchDoctor = ({ specialityData = [] }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false);
-  const i18n = useI18n()
+  const i18n = useI18n();
+
   const [filters, setFilters] = useState({
     name: null,
     speciality: null,
@@ -84,12 +84,18 @@ const SearchDoctor = ({ specialityData = [] }) => {
   });
 
   const [doctorList, setDoctorList] = useState([]);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   const [nameOptions, setNameOptions] = useState([]);
   const [experienceOptions, setExperienceOptions] = useState([]);
   const [feeOptions, setFeeOptions] = useState([]);
   const [specialityOptions, setSpecialityOptions] = useState(specialityData);
 
-  const togglePopup = () => setIsOpen(!isOpen);
+  useEffect(() => {
+    fetchDropdowns();
+    setSpecialityOptions(specialityData);
+  }, [specialityData]);
 
   const fetchDropdowns = async () => {
     try {
@@ -107,73 +113,86 @@ const SearchDoctor = ({ specialityData = [] }) => {
       setFeeOptions(feeData);
       setExperienceOptions(expData);
     } catch (err) {
-      console.error(err);
+      console.error('Dropdown fetch error:', err);
     }
   };
 
-  useEffect(() => {
-    fetchDropdowns();
-    setSpecialityOptions(specialityData);
-  }, [specialityData]);
-
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    setHasSearched(true);
-
+  const handleSearch = async (customFilters = filters) => {
     const queryParams = new URLSearchParams();
-    if (filters.name?.value) queryParams.append("DoctorId", filters.name.value);
-    if (filters.speciality?.text) queryParams.append("Specialty", filters.speciality.text);
-    if (filters.emergency?.value) queryParams.append("Emergency", filters.emergency.value);
-    if (filters.fee?.text) queryParams.append("Fee", filters.fee.text);
-    if (filters.experience?.text) queryParams.append("Experience", filters.experience.text);
-    if (filters.rating?.value) queryParams.append("Rating", filters.rating.value);
-    if (filters.rank?.value) queryParams.append("Rank", filters.rank.value);
-    if (filters.bmdc) queryParams.append("BMDC", filters.bmdc);
 
-    const res = await fetch(`${base_endpoint}/GeneralWeb/GetDoctorSearchList?pageNumber=1&pageSize=20&${queryParams}`);
-    const data = await res.json();
-    setDoctorList(data?.data || []);
-    togglePopup();
+    if (customFilters.name?.value) queryParams.append("DoctorId", customFilters.name.value);
+    if (customFilters.speciality?.text) queryParams.append("Specialty", customFilters.speciality.text);
+    if (customFilters.emergency?.value) queryParams.append("Emergency", customFilters.emergency.value);
+    if (customFilters.fee?.text) queryParams.append("Fee", customFilters.fee.text);
+    if (customFilters.experience?.text) queryParams.append("Experience", customFilters.experience.text);
+    if (customFilters.rating?.value) queryParams.append("Rating", customFilters.rating.value);
+    if (customFilters.rank?.value) queryParams.append("Rank", customFilters.rank.value);
+    if (customFilters.bmdc) queryParams.append("BMDC", customFilters.bmdc);
+
+    try {
+      const res = await fetch(`${base_endpoint}/GeneralWeb/GetDoctorSearchList?pageNumber=1&pageSize=20&${queryParams}`);
+      const data = await res.json();
+      setDoctorList(data?.data || []);
+      setHasSearched(true);
+    } catch (error) {
+      console.error("Search error:", error);
+    }
   };
 
   return (
     <>
-      {/* Search Button */}
-      <div className='flex items-center gap-2 md:gap-3 lg:gap-6'>
-
+      {/* Top Search Bar */}
+      <div className='flex items-center gap-2 md:gap-3 lg:gap-6 w-full'>
         <div className="w-[70%] md:w-[90%] relative flex items-center mb-3 mt-2">
-          <form className="w-full" onSubmit={handleSearch}>
-            <SearchableDropdown slug='name' label="Name" options={nameOptions} value={filters.name} onChange={val => setFilters(f => ({ ...f, name: val }))} />
-          </form>
+          <SearchableDropdown
+            slug='name'
+            label={i18n.t("Name")}
+            options={nameOptions}
+            value={filters.name}
+            onChange={(val) => {
+              const updated = { ...filters, name: val };
+              setFilters(updated);
+              if (val) {
+                handleSearch(updated);
+              } else {
+                setHasSearched(false);
+                setDoctorList([]);
+              }
+            }}
+          />
         </div>
 
-        <div onClick={togglePopup} className='w-[30%] md:w-[10%] cursor-pointer flex items-center gap-1 lg:gap-2 border rounded-md justify-center -mt-1'>
-          <Image
-            src="/filter.png"
-            width={40}
-            height={40}
-            alt='Filter'
-          />
-          <p>Filter</p>
+        <div
+          onClick={() => setIsFilterOpen(true)}
+          className='w-[30%] md:w-[10%] cursor-pointer flex items-center gap-1 lg:gap-2 border rounded-md justify-center -mt-1'
+        >
+          <Image src="/filter.png" width={40} height={40} alt='Filter' />
+          <p>{i18n.t("Filter")}</p>
         </div>
       </div>
 
-      {/* Popup */}
-      {isOpen && (
+      {/* Filter Modal */}
+      {isFilterOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-[10000]">
           <div className="bg-white rounded-lg w-11/12 max-w-md p-6 shadow-lg overflow-y-auto max-h-[90vh]">
-            <button onClick={togglePopup} className="text-gray-500 float-right text-xl">&times;</button>
-            <h2 className="text-center text-lg font-semibold mb-2">Search Doctor</h2>
-            <p className="text-center text-red-500 mb-4 text-sm">** search by one or multiple criteria **</p>
-            <form className="space-y-4" onSubmit={handleSearch}>
-              <SearchableDropdown label="Name" options={nameOptions} value={filters.name} onChange={val => setFilters(f => ({ ...f, name: val }))} />
-              <SearchableDropdown label="Speciality" options={specialityOptions} value={filters.speciality} onChange={val => setFilters(f => ({ ...f, speciality: val }))} />
-              <SearchableDropdown label="Experience" options={experienceOptions} value={filters.experience} onChange={val => setFilters(f => ({ ...f, experience: val }))} />
-              <SearchableDropdown label="Fee" options={feeOptions} value={filters.fee} onChange={val => setFilters(f => ({ ...f, fee: val }))} />
-              <SearchableDropdown label="Rating" options={[1, 2, 3, 4, 5].map(v => ({ value: v, text: `${v} Star` }))} value={filters.rating} onChange={val => setFilters(f => ({ ...f, rating: val }))} />
-              <SearchableDropdown label="Popularity Rank" options={[1, 2, 3, 4].map(v => ({ value: v, text: `Rank ${v}` }))} value={filters.rank} onChange={val => setFilters(f => ({ ...f, rank: val }))} />
+            <button onClick={() => setIsFilterOpen(false)} className="text-gray-500 float-right text-xl">&times;</button>
+            <h2 className="text-center text-lg font-semibold mb-2">{i18n.t("Search Doctor")}</h2>
+            <p className="text-center text-red-500 mb-4 text-sm">** {i18n.t("search by one or multiple criteria")} **</p>
+            <form
+              className="space-y-4"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSearch();
+                setIsFilterOpen(false);
+              }}
+            >
+              <SearchableDropdown label={i18n.t("Speciality")} options={specialityOptions} value={filters.speciality} onChange={val => setFilters(f => ({ ...f, speciality: val }))} />
+              <SearchableDropdown label={i18n.t("Experience")} options={experienceOptions} value={filters.experience} onChange={val => setFilters(f => ({ ...f, experience: val }))} />
+              <SearchableDropdown label={i18n.t("Fee")} options={feeOptions} value={filters.fee} onChange={val => setFilters(f => ({ ...f, fee: val }))} />
+              <SearchableDropdown label={i18n.t("Rating")} options={[1, 2, 3, 4, 5].map(v => ({ value: v, text: `${v} Star` }))} value={filters.rating} onChange={val => setFilters(f => ({ ...f, rating: val }))} />
+              <SearchableDropdown label={i18n.t("Popularity Rank")} options={[1, 2, 3, 4].map(v => ({ value: v, text: `Rank ${v}` }))} value={filters.rank} onChange={val => setFilters(f => ({ ...f, rank: val }))} />
               <div>
-                <label className="text-gray-700">Membership</label>
+                <label className="text-gray-700">{i18n.t("Membership")}</label>
                 <input
                   type="text"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none"
@@ -181,14 +200,14 @@ const SearchDoctor = ({ specialityData = [] }) => {
                   onChange={e => setFilters(f => ({ ...f, bmdc: e.target.value }))}
                 />
               </div>
-              <SearchableDropdown label="Emergency" options={[{ value: 'yes', text: 'Yes' }, { value: 'no', text: 'No' }]} value={filters.emergency} onChange={val => setFilters(f => ({ ...f, emergency: val }))} />
-              <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg mt-4 hover:bg-blue-600">Search</button>
+              <SearchableDropdown label={i18n.t("Emergency")} options={[{ value: 'yes', text: 'Yes' }, { value: 'no', text: 'No' }]} value={filters.emergency} onChange={val => setFilters(f => ({ ...f, emergency: val }))} />
+              <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg mt-4 hover:bg-blue-600">{i18n.t("Search")}</button>
             </form>
           </div>
         </div>
       )}
 
-      {/* Results - shown only after search */}
+      {/* Search Results */}
       {hasSearched && (
         <div className="mb-10">
           <h3 className="text-lg ml-3 mb-2">{i18n.t("Search Results")}</h3>
