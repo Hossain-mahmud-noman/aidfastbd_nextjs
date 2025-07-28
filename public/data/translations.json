@@ -179,7 +179,12 @@
     "Service Name": "Service Name",
     "Blood Bank Detail": "Blood Bank Detail",
     "No doctor data available": "No doctor data available",
-    "Dental Detail": "Dental Detail"
+    "Dental Detail": "Dental Detail",
+    "physiotherapy center Details": "Physiotherapy Center Details",
+  "Drug De Addiction Details": "Drug De-Addiction Details",
+  "Hearing Care Center Details": "Hearing Care Center Details",
+  "Eye Care Center Details": "Eye Care Center Details",
+  "Nursing Home Care  Center Details": "Nursing Home Care Center Details"
   },
   "bn": {
     "Doctor": "ডাক্তার",
@@ -361,6 +366,11 @@
     "Service Name": "সেবার নাম",
     "Blood Bank Detail": "ব্লাডব্যাংক এর বিস্তারিত",
     "No doctor data available": "কোনো ডাক্তার সংক্রান্ত তথ্য পাওয়া যায়নি",
-    "Dental Detail": "ডেন্টাল এর বিস্তারিত"
+    "Dental Detail": "ডেন্টাল এর বিস্তারিত",
+    "physiotherapy center Details": "ফিজিওথেরাপি সেন্টারের বিস্তারিত",
+  "Drug De Addiction Details": "ড্রাগ ডি-অ্যাডিকশন সেন্টারের বিস্তারিত",
+  "Hearing Care Center Details": "শ্রবণ সেবা কেন্দ্রের বিস্তারিত",
+  "Eye Care Center Details": "চক্ষু সেবা কেন্দ্রের বিস্তারিত",
+  "Nursing Home Care  Center Details": "নার্সিং হোম কেয়ার সেন্টারের বিস্তারিত"
   }
 }

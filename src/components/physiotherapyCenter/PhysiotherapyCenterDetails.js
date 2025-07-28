@@ -12,9 +12,11 @@ import FloatingCallButton from "../FloatingCallButton";
 import Image from "next/image";
 import DiaLocation from "../DiaLocation";
 import TextTicker from "../TextTicker";
+import EmergencyCallButton from "../EmergencyCallButton";
+import { useI18n } from "../../context/i18n";
 
 const PhysiotherapyCenterDetails = ({ data }) => {
-
+  const i18n = useI18n()
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
 
@@ -53,7 +55,7 @@ const PhysiotherapyCenterDetails = ({ data }) => {
 
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        title="physiotherapy center Detail"
+        title={i18n.t("physiotherapy center Details")}
         trailingComponents={
           <div className="flex">
             <ProfileQR
@@ -73,7 +75,7 @@ const PhysiotherapyCenterDetails = ({ data }) => {
         }
       />
 
-      <div className="pt-16 aid-container">
+      <div className="my-5 lg:my-8 aid-container">
         <div className="">
           <div className="w-full lg:h-[70vh] md:h-[50vh] h-[30vh] overflow-hidden">
             <Image
@@ -84,7 +86,7 @@ const PhysiotherapyCenterDetails = ({ data }) => {
               className="w-full h-full object-fill"
             />
           </div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between my-5 lg:my-8">
             <div className="flex items-center">
               <Image
                 width={1000}
@@ -109,33 +111,15 @@ const PhysiotherapyCenterDetails = ({ data }) => {
 
           {data?.notice && <TextTicker text={data?.notice} />}
 
-          <div className="bg-gray-100 p-3 rounded-lg mb-4">
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <p className="font-bold">Registration No</p>
-                <p>{data?.registrationNumber || "N/A"}</p>
-              </div>
-              <div>
-                <p className="font-bold">Service Time</p>
-                <p>{data?.serviceTime}</p>
-              </div>
-              <div>
-                <p className="font-bold">Total Rating</p>
-                <p>
-                  {data?.averageRating} ⭐ ({data?.atotalRating} reviews)
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div>
+          {/* <div>
             <a
               href={`tel:${data?.emergencyContactNumber}`}
               className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm"
             >
               Emergency Call
             </a>
-          </div>
+          </div> */}
+          <EmergencyCallButton number={data?.emergencyContactNumber} />
         </div>
       </div>
 

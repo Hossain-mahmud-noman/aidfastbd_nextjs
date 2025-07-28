@@ -1,8 +1,6 @@
 import { appname, headerx } from '../../../utils/constants';
 import React from 'react'
 import DoctorProfile from '../../../components/profile/DoctorProfile';
-import AppBar from '../../../components/AppBar';
-import { FaArrowLeft } from "react-icons/fa";
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
