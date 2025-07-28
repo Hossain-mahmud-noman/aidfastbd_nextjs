@@ -17,7 +17,7 @@ const EmergencyService = () => {
          image: "/common/s11.png",
          heading: i18n.t("Emergency Service 24/7"),
          description: i18n.t("Emergency Service Description"),
-         call: "tel:+8801738548662",
+         call: "tel:+8801338988734",
          slug: i18n.t("Call Emergency")
       }
    ];
@@ -38,7 +38,7 @@ const EmergencyService = () => {
                      <h1 className="heading1 text-[#212B36]">{item.heading}</h1>
                      <p className="description2 text-[#061C3D] mt-4 md:mt-5 lg:mt-6 xl:mt-[30px]">{item.description}</p>
                      <div className="mt-7 md:mt-8 lg:mt-10 xl:mt-12 flex items-center gap-3 md:gap-4 xl:gap-10">
-                        <button onClick={handleOpen} href="tel: +8801738548662" target="_blank" className="hover:scale-105 bg-[#1087EF] px-3 md:px-6 md:py-3 py-2 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
+                        <button onClick={handleOpen} target="_blank" className="hover:scale-105 bg-[#1087EF] px-3 md:px-6 md:py-3 py-2 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
                            <BiSolidPhoneCall className="text-white description2" />
                            <p className="description5 text-white whitespace-pre">{item.slug}</p>
                         </button>
@@ -48,7 +48,7 @@ const EmergencyService = () => {
             ))
          }
          <ContacTactModal
-            contact="+8801738548662"
+            contact="+8801338988734"
             open={showModal}
             onClose={handleClose}
          />

@@ -123,7 +123,7 @@ const Hero = () => {
             </div>
          </div> */}
           <ContacTactModal
-            contact="+8801738548662"
+            contact="+8801338988734"
             open={showModal}
             onClose={handleClose}
          />

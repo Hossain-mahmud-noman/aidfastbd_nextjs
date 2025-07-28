@@ -55,7 +55,7 @@ const Footer = () => {
          icon: <MdOutlineEmail />,
       },
       {
-         name: "+8801738548662",
+         name: "+8801338988734",
          link: handleOpen,
          icon: <BiPhoneCall />,
       },
@@ -248,7 +248,7 @@ const Footer = () => {
             </div>
          </div>
          <ContacTactModal
-            contact="+8801738548662"
+            contact="+8801338988734"
             open={showModal}
             onClose={handleClose}
          />

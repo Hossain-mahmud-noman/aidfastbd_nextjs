@@ -19,7 +19,7 @@ const CommonService = () => {
          heading: i18n.t("Book Specialist Doctor"),
          description: i18n.t("Book Specialist Doctor Description"),
          link: "/doctor",
-         call: "tel:+8801738548662",
+         call: "tel:+8801338988734",
          slug: i18n.t("Book Appointment")
       },
       {
@@ -27,7 +27,7 @@ const CommonService = () => {
          heading: i18n.t("Diagnostics and Hospitals at Your Doorstep"),
          description: i18n.t("Diagnostics and Hospitals Description"),
          link: "/diagnostic",
-         call: "tel:+8801738548662",
+         call: "tel:+8801338988734",
          slug: i18n.t("Book Diagnostic")
       },
       {
@@ -35,7 +35,7 @@ const CommonService = () => {
          heading: i18n.t("Ambulance Service from Home"),
          description: i18n.t("Ambulance Service Description2"),
          link: "/ambulance",
-         call: "tel:+8801738548662",
+         call: "tel:+8801338988734",
          slug: i18n.t("Book Ambulance")
       },
       {
@@ -43,7 +43,7 @@ const CommonService = () => {
          heading: i18n.t("Trusted Dental Clinics"),
          description: i18n.t("Trusted Dental Clinics Description"),
          link: "/dental",
-         call: "tel:+8801738548662",
+         call: "tel:+8801338988734",
          slug: i18n.t("Book Dental Care")
       },
       {
@@ -51,7 +51,7 @@ const CommonService = () => {
          heading: i18n.t("Blood Donor Club"),
          description: i18n.t("Blood Donor Club Description"),
          link: "/blood",
-         call: "tel:+8801738548662",
+         call: "tel:+8801338988734",
          slug: i18n.t("Find Donor")
       },
       {
@@ -59,7 +59,7 @@ const CommonService = () => {
          heading: i18n.t("Medicine Delivery"),
          description: i18n.t("Medicine Delivery Description"),
          link: "/pharmacy",
-         call: "tel:+8801738548662",
+         call: "tel:+8801338988734",
          slug: i18n.t("Order Medicine")
       },
       {
@@ -67,7 +67,7 @@ const CommonService = () => {
          heading: i18n.t("Modern Physiotherapy"),
          description: i18n.t("Modern Physiotherapy Description"),
          link: "/physiotherapy-center",
-         call: "tel:+8801738548662",
+         call: "tel:+8801338988734",
          slug: i18n.t("Book Physiotherapy")
       },
       {
@@ -75,7 +75,7 @@ const CommonService = () => {
          heading: i18n.t("Eye Care Support"),
          description: i18n.t("Eye Care Support Description"),
          link: "/eye-care-center",
-         call: "tel:+8801738548662",
+         call: "tel:+8801338988734",
          slug: i18n.t("Book Eye Checkup")
       },
       {
@@ -83,7 +83,7 @@ const CommonService = () => {
          heading: i18n.t("Drug Rehabilitation"),
          description: i18n.t("Drug Rehabilitation Description"),
          link: "/drug-de-addiction",
-         call: "tel:+8801738548662",
+         call: "tel:+8801338988734",
          slug: i18n.t("Get Rehab Help")
       },
       {
@@ -91,7 +91,7 @@ const CommonService = () => {
          heading: i18n.t("Nursing Home Care2"),
          description: i18n.t("Nursing Home Care Description"),
          link: "/nursing-home-care",
-         call: "tel:+8801738548662",
+         call: "tel:+8801338988734",
          slug: i18n.t("Book Nursing Care")
       },
       {
@@ -99,7 +99,7 @@ const CommonService = () => {
          heading: i18n.t("Hearing Aid Support"),
          description: i18n.t("Hearing Aid Support Description"),
          link: "/hearing-care-center",
-         call: "tel:+8801738548662",
+         call: "tel:+8801338988734",
          slug: i18n.t("Consult Audiologist")
       },
    ];
@@ -120,25 +120,25 @@ const CommonService = () => {
                      <h1 className="heading1 text-[#212B36]">{item.heading}</h1>
                      <p className="description2 text-[#061C3D] mt-4 md:mt-5 lg:mt-6 xl:mt-[30px]">{item.description}</p>
                      <div className="mt-7 md:mt-8 lg:mt-10 xl:mt-12 flex items-center gap-3 md:gap-4 xl:gap-10">
-                        <button onClick={handleOpen} className="hover:scale-105 bg-[#1087EF] px-3 md:px-6 md:py-3 py-2 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
-                           <BiSolidPhoneCall className="text-white description2" />
+                        <Link href={item.link} target="_blank" className="hover:scale-105 bg-[#1087EF] px-3 md:px-6 md:py-3 py-2 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
+                           {/* <BiSolidPhoneCall className="text-white description2" /> */}
                            <p className="description5 text-white whitespace-pre">{item.slug}</p>
-                        </button>
-                        {
+                        </Link>
+                        {/* {
                            item.link && (
                               <Link href={item.link} target="_blank" className="hover:scale-105 group bg-white border-2 border-primary md:px-6 md:py-3 px-3 py-2 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
                                  <p className="description5 text-primary group-hover:text-white transition-all duration-300 whitespace-pre">{i18n.t("Learn More")}</p>
                                  <FaArrowRightLong className="description2 text-primary group-hover:text-white transition-all duration-300" />
                               </Link>
                            )
-                        }
+                        } */}
                      </div>
                   </div>
                </div>
             ))
          }
          <ContacTactModal
-            contact="+8801738548662"
+            contact="+8801338988734"
             open={showModal}
             onClose={handleClose}
          />
