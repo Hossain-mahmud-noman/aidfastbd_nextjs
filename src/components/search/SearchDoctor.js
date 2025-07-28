@@ -6,8 +6,9 @@ import { FaAngleDown } from "react-icons/fa6";
 import DoctorCard from '../DoctorCard';
 import { base_endpoint } from '../../utils/constants';
 import { useI18n } from '../../context/i18n';
+import Image from 'next/image';
 
-const SearchableDropdown = ({ label, options, value, onChange }) => {
+const SearchableDropdown = ({ label, options, value, onChange, slug }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const toggleDropdown = () => setIsOpen(!isOpen);
@@ -23,7 +24,11 @@ const SearchableDropdown = ({ label, options, value, onChange }) => {
 
   return (
     <div className="relative">
-      <label className="text-gray-700">{label}</label>
+      {
+        slug != 'name' && (
+          <label className="text-gray-700">{label}</label>
+        )
+      }
       <div className="border border-gray-300 rounded-lg px-3 py-2 flex items-center justify-between cursor-pointer">
         <span onClick={toggleDropdown} style={{ inlineSize: "100%" }}>
           {value?.text || `Select ${label.toLowerCase()}`}
@@ -134,13 +139,23 @@ const SearchDoctor = ({ specialityData = [] }) => {
   return (
     <>
       {/* Search Button */}
-      <div onClick={togglePopup} className="relative flex items-center mb-3 mt-2">
-        <div className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 shadow-lg pr-12">
-          {i18n.t("Nearest Doctors")}
+      <div className='flex items-center gap-2 md:gap-3 lg:gap-6'>
+
+        <div className="w-[90%] relative flex items-center mb-3 mt-2">
+          <form className="w-full" onSubmit={handleSearch}>
+            <SearchableDropdown slug='name' label="Name" options={nameOptions} value={filters.name} onChange={val => setFilters(f => ({ ...f, name: val }))} />
+          </form>
         </div>
-        <button className="absolute right-0 mr-2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transform hover:scale-105">
-          <FiSearch className="w-5 h-5" />
-        </button>
+
+        <div onClick={togglePopup} className='w-[10%] cursor-pointer flex items-center gap-1 lg:gap-2 border rounded-md justify-center -mt-1'>
+          <Image
+            src="/filter.png"
+            width={40}
+            height={40}
+            alt='Filter'
+          />
+          <p>Filter</p>
+        </div>
       </div>
 
       {/* Popup */}
