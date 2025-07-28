@@ -48,7 +48,7 @@ export default function AppointmentCard({ data, isHistory = false, token }) {
 
    return (
       <div className="aid-container p-3 lg:p-5 border border-gray-300 rounded-xl bg-white shadow-sm space-y-4 hover:shadow-md transition-all duration-300">
-         
+
          {/* Serial Number */}
          <div className="text-sm font-semibold text-gray-800 px-3 lg:px-5">
             Serial No: {data.serial}
@@ -98,8 +98,9 @@ export default function AppointmentCard({ data, isHistory = false, token }) {
                      {data.isConfirmed ? "Confirmed" : "Pending"}
                   </button>
                   <button
+                     disabled={data.isConfirmed}
                      onClick={() => cancelBooking({ id: data.id })}
-                     className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium shadow-md transition"
+                     className={`${data.isConfirmed ? 'cursor-not-allowed' : ''} bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium shadow-md transition`}
                   >
                      Cancel
                   </button>
