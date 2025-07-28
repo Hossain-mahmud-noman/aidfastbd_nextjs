@@ -141,13 +141,13 @@ const SearchDoctor = ({ specialityData = [] }) => {
       {/* Search Button */}
       <div className='flex items-center gap-2 md:gap-3 lg:gap-6'>
 
-        <div className="w-[90%] relative flex items-center mb-3 mt-2">
+        <div className="w-[70%] md:w-[90%] relative flex items-center mb-3 mt-2">
           <form className="w-full" onSubmit={handleSearch}>
             <SearchableDropdown slug='name' label="Name" options={nameOptions} value={filters.name} onChange={val => setFilters(f => ({ ...f, name: val }))} />
           </form>
         </div>
 
-        <div onClick={togglePopup} className='w-[10%] cursor-pointer flex items-center gap-1 lg:gap-2 border rounded-md justify-center -mt-1'>
+        <div onClick={togglePopup} className='w-[30%] md:w-[10%] cursor-pointer flex items-center gap-1 lg:gap-2 border rounded-md justify-center -mt-1'>
           <Image
             src="/filter.png"
             width={40}
