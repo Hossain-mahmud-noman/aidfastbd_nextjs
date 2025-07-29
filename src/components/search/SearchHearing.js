@@ -69,7 +69,7 @@ const SearchableDropdown = ({ label, options, value, onChange, slug }) => {
                 </li>
               ))
             ) : (
-              <li className="px-3 py-2 text-gray-500">{i18n.t('no_results_found')}</li>
+              <li className="px-3 py-2 text-gray-500">{i18n.t('no results found')}</li>
             )}
           </ul>
         </div>
@@ -191,9 +191,9 @@ const SearchHearing = () => {
             >
               &times;
             </button>
-            <h2 className="text-center text-lg font-semibold mb-2">{i18n.t('search_hearing_care_center')}</h2>
+            <h2 className="text-center text-lg font-semibold mb-2">{i18n.t("Search Hearing Care Center")}</h2>
             <p className="text-center text-red-500 mb-4 text-sm">
-              ** {i18n.t('search_by_one_or_multiple_criteria')} **
+              ** {i18n.t("search by one or multiple criteria")} **
             </p>
             <form className="space-y-4" onSubmit={handleSearchSubmit}>
               <SearchableDropdown

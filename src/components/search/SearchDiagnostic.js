@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { MdCancel } from "react-icons/md";
 import { FaAngleDown } from "react-icons/fa6";
-import { FiSearch } from "react-icons/fi";
 import Image from 'next/image';
 import DiagnosticCenterCard from '../DiagnosticCenterCard';
 import { useI18n } from '../../context/i18n';
@@ -97,7 +96,7 @@ const SearchDiagnostic = () => {
     if (customFilters.emergency?.value) queryParams.append("emergency", customFilters.emergency.value);
     if (customFilters.icu?.value) queryParams.append("emergencyICU", customFilters.icu.value);
     if (customFilters.ot?.value) queryParams.append("emergencyOT", customFilters.ot.value);
-    if (customFilters.rating?.value) queryParams.append("ratngs", customFilters.rating.value);
+    if (customFilters.rating?.value) queryParams.append("rating", customFilters.rating.value);
     if (customFilters.rank?.value) queryParams.append("popularity", customFilters.rank.value);
 
     try {

@@ -111,7 +111,7 @@ const SearchPharmacy = () => {
     if (customFilters.rank?.value)
       query.append("popularity", customFilters.rank.value);
     if (customFilters.rating?.value)
-      query.append("ratngs", customFilters.rating.value);
+      query.append("rating", customFilters.rating.value);
     if (customFilters.emergency?.value)
       query.append("emergency", customFilters.emergency.value);
 

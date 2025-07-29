@@ -2,13 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { MdCancel } from 'react-icons/md';
 import { FaAngleDown } from 'react-icons/fa6';
-import { FiSearch } from 'react-icons/fi';
 import DentalCard from '../DentalCard';
 import { useI18n } from '../../context/i18n';  
 import { base_endpoint } from '../../utils/constants'; 
 import Image from 'next/image';
 
-// Reusable searchable dropdown component
 const SearchableDropdown = ({ label, options, value, onChange, slug }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -106,10 +104,9 @@ const SearchDental = () => {
       });
   }, []);
 
-  // Build query params and fetch search results
   const handleSearch = async (customFilters = filters) => {
     const query = new URLSearchParams();
-    query.append('serviceType', '1'); // as per your original API
+    query.append('serviceType', '1'); 
 
     query.append('pageNumber', '1');
     query.append('pageSize', '20');
@@ -183,9 +180,9 @@ const SearchDental = () => {
             >
               &times;
             </button>
-            <h2 className="text-center text-lg font-semibold mb-2">{i18n.t('Search Dental Clinics')}</h2>
+            <h2 className="text-center text-lg font-semibold mb-2">{i18n.t("Search Dental Clinics")}</h2>
             <p className="text-center text-red-500 mb-4 text-sm">
-              ** {i18n.t('search by one or multiple criteria')} **
+              ** {i18n.t("search by one or multiple criteria")} **
             </p>
             <form
               className="space-y-4"

@@ -124,10 +124,10 @@ const SearchDoctor = ({ specialityData = [] }) => {
     if (customFilters.speciality?.text) queryParams.append("Specialty", customFilters.speciality.text);
     if (customFilters.emergency?.value) queryParams.append("Emergency", customFilters.emergency.value);
     if (customFilters.fee?.text) queryParams.append("Fee", customFilters.fee.text);
-    if (customFilters.experience?.text) queryParams.append("Experience", customFilters.experience.text);
+    if (customFilters.experience?.text) queryParams.append("Experiance", customFilters.experience.text);
     if (customFilters.rating?.value) queryParams.append("Rating", customFilters.rating.value);
-    if (customFilters.rank?.value) queryParams.append("Rank", customFilters.rank.value);
-    if (customFilters.bmdc) queryParams.append("BMDC", customFilters.bmdc);
+    if (customFilters.rank?.value) queryParams.append("Popularity", customFilters.rank.value);
+    if (customFilters.bmdc) queryParams.append("BMDCNumber", customFilters.bmdc);
 
     try {
       const res = await fetch(`${base_endpoint}/GeneralWeb/GetDoctorSearchList?pageNumber=1&pageSize=20&${queryParams}`);

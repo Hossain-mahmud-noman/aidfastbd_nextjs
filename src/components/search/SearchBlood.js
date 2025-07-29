@@ -1,14 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { FiSearch } from 'react-icons/fi';
 import { MdCancel } from 'react-icons/md';
 import { FaAngleDown } from 'react-icons/fa6';
 import BloodBankCard from '../BloodBankCard';
-import { useI18n } from '../../context/i18n'; // adapt if you use i18n context
-import { base_endpoint } from '../../utils/constants'; // your base API endpoint
+import { useI18n } from '../../context/i18n'; 
+import { base_endpoint } from '../../utils/constants'; 
 import Image from 'next/image';
 
-// Reusable Dropdown with search inside dropdown
+
 const SearchableDropdown = ({ label, options, value, onChange, slug }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -109,7 +108,7 @@ const SearchBlood = () => {
     if (customFilters.name?.value)
       query.append('bloodBankInformationId', customFilters.name.value);
     if (customFilters.rank?.value) query.append('popularity', customFilters.rank.value);
-    if (customFilters.rating?.value) query.append('ratngs', customFilters.rating.value);
+    if (customFilters.rating?.value) query.append('rating', customFilters.rating.value);
     if (customFilters.emergency?.value) query.append('emergency', customFilters.emergency.value);
 
     try {
@@ -172,7 +171,7 @@ const SearchBlood = () => {
               &times;
             </button>
             <h2 className="text-center text-lg font-semibold mb-2">
-              {i18n.t('Search Blood Banks')}
+              {i18n.t("Search Blood Banks")}
             </h2>
             <p className="text-center text-red-500 mb-4 text-sm">
               ** {i18n.t('search by one or multiple criteria')} **

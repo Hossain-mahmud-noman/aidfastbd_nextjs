@@ -301,7 +301,7 @@
     "Speciality": "স্পেশালিটি",
     "No data Speciality available": "কোনো স্পেশালিটির তথ্য পাওয়া যায়নি",
     "Nearest Doctors": "কাছাকাছি ডাক্তারদের নাম দিয়ে খোজ করুন",
-    "Search Results": "আপনার সার্চের রেজাল্ট",
+    "Search Results": "আপনার সার্চের ফলাফল",
     "No doctors found": "কোনো ডাক্তার পাওয়া যায়নি",
     "Doctor Details Information": "ডাক্তারের বিস্তারিত তথ্য",
     "Information": "ইনফরমেশন",
@@ -379,6 +379,17 @@
     "Search": "সার্স করুন",
     "Rating": "রেটিং",
     "Popularity Rank": "পপুলারিটি",
-    "Select": "নির্বাচন করুন"
+    "Select": "নির্বাচন করুন",
+    "Search Doctor": "ডাক্তার সার্স করুন",
+    "Search Diagnostic": "ডায়াগনস্টিক সেন্টার সার্স করুন",
+    "Search Ambulance": "অ্যাম্বুলেন্স সার্স করুন",
+    "Search Pharmacy": "ফার্মেসি সার্স করুন",
+    "Search Blood Banks": "ব্লাডব্যাংক সার্স করুন",
+    "Search Dental Clinics": "ডেন্টাল সার্স করুন",
+    "Search Drug-De-Addiction": "মাদকাসক্ত নিরাময় কেন্দ্র সার্স করুন",
+    "Search Physiotherapy Center": "ফিজিওথেরাপি সেন্টার সার্স করুন",
+    "Search Hearing Care Center": "হেয়ারিং কেয়ার সেন্টার সার্স করুন",
+    "Search Eye Care Center": "আই কেয়ার সেন্টার সার্স করুন"
+
   }
 }
