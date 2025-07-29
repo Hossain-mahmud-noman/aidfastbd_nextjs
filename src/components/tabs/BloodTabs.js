@@ -5,6 +5,7 @@ import ReviewList from "../ReviewList";
 import { FaPhone, FaUserCircle, FaTint } from "react-icons/fa";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
+import PostReview from "../postReview/PostReview";
 function BloodTabs({ data }) {
   const i18n = useI18n()
 
@@ -143,24 +144,35 @@ function BloodTabs({ data }) {
           </div>
         )}
 
+
+
         {activeTab === i18n.t("Review") && (
 
-          data?.bloodBankReview?.length > 0 ? (
-            <ReviewList
-              reviews={data?.bloodBankReview}
-              averageRating={data?.averageRating}
-              totalRatings={data?.totalRating}
+          <>
+            <PostReview
+              profileUserId={data?.userId}
             />
-          ) : (
-            <div
-              className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
-              role="alert"
-            >
-              <p className="text-yellow-700">
-                {i18n.t("No review data available")}
-              </p>
-            </div>
-          )
+            {
+              data?.bloodBankReview?.length > 0 ? (
+                <ReviewList
+                  reviews={data?.bloodBankReview}
+                  averageRating={data?.averageRating}
+                  totalRatings={data?.totalRating}
+                />
+              ) : (
+                <div
+                  className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
+                  role="alert"
+                >
+                  <p className="text-yellow-700">
+                    {i18n.t("No review data available")}
+                  </p>
+                </div>
+              )
+            }
+          </>
+
+
         )}
       </div>
     </>
