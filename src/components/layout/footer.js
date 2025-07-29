@@ -124,7 +124,7 @@ const Footer = () => {
                   <p className="description1 mt-4 text-white md:max-w-[326px]">{i18n.t("AidFast Tagline")}</p>
                   <p className="description1 mt-4 text-white ">{i18n.t("Download AidFast App")}</p>
                   <div className="mt-4 lg:mt-5 xl:mt-8 flex items-center gap-3 md:gap-4 xl:gap-5">
-                     <Link href="/www.google.com" className="relative w-[150px] h-[50px]">
+                     <Link href="https://play.google.com/store/apps/details?id=com.aidfastbd.app" className="relative w-[150px] h-[50px]">
                         <Image
                            src="/home/service/google.png"
                            fill
