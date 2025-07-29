@@ -389,7 +389,12 @@
     "Search Drug-De-Addiction": "মাদকাসক্ত নিরাময় কেন্দ্র সার্স করুন",
     "Search Physiotherapy Center": "ফিজিওথেরাপি সেন্টার সার্স করুন",
     "Search Hearing Care Center": "হেয়ারিং কেয়ার সেন্টার সার্স করুন",
-    "Search Eye Care Center": "আই কেয়ার সেন্টার সার্স করুন"
+    "Search Eye Care Center": "আই কেয়ার সেন্টার সার্স করুন",
+    "Give Review": "রিভিউ দিন",
+    "Cancel": "বাতিল করুন",
+    "Submit": "জমা দিন",
+    "Comment" : "মন্তব্য করুন",
+    "Write your feedback here...": "আপনার মন্তব্য লিখুন"
 
   }
 }

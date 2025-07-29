@@ -9,6 +9,7 @@ import Image from "next/image";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import ContacTactModal from "../../utils/contactModal";
+import PostReview from "../postReview/PostReview";
 
 function DoctorTabs({ data }) {
   const i18n = useI18n()
@@ -417,23 +418,27 @@ function DoctorTabs({ data }) {
 
         {activeTab === i18n.t("Review") && (
 
-          data?.doctorRatingInfo?.length > 0 ? (
-            <ReviewList
-              reviews={data.doctorRatingInfo}
-              averageRating={data.averageRating}
-              totalRatings={data.totalRating}
+          <>
+            <PostReview
+              profileUserId={data?.userId}
             />
-          ) : (
-            <div
-              className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
-              role="alert"
-            >
-              <p className="text-yellow-700">
-                {i18n.t("No review data available")}
-              </p>
-            </div>
-          )
-
+            {data?.doctorRatingInfo?.length > 0 ? (
+              <ReviewList
+                reviews={data?.doctorRatingInfo}
+                averageRating={data?.averageRating}
+                totalRatings={data?.totalRating}
+              />
+            ) : (
+              <div
+                className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4"
+                role="alert"
+              >
+                <p className="text-yellow-700">
+                  {i18n.t("No review data available")}
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
 
