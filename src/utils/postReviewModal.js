@@ -27,7 +27,6 @@ const PostReviewModal = ({ profileUserId, open, onClose }) => {
       fetchProfle()
       setToken(tokenCookie);
    }, [token]);
-   console.log("userrrrrrrrrrrrrrrrr", user)
 
    const handleSubmit = async () => {
       if (!star || !remarks) {
