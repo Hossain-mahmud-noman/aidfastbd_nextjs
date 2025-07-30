@@ -6,6 +6,7 @@ import DentalCard from '../DentalCard';
 import { useI18n } from '../../context/i18n';  
 import { base_endpoint } from '../../utils/constants'; 
 import Image from 'next/image';
+import ServiceCard from '../ServiceCard';
 
 const SearchableDropdown = ({ label, options, value, onChange, slug }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -240,7 +241,7 @@ const SearchDental = () => {
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-3">
               {results.map((item, index) => (
-                <DentalCard key={index} data={item} />
+                <ServiceCard key={index} data={item} slug='dental' />
               ))}
             </div>
           )}

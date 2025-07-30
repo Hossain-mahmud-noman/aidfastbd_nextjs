@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { FaSpinner } from 'react-icons/fa';
 import DentalCard from '../DentalCard';
+import ServiceCard from '../ServiceCard';
 
 const DentalList = () => {
   const [data, setData] = useState([]);
@@ -87,7 +88,7 @@ const DentalList = () => {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-3">
           {data.map((d, index) => (
-            <DentalCard key={`${d.id}-${index}`} data={d} />
+            <ServiceCard key={`${d.id}-${index}`} data={d}  slug='dental' />
           ))}
         </div>
       )}

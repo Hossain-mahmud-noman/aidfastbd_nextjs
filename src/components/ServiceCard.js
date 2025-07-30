@@ -9,7 +9,7 @@ const ServiceCard = ({ data, slug }) => {
   return (
     <Link href={`/${slug}/` + data.id}>
       <div
-        className="shadow-custom-light flex flex-col h-full bg-white rounded-lg  transition-all duration-300 hover:shadow-lg"
+        className="hover:shadow-custom-light flex flex-col h-full bg-white rounded-lg  transition-all duration-300 shadow-md"
         aria-label={`Dental ${data.name} information card`}
       >
         <div className="flex-1 pl-3 pt-3 pr-3 pb-1">

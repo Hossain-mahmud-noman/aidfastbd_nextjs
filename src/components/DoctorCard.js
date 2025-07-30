@@ -9,7 +9,7 @@ const DoctorCard = ({ doctor, lat = null, lon = null, id = null }) => {
     return (
         <Link href={lat !== null && lon !== null && id !== null ? `/doctor/${id}?lat=${lat}&lon=${lon}` : "/doctor/" + doctor.userId}>
             <div
-                className="flex  cursor-pointer flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
+                className="flex  cursor-pointer flex-col h-full bg-white rounded-lg hover:shadow-custom-light transition-all duration-300 "
                 aria-label={`Doctor ${doctor.name} information card`}
             >
                 <Image

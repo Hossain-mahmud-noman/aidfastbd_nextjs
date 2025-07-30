@@ -11,7 +11,7 @@ const BloodBankCard = ({ data }) => {
         <Link href={"/blood/" + data.userId}>
 
             <div
-                className="flex flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
+                className="flex flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-custom-light"
                 aria-label={`Blood Bank ${data.name} information card`}
             >
                 <div className="flex-1 pl-3 pt-3 pr-3 pb-1">
