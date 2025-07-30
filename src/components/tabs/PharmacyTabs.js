@@ -165,6 +165,7 @@ function PharmacyTabs({ data }) {
           <>
             <PostReview
               profileUserId={data?.userId}
+              typeId="4"
             />
             {
               data?.pharmacyReview?.length > 0 ? (

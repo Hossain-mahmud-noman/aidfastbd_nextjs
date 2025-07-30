@@ -7,13 +7,14 @@ import { toast } from 'sonner';
 import { useI18n } from '../context/i18n';
 import { getUserProfile } from '../context/getUserProfile';
 
-const PostReviewModal = ({ profileUserId, open, onClose }) => {
+const PostReviewModal = ({ profileUserId, open, onClose, typeId }) => {
    const [star, setStar] = useState(0);
    const [remarks, setRemarks] = useState('');
    const [loading, setLoading] = useState(false);
 
    const [token, setToken] = useState("");
    const [user, setUser] = useState(null);
+   
    const i18n = useI18n()
 
    const fetchProfle = async() => {
@@ -27,7 +28,6 @@ const PostReviewModal = ({ profileUserId, open, onClose }) => {
       fetchProfle()
       setToken(tokenCookie);
    }, [token]);
-
    const handleSubmit = async () => {
       if (!star || !remarks) {
          toast.error(i18n.t('Please provide a rating and a comment.'));
@@ -35,9 +35,9 @@ const PostReviewModal = ({ profileUserId, open, onClose }) => {
       }
 
       const reviewData = {
-         userId: user.id,
+         userId: user.userId,
          profileUserId: profileUserId,
-         typeId: 0,
+         typeId: typeId,
          reviewDate: new Date().toISOString(),
          star: star,
          remarks: remarks,

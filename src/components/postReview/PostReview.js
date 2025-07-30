@@ -4,7 +4,7 @@ import { FiStar } from "react-icons/fi";
 import PostReviewModal from "../../utils/postReviewModal"; // adjust import path
 import { useI18n } from "../../context/i18n";
 
-const PostReview = ({ profileUserId }) => {
+const PostReview = ({ profileUserId, typeId }) => {
   const i18n = useI18n();
   const [showModal, setShowModal] = useState(false);
 
@@ -20,6 +20,7 @@ const PostReview = ({ profileUserId }) => {
 
       <PostReviewModal
         profileUserId={profileUserId}
+        typeId={typeId}
         open={showModal}
         onClose={() => setShowModal(false)}
       />

@@ -144,6 +144,7 @@ function AmbulanceTabs({ data }) {
           <>
             <PostReview
               profileUserId={data?.userId}
+              typeId="5"
             />
             {
               data?.ambulanceReview?.length > 0 ? (

@@ -421,6 +421,7 @@ function DoctorTabs({ data }) {
           <>
             <PostReview
               profileUserId={data?.userId}
+              typeId="1"
             />
             {data?.doctorRatingInfo?.length > 0 ? (
               <ReviewList

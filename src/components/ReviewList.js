@@ -15,7 +15,7 @@ function ReviewList({ reviews = [], totalRatings, averageRating }) {
 
         for (let i = 0; i < fullStars; i++) {
             stars.push(
-                <FaStar key={`full-${i}`} className="text-yellow-400 inline-block" />
+                <FaStar key={`full-${i}`} className="text-primary inline-block" />
             );
         }
 
@@ -23,7 +23,7 @@ function ReviewList({ reviews = [], totalRatings, averageRating }) {
             stars.push(
                 <FaStarHalfAlt
                     key="half"
-                    className="text-yellow-400 inline-block"
+                    className="text-primary inline-block"
                 />
             );
         }
@@ -60,7 +60,7 @@ function ReviewList({ reviews = [], totalRatings, averageRating }) {
                 {reviews?.map((review,index) => (
                     <div
                         key={`review_${index}`}
-                        className="bg-gray-50 p-4 rounded-lg transition-transform duration-200 hover:transform hover:scale-102 hover:shadow-md"
+                        className="bg-gray-50 p-4 rounded-lg transition-all duration-300 hover:transform hover:scale-102 hover:shadow-custom-light"
                     >
                         <div className="flex items-center mb-2">
                             <Image

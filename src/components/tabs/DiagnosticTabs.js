@@ -271,6 +271,7 @@ function DiagnosticTabs({ data }) {
           <>
             <PostReview
               profileUserId={data?.userId}
+              typeId="2"
             />
             {
               data?.diagnosticCenterReview?.length > 0 ? (

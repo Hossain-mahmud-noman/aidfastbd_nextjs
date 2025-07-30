@@ -151,6 +151,7 @@ function BloodTabs({ data }) {
           <>
             <PostReview
               profileUserId={data?.userId}
+              typeId="3"
             />
             {
               data?.bloodBankReview?.length > 0 ? (

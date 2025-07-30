@@ -7,7 +7,6 @@ import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
 function DentalTabs({ data }) {
   const i18n = useI18n()
-
   const tabData = [
     i18n.t("Information"),
     i18n.t("Doctors"),
@@ -144,6 +143,7 @@ function DentalTabs({ data }) {
           <>
             <PostReview
               profileUserId={data?.userId}
+              typeId="7"
             />
             {
               data?.genericServiceReview?.length > 0 ? (
