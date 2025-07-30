@@ -441,6 +441,7 @@ function DoctorTabs({ data }) {
             )}
           </>
         )}
+
       </div>
 
     </>

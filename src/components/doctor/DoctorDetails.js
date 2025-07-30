@@ -11,7 +11,6 @@ import ShowOriginalImage from "../list/ShowOriginalImage";
 import { image_base_endpoint, frontend_url, appname } from "../../utils/constants";
 import Head from "next/head";
 import { useI18n } from "../../context/i18n";
-import ContacTactModal from "../../utils/contactModal";
 import EmergencyCallButton from "../EmergencyCallButton";
 
 const DoctorDetail = ({ data }) => {
