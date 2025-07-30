@@ -37,16 +37,16 @@ const ClientLayout = ({ children }) => {
     if (loading) return <Loader />;
 
     return (
-        // <AuthProvider>
-        <StoreProvider>
-            <I18nProvider>
-                <Navbar />
-                <Toaster position="top-right" />
-                {children}
-                <Footer />
-            </I18nProvider>
-        </StoreProvider>
-        // </AuthProvider>
+        <AuthProvider>
+            <StoreProvider>
+                <I18nProvider>
+                    <Navbar />
+                    <Toaster position="top-right" />
+                    {children}
+                    <Footer />
+                </I18nProvider>
+            </StoreProvider>
+        </AuthProvider>
     );
 };
 

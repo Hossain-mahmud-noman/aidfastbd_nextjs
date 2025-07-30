@@ -4,8 +4,10 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { base_endpoint } from '../../utils/constants';
 import { toast, Toaster } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../../context/AuthContext';
 
 const LoginForm = () => {
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
   const [password, setPassword] = useState('');
@@ -49,10 +51,9 @@ const LoginForm = () => {
           });
 
           if (ret.status == 200) {
+            login(data.user, data.tokenString);
             localStorage.setItem("token", data.tokenString);
             localStorage.setItem("id", data.user?.id);
-
-            toast.success("User login Successfully");
             setTimeout(() => router.push("/profile"), 1000);
           } else {
             toast.error("Login failed");

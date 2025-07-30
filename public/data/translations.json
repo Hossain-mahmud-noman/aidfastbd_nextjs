@@ -394,7 +394,10 @@
     "Cancel": "বাতিল করুন",
     "Submit": "জমা দিন",
     "Comment" : "মন্তব্য করুন",
-    "Write your feedback here...": "আপনার মন্তব্য লিখুন...."
-
+    "Write your feedback here...": "আপনার মন্তব্য লিখুন....",
+    "Profile": "প্রোফাইল",
+    "Appoinments":"অ্যাপয়েন্টমেন্ট",
+    "Logout": "লগ আউট",
+    "login": "লগ ইন"
   }
 }

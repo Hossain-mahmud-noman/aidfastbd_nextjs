@@ -3,53 +3,33 @@
 import { Dropdown } from 'antd';
 import Link from 'next/link';
 import { FaUserDoctor } from 'react-icons/fa6';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useI18n } from '../../../context/i18n';
-import handleLogout from '../../../context/logout'
-import { getUserProfile } from '../../../context/getUserProfile'
 import Image from 'next/image';
+import { useAuth } from '../../../context/AuthContext';
+import { image_base_endpoint } from '../../../utils/constants';
 const Login = () => {
-  const [user, setUser] = useState(null);
+  const { user, logout } = useAuth();
+  const fullImageUrl = `${image_base_endpoint}${user?.imageUrl}`;
   const i18n = useI18n();
-  const router = useRouter();
-  const [image, setImage] = useState(null)
-
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem('id');
-    setUser(storedUser);
-    fetchProfile()
-  }, [i18n]);
-
-
-  const fetchProfile = async () => {
-    const profile = await getUserProfile();
-    if (profile) {
-      setImage(
-        profile.imageUrl !== "" ? "https://api.aidfastbd.com/" + profile.imageUrl : ""
-      );
-    }
-  };
 
   const items = [
     {
       key: '1',
-      label: <Link href="/profile">Profile</Link>,
+      label: <Link href="/profile">{i18n.t("Profile")}</Link>,
     },
     {
       key: 't',
       label: (
         <Link href='/appointments' className="w-full text-left">
-          Appoinments
+          {i18n.t("Appoinments")}
         </Link>
       ),
     },
     {
       key: '2',
       label: (
-        <button onClick={() => handleLogout(router)} className="w-full text-left">
-          Logout
+        <button onClick={logout} className="w-full text-left">
+          {i18n.t("Logout")}
         </button>
       ),
     },
@@ -61,9 +41,9 @@ const Login = () => {
         <Dropdown menu={{ items }} trigger={['hover']} placement="bottomRight">
           <div className="cursor-pointer h-6 w-6 md:h-8 md:w-8 rounded-full bg-primary flex items-center justify-center overflow-hidden">
             {
-              image ?
+              fullImageUrl ?
                 <Image
-                  src={image}
+                  src={fullImageUrl}
                   width={100}
                   height={100}
                   alt='user'
@@ -75,7 +55,7 @@ const Login = () => {
       ) : (
         <Link href="/login">
           <div className="border rounded-md text-white bg-primary md:px-2 px-1 py-1">
-            <p className="text-xs md:text-base">login</p>
+            <p className="text-xs md:text-base">{i18n.t("login")}</p>
           </div>
         </Link>
       )}
