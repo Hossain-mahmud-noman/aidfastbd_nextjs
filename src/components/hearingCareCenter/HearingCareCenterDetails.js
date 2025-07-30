@@ -126,7 +126,7 @@ const HearingCareCenterDetails = ({ data }) => {
       </div>
       {/* Have to add tabs */}
       <div className="aid-container">
-        <DentalTabs data={data} />
+        <DentalTabs typeId="10" data={data} />
       </div>
       <FloatingCallButton number={data?.contact} />
     </>

@@ -19,9 +19,6 @@ const DentalDetails = ({ data }) => {
   const i18n = useI18n()
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const handleOpen = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
 
   useEffect(() => {
     const tokenCookie = localStorage.getItem("token") ?? "";
@@ -112,7 +109,7 @@ const DentalDetails = ({ data }) => {
 
       </div>
       <div className="aid-container mt-6">
-        <DentalTabs data={data} />
+        <DentalTabs data={data} typeId="7" />
       </div>
       <FloatingCallButton number={data?.contact} />
     </>

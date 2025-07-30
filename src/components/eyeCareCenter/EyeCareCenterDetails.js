@@ -115,7 +115,7 @@ const EyeCareCenterDetails = ({ data }) => {
       </div>
 
       <div className="aid-container">
-        <DentalTabs data={data} />
+        <DentalTabs typeId="11" data={data} />
       </div>
       <FloatingCallButton number={data.contact} />
     </>

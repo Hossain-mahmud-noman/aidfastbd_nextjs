@@ -121,7 +121,7 @@ const DrugDeAddictionDetails = ({ data }) => {
       </div>
 
       <div className="aid-container">
-        <DentalTabs data={data} />
+        <DentalTabs data={data} typeId="8" />
       </div>
       <FloatingCallButton number={data?.contact} />
     </>
