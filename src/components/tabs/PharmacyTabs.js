@@ -5,9 +5,11 @@ import ReviewList from "../ReviewList";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
+import { useAuth } from "../../context/AuthContext";
 
 function PharmacyTabs({ data, userId }) {
   const i18n = useI18n()
+  const { user } = useAuth()
   const [RerviewData, setReviewdData] = useState(data)
   const tabData = [
     i18n.t("Information"),
@@ -173,11 +175,15 @@ function PharmacyTabs({ data, userId }) {
         {activeTab === i18n.t("Review") && (
 
           <>
-            <PostReview
-              profileUserId={RerviewData?.userId}
-              typeId="4"
-              onSuccess={fetchPharmacyData}
-            />
+            {
+              user && (
+                <PostReview
+                  profileUserId={RerviewData?.userId}
+                  typeId="4"
+                  onSuccess={fetchPharmacyData}
+                />
+              )
+            }
             {
               RerviewData?.pharmacyReview?.length > 0 ? (
                 <ReviewList

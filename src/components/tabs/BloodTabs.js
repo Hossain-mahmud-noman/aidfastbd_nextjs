@@ -6,9 +6,11 @@ import { FaPhone, FaUserCircle, FaTint } from "react-icons/fa";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
+import { useAuth } from "../../context/AuthContext";
 function BloodTabs({ data, UserId }) {
   const i18n = useI18n()
   const [reviewData, setReviewdData] = useState(data)
+  const { user } = useAuth()
   const tabData = [
     i18n.t("Information"),
     i18n.t("Services"),
@@ -157,11 +159,15 @@ function BloodTabs({ data, UserId }) {
         {activeTab === i18n.t("Review") && (
 
           <>
-            <PostReview
-              profileUserId={reviewData?.userId}
-              typeId="3"
-              onSuccess={fetchBlooddata}
-            />
+            {
+              user && (
+                <PostReview
+                  profileUserId={reviewData?.userId}
+                  typeId="3"
+                  onSuccess={fetchBlooddata}
+                />
+              )
+            }
             {
               reviewData?.bloodBankReview?.length > 0 ? (
                 <ReviewList

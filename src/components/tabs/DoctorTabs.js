@@ -10,9 +10,11 @@ import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import ContacTactModal from "../../utils/contactModal";
 import PostReview from "../postReview/PostReview";
+import { useAuth } from "../../context/AuthContext";
 
 function DoctorTabs({ data, UserId }) {
   const i18n = useI18n()
+  const { user } = useAuth()
   const [reviewData, setReviewdData] = useState(data)
   const [showModal, setShowModal] = useState(false);
   const handleOpen = () => setShowModal(true);
@@ -430,11 +432,15 @@ function DoctorTabs({ data, UserId }) {
         {activeTab === i18n.t("Review") && (
 
           <>
-            <PostReview
-              profileUserId={reviewData?.userId}
-              typeId="1"
-              onSuccess={fetchDoctorProfile}
-            />
+            {
+              user && (
+                <PostReview
+                  profileUserId={reviewData?.userId}
+                  typeId="1"
+                  onSuccess={fetchDoctorProfile}
+                />
+              )
+            }
 
             {reviewData?.doctorRatingInfo?.length > 0 ? (
               <ReviewList

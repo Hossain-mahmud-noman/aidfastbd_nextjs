@@ -5,8 +5,10 @@ import DoctorCard from "../DoctorCard";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
+import { useAuth } from "../../context/AuthContext";
 function DentalTabs({ data, typeId, url }) {
   const i18n = useI18n()
+  const { user } = useAuth()
   const [reviewData, setReviewdData] = useState(data)
   const tabData = [
     i18n.t("Information"),
@@ -151,11 +153,15 @@ function DentalTabs({ data, typeId, url }) {
         {activeTab === i18n.t("Review") && (
 
           <>
-            <PostReview
-              profileUserId={reviewData?.userId}
-              typeId={typeId}
-              onSuccess={fetchServiceData}
-            />
+            {
+              user && (
+                <PostReview
+                  profileUserId={reviewData?.userId}
+                  typeId={typeId}
+                  onSuccess={fetchServiceData}
+                />
+              )
+            }
             {
               reviewData?.genericServiceReview?.length > 0 ? (
                 <ReviewList

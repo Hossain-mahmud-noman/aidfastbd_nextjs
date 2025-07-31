@@ -7,9 +7,10 @@ import ReviewList from "../ReviewList";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
+import { useAuth } from "../../context/AuthContext";
 
 function DiagnosticTabs({ data, userId }) {
-
+  const { user } = useAuth()
   const i18n = useI18n()
   const [reviewData, setReviewdData] = useState(data)
 
@@ -280,11 +281,15 @@ function DiagnosticTabs({ data, userId }) {
         {activeTab === i18n.t("Review") && (
 
           <>
-            <PostReview
-              profileUserId={reviewData?.userId}
-              typeId="2"
-              onSuccess={fetchDiagnosticData}
-            />
+            {
+              user && (
+                <PostReview
+                  profileUserId={reviewData?.userId}
+                  typeId="2"
+                  onSuccess={fetchDiagnosticData}
+                />
+              )
+            }
             {
               reviewData?.diagnosticCenterReview?.length > 0 ? (
                 <ReviewList

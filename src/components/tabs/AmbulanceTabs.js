@@ -5,9 +5,11 @@ import ReviewList from "../ReviewList";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
+import { useAuth } from "../../context/AuthContext";
 
 function AmbulanceTabs({ data, UserId }) {
   const i18n = useI18n()
+  const { user } = useAuth()
   const [reviewData, setReviewdData] = useState(data)
   const tabData = [
     i18n.t("Information"),
@@ -153,11 +155,15 @@ function AmbulanceTabs({ data, UserId }) {
         {activeTab === i18n.t("Review") && (
 
           <>
-            <PostReview
-              profileUserId={reviewData?.userId}
-              typeId="5"
-              onSuccess={fetchAmbulenceData}
-            />
+            {
+              user && (
+                <PostReview
+                  profileUserId={reviewData?.userId}
+                  typeId="5"
+                  onSuccess={fetchAmbulenceData}
+                />
+              )
+            }
             {
               reviewData?.ambulanceReview?.length > 0 ? (
                 <ReviewList
