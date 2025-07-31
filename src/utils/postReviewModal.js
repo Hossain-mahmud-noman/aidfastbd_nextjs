@@ -9,7 +9,7 @@ import { getUserProfile } from '../context/getUserProfile';
 
 const PostReviewModal = ({ profileUserId, open, onClose, typeId }) => {
    const [star, setStar] = useState(0);
-   const [remarks, setRemarks] = useState('');
+   // const [remarks, setRemarks] = useState('');
    const [loading, setLoading] = useState(false);
 
    const [token, setToken] = useState("");
@@ -29,8 +29,8 @@ const PostReviewModal = ({ profileUserId, open, onClose, typeId }) => {
       setToken(tokenCookie);
    }, [token]);
    const handleSubmit = async () => {
-      if (!star || !remarks) {
-         toast.error(i18n.t('Please provide a rating and a comment.'));
+      if (!star) {
+         toast.error(i18n.t('Please provide a rating.'));
          return;
       }
 
@@ -40,7 +40,7 @@ const PostReviewModal = ({ profileUserId, open, onClose, typeId }) => {
          typeId: typeId,
          reviewDate: new Date().toISOString(),
          star: star,
-         remarks: remarks,
+         // remarks: remarks,
          isDeleted: false,
       };
 
@@ -58,7 +58,7 @@ const PostReviewModal = ({ profileUserId, open, onClose, typeId }) => {
          if (!res.ok) throw new Error('Failed to post review');
 
          toast.success(i18n.t('Review submitted successfully!'));
-         setRemarks('');
+         // setRemarks('');
          setStar(0);
          onClose();
       } catch (err) {
@@ -92,7 +92,7 @@ const PostReviewModal = ({ profileUserId, open, onClose, typeId }) => {
                <label className="font-medium">{i18n.t('Rating')}</label> <br />
                <Rate value={star} className='text-primary' onChange={(value) => setStar(value)} />
             </div>
-            <div>
+            {/* <div>
                <label className="font-medium">{i18n.t("Comment")}</label>
                <Input.TextArea
                   rows={4}
@@ -101,7 +101,7 @@ const PostReviewModal = ({ profileUserId, open, onClose, typeId }) => {
                   required
                   onChange={(e) => setRemarks(e.target.value)}
                />
-            </div>
+            </div> */}
          </div>
       </Modal>
    );

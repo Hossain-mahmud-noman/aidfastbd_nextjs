@@ -55,12 +55,11 @@ function ReviewList({ reviews = [], totalRatings, averageRating }) {
                 Based on {totalRatings} ratings
             </p>
         </div>
-
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-5">
                 {reviews?.map((review,index) => (
                     <div
                         key={`review_${index}`}
-                        className="bg-gray-50 p-4 rounded-lg transition-all duration-300 hover:transform hover:scale-102 hover:shadow-custom-light"
+                        className=" bg-white border border-primary p-4 rounded-lg transition-all duration-300 hover:transform hover:scale-102 hover:shadow-custom-light"
                     >
                         <div className="flex items-center mb-2">
                             <Image
@@ -84,7 +83,7 @@ function ReviewList({ reviews = [], totalRatings, averageRating }) {
                         <div className="flex items-center mb-2">
                             {renderStars(review?.star)}
                         </div>
-                        <p className="text-gray-700">{review?.remarks}</p>
+                        {/* <p className="text-gray-700">{review?.remarks}</p> */}
                     </div>
                 ))}
             </div>
