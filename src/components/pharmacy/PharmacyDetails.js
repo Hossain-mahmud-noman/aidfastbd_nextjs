@@ -15,7 +15,7 @@ import PharmacyTabs from "../tabs/PharmacyTabs";
 import { useI18n } from "../../context/i18n";
 import ContacTactModal from "../../utils/contactModal";
 
-const PharmacyDetails = ({ data }) => {
+const PharmacyDetails = ({ data, userId }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const i18n = useI18n();
@@ -121,7 +121,7 @@ const PharmacyDetails = ({ data }) => {
         </div>
       </div>
       <div className='aid-container'>
-        <PharmacyTabs data={data} />
+        <PharmacyTabs data={data} userId={userId} />
       </div>
       <FloatingCallButton number={data?.contactNumber} />
       <ContacTactModal

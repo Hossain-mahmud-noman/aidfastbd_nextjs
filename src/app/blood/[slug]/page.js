@@ -45,7 +45,7 @@ export default async function DoctorPage({ params }) {
     return <div className="p-8 text-center text-lg">Blood Bank not found.</div>;
   }
 
-  return <BloodDetails data={data} />;
+  return <BloodDetails data={data} UserId={params.slug} />;
 }
 
 

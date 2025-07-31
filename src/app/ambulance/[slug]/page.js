@@ -49,7 +49,7 @@ export default async function DoctorPage({ params }) {
     return <div className="p-8 text-center text-lg"> Ambulance not found.</div>;
   }
 
-  return <AmbulanceDetails data={data} />;
+  return <AmbulanceDetails data={data} UserId={params.slug} />;
 }
 
 

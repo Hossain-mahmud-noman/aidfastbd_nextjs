@@ -5,8 +5,9 @@ import DoctorCard from "../DoctorCard";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
-function DentalTabs({ data, typeId }) {
+function DentalTabs({ data, typeId, url }) {
   const i18n = useI18n()
+  const [reviewData, setReviewdData] = useState(data)
   const tabData = [
     i18n.t("Information"),
     i18n.t("Doctors"),
@@ -14,6 +15,15 @@ function DentalTabs({ data, typeId }) {
     i18n.t("Review"),
   ];
 
+  const fetchServiceData = async () => {
+    const res = await fetch(
+      url,
+      { cache: "no-store" }
+    );
+    const json = await res.json();
+    const data = json?.data?.[0];
+    setReviewdData(data)
+  }
   const [activeTab, setActiveTab] = useState();
 
   useEffect(() => {
@@ -142,15 +152,16 @@ function DentalTabs({ data, typeId }) {
 
           <>
             <PostReview
-              profileUserId={data?.userId}
+              profileUserId={reviewData?.userId}
               typeId={typeId}
+              onSuccess={fetchServiceData}
             />
             {
-              data?.genericServiceReview?.length > 0 ? (
+              reviewData?.genericServiceReview?.length > 0 ? (
                 <ReviewList
-                  reviews={data?.genericServiceReview}
-                  averageRating={data?.averageRating}
-                  totalRatings={data?.totalRating}
+                  reviews={reviewData?.genericServiceReview}
+                  averageRating={reviewData?.averageRating}
+                  totalRatings={reviewData?.totalRating}
                 />
               ) : (
                 <div

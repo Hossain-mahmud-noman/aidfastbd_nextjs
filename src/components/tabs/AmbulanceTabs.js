@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { image_base_endpoint } from "../../utils/constants";
+import { base_endpoint, image_base_endpoint } from "../../utils/constants";
 import ReviewList from "../ReviewList";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
 
-function AmbulanceTabs({ data }) {
+function AmbulanceTabs({ data, UserId }) {
   const i18n = useI18n()
-
+  const [reviewData, setReviewdData] = useState(data)
   const tabData = [
     i18n.t("Information"),
     i18n.t("Facilities"),
@@ -21,6 +21,17 @@ function AmbulanceTabs({ data }) {
   useEffect(() => {
     setActiveTab(tabData[0]);
   }, [i18n]);
+
+
+  const fetchAmbulenceData = async () => {
+    const res = await fetch(
+      `${base_endpoint}/GeneralWeb/GetAllAmbulanceList?pageNumber=1&pageSize=1&ambulanceInformationId=${UserId}`,
+      { cache: "no-store" }
+    );
+    const json = await res.json();
+    const data = json?.data?.[0];
+    setReviewdData(data)
+  }
   return (
     <>
       <div className="bg-white shadow-custom-light aid-container my-4 md:my-5 lg:my-8">
@@ -143,15 +154,16 @@ function AmbulanceTabs({ data }) {
 
           <>
             <PostReview
-              profileUserId={data?.userId}
+              profileUserId={reviewData?.userId}
               typeId="5"
+              onSuccess={fetchAmbulenceData}
             />
             {
-              data?.ambulanceReview?.length > 0 ? (
+              reviewData?.ambulanceReview?.length > 0 ? (
                 <ReviewList
-                  reviews={data?.ambulanceReview}
-                  averageRating={data?.averageRating}
-                  totalRatings={data?.totalRating}
+                  reviews={reviewData?.ambulanceReview}
+                  averageRating={reviewData?.averageRating}
+                  totalRatings={reviewData?.totalRating}
                 />
               ) : (
                 <div

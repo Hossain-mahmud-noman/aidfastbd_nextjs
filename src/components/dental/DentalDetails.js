@@ -15,7 +15,7 @@ import DiaLocation from "../DiaLocation";
 import TextTicker from "../TextTicker";
 import { useI18n } from "../../context/i18n";
 
-const DentalDetails = ({ data }) => {
+const DentalDetails = ({ data, url }) => {
   const i18n = useI18n()
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
@@ -109,7 +109,7 @@ const DentalDetails = ({ data }) => {
 
       </div>
       <div className="aid-container mt-6">
-        <DentalTabs data={data} typeId="7" />
+        <DentalTabs data={data} typeId="7" url={url} />
       </div>
       <FloatingCallButton number={data?.contact} />
     </>

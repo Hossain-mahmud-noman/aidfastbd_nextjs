@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
-import { image_base_endpoint } from "../../utils/constants";
+import React, { useEffect, useState } from "react";
+import { base_endpoint, image_base_endpoint } from "../../utils/constants";
 import TextTicker from "../TextTicker";
 import ReviewList from "../ReviewList";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -11,8 +11,9 @@ import { useI18n } from "../../context/i18n";
 import ContacTactModal from "../../utils/contactModal";
 import PostReview from "../postReview/PostReview";
 
-function DoctorTabs({ data }) {
+function DoctorTabs({ data, UserId }) {
   const i18n = useI18n()
+  const [reviewData, setReviewdData] = useState(data)
   const [showModal, setShowModal] = useState(false);
   const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
@@ -49,6 +50,16 @@ function DoctorTabs({ data }) {
     FRI: { en: "Friday", bn: "শুক্রবার" },
     SAT: { en: "Saturday", bn: "শনিবার" },
   };
+
+  const fetchDoctorProfile = async () => {
+    const res = await fetch(
+      `${base_endpoint}/GeneralWeb/GetDoctorInfoList?userid=${UserId}`,
+      { cache: "no-store" }
+    );
+    const json = await res.json();
+    const data = json?.[0];
+    setReviewdData(data)
+  }
 
   return (
     <>
@@ -420,14 +431,16 @@ function DoctorTabs({ data }) {
 
           <>
             <PostReview
-              profileUserId={data?.userId}
+              profileUserId={reviewData?.userId}
               typeId="1"
+              onSuccess={fetchDoctorProfile}
             />
-            {data?.doctorRatingInfo?.length > 0 ? (
+
+            {reviewData?.doctorRatingInfo?.length > 0 ? (
               <ReviewList
-                reviews={data?.doctorRatingInfo}
-                averageRating={data?.averageRating}
-                totalRatings={data?.totalRating}
+                reviews={reviewData?.doctorRatingInfo}
+                averageRating={reviewData?.averageRating}
+                totalRatings={reviewData?.totalRating}
               />
             ) : (
               <div

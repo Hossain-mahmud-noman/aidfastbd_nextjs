@@ -48,7 +48,7 @@ export default async function DoctorPage({ params }) {
     return <div className="p-8 text-center text-lg">Dental not found.</div>;
   }
 
-  return <DentalDetails data={data} />;
+  return <DentalDetails data={data} url={`${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`} />;
 }
 
 

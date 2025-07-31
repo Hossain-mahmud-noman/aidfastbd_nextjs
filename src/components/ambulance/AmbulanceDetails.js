@@ -17,7 +17,7 @@ import { useI18n } from "../../context/i18n";
 import ContacTactModal from "../../utils/contactModal";
 import EmergencyCallButton from "../EmergencyCallButton";
 
-const AmbulanceDetails = ({ data }) => {
+const AmbulanceDetails = ({ data, UserId }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const i18n = useI18n()
@@ -116,7 +116,7 @@ const AmbulanceDetails = ({ data }) => {
         </div>
       </div>
       <div className='aid-container'>
-        <AmbulanceTabs data={data} />
+        <AmbulanceTabs data={data} UserId={UserId} />
       </div>
       <FloatingCallButton number={data?.contactNumber} />
 

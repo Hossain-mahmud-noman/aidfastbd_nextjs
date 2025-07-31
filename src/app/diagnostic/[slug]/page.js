@@ -44,5 +44,5 @@ export default async function DoctorPage({ params }) {
     return <div className="p-8 text-center text-lg">Diagnostic not found.</div>;
   }
 
-  return <DiagnosticCenterDetails data={data} />;
+  return <DiagnosticCenterDetails data={data} userId={params.slug} />;
 }

@@ -13,10 +13,9 @@ import DiaLocation from "../DiaLocation";
 import TextTicker from "../TextTicker";
 import BloodTabs from "../tabs/BloodTabs";
 import { useI18n } from "../../context/i18n";
-import ContacTactModal from "../../utils/contactModal";
 import EmergencyCallButton from "../EmergencyCallButton";
 
-const BloodDetails = ({ data }) => {
+const BloodDetails = ({ data, UserId }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const i18n = useI18n()
@@ -114,7 +113,7 @@ const BloodDetails = ({ data }) => {
         </div>
       </div>
       <div className='aid-container'>
-        <BloodTabs data={data} />
+        <BloodTabs data={data} UserId={UserId} />
       </div>
       <FloatingCallButton number={data?.contact} />
     </>

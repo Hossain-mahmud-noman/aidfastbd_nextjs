@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { image_base_endpoint } from "../../utils/constants";
+import { base_endpoint, image_base_endpoint } from "../../utils/constants";
 import ReviewList from "../ReviewList";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
 
-function PharmacyTabs({ data }) {
+function PharmacyTabs({ data, userId }) {
   const i18n = useI18n()
-
+  const [RerviewData, setReviewdData] = useState(data)
   const tabData = [
     i18n.t("Information"),
     i18n.t("Services"),
@@ -22,6 +22,16 @@ function PharmacyTabs({ data }) {
   useEffect(() => {
     setActiveTab(tabData[0]);
   }, [i18n]);
+
+  const fetchPharmacyData = async () => {
+    const res = await fetch(
+      `${base_endpoint}/GeneralWeb/GetAllPharmacyList?pageNumber=1&pageSize=1&pharmacyInformationId=${userId}`,
+      { cache: "no-store" }
+    );
+    const json = await res.json();
+    const data = json?.data?.[0];
+    setReviewdData(data)
+  }
   return (
     <>
       <div className="bg-white shadow-custom-light aid-container my-4 md:my-5 lg:my-8">
@@ -164,15 +174,16 @@ function PharmacyTabs({ data }) {
 
           <>
             <PostReview
-              profileUserId={data?.userId}
+              profileUserId={RerviewData?.userId}
               typeId="4"
+              onSuccess={fetchPharmacyData}
             />
             {
-              data?.pharmacyReview?.length > 0 ? (
+              RerviewData?.pharmacyReview?.length > 0 ? (
                 <ReviewList
-                  reviews={data?.pharmacyReview}
-                  averageRating={data?.averageRating}
-                  totalRatings={data?.totalRating}
+                  reviews={RerviewData?.pharmacyReview}
+                  averageRating={RerviewData?.averageRating}
+                  totalRatings={RerviewData?.totalRating}
                 />
               ) : (
                 <div

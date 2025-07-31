@@ -1,16 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { image_base_endpoint } from "../../utils/constants";
+import { base_endpoint, image_base_endpoint } from "../../utils/constants";
 import DoctorCard from "../DoctorCard";
 import ReviewList from "../ReviewList";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
 
-function DiagnosticTabs({ data }) {
+function DiagnosticTabs({ data, userId }) {
 
   const i18n = useI18n()
+  const [reviewData, setReviewdData] = useState(data)
 
   const tabData = [
     i18n.t("Information"),
@@ -24,6 +25,16 @@ function DiagnosticTabs({ data }) {
   useEffect(() => {
     setActiveTab(tabData[0]);
   }, [i18n]);
+
+  const fetchDiagnosticData = async () => {
+    const res = await fetch(
+      `${base_endpoint}/GeneralWeb/GetAllDiagnosticCenterList?userId=${userId}`,
+      { cache: "no-store" }
+    );
+    const json = await res.json();
+    const data = json?.data?.[0];
+    setReviewdData(data)
+  }
   return (
     <>
       <div className="bg-white shadow-custom-light aid-container my-4 md:my-5 lg:my-8">
@@ -270,15 +281,16 @@ function DiagnosticTabs({ data }) {
 
           <>
             <PostReview
-              profileUserId={data?.userId}
+              profileUserId={reviewData?.userId}
               typeId="2"
+              onSuccess={fetchDiagnosticData}
             />
             {
-              data?.diagnosticCenterReview?.length > 0 ? (
+              reviewData?.diagnosticCenterReview?.length > 0 ? (
                 <ReviewList
-                  reviews={data?.diagnosticCenterReview}
-                  averageRating={data?.averageRating}
-                  totalRatings={data?.totalRating}
+                  reviews={reviewData?.diagnosticCenterReview}
+                  averageRating={reviewData?.averageRating}
+                  totalRatings={reviewData?.totalRating}
                 />
               ) : (
                 <div

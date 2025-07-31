@@ -12,7 +12,7 @@ import DiagnosticTabs from "../tabs/DiagnosticTabs";
 import FloatingCallButton from "../FloatingCallButton";
 import { useI18n } from "../../context/i18n";
 
-const DiagnosticCenterDetails = ({ data }) => {
+const DiagnosticCenterDetails = ({ data, userId }) => {
 
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
@@ -50,7 +50,7 @@ const DiagnosticCenterDetails = ({ data }) => {
           {data && <DiagnosticDetail data={data} />}
         </div>
         <div className='aid-container'>
-          {data && <DiagnosticTabs data={data} />}
+          {data && <DiagnosticTabs data={data} userId={userId} />}
         </div>
         <FloatingCallButton number={data?.contact} />
       </>

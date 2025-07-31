@@ -1,10 +1,10 @@
 'use client';
 import React, { useState } from "react";
 import { FiStar } from "react-icons/fi";
-import PostReviewModal from "../../utils/postReviewModal"; // adjust import path
+import PostReviewModal from "../../utils/postReviewModal"; 
 import { useI18n } from "../../context/i18n";
 
-const PostReview = ({ profileUserId, typeId }) => {
+const PostReview = ({ profileUserId, typeId, onSuccess }) => {
   const i18n = useI18n();
   const [showModal, setShowModal] = useState(false);
 
@@ -22,6 +22,7 @@ const PostReview = ({ profileUserId, typeId }) => {
         profileUserId={profileUserId}
         typeId={typeId}
         open={showModal}
+        onSuccess= {onSuccess}
         onClose={() => setShowModal(false)}
       />
     </>

@@ -13,7 +13,7 @@ import Head from "next/head";
 import { useI18n } from "../../context/i18n";
 import EmergencyCallButton from "../EmergencyCallButton";
 
-const DoctorDetail = ({ data }) => {
+const DoctorDetail = ({ data, UserId }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const i18n = useI18n()
@@ -96,7 +96,7 @@ const DoctorDetail = ({ data }) => {
           <EmergencyCallButton number={data?.emergencyNo} />
         </div>
       </div>
-      <DoctorTabs data={data} />
+      <DoctorTabs data={data} UserId={UserId} />
       <AppointmentBooking
         id={data?.userId}
         token={token}

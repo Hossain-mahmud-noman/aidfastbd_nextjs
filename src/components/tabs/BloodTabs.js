@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { image_base_endpoint } from "../../utils/constants";
+import { base_endpoint, image_base_endpoint } from "../../utils/constants";
 import ReviewList from "../ReviewList";
 import { FaPhone, FaUserCircle, FaTint } from "react-icons/fa";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
-function BloodTabs({ data }) {
+function BloodTabs({ data, UserId }) {
   const i18n = useI18n()
-
+  const [reviewData, setReviewdData] = useState(data)
   const tabData = [
     i18n.t("Information"),
     i18n.t("Services"),
@@ -21,6 +21,16 @@ function BloodTabs({ data }) {
   useEffect(() => {
     setActiveTab(tabData[0]);
   }, [i18n]);
+
+  const fetchBlooddata = async () => {
+    const res = await fetch(
+      `${base_endpoint}/GeneralWeb/GetAllBloodBankList?userId=${UserId}`,
+      { cache: "no-store" }
+    );
+    const json = await res.json();
+    const data = json?.data?.[0];
+    setReviewdData(data)
+  }
   return (
     <>
       <div className="bg-white shadow-custom-light aid-container my-4 md:my-5 lg:my-8">
@@ -144,21 +154,20 @@ function BloodTabs({ data }) {
           </div>
         )}
 
-
-
         {activeTab === i18n.t("Review") && (
 
           <>
             <PostReview
-              profileUserId={data?.userId}
+              profileUserId={reviewData?.userId}
               typeId="3"
+              onSuccess={fetchBlooddata}
             />
             {
-              data?.bloodBankReview?.length > 0 ? (
+              reviewData?.bloodBankReview?.length > 0 ? (
                 <ReviewList
-                  reviews={data?.bloodBankReview}
-                  averageRating={data?.averageRating}
-                  totalRatings={data?.totalRating}
+                  reviews={reviewData?.bloodBankReview}
+                  averageRating={reviewData?.averageRating}
+                  totalRatings={reviewData?.totalRating}
                 />
               ) : (
                 <div

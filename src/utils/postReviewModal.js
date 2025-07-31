@@ -7,17 +7,17 @@ import { toast } from 'sonner';
 import { useI18n } from '../context/i18n';
 import { getUserProfile } from '../context/getUserProfile';
 
-const PostReviewModal = ({ profileUserId, open, onClose, typeId }) => {
+const PostReviewModal = ({ profileUserId, open, onClose, typeId, onSuccess = null }) => {
    const [star, setStar] = useState(0);
    // const [remarks, setRemarks] = useState('');
    const [loading, setLoading] = useState(false);
 
    const [token, setToken] = useState("");
    const [user, setUser] = useState(null);
-   
+
    const i18n = useI18n()
 
-   const fetchProfle = async() => {
+   const fetchProfle = async () => {
       const profile = await getUserProfile();
       setUser(profile)
 
@@ -56,8 +56,11 @@ const PostReviewModal = ({ profileUserId, open, onClose, typeId }) => {
          });
 
          if (!res.ok) throw new Error('Failed to post review');
-
+         if (onSuccess) {
+            onSuccess()
+         }
          toast.success(i18n.t('Review submitted successfully!'));
+
          // setRemarks('');
          setStar(0);
          onClose();
