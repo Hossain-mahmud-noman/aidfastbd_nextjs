@@ -15,7 +15,7 @@ import TextTicker from "../TextTicker";
 import { useI18n } from "../../context/i18n";
 import EmergencyCallButton from "../EmergencyCallButton";
 
-const HearingCareCenterDetails = ({ data }) => {
+const HearingCareCenterDetails = ({ data, url }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const i18n = useI18n()
@@ -119,14 +119,14 @@ const HearingCareCenterDetails = ({ data }) => {
           {data?.notice != null ? (
             <TextTicker text={data?.notice}></TextTicker>
           ) : null}
-         
+
           <EmergencyCallButton number={data?.emergencyContactNumber} />
 
         </div>
       </div>
       {/* Have to add tabs */}
       <div className="aid-container">
-        <DentalTabs typeId="10" data={data} />
+        <DentalTabs typeId="10" data={data} url={url} />
       </div>
       <FloatingCallButton number={data?.contact} />
     </>

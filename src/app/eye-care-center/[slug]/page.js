@@ -25,7 +25,7 @@ export async function generateMetadata({ params }) {
     ? defaultImageUrl
     : image_base_endpoint + data.profileImageUrl;
 
-  
+
   return {
     title: `${data?.name} | ${appname}`,
     description: `${data.name ?? ""} ${data?.location ?? ""}`.slice(0, 150),
@@ -50,7 +50,7 @@ export default async function DoctorPage({ params }) {
     return <div className="p-8 text-center text-lg">Eye Care Center not found.</div>;
   }
 
-  return <EyeCareCenterDetails data={data} />;
+  return <EyeCareCenterDetails data={data} url={`${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`} />;
 }
 
 

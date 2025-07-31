@@ -15,7 +15,7 @@ import TextTicker from "../TextTicker";
 import EmergencyCallButton from "../EmergencyCallButton";
 import { useI18n } from "../../context/i18n";
 
-const PhysiotherapyCenterDetails = ({ data }) => {
+const PhysiotherapyCenterDetails = ({ data, url }) => {
   const i18n = useI18n()
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
@@ -110,21 +110,12 @@ const PhysiotherapyCenterDetails = ({ data }) => {
           </div>
 
           {data?.notice && <TextTicker text={data?.notice} />}
-
-          {/* <div>
-            <a
-              href={`tel:${data?.emergencyContactNumber}`}
-              className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm"
-            >
-              Emergency Call
-            </a>
-          </div> */}
           <EmergencyCallButton number={data?.emergencyContactNumber} />
         </div>
       </div>
 
       <div className="aid-container">
-        <DentalTabs data={data} typeId="9" />
+        <DentalTabs data={data} typeId="9" url={url} />
       </div>
       <FloatingCallButton number={data?.contact} />
     </>

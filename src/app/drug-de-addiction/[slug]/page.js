@@ -51,6 +51,6 @@ export default async function DoctorPage({ params }) {
     return <div className="p-8 text-center text-lg">Drug De Addiction Center not found.</div>;
   }
 
-  return <DrugDeAddictionDetails data={data} />;
+  return <DrugDeAddictionDetails data={data} url={`${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`} />;
 }
 

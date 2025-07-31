@@ -16,7 +16,7 @@ import EmergencyCallButton from "../EmergencyCallButton";
 import { useI18n } from "../../context/i18n";
 
 
-const DrugDeAddictionDetails = ({ data }) => {
+const DrugDeAddictionDetails = ({ data, url }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const i18n = useI18n()
@@ -121,7 +121,7 @@ const DrugDeAddictionDetails = ({ data }) => {
       </div>
 
       <div className="aid-container">
-        <DentalTabs data={data} typeId="8" />
+        <DentalTabs data={data} typeId="8" url={url} />
       </div>
       <FloatingCallButton number={data?.contact} />
     </>

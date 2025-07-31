@@ -49,7 +49,7 @@ export default async function DoctorPage({ params }) {
     return <div className="p-8 text-center text-lg">Hearing Care Center not found.</div>;
   }
 
-  return <HearingCareCenterDetails data={data} />;
+  return <HearingCareCenterDetails data={data} url={`${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`} />;
 }
 
 

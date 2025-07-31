@@ -15,7 +15,7 @@ import TextTicker from "../TextTicker";
 import { useI18n } from "../../context/i18n";
 import EmergencyCallButton from "../EmergencyCallButton";
 
-const NursingCareHomeDetails = ({ data }) => {
+const NursingCareHomeDetails = ({ data, url }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const i18n = useI18n()
@@ -117,7 +117,7 @@ const NursingCareHomeDetails = ({ data }) => {
       </div>
 
       <div className="aid-container">
-        <DentalTabs typeId="12" data={data} />
+        <DentalTabs typeId="12" data={data} url={url} />
       </div>
       <FloatingCallButton number={data?.contact} />
 

@@ -51,7 +51,7 @@ export default async function PhysiotherapyPage({ params }) {
     return <div className="p-8 text-center text-lg">Physiotherapy Center not found.</div>;
   }
 
-  return <PhysiotherapyCenterDetails data={data} />;
+  return <PhysiotherapyCenterDetails data={data} url={`${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`} />;
 }
 
 

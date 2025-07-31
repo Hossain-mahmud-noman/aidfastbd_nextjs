@@ -51,6 +51,6 @@ export default async function DoctorPage({ params }) {
     return <div className="p-8 text-center text-lg">Nursing Home Center not found.</div>;
   }
 
-  return <NursingCareHomeDetails data={data} />;
+  return <NursingCareHomeDetails data={data} url={`${base_endpoint}/GeneralInformation/GetAllGenericServiceList?userId=${params.slug}`} />;
 }
 
