@@ -243,14 +243,19 @@ function BloodTabs({ data, UserId }) {
 
         {activeTab === i18n.t("Donor List") && (
           <div className="space-y-4">
-            <Button
-              onClick={() => openModal()}
-              icon={<FaPlus />}
-              type="primary"
-              className="mb-4"
-            >
-              {i18n.t("Add Donor")}
-            </Button>
+
+            {
+              user && (
+                <Button
+                  onClick={() => openModal()}
+                  icon={<FaPlus />}
+                  type="primary"
+                  className="mb-4"
+                >
+                  {i18n.t("Add Donor")}
+                </Button>
+              )
+            }
 
             {blooddata?.bloodBankDonerInfo?.length > 0 ? (
               blooddata.bloodBankDonerInfo.map((donor) => (
@@ -258,14 +263,18 @@ function BloodTabs({ data, UserId }) {
                   key={donor.id}
                   className="bg-white rounded-lg shadow-md p-4 relative"
                 >
-                  <Button
+                  {
+                    user && (
+                      <Button
 
-                    icon={<FaEdit />}
-                    onClick={() => openModal(donor)}
-                    className="absolute bottom-1/2 right-2"
-                  >
-                    {i18n.t("Edit Donor")}
-                  </Button>
+                        icon={<FaEdit />}
+                        onClick={() => openModal(donor)}
+                        className="absolute bottom-1/2 right-2"
+                      >
+                        {i18n.t("Edit Donor")}
+                      </Button>
+                    )
+                  }
                   <div className="">
                     <div className="flex items-center space-x-3">
                       <FaUserCircle className="w-10 h-10 text-gray-600" />
