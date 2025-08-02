@@ -258,47 +258,53 @@ function BloodTabs({ data, UserId }) {
             }
 
             {blooddata?.bloodBankDonerInfo?.length > 0 ? (
-              blooddata.bloodBankDonerInfo.map((donor) => (
-                <div
-                  key={donor.id}
-                  className="bg-white rounded-lg shadow-md p-4 relative"
-                >
-                  {
-                    user && (
-                      <Button
 
-                        icon={<FaEdit />}
-                        onClick={() => openModal(donor)}
-                        className="absolute bottom-1/2 right-2"
-                      >
-                        {i18n.t("Edit Donor")}
-                      </Button>
-                    )
-                  }
-                  <div className="">
-                    <div className="flex items-center space-x-3">
-                      <FaUserCircle className="w-10 h-10 text-gray-600" />
-                      <div>
-                        <h2 className="font-semibold text-gray-800">
-                          {donor.name}
-                        </h2>
-                        <div className="flex items-center mt-1">
-                          <FaPhone className="w-4 h-4 text-gray-500 mr-1" />
-                          <p className="text-sm text-gray-600">{donor.mobileNo}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-6">
+                {
+                  blooddata.bloodBankDonerInfo.map((donor) => (
+                    <div
+                      key={donor.id}
+                      className="bg-white rounded-lg shadow-custom-light p-4 relative"
+                    >
+                      {
+                        user && (
+                          <Button
+
+                            icon={<FaEdit />}
+                            onClick={() => openModal(donor)}
+                            className="absolute bottom-1/2 right-2"
+                          >
+                            {i18n.t("Edit Donor")}
+                          </Button>
+                        )
+                      }
+                      <div className="">
+                        <div className="flex items-center space-x-3">
+                          <FaUserCircle className="w-10 h-10 text-gray-600" />
+                          <div>
+                            <h2 className="font-semibold text-gray-800">
+                              {donor.name}
+                            </h2>
+                            <div className="flex items-center mt-1">
+                              <FaPhone className="w-4 h-4 text-gray-500 mr-1" />
+                              <p className="text-sm text-gray-600">{donor.mobileNo}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="mt-3 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-red-50 to-red-100">
+                          <div className="flex items-center space-x-1">
+                            <FaTint className="w-4 h-4 text-red-500" />
+                            <span className="text-sm font-bold text-red-500">
+                              {donor.bloodGroup}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div className="mt-3 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-red-50 to-red-100">
-                      <div className="flex items-center space-x-1">
-                        <FaTint className="w-4 h-4 text-red-500" />
-                        <span className="text-sm font-bold text-red-500">
-                          {donor.bloodGroup}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))
+                  ))
+                }
+              </div>
+
             ) : (
               <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4">
                 <p className="text-yellow-700">{i18n.t("No donor data available")}</p>
