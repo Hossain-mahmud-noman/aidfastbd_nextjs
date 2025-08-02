@@ -267,9 +267,8 @@ function BloodTabs({ data, UserId }) {
                       className="bg-white rounded-lg shadow-custom-light p-4 relative"
                     >
                       {
-                        user && (
+                        donor?.creatorId == user?.userId && (
                           <Button
-
                             icon={<FaEdit />}
                             onClick={() => openModal(donor)}
                             className="absolute bottom-1/2 right-2"
