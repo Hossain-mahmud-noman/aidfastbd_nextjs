@@ -10,7 +10,7 @@ const Service = () => {
    const data = [
       {
          image: "/home/service/s1.png",
-         heading: i18n.t("Doctor Appointment"),
+         heading: i18n.t("Doctor"),
          description: i18n.t("Doctor Appointment Description"),
          link: "/doctor",
       },
@@ -52,13 +52,13 @@ const Service = () => {
       },
       {
          image: "/home/service/s8.png",
-         heading: i18n.t("Eye Care Center"),
+         heading: i18n.t("Eye Care Center and Hospital"),
          description: i18n.t("Eye Care Description"),
          link: "/eye-care-center",
       },
       {
          image: "/home/service/s9.png",
-         heading: i18n.t("Drug Rehabilitation Center"),
+         heading: i18n.t("Drug De-Addiction Center"),
          description: i18n.t("Rehab Description"),
          link: "/drug-de-addiction",
       },
@@ -107,11 +107,11 @@ const Service = () => {
                         src={item.image}
                         width={100}
                         height={100}
-                        className="h-12 w-12 md:w-[76px] md:h-[76px] object-contain animate-pulse"
+                        className="h-16 w-16 md:w-[100px] md:h-[100px] object-contain animate-pulse"
                         alt="Service image"
                      />
                      <h4 className="heading3 mt-6 text-[#061C3D]">{item.heading}</h4>
-                     <p className="description1 mt-3 text-[#42526B]">{item.description}</p>
+                     {/* <p className="description1 mt-3 text-[#42526B]">{item.description}</p> */}
                   </Link>
                ))}
             </div>

@@ -11,8 +11,8 @@ import { useState } from "react"
 const CommonService = () => {
    const i18n = useI18n()
    const [showModal, setShowModal] = useState(false);
-      const handleOpen = () => setShowModal(true);
-      const handleClose = () => setShowModal(false);
+   const handleOpen = () => setShowModal(true);
+   const handleClose = () => setShowModal(false);
    const data = [
       {
          image: "/common/s1.png",
@@ -24,7 +24,7 @@ const CommonService = () => {
       },
       {
          image: "/common/s2.png",
-         heading: i18n.t("Diagnostics and Hospitals at Your Doorstep"),
+         heading: i18n.t("Nearby diagnostic and hospital facilities"),
          description: i18n.t("Diagnostics and Hospitals Description"),
          link: "/diagnostic",
          call: "tel:+8801338988734",
@@ -32,7 +32,7 @@ const CommonService = () => {
       },
       {
          image: "/common/ambulence.png",
-         heading: i18n.t("Ambulance Service from Home"),
+         heading: i18n.t("Get the nearest ambulance service in emergencies — just one click away"),
          description: i18n.t("Ambulance Service Description2"),
          link: "/ambulance",
          call: "tel:+8801338988734",
@@ -48,7 +48,7 @@ const CommonService = () => {
       },
       {
          image: "/common/s4.png",
-         heading: i18n.t("Blood Donor Club"),
+         heading: i18n.t("Nearest emergency blood bank and donor organization"),
          description: i18n.t("Blood Donor Club Description"),
          link: "/blood",
          call: "tel:+8801338988734",
@@ -56,7 +56,7 @@ const CommonService = () => {
       },
       {
          image: "/common/s5.png",
-         heading: i18n.t("Medicine Delivery"),
+         heading: i18n.t("Find pharmacies and order the medicines you need."),
          description: i18n.t("Medicine Delivery Description"),
          link: "/pharmacy",
          call: "tel:+8801338988734",
@@ -96,7 +96,7 @@ const CommonService = () => {
       },
       {
          image: "/common/s10.png",
-         heading: i18n.t("Hearing Aid Support"),
+         heading: i18n.t("Hearing Aid Center"),
          description: i18n.t("Hearing Aid Support Description"),
          link: "/hearing-care-center",
          call: "tel:+8801338988734",
@@ -117,10 +117,10 @@ const CommonService = () => {
                      className="w-full md:w-[429px] xl:h-[303px] lg:h-[280px] h-[300px] object-fill"
                   />
                   <div className="w-full">
-                     <h1 className="heading1 text-[#212B36]">{item.heading}</h1>
-                     <p className="description2 text-[#061C3D] mt-4 md:mt-5 lg:mt-6 xl:mt-[30px]">{item.description}</p>
+                     <h1 className="heading1  xl:!leading-[60px] text-[#212B36]">{item.heading}</h1>
+                     {/* <p className="description2 text-[#061C3D] mt-4 md:mt-5 lg:mt-6 xl:mt-[30px]">{item.description}</p> */}
                      <div className="mt-7 md:mt-8 lg:mt-10 xl:mt-12 flex items-center gap-3 md:gap-4 xl:gap-10">
-                        <Link href={item.link} target="_blank" className="hover:scale-105 bg-[#1087EF] px-3 md:px-6 md:py-3 py-2 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
+                        <Link href={item.link} target="_blank" className="hover:scale-105 bg-[#1087EF] px-6 py-3  rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
                            {/* <BiSolidPhoneCall className="text-white description2" /> */}
                            <p className="description5 text-white whitespace-pre">{item.slug}</p>
                         </Link>

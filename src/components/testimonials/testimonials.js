@@ -4,9 +4,10 @@ import Image from "next/image"
 import { useEffect, useRef } from "react"
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Keyboard, Mousewheel, Navigation } from "swiper/modules";
+import { Keyboard, Navigation } from "swiper/modules";
 import { GoArrowRight, GoArrowLeft } from "react-icons/go";
 import { Rate } from "antd";
+import { FaMapMarkerAlt } from "react-icons/fa";
 const Testimonials = () => {
    const swiperRef = useRef(null);
    useEffect(() => {
@@ -29,40 +30,50 @@ const Testimonials = () => {
    const data = [
       {
          image: "/home/testimonials/t1.jpg",
-         user: "Abrar Fahim",
-         comment: "Thanks to AidFastBD, I was able to consult a qualified doctor without stepping out of my house. It’s truly a revolutionary service for busy people like me.",
+         user: "রেহানুল ইসলাম",
+         location: "সরাইল, ব্রাহ্মণবাড়িয়া",
+         identity: "ব্যবসায়ী",
+         comment: "AidFast অ্যাপটা হাতে পেয়েই আমি প্রথমে আমার এলাকার ডাক্তার খুঁজে বের করলাম। নাম, সিরিয়াল টাইম, ফোন নাম্বার—সব কিছু এক জায়গায়! এরকম সহজ একটা অ্যাপ আগে পাইনি। গ্রামের মানুষজনের জন্য এটা সত্যিই দরকার ছিল। খুব কাজের অ্যাপ।",
          rate: 5
       },
       {
          image: "/home/testimonials/t2.jpg",
-         user: "Roksona Tabassum",
-         comment: "In an emergency, AidFastBD’s ambulance reached us faster than I expected. Their service is dependable and life-saving.",
+         user: "ডা. শবনম রহমান",
+         location: "মিরপুর,ঢাকা",
+         identity: "MBBS, FCPS (Gynecology)",
+         comment: "আমার চেম্বার AidFast প্ল্যাটফর্মে যুক্ত হওয়ার পর রোগীরা আগেই সিরিয়াল নিয়ে আসে। এতে আমার সময় বাঁচে, রোগীরাও দিকবিদিক না ঘুরে সহজে আমার কাছে পৌঁছাতে পারে। ডিজিটাল সেবা বলতে আমরা যেটা বুঝি, AidFast সেটাই করছে।",
          rate: 5
       },
       {
          image: "/home/testimonials/t3.jpg",
-         user: "Musfiq Rahman",
-         comment: "From doctor appointments to lab tests, everything was seamless. I felt cared for every step of the way. Highly recommended!",
+         user: "সাদিক হাসান",
+         location: "আশুগঞ্জ,ঢাকা",
+         identity: "Diagnostic Center Owner",
+         comment: "AidFast-এ রেজিস্ট্রেশন করার পর আমাদের ডায়াগনস্টিক সেন্টারে কল ও রোগী বেড়েছে। অ্যাপ ও ওয়েবসাইটে ইনফো থাকায় মানুষজন আমাদের খুঁজে পায়। এটা শুধু একটি অ্যাপ না, বরং একটি স্মার্ট মার্কেটিং সল্যুশন।",
          rate: 5
       },
       {
          image: "/home/testimonials/t4.jpg",
-         user: "JannatunFerdous",
-         comment: "AidFastBD has made healthcare simpler for my parents. They no longer have to wait in long queues — everything is just a few taps away.",
+         user: "মাহফুজা বেগম",
+         location: "কসবা,ঢাকা",
+         identity: "গৃহিণী",
+         comment: "আমার ছেলে হঠাৎ অসুস্থ হলে AidFast দিয়ে কাছের হাসপাতালের নাম ও নম্বর পেয়ে যাই। এমনকি কাছাকাছি এম্বুলেন্সও খুঁজে পাই। এত দ্রুত হেল্প পাবো ভাবিনি। এই অ্যাপটা মোবাইলে থাকা খুব দরকার।",
          rate: 5
       },
       {
          image: "/home/testimonials/t5.jpg",
-         user: "Fatema Akter",
-         comment: "I ordered medicines through the app, and they arrived on time with proper packaging. Safe, reliable, and stress-free!",
+         user: "জান্নাতুল ফেরদৌস",
+         location: "নাসিরনগর,ব্রাহ্মণবাড়িয়া ",
+         identity: "বিশ্ববিদ্যালয় শিক্ষার্থী",
+         comment: "AidFast-এর ওয়েবসাইট আর অ্যাপ—দুটোই খুব ক্লিন ও ইউজার ফ্রেন্ডলি। হেলথ সার্ভিস খোঁজার জন্য আমি এখন আর ফেসবুকে পোস্ট দেই না। এই একটা অ্যাপই যথেষ্ট।",
          rate: 4
       },
-      {
-         image: "/home/testimonials/t6.jpg",
-         user: "Nurul Islam",
-         comment: "This is what modern healthcare should look like. AidFastBD brings hospitals, doctors, and support to your fingertips.",
-         rate: 5
-      },
+      // {
+      //    image: "/home/testimonials/t6.jpg",
+      //    user: "Nurul Islam",
+      //    comment: "This is what modern healthcare should look like. AidFastBD brings hospitals, doctors, and support to your fingertips.",
+      //    rate: 5
+      // },
    ];
 
 
@@ -86,7 +97,7 @@ const Testimonials = () => {
                   }}
                   loop={true}
                   mousewheel={true}
-                  modules={[Keyboard, Navigation, Mousewheel]}
+                  modules={[Keyboard, Navigation]}
                   ref={swiperRef}
                   className="w-full"
                >
@@ -101,7 +112,11 @@ const Testimonials = () => {
                                  alt={item.user}
                                  className="w-[68px] h-[68px] rounded-full object-fill mx-auto"
                               />
-                              <p className="mt-2 description2 text-white text-center">{item.user}</p>
+                              <p className="mt-2 description2 text-white text-center">{item.user}  ({item.identity}) </p>
+                              <p className="mt-3 description1 text-white text-center max-w-[731px] mx-4 flex items-center gap-2 justify-center">
+                                 <FaMapMarkerAlt />
+                                 <span>{item.location}</span>
+                              </p>
                               <p className="mt-3 lg:mt-4 xl:mt-[18px] description1 text-white text-center max-w-[731px] mx-4">{item.comment}</p>
                               <Rate count={item.rate} defaultValue={item.rate} className="mt-4 lg:mt-5 text-[#FFA500] text-center flex items-center justify-center" />
                            </div>

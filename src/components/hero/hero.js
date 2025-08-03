@@ -56,7 +56,7 @@ const Hero = () => {
                      <Avatar size={40} src="/home/hero/d4.png" />
                   </Avatar.Group>
                   <p className="text-sm text-gray-600">
-                     {i18n.t("Trusted by 1200+ patients with 5/5 rating")}
+                     {i18n.t("Trusted by 4500+ patients with 5/5 rating")}
                   </p>
                </div>
             </div>

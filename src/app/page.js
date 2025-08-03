@@ -17,15 +17,15 @@ export default async function Home() {
     <>
       <div className="font-[family-name:var(--font-geist-sans)] pt-4 md:pt-6 lg:pt-10">
         <Hero />
-        <EmergencyService />
-        <Service />
-        <About />
-        <CommonService />
-        <Information />
-        <MobileApp />
+        {/* <EmergencyService /> */}
+        {/* <Service /> */}
+        {/* <About /> */}
+        {/* <CommonService /> */}
+        {/* <Information /> */}
+        {/* <MobileApp /> */}
         <Testimonials />
-        <FAQ />
-        <Blog />
+        {/* <FAQ /> */}
+        {/* <Blog /> */}
         <Contact />
       </div>
     </>

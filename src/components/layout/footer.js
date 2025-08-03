@@ -11,6 +11,7 @@ import { BiPhoneCall } from "react-icons/bi";
 import { FaLinkedin } from "react-icons/fa";
 import { useI18n } from "../../context/i18n";
 import ContacTactModal from "../../utils/contactModal";
+import { FiDownload } from "react-icons/fi";
 
 
 const Footer = () => {
@@ -123,14 +124,18 @@ const Footer = () => {
                   />
                   <p className="description1 mt-4 text-white md:max-w-[326px]">{i18n.t("AidFast Tagline")}</p>
                   <p className="description1 mt-4 text-white ">{i18n.t("Download AidFast App")}</p>
-                  <div className="mt-4 lg:mt-5 xl:mt-8 flex items-center gap-3 md:gap-4 xl:gap-5">
-                     <Link href="https://play.google.com/store/apps/details?id=com.aidfastbd.app" className="relative w-[150px] h-[50px]">
+                  <div className="mt-4 lg:mt-5 xl:mt-8 flex items-center flex-row md:flex-col lg:flex-row gap-3 md:gap-2 xl:gap-5">
+                     <Link href="https://play.google.com/store/apps/details?id=com.aidfastbd.app" className="relative w-[150px] h-[50px] hover:scale-105 transition-all duration-300">
                         <Image
                            src="/home/service/google.png"
                            fill
                            alt="Google Play"
                            className="object-contain"
                         />
+                     </Link>
+                     <Link href="https://play.google.com/store/apps/details?id=com.aidfastbd.app" className="group hover:scale-105 bg-white px-6 lg:px-4 xl:px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
+                        <FiDownload className="text-primary group-hover:text-white text-base" />
+                        <p className="text-base lg:text-sm xl:text-base text-primary group-hover:text-white whitespace-pre">{i18n.t("Download Now")}</p>
                      </Link>
                      {/* <Link href="/www.google.com" className="relative w-[150px] h-[50px]">
                         <Image

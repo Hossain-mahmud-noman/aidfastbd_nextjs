@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useI18n } from "../../context/i18n"
+import { FiDownload } from "react-icons/fi"
 
 const MobileApp = () => {
    const i18n = useI18n()
@@ -10,9 +11,9 @@ const MobileApp = () => {
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 aid-container">
          <div className="flex items-center justify-between flex-col md:flex-row xl:gap-[105px] lg:gap-14 md:gap-8 gap-5">
             <div className="w-full">
-               <h1 className="heading1 text-[#212B36]">{i18n.t("Get Ambulance Service at Home")}</h1>
-               <p className="description2 text[#061C3D] mt-4 md:mt-5 lg:mt-6 xl:mt-[30px]">{i18n.t("AidFastBD Tagline Description")}</p>
-               <div className="mt-7 md:mt-8 lg:mt-10 xl:mt-12 flex items-center gap-3 md:gap-4 xl:gap-5">
+               <h1 className="heading1 text-[#212B36] !leading-[60px]">{i18n.t("AidFast app — free to download")}</h1>
+               <p className="description2 text[#061C3D] mt-4 md:mt-5 lg:mt-6 xl:mt-[30px]">{i18n.t("Doctor, ambulance, medicine, hospital—all in one app. AidFastBD makes healthcare faster and easier")}</p>
+               <div className="mt-7 md:mt-8 lg:mt-10 xl:mt-12 flex items-center flex-col md:flex-row gap-3 md:gap-4 xl:gap-5">
                   <Link href="https://play.google.com/store/apps/details?id=com.aidfastbd.app" target="_blank" className="relative w-[150px] h-[50px]">
                      <Image
                         src="/home/service/google.png"
@@ -20,6 +21,10 @@ const MobileApp = () => {
                         alt="Google Play"
                         className="object-contain"
                      />
+                  </Link>
+                  <Link href="https://play.google.com/store/apps/details?id=com.aidfastbd.app" className="hover:scale-105 bg-[#1087EF] px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
+                     <FiDownload className="text-white description1" />
+                     <p className="description2 text-white">{i18n.t("Download Now")}</p>
                   </Link>
                   {/* <Link href="/www.google.com" className="relative w-[150px] h-[50px]">
                      <Image

@@ -8,18 +8,18 @@ const Information = () => {
    const data = [
       {
          image: "/home/info/i1.png",
-         heading: i18n.t("7900+"),
-         description: i18n.t("Active Users Nationwide")
+         heading: i18n.t("15400+"),
+         description: i18n.t("AidFast Beneficiary")
       },
       {
          image: "/home/info/i2.png",
-         heading: i18n.t("94%"),
-         description: i18n.t("Received 5-Star Feedback")
+         heading: i18n.t("98%"),
+         description: i18n.t("98% of customers gave a 5-star rating")
       },
       {
          image: "/home/info/i3.png",
-         heading: i18n.t("29+"),
-         description: i18n.t("Trusted Healthcare Services")
+         heading: i18n.t("700+"),
+         description: i18n.t("Diagnostic and medical centers included")
       },
       {
          image: "/home/info/i4.png",
@@ -32,7 +32,7 @@ const Information = () => {
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-[97px]  bg-[#F8FCFF]">
          <div className="aid-container">
-            <div className="grid lg:grid-cols-4 grid-cols-2 xl:gap-[124px] lg:gap-10 md:gap-6 gap-3">
+            <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-10 gap-3">
                {
                   data.map((Item, index) => (
                      <div key={index} className="mx-auto xl:py-[46px] lg:py-9 md:py-6 py-4">
@@ -44,7 +44,7 @@ const Information = () => {
                            alt="Service image"
                         />
                         <h4 className="heading3 mt-4 md:mt-5 xl:mt-6 text-[#061C3D] text-center">{Item.heading}</h4>
-                        <h4 className="description1 mt-2 md:mt-3 text-[#42526B] text-center sm:whitespace-pre">{Item.description}</h4>
+                        <h4 className="description1 mt-2 md:mt-3 text-[#42526B] text-center ">{Item.description}</h4>
                      </div>
                   ))
                }
