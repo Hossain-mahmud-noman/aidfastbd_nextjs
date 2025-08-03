@@ -3,25 +3,27 @@
 import Image from "next/image"
 import Link from "next/link"
 import { FaArrowRightLong } from "react-icons/fa6"
+import { useI18n } from "../../context/i18n"
 
 const Blog = () => {
+   const i18n = useI18n()
    const data = [
       {
          image: "/home/blog/b1.png",
-         heading: "When to See a General Physician: Early Signs You Shouldn’t Ignore",
-         description: "Discover the key symptoms that signal when it’s time to consult a general physician, and how early intervention can make all the difference.",
+         heading: "কমিশন, ভুয়া টেস্ট ও দালাল থেকে বাঁচার উপায়: সচেতন থাকুন, নিজের সিদ্ধান্ত নিজে নিন, AidFast এর সাথে থাকুন, নিজেকে বাচান",
+         description: "স্বাস্থ্যসেবায় দালাল ও প্রতারণাবাংলাদেশের অনেক জেলা শহর ও উপজেলায় এখনো রোগীরা চিকিৎসা নিতে গিয়ে দালাল ও অসাধু চক্রের হাতে পড়ে ভোগে থাকেন....",
          time: 2
       },
       {
          image: "/home/blog/b2.png",
-         heading: "How Fast Ambulance Access Can Save Lives",
-         description: "Explore the critical role of ambulance response time in emergencies and how technology is helping reduce delays across Bangladesh.",
+         heading: "ডেঙ্গু বাড়ছে, সচেতনতা কম! জরুরি সময়েও মিলছে না ডাক্তার বা রক্ত, AidFast হতে পারে আপনার জীবনরক্ষাকারী হাতিয়ার",
+         description: "বর্ষা এলেই বাড়ে ডেঙ্গুর ভয়! বাংলাদেশে প্রতিবছর বর্ষাকালে ডেঙ্গু জ্বর যেনো একটি আতঙ্ক হয়ে দাঁড়ায়। শহর তো বটেই, এখন তো গ্রামগঞ্জেও ডেঙ্গু ছড়িয়ে পড়ছে দ্রুত....",
          time: 3
       },
       {
          image: "/home/blog/b3.png",
-         heading: "The Future of Pharmacy: Online Medicine Delivery in Bangladesh",
-         description: "Learn how digital pharmacy services are making healthcare more accessible and what you should know before ordering medicines online.",
+         heading: "স্বাস্থ্যসেবায় খরচ কমানোর উপায় ও সচেতনতার গুরুত্ব: দালাল ও অপ্রয়োজনীয় টেস্ট এড়িয়ে প্রযুক্তির মাধ্যমে সাশ্রয়ী চিকিৎসা",
+         description: "স্বাস্থ্যসেবা মানুষের মৌলিক অধিকার হলেও, আমাদের দেশে এটি এখন অনেকের জন্য দুশ্চিন্তার কারণ হয়ে দাঁড়িয়েছে। কারণ কী? অপ্রয়োজনীয় খরচ যেসব....",
          time: 6
       },
    ];
@@ -31,8 +33,8 @@ const Blog = () => {
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 aid-container">
          <div className="flex items-center justify-between">
             <div>
-               <h1 className="text-[#212121] heading1">Browse updated blogs</h1>
-               <p className="text-[#061C3D] description2 mt-3 lg:mt-4 max-w-[834px]">Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy</p>
+               <h1 className="text-[#212121] heading1">{i18n.t("Browse updated blogs")}</h1>
+               <p className="text-[#061C3D] description2 mt-3 lg:mt-4 max-w-[834px]">{i18n.t("Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy")}</p>
             </div>
             
          </div>
@@ -60,14 +62,19 @@ const Blog = () => {
                                        alt="Logo"
                                        className="object-fill"
                                     />
-
                                  </div>
                                  <p className="description2 text-[#061C3D]">AidFast</p>
                               </div>
                               <p className="text-xs text-[#717070]">{Item.time} Hours ago</p>
                            </div>
                            <h4 className="text-xs text-[#42526B] text-justify">{Item.description}</h4>
+
+                           <Link href={`/blog/${index + 1}`} className="flex items-center gap-1.5 mt-3 md:mt-4">
+                              <p className="text-[#1087EF] description1">{i18n.t("Read More")}</p>
+                              <FaArrowRightLong className="description1 text-[#1087EF]" />
+                           </Link>
                         </div>
+
                      </div>
                   ))
                }

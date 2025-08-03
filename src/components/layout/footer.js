@@ -12,10 +12,12 @@ import { FaLinkedin } from "react-icons/fa";
 import { useI18n } from "../../context/i18n";
 import ContacTactModal from "../../utils/contactModal";
 import { FiDownload } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
 
 const Footer = () => {
    const i18n = useI18n();
+   const router = useRouter();
    const [currentYear, setCurrentYear] = useState(null);
    const [showModal, setShowModal] = useState(false);
    const handleOpen = () => setShowModal(true);
@@ -116,7 +118,10 @@ const Footer = () => {
             <div className="flex flex-col md:flex-row justify-center gap-3 lg:gap-0">
                <div className="w-full md:w-[30%] lg:w-[35%]">
                   <Image
-                     className=""
+                     className="cursor-pointer"
+                     onClick={() => {
+                       router.push("/")
+                     }}
                      src="/logo1.png"
                      alt="logo"
                      width={137}
