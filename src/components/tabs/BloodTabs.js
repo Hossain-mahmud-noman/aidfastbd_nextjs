@@ -253,7 +253,7 @@ function BloodTabs({ data, UserId }) {
                 style={{ inlineSize: 550 }}
                 onChange={(value) => {
                   if (!value || value === "all") {
-                    setBloodData(data); // Reset to original list
+                    setBloodData(data); 
                   } else {
                     const filteredDonors = data?.bloodBankDonerInfo?.filter(
                       (donor) => donor.bloodGroup === value
@@ -289,7 +289,7 @@ function BloodTabs({ data, UserId }) {
                     className="bg-white rounded-lg shadow-custom-light p-4 relative"
                   >
                     {
-                      donor?.creatorId == user?.userId && donor?.ownerId == user?.userId && (
+                      (donor?.creatorId == user?.userId || donor?.ownerId == user?.userId) && (
                         <Button
                           icon={<FaEdit />}
                           onClick={() => openModal(donor)}
