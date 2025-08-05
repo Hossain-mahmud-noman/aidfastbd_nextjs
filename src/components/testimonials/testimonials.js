@@ -97,7 +97,7 @@ const Testimonials = () => {
                   }}
                   autoplay={{
                      delay: 3000, 
-                     disableOnInteraction: false, 
+                     // disableOnInteraction: false, 
                   }}
                   loop={true}
                   mousewheel={true}

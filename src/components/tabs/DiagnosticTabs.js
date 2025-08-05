@@ -8,10 +8,10 @@ import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
 import { useAuth } from "../../context/AuthContext";
-import { Button } from "antd";
+import DoctorCard from "../DoctorCard";
+
 
 function DiagnosticTabs({ data, userId }) {
-  console.log("🚀 ~ DiagnosticTabs ~ data:", data)
   const { user } = useAuth()
   const i18n = useI18n()
   const [reviewData, setReviewdData] = useState(data)
@@ -24,26 +24,6 @@ function DiagnosticTabs({ data, userId }) {
   ];
 
   const [activeTab, setActiveTab] = useState();
-
-  const fetchAccess = async (doctorId, diagnosticCenterId) => {
-    const token = localStorage.getItem("token"); // or your specific key
-
-    const res = await fetch(
-      `https://api.aidfastbd.com/api/Doctor/GetChamberInformationByDiagnosticAndDoctorId?genericServiceId=${diagnosticCenterId}&doctorId=${doctorId}`,
-      {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        },
-        cache: "no-store"
-      }
-    );
-
-    const json = await res.json();
-    const Accessdata = json?.data?.[0];
-  };
-
 
 
   useEffect(() => {
@@ -124,19 +104,17 @@ function DiagnosticTabs({ data, userId }) {
           <div className="container mx-auto">
             {data?.diagnosticCenterDoctors?.length > 0 ? (
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-6">
-                {data.diagnosticCenterDoctors.map((e, index) => (
-                  <div key={`doctor_${index}`}>
-                    <DiagnostickDoctorCard
+                {data?.diagnosticCenterDoctors.map((e, index) => {
+                  return (
+                    <DoctorCard
+                      id={e?.doctorUserId}
+                      lat={data?.latitude}
+                      lon={data?.longitude}
+                      key={`doctor_${index}`}
                       doctor={e}
                     />
-                    {/* <Button
-                      onClick={() => fetchAccess(e?.doctorUserId, e?.diagnosticCenterId)}
-                      type="primary"
-                    >
-                      Edit
-                    </Button> */}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <p className="text-center text-gray-500 py-10">

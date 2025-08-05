@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import MapComponent from '../../MapComponent';
 import { toast } from 'sonner';
 import Swal from 'sweetalert2';
+import { Button } from 'antd';
+import { FaRegCopy } from 'react-icons/fa6';
 // Reusable InputField component
 function InputField({ label, placeholder, value, onChange, type = "text", required = false }) {
   return (
@@ -27,6 +29,7 @@ function InputField({ label, placeholder, value, onChange, type = "text", requir
 }
 
 function DoctorProfileChamber({ data, user, token }) {
+  const [copied, setCopied] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [chamberName, setChamberName] = useState('');
   const [address, setAddress] = useState('');
@@ -43,6 +46,17 @@ function DoctorProfileChamber({ data, user, token }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+
+
+  const handleCopy = () => {
+    const id = data?.[0]?.id;
+    if (!id) return;
+    navigator.clipboard.writeText(id);
+    setCopied(true);
+    toast.success("Secret key copied successfully");
+    setTimeout(() => setCopied(false), 2000);
+  };
+
 
   useEffect(() => {
     setChamberList(data);
@@ -270,15 +284,16 @@ function DoctorProfileChamber({ data, user, token }) {
       </p>
 
       {isModalOpen == false ? <>
-        <button
+        <Button
+        type='primary'
           onClick={() => {
             resetModal();
             setIsModalOpen(true);
           }}
-          className="mt-4 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+          className="mt-4"
         >
           Add New Chamber
-        </button>
+        </Button>
 
         {/* Chamber List */}
         <div className="mt-6">
@@ -312,20 +327,40 @@ function DoctorProfileChamber({ data, user, token }) {
                 </table>
 
                 {/* Edit and Delete Buttons */}
-                <div className="mt-4 flex space-x-4">
-                  <button
+                <div className="mt-4 flex justify-between">
+                  <Button
+                    type="primary"
                     onClick={() => handleEdit(chamber)}
-                    className="bg-yellow-500 text-white p-2 rounded-md hover:bg-yellow-600"
+                    className="bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
                   >
                     Edit
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    type="primary" danger
                     onClick={() => handleDelete(chamber.id)}
-                    className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600"
+                    className="bg-red-500 text-white  rounded-md hover:bg-red-600"
                   >
                     Delete
-                  </button>
+                  </Button>
                 </div>
+
+
+                <div className="mt-5 flex items-center gap-3 bg-white shadow-md rounded-xl p-4 border w-fit">
+                  <span className="text-gray-800 font-semibold">Secret Key:</span>
+                  <span className="text-blue-700 font-mono">{data?.[0]?.id}</span>
+                  <button
+                    onClick={handleCopy}
+                    className="text-gray-500 hover:text-blue-600 transition"
+                    title="Copy ID"
+                  >
+                    <FaRegCopy className="text-xl" />
+                  </button>
+                  {copied && (
+                    <span className="text-green-600 text-sm animate-fadeIn">Copied!</span>
+                  )}
+                </div>
+
+
               </div>
             </div>
           ))}
