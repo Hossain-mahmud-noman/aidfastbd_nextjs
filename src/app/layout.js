@@ -26,24 +26,27 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/*  Google tag (gtag.js)  */}
         <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-8YNM25L12S"
           strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=G-BSWTVTW7HJ`}
+          async
         />
+
         <Script
-          id="gtag-init"
+          id="google-analytics"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-BSWTVTW7HJ', {
-              page_path: window.location.pathname,
-            });
-          `,
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-8YNM25L12S');
+            `,
           }}
         />
+
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
