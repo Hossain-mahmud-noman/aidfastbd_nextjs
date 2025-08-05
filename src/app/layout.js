@@ -2,7 +2,7 @@ import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
-import PlausibleProvider from 'next-plausible'
+// import PlausibleProvider from 'next-plausible'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,6 +26,24 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-BSWTVTW7HJ`}
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-BSWTVTW7HJ', {
+              page_path: window.location.pathname,
+            });
+          `,
+          }}
+        />
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -35,27 +53,13 @@ export default function RootLayout({ children }) {
             })(window,document,'script','dataLayer','GTM-KRKBFPTZ');
           `}
         </Script>
-
-        {/* <script>
-          var script = document.createElement('script');
-          script.defer = true;
-          script.dataset.domain = "aidfastbd.com";
-          script.dataset.api = "https://plausible.io/api/event";
-          script.src = "https://plausible.io/js/script.js";
-          document.getElementsByTagName('head')[0].appendChild(script);
-        </script> */}
-
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <PlausibleProvider
-          domain="aidfastbd.com"
-          // trackLocalhost={true}
-          // enabled={true}
-        >
-          <ClientLayout>
-            {children}
-          </ClientLayout>
-        </PlausibleProvider>
+        {/* <PlausibleProvider domain="aidfastbd.com"> */}
+        <ClientLayout>
+          {children}
+        </ClientLayout>
+        {/* </PlausibleProvider> */}
       </body>
     </html>
   );
