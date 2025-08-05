@@ -1,12 +1,8 @@
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
-import StoreProvider from './StoreProvider';
-import Navbar from "../components/layout/nabvar.js";
-import Footer from "../components/layout/footer.js";
-import I18nProvider from "../context/i18n.js";
-import { Toaster } from 'sonner';
-import ClientLayout from "./ClientLayout"; // 👈 New client component
+import ClientLayout from "./ClientLayout";
+import PlausibleProvider from 'next-plausible'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,9 +35,27 @@ export default function RootLayout({ children }) {
             })(window,document,'script','dataLayer','GTM-KRKBFPTZ');
           `}
         </Script>
+
+        {/* <script>
+          var script = document.createElement('script');
+          script.defer = true;
+          script.dataset.domain = "aidfastbd.com";
+          script.dataset.api = "https://plausible.io/api/event";
+          script.src = "https://plausible.io/js/script.js";
+          document.getElementsByTagName('head')[0].appendChild(script);
+        </script> */}
+
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ClientLayout>{children}</ClientLayout>
+        <PlausibleProvider
+          domain="https://aidfastbd.com"
+          // trackLocalhost={true}
+          // enabled={true}
+        >
+          <ClientLayout>
+            {children}
+          </ClientLayout>
+        </PlausibleProvider>
       </body>
     </html>
   );
