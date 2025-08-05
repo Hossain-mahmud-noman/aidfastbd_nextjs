@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useEffect, useRef } from "react"
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Keyboard, Navigation } from "swiper/modules";
+import { Keyboard, Navigation, Autoplay } from "swiper/modules";
 import { GoArrowRight, GoArrowLeft } from "react-icons/go";
 import { Rate } from "antd";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -95,9 +95,13 @@ const Testimonials = () => {
                      768: { slidesPerView: 1, spaceBetween: 16 },
                      1024: { slidesPerView: 1, spaceBetween: 20 },
                   }}
+                  autoplay={{
+                     delay: 3000, 
+                     disableOnInteraction: false, 
+                  }}
                   loop={true}
                   mousewheel={true}
-                  modules={[Keyboard, Navigation]}
+                  modules={[Keyboard, Navigation, Autoplay]}
                   ref={swiperRef}
                   className="w-full"
                >
