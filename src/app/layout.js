@@ -48,7 +48,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <PlausibleProvider
-          domain="https://aidfastbd.com/"
+          domain="aidfastbd.com"
           // trackLocalhost={true}
           // enabled={true}
         >
