@@ -3,6 +3,8 @@ import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
+import { Button, Input, Modal } from "antd";
+import { FaEdit } from "react-icons/fa";
 
 function DiagnosticProfileDoctors({ data, user, token }) {
   const [doctors, setDoctors] = useState([]);
@@ -10,6 +12,9 @@ function DiagnosticProfileDoctors({ data, user, token }) {
   const [showPopup, setShowPopup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [chamberIdInput, setChamberIdInput] = useState("");
+  const [diagnosticCenterId, setDiagnosticCenterId] = useState("");
 
   const fetchDoctorList = async () => {
     setLoading(true);
@@ -110,18 +115,87 @@ function DiagnosticProfileDoctors({ data, user, token }) {
     fetchDoctorList();
   }, [searchTerm]);
 
+
+  const fetchAccess = async (doctorId, diagnosticCenterId) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await fetch(
+        `https://api.aidfastbd.com/api/Doctor/GetChamberInformationByDiagnosticAndDoctorId?diagnosticCenterId=${diagnosticCenterId}&doctorId=${doctorId}`,
+        {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          cache: "no-store"
+        }
+      );
+
+      if (res.status === 400) {
+        // Show modal to enter chamber ID
+        setDiagnosticCenterId(diagnosticCenterId);
+        setIsModalVisible(true);
+      } else {
+        const data = await res.json();
+        toast.success("Access granted");
+        // console.log("✅ Chamber data:", data);
+      }
+    } catch (error) {
+      console.error("Fetch access failed:", error);
+      toast.error("Something went wrong");
+    }
+  };
+
+  const handleGetAccess = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!chamberIdInput || !diagnosticCenterId) {
+      toast.warning("Please enter Chamber ID");
+      return;
+    }
+
+    const payload = {
+      diagnosticCenterId: diagnosticCenterId,
+      chamberId: chamberIdInput
+    };
+
+    try {
+      const res = await fetch("https://api.aidfastbd.com/api/Doctor/UpdateChamberAccessDiagnostic", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        toast.success("Access granted successfully");
+        setIsModalVisible(false);
+        setChamberIdInput("");
+      } else {
+        toast.error("Failed to grant access");
+      }
+    } catch (error) {
+      console.error("Error updating access:", error);
+      toast.error("Something went wrong");
+    }
+  };
+
   return (
     <div className="p-4 max-w-3xl mx-auto">
       <h1 className="text-lg font-bold mb-4">
         Add Doctor profile of your Diagnostic/Hospital (if any)
       </h1>
 
-      <button
+      <Button
+        type="primary"
         onClick={() => setShowPopup(true)}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        className=""
       >
         Add Doctor
-      </button>
+      </Button>
 
       <div className="mt-4 space-y-4">
         {doctors.map((doctor) => (
@@ -141,12 +215,23 @@ function DiagnosticProfileDoctors({ data, user, token }) {
               <p className="text-sm text-gray-600">{doctor.degree}</p>
               <p className="text-sm text-gray-500">{doctor.location}</p>
             </div>
-            <button
-              onClick={() => removeDoctor(doctor.doctorUserId)}
-              className="text-red-600 hover:text-red-800 font-medium"
-            >
-              Remove
-            </button>
+
+            <div className="flex items-center flex-col lg:flex-row gap-4
+            ">
+              <Button
+                danger
+                onClick={() => removeDoctor(doctor.doctorUserId)}
+                className=""
+              >
+                Remove
+              </Button>
+              <Button
+                onClick={() => fetchAccess(doctor?.doctorId, doctor?.diagnosticCenterId)}
+                className="bg-primary text-white"
+              >
+                Edit
+              </Button>
+            </div>
           </div>
         ))}
       </div>
@@ -197,6 +282,32 @@ function DiagnosticProfileDoctors({ data, user, token }) {
           </div>
         </div>
       )}
+
+      {/* Modal for Chamber ID input */}
+      <Modal
+        title="Get Access"
+        open={isModalVisible}
+        onCancel={() => {
+          setIsModalVisible(false);
+          setChamberIdInput("");
+        }}
+        footer={[
+          <Button key="cancel" onClick={() => setIsModalVisible(false)}>
+            Cancel
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleGetAccess}>
+            Get Access
+          </Button>,
+        ]}
+      >
+        <p>Enter Chamber ID to get access:</p>
+        <Input
+          placeholder="Enter Chamber ID"
+          value={chamberIdInput}
+          onChange={(e) => setChamberIdInput(e.target.value)}
+          className="mt-2"
+        />
+      </Modal>
     </div>
   );
 }
