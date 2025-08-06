@@ -5,8 +5,10 @@ import { FiAlertCircle } from "react-icons/fi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../../context/AuthContext";
 
 const OTPVerification = ({ user, otpCode, isForget = false, mobileEmailNo }) => {
+  const { login } = useAuth()
   const router = useRouter();
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [error, setError] = useState("");
@@ -31,42 +33,35 @@ const OTPVerification = ({ user, otpCode, isForget = false, mobileEmailNo }) => 
   const handleSubmit = async () => {
     setLoading(true);
     setError("");
+
     try {
       const otpValue = otp.join("");
+
       if (otpValue.length !== 4) {
-        // setError("Please enter a valid 4-digit OTP");
         toast.error("Please enter a valid 4-digit OTP");
       } else if (otpCode !== otpValue) {
-        // setError("Incorrect Otp");
         toast.error("Incorrect Otp");
       } else {
         if (isForget) {
           setOtpVerified(true);
         } else {
-          const ret = await fetch(`https://api.aidfastbd.com/api/Auth/OtpVerified?userId=${user.id}`);
-          if (ret.status === 200) {
-            const ret = await fetch("/api/login", {
-              method: "POST", headers: {
-                'Content-Type': 'application/json'
-              }, body: JSON.stringify({
-                user: user, token: user['token']
-              })
-            })
+          // 🔐 Backend verification of OTP
+          const otpRes = await fetch(
+            `https://api.aidfastbd.com/api/Auth/OtpVerified?userId=${user.id}`
+          );
 
-            if (ret.status == 200) {
-              toast.success("Verification successful. You are now logged in.");
-              setTimeout(() => router.push("/"), 1000);
-
-            } else {
-              // setError("Verification failed. Please try again.");
-              toast.error("Verification failed. Please try again.");
-            }
+          if (otpRes.status === 200) {
+            await login(user, user.token);
+            localStorage.setItem("token", user?.token);
+            localStorage.setItem("id", user?.id);
+            setTimeout(() => router.push("/profile"), 1000);
+            toast.success("Verification successful. You are now logged in.");
+          } else {
+            toast.error("OTP Verification failed. Please try again.");
           }
         }
       }
-
     } catch (err) {
-      // setError(err.message || "Verification failed. Please try again.");
       toast.error(err.message || "Verification failed. Please try again.");
     } finally {
       setLoading(false);
@@ -100,25 +95,23 @@ const OTPVerification = ({ user, otpCode, isForget = false, mobileEmailNo }) => 
       if (response.ok) {
         toast.success("Password reset successfully!, You can login now.");
         setTimeout(() => router.push("/login"), 1000);
-        // setSuccess('Password reset successfully!');
       } else {
         const data = await response.json();
         toast.error(data.message || 'Password reset failed');
-        // setError(data.message || 'Password reset failed');
       }
     } catch (err) {
-      // setError('An error occurred. Please try again.');
       toast.error('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
     <div>
       <Toaster position="top-right" />
       <div>
-        {otpVerified === true ? <div className="flex flex-col items-center justify-center bg-gray-100 pt-4 px-4">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full">
+        {otpVerified === true ? <div className="flex flex-col items-center justify-center  pt-4 px-4">
+          <div className=" p-6 rounded-lg shadow-lg w-full">
             <p className="text-center text-gray-700 mb-6">Be Happy and be healthy</p>
             <form onSubmit={handleResetSubmit}>
               <div className="mb-4 relative">
@@ -184,7 +177,7 @@ const OTPVerification = ({ user, otpCode, isForget = false, mobileEmailNo }) => 
           </div>
         </div>
           :
-          <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center px-4">
+          <div className=" bg-gradient-to-b from-blue-50 to-white flex items-center justify-center px-4">
             <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-2xl shadow-lg">
               <div className="text-center">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">Verify OTP</h2>

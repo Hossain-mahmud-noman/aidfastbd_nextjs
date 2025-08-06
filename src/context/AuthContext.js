@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { getUserProfile } from './getUserProfile';
-// import { getUserProfile } from '../utils/getUserProfile'; // Adjust path if needed
+
 
 const AuthContext = createContext();
 
@@ -15,7 +15,6 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 🔄 Load token and fetch user profile on mount
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     const storedUserId = localStorage.getItem('id');

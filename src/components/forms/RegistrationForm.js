@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { base_endpoint } from '../../utils/constants';
 import OTPVerification from './OTPVerification';
-import { toast, Toaster } from 'sonner';
+import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 const RegistrationForm = () => {
   const router = useRouter();
@@ -55,7 +55,7 @@ const RegistrationForm = () => {
         if (data.message === "INVALID" || data.token === "") {
           // setError('Already exits account');
           toast.error("Already exits account");
-          setTimeout(() => router.push("/"), 1000);
+          setTimeout(() => router.push("/login"), 1000);
           setIsLoading(false);
           return;
         }
@@ -70,11 +70,9 @@ const RegistrationForm = () => {
           token: data.token,
         });
       } else {
-        // setError(data.message || 'Registration failed');
         toast.error(data.message || 'Registration failed');
       }
     } catch (err) {
-      // setError(err.message || 'An unexpected error occurred');
       toast.error(err.message || 'An unexpected error occurred');
     } finally {
       setIsLoading(false);
@@ -83,7 +81,6 @@ const RegistrationForm = () => {
 
   return (
     <div>
-      <Toaster position='top-right' />
       <div>
         {isSuccessed === null ? (
           <div className="flex flex-col items-center justify-center pt-4 px-4">
@@ -182,7 +179,7 @@ const RegistrationForm = () => {
           </div>
         ) : (
           <>
-            <OTPVerification mobileEmailNo={mobileEmailNo} user={isSuccessed} otpCode={otpCode} />
+            <OTPVerification mobileEmailNo={mobileEmailNo}  user={isSuccessed} otpCode={otpCode} />
           </>)}
       </div>
     </div>

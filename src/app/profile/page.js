@@ -1,48 +1,48 @@
-import React from 'react'
-import AppBar from '../../components/AppBar';
-import { FaArrowLeft } from "react-icons/fa";
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { appname, base_endpoint, headerx } from '../../utils/constants';
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../../context/AuthContext';
+import { base_endpoint, headerx } from '../../utils/constants';
 import ProfileMenu from '../../components/ProfileMenu';
 
-export const metadata = {
-  title: "My Profile | " + appname,
-};
+const Page = () => {
+  const { user, token } = useAuth(); 
+  const [data, setData] = useState(null);
+  const router = useRouter();
 
-const checkLogin = async () => {
-  const tokenCookie = cookies().get('token')?.value ?? "";
-  const userCookie = cookies().get('user')?.value;
-  const user = userCookie ? JSON.parse(userCookie) : null;
-
-  let data = null;
-  if (user !== null) {
-    headerx['Authorization'] = `Bearer ${tokenCookie}`;
-    try {
-      const res = await fetch(`${base_endpoint}/GeneralInformation/GetUserProfileInfo?userId=${user.id}`, { headers: headerx });
-      data = await res.json();
-    } catch (err) {
+  useEffect(() => {
+    if (!user || !token) {
+      router.push('/login');
+      return;
     }
-  }
 
-  return { token: tokenCookie, user: user, data: data };
+    const fetchUserData = async () => {
+      try {
+        const authHeader = {
+          ...headerx,
+          Authorization: `Bearer ${token}`,
+        };
+        const res = await fetch(`${base_endpoint}/GeneralInformation/GetUserProfileInfo?userId=${user.id}`, {
+          headers: authHeader,
+        });
+        const json = await res.json();
+        setData(json);
+      } catch (err) {
+        console.error('Failed to load profile:', err);
+      }
+    };
 
-};
+    fetchUserData();
+  }, [user, token, router]);
 
-async function page() {
-
-  const { user, data } = await checkLogin();
-  if (!user) {
-    redirect('/login');
-  }
+  if (!user || !token) return null; 
 
   return (
-    <>
-      <div className="pt-10 aid-container">
-        <ProfileMenu data={data} />
-      </div>
-    </>
-  )
-}
+    <div className="pt-10 aid-container">
+      {data ? <ProfileMenu data={data} /> : <p>Loading...</p>}
+    </div>
+  );
+};
 
-export default page
+export default Page;
