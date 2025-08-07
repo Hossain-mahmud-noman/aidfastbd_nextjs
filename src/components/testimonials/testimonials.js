@@ -29,7 +29,7 @@ const Testimonials = () => {
    };
    const data = [
       {
-         image: "/home/testimonials/t1.jpg",
+         image: "/home/testimonials/l1.jpg",
          user: "রেহানুল ইসলাম",
          location: "সরাইল, ব্রাহ্মণবাড়িয়া",
          identity: "ব্যবসায়ী",
@@ -37,7 +37,7 @@ const Testimonials = () => {
          rate: 5
       },
       {
-         image: "/home/testimonials/t2.jpg",
+         image: "/home/testimonials/l2.jpg",
          user: "ডা. শবনম রহমান",
          location: "মিরপুর,ঢাকা",
          identity: "MBBS, FCPS (Gynecology)",
@@ -45,7 +45,7 @@ const Testimonials = () => {
          rate: 5
       },
       {
-         image: "/home/testimonials/t3.jpg",
+         image: "/home/testimonials/l3.jpg",
          user: "সাদিক হাসান",
          location: "আশুগঞ্জ,ঢাকা",
          identity: "Diagnostic Center Owner",
@@ -53,7 +53,7 @@ const Testimonials = () => {
          rate: 5
       },
       {
-         image: "/home/testimonials/t4.jpg",
+         image: "/home/testimonials/l4.jpg",
          user: "মাহফুজা বেগম",
          location: "কসবা,ঢাকা",
          identity: "গৃহিণী",
@@ -61,7 +61,7 @@ const Testimonials = () => {
          rate: 5
       },
       {
-         image: "/home/testimonials/t5.jpg",
+         image: "/home/testimonials/lg.jpg",
          user: "জান্নাতুল ফেরদৌস",
          location: "নাসিরনগর,ব্রাহ্মণবাড়িয়া ",
          identity: "বিশ্ববিদ্যালয় শিক্ষার্থী",
