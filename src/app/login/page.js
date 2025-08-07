@@ -1,21 +1,14 @@
 import { appname } from "../../utils/constants";
-
-import LoginForm from '../../components/forms/LoginForm';
+import LoginPageClient from "./LoginPageClient";
 
 export const metadata = {
   title: "Login | " + appname,
 };
 
-
-function page() {
+export default function Page() {
   return (
-    <>
-      <div className="py-10 aid-container">
-        <LoginForm />
-      </div>
-    </>
-
-  )
+    <div className="py-10 aid-container">
+      <LoginPageClient />
+    </div>
+  );
 }
-
-export default page

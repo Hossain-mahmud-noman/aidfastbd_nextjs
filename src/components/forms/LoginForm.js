@@ -6,7 +6,7 @@ import { toast, Toaster } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 
-const LoginForm = () => {
+const LoginForm = ({ slug = null, id = null }) => {
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
@@ -54,7 +54,13 @@ const LoginForm = () => {
             login(data.user, data.tokenString);
             localStorage.setItem("token", data.tokenString);
             localStorage.setItem("id", data.user?.id);
-            setTimeout(() => router.push("/profile"), 1000);
+            if (slug) {
+              setTimeout(() => router.push(`/${slug}/${id}`), 1000);
+            }
+            else{
+              setTimeout(() => router.push("/profile"), 1000);
+            }
+
           } else {
             toast.error("Login failed");
             setError('Login failed');

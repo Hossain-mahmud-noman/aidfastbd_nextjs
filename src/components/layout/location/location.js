@@ -80,6 +80,8 @@ const Location = () => {
         const lat = location.lat();
         const lng = location.lng();
         setMapCenter({ lat, lng });
+        localStorage.setItem("lat", lat);
+        localStorage.setItem("lon", lng);
         setLocationName(results[0].formatted_address);
         setSuggestions([]);
         setSearchLocation(results[0].formatted_address);
@@ -96,6 +98,8 @@ const Location = () => {
           const { latitude, longitude } = position.coords;
           setMapCenter({ lat: latitude, lng: longitude });
           await fetchLocationName(latitude, longitude);
+          localStorage.setItem("lat", latitude);
+          localStorage.setItem("lon", longitude);
           setIsModalOpen(false);
         },
         async () => {
@@ -113,6 +117,8 @@ const Location = () => {
     const newLat = event.latLng.lat();
     const newLng = event.latLng.lng();
     setMapCenter({ lat: newLat, lng: newLng });
+    localStorage.setItem("lat", newLat);
+    localStorage.setItem("lon", newLng);
     fetchLocationName(newLat, newLng);
   };
 

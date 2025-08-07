@@ -3,11 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { headerx } from '../../utils/constants';
 import { toast } from 'sonner';
-import { getUserProfile } from '../../context/getUserProfile';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../../context/AuthContext';
 
 function AppointmentBooking({ id, token, chambers }) {
-   const [user, setUser] = useState(null)
+   const { user } = useAuth()
+   console.log("🚀 ~ AppointmentBooking ~ user:", user)
    const router = useRouter();
    const [isOpen, setIsOpen] = useState(false);
    const [formData, setFormData] = useState({
@@ -22,13 +23,17 @@ function AppointmentBooking({ id, token, chambers }) {
    const today = new Date().toISOString().split('T')[0];
    const [slots, setSlots] = useState([]);
 
-   const fetchProfile = async () => {
-      const profile = await getUserProfile();
-      setUser(profile)
+
+   const handleAppoinment = () => {
+      if (user) {
+         toggleModal();
+      }
+      else {
+         toast.warning("Please log in first to continue with your appointment booking.");
+         router.push(`/login?id=${id}&slug=doctor`)
+      }
    }
-   useEffect(() => {
-      fetchProfile();
-   }, [token])
+
 
    const toggleModal = () => {
       setIsOpen(!isOpen);
@@ -148,7 +153,8 @@ function AppointmentBooking({ id, token, chambers }) {
    return (
       <nav className="fixed bottom-0 left-0 right-0 shadow-lg p-2 z-[10000] aid-container">
          <button
-            onClick={toggleModal}
+
+            onClick={() => handleAppoinment()}
             className="w-full bg-green-500 text-white py-2 px-4 rounded-lg"
          >
             Book Appointment
