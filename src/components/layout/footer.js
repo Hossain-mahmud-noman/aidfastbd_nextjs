@@ -138,7 +138,7 @@ const Footer = () => {
                            className="object-contain"
                         />
                      </Link>
-                     <Link href="https://play.google.com/store/apps/details?id=com.aidfastbd.app" className="group hover:scale-105 bg-white px-6 lg:px-4 xl:px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
+                     <Link href="https://play.google.com/store/apps/details?id=com.aidfastbd.app" className="z-[1000] group hover:scale-105 bg-white px-6 lg:px-4 xl:px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2">
                         <FiDownload className="text-primary group-hover:text-white text-base" />
                         <p className="text-base lg:text-sm xl:text-base text-primary group-hover:text-white whitespace-pre">{i18n.t("Download Now")}</p>
                      </Link>

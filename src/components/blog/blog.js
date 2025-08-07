@@ -28,13 +28,13 @@ const Blog = () => {
       },
    ];
 
-
+   
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 aid-container">
-         <div className="flex items-center justify-between">
-            <div>
+         <div className="flex justify-between">
+            <div className="max-w-[230px] md:max-w-[834px]">
                <h1 className="text-[#212121] heading1">{i18n.t("Browse updated blogs")}</h1>
-               <p className="text-[#061C3D] description2 mt-3 lg:mt-4 max-w-[834px]">{i18n.t("Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy")}</p>
+               <p className="text-[#061C3D] description2 mt-3 lg:mt-4 ">{i18n.t("Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy")}</p>
             </div>
             <Link href={"/blog"} target="_blank" className="flex items-center gap-1.5">
                <p className="text-[#1087EF] description2">{i18n.t("Explore More")}</p>
