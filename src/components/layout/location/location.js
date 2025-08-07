@@ -28,33 +28,36 @@ const Location = () => {
     libraries: ["places"]
   });
 
-  const fetchLocationName = async (lat, lng) => {
+  const fetchLocationName = async (lat, lng, optionalName = null) => {
     try {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${map_key}`
       );
       const data = await response.json();
+      let name = "Unknown Location";
       if (data.results && data.results.length > 0) {
-        setLocationName(data.results[0].formatted_address);
+        name = data.results[0].formatted_address;
+        setLocationName(name);
       } else {
-        setLocationName("Unknown Location");
+        setLocationName(name);
       }
-    } catch (error) {
-      console.error("Error fetching location name:", error);
-      setLocationName("Error fetching location");
-    } finally {
+
       await fetch("/api/set-location-cookie", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lat, lng, name: locationName }),
+        body: JSON.stringify({ lat, lng, name: optionalName || name }),
       });
+    } catch (error) {
+      console.error("Error fetching location name:", error);
+      setLocationName("Error fetching location");
     }
   };
 
   const handleSearchLocation = (e) => {
     const input = e.target.value;
     setSearchLocation(input);
-    if (!input) {
+
+    if (!input || !window.google || !window.google.maps) {
       setSuggestions([]);
       return;
     }
@@ -63,6 +66,8 @@ const Location = () => {
     service.getPlacePredictions({ input }, (predictions, status) => {
       if (status === "OK") {
         setSuggestions(predictions || []);
+      } else {
+        setSuggestions([]);
       }
     });
   };
@@ -91,11 +96,12 @@ const Location = () => {
           const { latitude, longitude } = position.coords;
           setMapCenter({ lat: latitude, lng: longitude });
           await fetchLocationName(latitude, longitude);
-          setError(null);
+          setIsModalOpen(false);
         },
         async () => {
           setMapCenter({ lat: defaultLat, lng: defaultLng });
           await fetchLocationName(defaultLat, defaultLng);
+          setIsModalOpen(false);
         }
       );
     } else {
@@ -122,13 +128,10 @@ const Location = () => {
   }, []);
 
   const cleanLocationName = locationName.replace(/^[^,]+,\s*/, '');
-
   const formattedShortLocation =
     cleanLocationName.length > 20 ? cleanLocationName.slice(0, 20) + "..." : cleanLocationName;
-
   const formattedShortLocationMobile =
     cleanLocationName.length > 6 ? cleanLocationName.slice(0, 6) + "..." : cleanLocationName;
-
 
   return (
     <div>

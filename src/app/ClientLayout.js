@@ -15,7 +15,8 @@ const ClientLayout = ({ children }) => {
     const [image, setImage] = useState("");
 
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: map_key
+        googleMapsApiKey: map_key,
+        libraries: ["places"], 
     });
 
     useEffect(() => {

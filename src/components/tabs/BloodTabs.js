@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { Modal, Input, Form, Button, Select } from "antd";
 
 function BloodTabs({ data, UserId }) {
+  console.log("🚀 ~ BloodTabs ~ data:", data)
   const i18n = useI18n();
   const [reviewData, setReviewdData] = useState(data);
   const [blooddata, setBloodData] = useState(data)
@@ -215,31 +216,34 @@ function BloodTabs({ data, UserId }) {
         {activeTab === i18n.t("Services") && (
           <div>
             {data?.bloodBankServices?.length > 0 ? (
-              <table className="w-full border-collapse table-auto">
-                <thead>
-                  <tr className="bg-gray-100 border-b border-gray-200">
-                    <th className="p-4 text-left border rounded-tl-lg">#</th>
-                    <th className="p-4 text-left border">{i18n.t("Service Name")}</th>
-                    <th className="p-4 text-left border rounded-tr-lg">{i18n.t("Quantity")}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.bloodBankServices.map((service, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="p-4 border">{index + 1}</td>
-                      <td className="p-4 border">{service.serviceName}</td>
-                      <td className="p-4 border">{service.price}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                {data.bloodBankServices.map((service, index) => (
+                  <div
+                    key={index}
+                    className="bg-white rounded-xl shadow-md border p-5 transition hover:shadow-lg"
+                  >
+                    <h2 className="text-xl lg:text-2xl font-semibold text-blue-800">
+                      {service?.serviceName}
+                    </h2>
+                    <p className="text-gray-700 text-sm lg:text-base mt-2">
+                      <span className="font-medium text-gray-900"></span> {service?.price}
+                    </p>
+                    <div className="mt-4">
+                      <ShowOriginalImage image={service?.remarks} />
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : (
-              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4">
-                <p className="text-yellow-700">{i18n.t("No services data available")}</p>
+              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4 rounded">
+                <p className="text-yellow-700 font-medium">
+                  {i18n.t("No services data available")}
+                </p>
               </div>
             )}
           </div>
         )}
+
 
 
         {activeTab === i18n.t("Donor List") && (
@@ -253,7 +257,7 @@ function BloodTabs({ data, UserId }) {
                 style={{ inlineSize: 550 }}
                 onChange={(value) => {
                   if (!value || value === "all") {
-                    setBloodData(data); 
+                    setBloodData(data);
                   } else {
                     const filteredDonors = data?.bloodBankDonerInfo?.filter(
                       (donor) => donor.bloodGroup === value
@@ -330,8 +334,6 @@ function BloodTabs({ data, UserId }) {
             )}
           </div>
         )}
-
-
 
         {activeTab === i18n.t("Review") && (
           <>

@@ -6,7 +6,8 @@ import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
 
 import { toast } from "sonner";
-// Reusable InputField component
+
+
 function InputField({
   label,
   placeholder,
@@ -193,12 +194,10 @@ function DoctorProfileBasic({ data, user, token }) {
         typeof selectedLogo === "string" &&
         !selectedLogo.startsWith(image_base_endpoint)
       ) {
-        // If it's a URL (not a local file), fetch it and convert to a blob
         const blob = await fetch(selectedLogo).then((res) => res.blob());
-        // Append the fetched image as a blob with a name for the file
-        formData.append("File", blob, "image.jpg"); // You can add dynamic filename extensions here if needed
+        formData.append("File", blob, "image.jpg"); 
       } else if (selectedLogo instanceof File) {
-        // If selectedLogo is already a File object, just append it
+
         formData.append("File", selectedLogo);
       }
     }
