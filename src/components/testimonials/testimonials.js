@@ -61,7 +61,7 @@ const Testimonials = () => {
          rate: 5
       },
       {
-         image: "/home/testimonials/lg.jpg",
+         image: "/home/testimonials/l5.jpg",
          user: "জান্নাতুল ফেরদৌস",
          location: "নাসিরনগর,ব্রাহ্মণবাড়িয়া ",
          identity: "বিশ্ববিদ্যালয় শিক্ষার্থী",
@@ -116,7 +116,7 @@ const Testimonials = () => {
                                  alt={item.user}
                                  className="w-[68px] h-[68px] rounded-full object-fill mx-auto"
                               />
-                              <p className="mt-2 description2 text-white text-center">{item.user}  ({item.identity}) </p>
+                              <p className="mt-2 description2 text-white text-center whitespace-pre">{item.user}  ({item.identity}) </p>
                               <p className="mt-3 description1 text-white text-center max-w-[731px] mx-4 flex items-center gap-2 justify-center">
                                  <FaMapMarkerAlt />
                                  <span>{item.location}</span>
