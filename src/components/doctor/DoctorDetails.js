@@ -62,7 +62,7 @@ const DoctorDetail = ({ data, UserId }) => {
         }
       />
 
-      <div className="mt-5 lg:mt-8 flex flex-col md:flex-row gap-5 md:gap-10 aid-container">
+      <div className="mt-5 lg:mt-8 flex flex-col md:flex-row items-center gap-5 md:gap-10 aid-container">
         <div className="rounded-xl">
           <ShowOriginalImage image={profile} />
         </div>

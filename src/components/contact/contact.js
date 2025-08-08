@@ -10,9 +10,26 @@ const Contact = () => {
    const [form] = Form.useForm();
 
    const handleSubmit = async (values) => {
-      toast.success("Thank you for reaching out! I’ll get back to you as soon as possible.")
-      form.resetFields();
+      try {
+         const res = await fetch("https://api.aidfastbd.com/api/Inquiries/Save", {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+         });
+
+         if (!res.ok) {
+            throw new Error("Failed to send message");
+         }
+
+         toast.success("Thank you for reaching out! We’ll get back to you soon.");
+         form.resetFields();
+      } catch (error) {
+         toast.error(error.message || "Something went wrong. Please try again.");
+      }
    };
+
 
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 bg-[url('/home/contact/bg.png')] bg-no-repeat bg-cover bg-center">
@@ -81,7 +98,7 @@ const Contact = () => {
                         rows={5}
                         className="mt-4 w-full rounded-xl bg-transparent p-3 dashinput focus:outline-primary"
                      />
-                     <button href="tel: 01980445424" className="bg-[#1087EF]  px-6 py-3 rounded-[12px] description1 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
+                     <button type="submit" href="tel: 01980445424" className="bg-[#1087EF]  px-6 py-3 rounded-[12px] description1 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
                         <p className="description2 text-white">Sent Message</p>
                         <FaArrowRightLong className="text-white description2" />
                      </button>

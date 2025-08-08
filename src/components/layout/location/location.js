@@ -7,8 +7,10 @@ import { useEffect, useRef, useState } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { map_key } from "../../../utils/constants.js";
 import { FiSearch, FiTarget, FiX } from "react-icons/fi";
+import { useI18n } from "../../../context/i18n.js";
 
 const Location = () => {
+  const i18n = useI18n()
   const inputRef = useRef(null);
   const router = useRouter();
 
@@ -28,15 +30,53 @@ const Location = () => {
     libraries: ["places"]
   });
 
+  // const fetchLocationName = async (lat, lng, optionalName = null) => {
+  //   try {
+  //     const response = await fetch(
+  //       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${map_key}`
+  //     );
+  //     const data = await response.json();
+  //     let name = "Unknown Location";
+  //     if (data.results && data.results.length > 0) {
+  //       name = data.results[0].formatted_address;
+  //       setLocationName(name);
+  //     } else {
+  //       setLocationName(name);
+  //     }
+
+  //     await fetch("/api/set-location-cookie", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ lat, lng, name: optionalName || name }),
+  //     });
+  //   } catch (error) {
+  //     console.error("Error fetching location name:", error);
+  //     setLocationName("Error fetching location");
+  //   }
+  // };
+
+
   const fetchLocationName = async (lat, lng, optionalName = null) => {
     try {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${map_key}`
       );
       const data = await response.json();
+
       let name = "Unknown Location";
       if (data.results && data.results.length > 0) {
-        name = data.results[0].formatted_address;
+        const components = data.results[0].address_components;
+        const sublocality = components.find(c =>
+          c.types.includes("sublocality") || c.types.includes("sublocality_level_1")
+        );
+        const neighborhood = components.find(c =>
+          c.types.includes("neighborhood")
+        );
+        const locality = components.find(c =>
+          c.types.includes("locality")
+        );
+
+        name = sublocality?.long_name || neighborhood?.long_name || locality?.long_name || data.results[0].formatted_address;
         setLocationName(name);
       } else {
         setLocationName(name);
@@ -51,8 +91,8 @@ const Location = () => {
       console.error("Error fetching location name:", error);
       setLocationName("Error fetching location");
     }
-  };
-
+  }
+  
   const handleSearchLocation = (e) => {
     const input = e.target.value;
     setSearchLocation(input);
@@ -102,16 +142,27 @@ const Location = () => {
           localStorage.setItem("lon", longitude);
           setIsModalOpen(false);
         },
-        async () => {
-          setMapCenter({ lat: defaultLat, lng: defaultLng });
-          await fetchLocationName(defaultLat, defaultLng);
+        async (error) => {
+          console.warn(`Geolocation error (${error.code}): ${error.message}`);
+          // Don't immediately fallback to default — try to get last stored location if any
+          const latStored = localStorage.getItem("lat");
+          const lonStored = localStorage.getItem("lon");
+          if (latStored && lonStored) {
+            setMapCenter({ lat: parseFloat(latStored), lng: parseFloat(lonStored) });
+            await fetchLocationName(parseFloat(latStored), parseFloat(lonStored));
+          } else {
+            setMapCenter({ lat: defaultLat, lng: defaultLng });
+            await fetchLocationName(defaultLat, defaultLng);
+          }
           setIsModalOpen(false);
-        }
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     } else {
       alert("Geolocation not supported.");
     }
   };
+
 
   const handleMarkerDrag = (event) => {
     const newLat = event.latLng.lat();
@@ -131,7 +182,7 @@ const Location = () => {
 
   useEffect(() => {
     fetchCurrentLocation();
-  }, []);
+  }, [i18n]);
 
   const cleanLocationName = locationName.replace(/^[^,]+,\s*/, '');
   const formattedShortLocation =

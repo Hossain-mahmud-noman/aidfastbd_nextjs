@@ -7,7 +7,6 @@ import Image from "next/image";
 
 import { toast } from "sonner";
 
-
 function InputField({
   label,
   placeholder,
@@ -45,7 +44,7 @@ function Dropdown({ label, options, value, onChange, required = false }) {
         </label>
       )}
       <select
-        value={value} // Use value for controlled dropdown behavior
+        value={value} 
         onChange={onChange}
         className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
       >
@@ -146,7 +145,7 @@ function DoctorProfileBasic({ data, user, token }) {
     const file = event.target.files[0];
     if (file) {
       if (file.size > 2 * 1024 * 1024) {
-        alert("File size should be less than 2MB");
+        toast.warning("File size should be less than 2MB");
         return;
       }
       const reader = new FileReader();
@@ -209,7 +208,6 @@ function DoctorProfileBasic({ data, user, token }) {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
-            // No need to specify Content-Type for FormData
           },
           body: formData,
         }
@@ -305,21 +303,19 @@ function DoctorProfileBasic({ data, user, token }) {
         submission, name cannot be changed or edited **
       </p>
 
-      {/* Degree Section */}
-
       <Dropdown
         label="Degree"
         options={[
           {
-            value: "41C6856B-4531-4C16-BB6D-08DB62033D21".toLowerCase(),
+            value: "MBBS",
             text: "MBBS",
           },
           {
-            value: "2BCAE9D2-C382-4405-BA41-F926E20D7306".toLowerCase(),
+            value: "BDS",
             text: "BDS",
           },
           {
-            value: "9B4B6BA9-FED7-4655-B433-537490898290".toLowerCase(),
+            value: "MD",
             text: "MD (Rusia)",
           },
         ]}
@@ -356,7 +352,6 @@ function DoctorProfileBasic({ data, user, token }) {
         placeholder="Enter degree"
       />
 
-      {/* Speciality Section */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Speciality
@@ -467,7 +462,6 @@ function DoctorProfileBasic({ data, user, token }) {
         information give below will be kept private. Only you can see this.)
       </p>
 
-      {/* Gender Dropdown */}
       <Dropdown
         label="Gender"
         options={[
@@ -484,7 +478,6 @@ function DoctorProfileBasic({ data, user, token }) {
         onChange={(e) => setGender(e.target.value)}
       />
 
-      {/* Date of Birth Section */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Date of Birth
@@ -532,7 +525,7 @@ function DoctorProfileBasic({ data, user, token }) {
         placeholder="Enter your session"
       />
 
-      {/* Submit Button */}
+
       <button
         onClick={handleSubmit}
         className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
