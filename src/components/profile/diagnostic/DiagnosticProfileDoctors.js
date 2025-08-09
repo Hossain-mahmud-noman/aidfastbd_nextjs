@@ -4,9 +4,9 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
 import { Button, Input, Modal } from "antd";
-import { FaEdit } from "react-icons/fa";
 
 function DiagnosticProfileDoctors({ data, user, token }) {
+  console.log("🚀 ~ DiagnosticProfileDoctors ~ data:", data)
   const [doctors, setDoctors] = useState([]);
   const [allDoctors, setAllDoctors] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -139,7 +139,7 @@ function DiagnosticProfileDoctors({ data, user, token }) {
       } else {
         const data = await res.json();
         toast.success("Access granted");
-        // console.log("✅ Chamber data:", data);
+        console.log("✅ Chamber data:", data);
       }
     } catch (error) {
       console.error("Fetch access failed:", error);
@@ -229,7 +229,7 @@ function DiagnosticProfileDoctors({ data, user, token }) {
                 onClick={() => fetchAccess(doctor?.doctorId, doctor?.diagnosticCenterId)}
                 className="bg-primary text-white"
               >
-                Edit
+                Get Access
               </Button>
             </div>
           </div>

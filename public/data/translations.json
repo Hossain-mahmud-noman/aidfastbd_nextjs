@@ -230,7 +230,19 @@
     "FAQ Description": "Please review the information below to find clear and concise answers to your frequently asked questions about our services. We have made every effort to explain the most common and important topics in a straightforward way for your convenience",
     "Browse updated blogs": "Browse updated blogs",
     "Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy": "Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy",
-    "Read More": "Read More"
+    "Read More": "Read More",
+     "Contact Us": "Contact Us",
+    "Write your question or inquiry below and provide as much detail as possible. We will get back to you as soon as possible.": "Write your question or inquiry below and provide as much detail as possible. We will get back to you as soon as possible.",
+    "Email": "Email",
+    "Input Name": "Input Name",
+    "Input Email": "Input Email",
+    "Subject": "Subject",
+    "Input Subject": "Input Subject",
+    "Message": "Message",
+    "Type your message": "Type your message",
+    "Sent Message": "Sent Message",
+    "Request a quote — let's work together!": "Request a quote — let's work together!",
+    "Whether you need a custom solution or just have a question — we’re always here for you. Send us a message now.": "Whether you need a custom solution or just have a question — we’re always here for you. Send us a message now."
   },
   "bn": {
     "Doctor": "ডাক্তার",
@@ -451,6 +463,18 @@
     "Browse updated blogs": "আপডেট ব্লগ ব্রাউজ করুন",
     "Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy": "নিয়মিত স্বাস্থ্য সচেতনতা ও যত্ন সম্পর্কে জানুন আমাদের ব্লগ পোস্ট থেকে। ডাক্তার ও বিশেষজ্ঞদের লেখা এই লেখা গুলো আপনাকে ও আপনার পরিবারকে সুস্থ রাখতে সাহায্য করবে।",
     "Read More":"বিস্তারিত পড়ুন",
-    "Filter by Blood Group": "ব্লাডগ্রুপ দিয়ে ফিল্টার করুন"
+    "Filter by Blood Group": "ব্লাডগ্রুপ দিয়ে ফিল্টার করুন",
+    "Contact Us": "যোগাযোগ করুন",
+    "Write your question or inquiry below and provide as much detail as possible. We will get back to you as soon as possible.": "আপনার প্রশ্ন বা জিজ্ঞাসাটি নিচে লিখুন এবং যতটা সম্ভব বিস্তারিত দিন। আমরা যত দ্রুত সম্ভব আপনার সাথে যোগাযোগ করব।",
+    "Email": "ইমেইল",
+    "Input Name": "নাম লিখুন",
+    "Input Email": "ইমেইল লিখুন",
+    "Subject": "বিষয়",
+    "Input Subject": "বিষয় লিখুন",
+    "Message": "বার্তা",
+    "Type your message": "আপনার বার্তা লিখুন",
+    "Sent Message": "বার্তা পাঠান",
+    "Request a quote — let's work together!": "উদ্ধৃতি চেয়ে নিন — চলুন একসাথে কাজ করি!",
+    "Whether you need a custom solution or just have a question — we’re always here for you. Send us a message now.": "কাস্টম সলিউশন নিতে বা কেবল একটি প্রশ্ন করতে — আমরা সব সময় পাশে আছি এখনই বার্তা দিন"
   }
 }

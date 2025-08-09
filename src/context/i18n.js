@@ -2,10 +2,12 @@
 
 import { usePathname } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useAuth } from "./AuthContext";
 
 const I18nContext = createContext(undefined);
 
 const I18nProvider = ({ children }) => {
+  const { user, token } = useAuth()
   const [language, setLanguage] = useState("bn");
   const [translations, setTranslations] = useState({});
   const pathName = usePathname();
@@ -21,6 +23,31 @@ const I18nProvider = ({ children }) => {
       loadTranslations(savedLang || "bn");
     }
   }, [pathName]);
+
+
+  useEffect(() => {
+    if (user?.userId && token) {
+      fetchUserLanguage(user.userId, token);
+    }
+  }, [user, token]);
+
+  const fetchUserLanguage = async (userId, token) => {
+    try {
+      const res = await fetch(
+        `https://api.aidfastbd.com/api/GeneralWeb/GetUserLanguage?userId=${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!res.ok) throw new Error("Failed to fetch user language.");
+      const data = await res.json();
+      // console.log("🌐 User Language API Data:", data);
+    } catch (error) {
+      console.error("Error fetching user language:", error);
+    }
+  };
 
   const loadTranslations = async (lang) => {
     try {
@@ -59,7 +86,7 @@ export const useI18n = () => {
       language: "bn",
       lang_suffix: "",
       t: (key) => key || "",
-      changeLanguage: () => {},
+      changeLanguage: () => { },
     };
   }
   return context;
