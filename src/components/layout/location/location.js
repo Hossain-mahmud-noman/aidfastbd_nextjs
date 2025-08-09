@@ -10,19 +10,22 @@ import { FiSearch, FiTarget, FiX } from "react-icons/fi";
 import { useI18n } from "../../../context/i18n.js";
 
 const Location = () => {
-  const i18n = useI18n()
+  const i18n = useI18n();
   const inputRef = useRef(null);
   const router = useRouter();
 
-  let defaultLat = 23.8103;
-  let defaultLng = 90.4125;
+  const defaultLat = 23.8103;
+  const defaultLng = 90.4125;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mapCenter, setMapCenter] = useState({ lat: defaultLat, lng: defaultLng });
   const [searchLocation, setSearchLocation] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [locationName, setLocationName] = useState("Unknown Location");
+  const [locationName, setLocationName] = useState("Detecting location...");
+  const [fullAddress, setFullAddress] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isGeolocating, setIsGeolocating] = useState(false);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -30,69 +33,75 @@ const Location = () => {
     libraries: ["places"]
   });
 
-  // const fetchLocationName = async (lat, lng, optionalName = null) => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${map_key}`
-  //     );
-  //     const data = await response.json();
-  //     let name = "Unknown Location";
-  //     if (data.results && data.results.length > 0) {
-  //       name = data.results[0].formatted_address;
-  //       setLocationName(name);
-  //     } else {
-  //       setLocationName(name);
-  //     }
+  const formatAddress = (results) => {
+    if (!results || results.length === 0) return "Location not specified";
 
-  //     await fetch("/api/set-location-cookie", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ lat, lng, name: optionalName || name }),
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching location name:", error);
-  //     setLocationName("Error fetching location");
-  //   }
-  // };
+    // Try to get the most precise address first
+    const preciseAddress = results.find(result =>
+      result.types.includes("street_address") ||
+      result.types.includes("premise")
+    ) || results[0];
 
+    return preciseAddress.formatted_address;
+  };
 
-  const fetchLocationName = async (lat, lng, optionalName = null) => {
+  const getDisplayName = (components) => {
+    const streetNumber = components.find(c => c.types.includes("street_number"));
+    const route = components.find(c => c.types.includes("route"));
+    const locality = components.find(c => c.types.includes("locality"));
+
+    if (streetNumber && route) {
+      return `${streetNumber.long_name}, ${route.long_name}`;
+    }
+    if (route) {
+      return route.long_name;
+    }
+    return locality?.long_name || "Current Location";
+  };
+
+  const fetchLocationDetails = async (lat, lng) => {
     try {
+      setIsLoading(true);
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${map_key}`
       );
       const data = await response.json();
 
-      let name = "Unknown Location";
       if (data.results && data.results.length > 0) {
-        const components = data.results[0].address_components;
-        const sublocality = components.find(c =>
-          c.types.includes("sublocality") || c.types.includes("sublocality_level_1")
-        );
-        const neighborhood = components.find(c =>
-          c.types.includes("neighborhood")
-        );
-        const locality = components.find(c =>
-          c.types.includes("locality")
-        );
+        const formattedAddress = formatAddress(data.results);
+        const displayName = getDisplayName(data.results[0].address_components);
 
-        name = sublocality?.long_name || neighborhood?.long_name || locality?.long_name || data.results[0].formatted_address;
-        setLocationName(name);
+        setFullAddress(formattedAddress);
+        setLocationName(displayName);
+
+        await fetch("/api/set-location-cookie", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            lat,
+            lng,
+            name: displayName,
+            address: formattedAddress
+          }),
+        });
+
+        localStorage.setItem("lat", lat);
+        localStorage.setItem("lon", lng);
       } else {
-        setLocationName(name);
+        setLocationName("Location not found");
+        setFullAddress("Address not available");
       }
-
-      await fetch("/api/set-location-cookie", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lat, lng, name: optionalName || name }),
-      });
     } catch (error) {
-      console.error("Error fetching location name:", error);
-      setLocationName("Error fetching location");
+      console.error("Error fetching location:", error);
+      setError("Failed to load location details");
+      setLocationName("Location error");
+      setFullAddress("");
+    } finally {
+      setIsLoading(false);
+      setIsGeolocating(false);
     }
-  }
-  
+  };
+
   const handleSearchLocation = (e) => {
     const input = e.target.value;
     setSearchLocation(input);
@@ -119,10 +128,10 @@ const Location = () => {
         const location = results[0].geometry.location;
         const lat = location.lat();
         const lng = location.lng();
+
         setMapCenter({ lat, lng });
-        localStorage.setItem("lat", lat);
-        localStorage.setItem("lon", lng);
-        setLocationName(results[0].formatted_address);
+        setFullAddress(results[0].formatted_address);
+        setLocationName(getDisplayName(results[0].address_components));
         setSuggestions([]);
         setSearchLocation(results[0].formatted_address);
       } else {
@@ -132,61 +141,105 @@ const Location = () => {
   };
 
   const fetchCurrentLocation = () => {
+    setIsGeolocating(true);
+    setError(null);
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
           setMapCenter({ lat: latitude, lng: longitude });
-          await fetchLocationName(latitude, longitude);
-          localStorage.setItem("lat", latitude);
-          localStorage.setItem("lon", longitude);
-          setIsModalOpen(false);
+          await fetchLocationDetails(latitude, longitude);
+          setIsModalOpen(false); // Close modal after getting location
         },
         async (error) => {
-          console.warn(`Geolocation error (${error.code}): ${error.message}`);
-          // Don't immediately fallback to default — try to get last stored location if any
+          console.error("Geolocation error:", error);
+          setIsGeolocating(false);
+
           const latStored = localStorage.getItem("lat");
-          const lonStored = localStorage.getItem("lon");
-          if (latStored && lonStored) {
-            setMapCenter({ lat: parseFloat(latStored), lng: parseFloat(lonStored) });
-            await fetchLocationName(parseFloat(latStored), parseFloat(lonStored));
+          const lngStored = localStorage.getItem("lon");
+
+          if (latStored && lngStored) {
+            setMapCenter({
+              lat: parseFloat(latStored),
+              lng: parseFloat(lngStored)
+            });
+            await fetchLocationDetails(
+              parseFloat(latStored),
+              parseFloat(lngStored)
+            );
           } else {
             setMapCenter({ lat: defaultLat, lng: defaultLng });
-            await fetchLocationName(defaultLat, defaultLng);
+            await fetchLocationDetails(defaultLat, defaultLng);
           }
-          setIsModalOpen(false);
+
+          setError("Couldn't get precise location. Using approximate location.");
         },
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
       );
     } else {
-      alert("Geolocation not supported.");
+      alert("Geolocation is not supported by your browser");
+      setMapCenter({ lat: defaultLat, lng: defaultLng });
+      fetchLocationDetails(defaultLat, defaultLng);
     }
   };
 
-
-  const handleMarkerDrag = (event) => {
+  const handleMarkerDrag = async (event) => {
     const newLat = event.latLng.lat();
     const newLng = event.latLng.lng();
     setMapCenter({ lat: newLat, lng: newLng });
-    localStorage.setItem("lat", newLat);
-    localStorage.setItem("lon", newLng);
-    fetchLocationName(newLat, newLng);
+    await fetchLocationDetails(newLat, newLng);
   };
 
   const handleConfirmLocation = async () => {
+    await fetchLocationDetails(mapCenter.lat, mapCenter.lng);
     setIsModalOpen(false);
-    await fetchLocationName(mapCenter.lat, mapCenter.lng);
-    localStorage.setItem("lat", mapCenter.lat);
-    localStorage.setItem("lon", mapCenter.lng);
   };
 
   useEffect(() => {
-    fetchCurrentLocation();
+    const initializeLocation = async () => {
+      const latStored = localStorage.getItem("lat");
+      const lngStored = localStorage.getItem("lon");
+      const storedAddress = localStorage.getItem("fullAddress");
+
+      if (latStored && lngStored) {
+        setMapCenter({ lat: parseFloat(latStored), lng: parseFloat(lngStored) });
+        if (storedAddress) {
+          setFullAddress(storedAddress);
+          setLocationName(localStorage.getItem("locationName") || "Current Location");
+          setIsLoading(false);
+        } else {
+          await fetchLocationDetails(parseFloat(latStored), parseFloat(lngStored));
+        }
+      } else {
+        fetchCurrentLocation();
+      }
+    };
+
+    initializeLocation();
   }, [i18n]);
 
-  const cleanLocationName = locationName.replace(/^[^,]+,\s*/, '');
+  const getDisplayText = () => {
+    if (isGeolocating) return "Detecting location...";
+    if (isLoading) return "Loading...";
+    if (error) return "Tap to set location";
+
+    if (window.innerWidth < 768) {
+      return locationName.length > 10
+        ? `${locationName.substring(0, 10)}...`
+        : locationName;
+    }
+
+    return fullAddress || locationName;
+  };
+
+  const cleanLocationName = (locationName || "").replace(/^[^,]+,\s*/, "");
   const formattedShortLocation =
-    cleanLocationName.length > 20 ? cleanLocationName.slice(0, 20) + "..." : cleanLocationName;
+    locationName.length > 20 ? locationName.slice(0, 20) + "..." : locationName;
   const formattedShortLocationMobile =
     cleanLocationName.length > 6 ? cleanLocationName.slice(0, 6) + "..." : cleanLocationName;
 
@@ -207,8 +260,17 @@ const Location = () => {
               <div className="description1 text-[#212121]">{formattedShortLocationMobile}</div>
             </Tooltip>
           </div>
-          <button aria-label="Select location">
-            <Image src="/home/map.png" width={30} height={30} alt="Location" />
+          <button
+            aria-label="Select location"
+            className="flex items-center justify-center"
+          >
+            <Image
+              src="/home/map.png"
+              width={24}
+              height={24}
+              alt="Location pin"
+              className="w-6 h-6"
+            />
           </button>
         </div>
       </div>
@@ -223,13 +285,22 @@ const Location = () => {
 
             <div className="relative bg-white rounded-lg max-w-3xl w-full p-6 shadow-xl z-10">
               <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl font-semibold">Select Location</h2>
+                <h2 className="text-xl font-semibold">Select Your Exact Location</h2>
                 <button
                   onClick={() => setIsModalOpen(false)}
                   className="p-2 rounded-full hover:bg-gray-100"
                 >
                   <FiX className="w-5 h-5" />
                 </button>
+              </div>
+
+              <div className="mb-4">
+                <p className="text-sm text-gray-600">
+                  {fullAddress || "Search or drag the marker to your exact location"}
+                </p>
+                {error && (
+                  <p className="text-sm text-red-500 mt-1">{error}</p>
+                )}
               </div>
 
               <div className="relative mb-3">
@@ -239,7 +310,7 @@ const Location = () => {
                   onChange={handleSearchLocation}
                   type="text"
                   className="px-4 py-2 border rounded w-full"
-                  placeholder="Search location"
+                  placeholder="Search for exact address..."
                 />
                 <FiSearch className="absolute right-3 top-3 text-gray-600" />
                 {suggestions.length > 0 && (
@@ -262,32 +333,48 @@ const Location = () => {
                   <GoogleMap
                     mapContainerClassName="w-full h-full rounded-lg"
                     center={mapCenter}
-                    zoom={13}
+                    zoom={17}
+                    options={{
+                      streetViewControl: false,
+                      mapTypeControl: false,
+                      fullscreenControl: false,
+                      zoomControl: true,
+                      clickableIcons: false
+                    }}
                   >
                     <Marker
                       position={mapCenter}
                       draggable={true}
                       onDragEnd={handleMarkerDrag}
+                      icon={{
+                        url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                        scaledSize: new window.google.maps.Size(40, 40)
+                      }}
                     />
                   </GoogleMap>
                 ) : (
-                  <p>Loading map...</p>
+                  <div className="w-full h-full flex items-center justify-center">
+                    <p>Loading map...</p>
+                  </div>
                 )}
               </div>
 
               <div className="flex justify-between">
                 <button
                   onClick={fetchCurrentLocation}
-                  className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200"
+                  className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 flex items-center"
+                  disabled={isGeolocating}
                 >
-                  <FiTarget className="inline-block mr-2" /> Get Current Location
+                  <FiTarget className="mr-2" />
+                  {isGeolocating ? "Locating..." : "Use My Precise Location"}
                 </button>
 
                 <button
                   onClick={handleConfirmLocation}
                   className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                  disabled={isLoading}
                 >
-                  Confirm Location
+                  {isLoading ? "Confirming..." : "Confirm This Location"}
                 </button>
               </div>
             </div>
