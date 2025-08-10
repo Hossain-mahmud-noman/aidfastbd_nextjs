@@ -3,7 +3,7 @@ import { image_base_endpoint, base_endpoint } from '../../../utils/constants';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-function PharmacyProfileInfo({ data, user, token }) {
+function PharmacyProfileInfo({ data, user, token, getProfileData }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState(data?.title || '');
   const [details, setDetails] = useState(data?.details || '');
@@ -41,7 +41,7 @@ function PharmacyProfileInfo({ data, user, token }) {
 
     formData.append('Title', title);
     formData.append('Details', details);
-    formData.append('UserId', user?.id);
+    formData.append('UserId', user?.userId);
 
     try {
       if (selectedImage && typeof selectedImage === 'string' && !selectedImage.startsWith(image_base_endpoint)) {
@@ -60,6 +60,9 @@ function PharmacyProfileInfo({ data, user, token }) {
 
       if (response.ok) {
         toast.success('Pharmacy profile saved successfully!');
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         const errorMessages = result.errors
           ? Object.entries(result.errors)

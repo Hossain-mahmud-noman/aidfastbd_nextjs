@@ -8,17 +8,17 @@ import PharmacyProfileInfo from './pharmacy/PharmacyProfileInfo';
 import PharmacyProfileServices from './pharmacy/PharmacyProfileServices';
 import PharmacyProfileDrugList from './pharmacy/PharmacyProfileDrugList';
 import PharmacyProfileEquipments from './pharmacy/PharmacyProfileEquipments';
+import { useAuth } from '../../context/AuthContext';
 
-function PharmacyProfile({ token, user, isRegister }) {
-
+function PharmacyProfile() {
+  const { token, user } = useAuth()
   const [profileData, setProfileData] = useState(null);
 
   const getProfileData = async () => {
-
+    if (!user?.userId || !token) return;
     headerx['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllPharmacyList?userid=${user.id}`, { headers: headerx });
-
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllPharmacyList?userid=${user.userId}`, { headers: headerx });
     const data = await res.json();
     if (res.status == 200) {
       if (data.data[0] !== null) {
@@ -27,25 +27,21 @@ function PharmacyProfile({ token, user, isRegister }) {
     } else if (res.status === 401) {
       window.location.href = "/login";
     }
-
-    //
   }
 
 
   useEffect(() => {
-
-    if (isRegister) {
+    if (user && token) {
       getProfileData();
     }
-  }, [token]);
-
+  }, [user, token]);
+  console.log("dataaaaaaaaaaaaaa", profileData)
   const tabs = [
-    { label: 'Basic', content: <PharmacyProfileBasic isRegister={isRegister} data={profileData} user={user} token={token}></PharmacyProfileBasic> },
-    { label: 'Info', content: <PharmacyProfileInfo isRegister={isRegister} data={profileData?.pharmacyAdditionalInfo} user={user} token={token}></PharmacyProfileInfo> },
-    { label: 'Services', content: <PharmacyProfileServices isRegister={isRegister} data={profileData?.pharmacyOtherInfo} user={user} token={token}></PharmacyProfileServices> },
-    { label: 'Drug List', content: <PharmacyProfileDrugList pharmacyUserId={profileData?.id} isRegister={isRegister} data={profileData?.pharmacyDrugEquipment} user={user} token={token}></PharmacyProfileDrugList> },
-    { label: 'Medical Equipments', content: <PharmacyProfileEquipments isRegister={isRegister} data={profileData?.pharmacyDrugEquipment} user={user} token={token}></PharmacyProfileEquipments> },
-
+    { label: 'Basic', content: <PharmacyProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token}></PharmacyProfileBasic> },
+    { label: 'Info', content: <PharmacyProfileInfo getProfileData={getProfileData} data={profileData?.pharmacyAdditionalInfo} user={user} token={token}></PharmacyProfileInfo> },
+    { label: 'Services', content: <PharmacyProfileServices getProfileData={getProfileData} data={profileData?.pharmacyOtherInfo} user={user} token={token}></PharmacyProfileServices> },
+    { label: 'Drug List', content: <PharmacyProfileDrugList pharmacyUserId={profileData?.id} getProfileData={getProfileData} data={profileData?.pharmacyDrugEquipment?.filter(item => item.type === 'Drug')} user={user} token={token}></PharmacyProfileDrugList> },
+    { label: 'Medical Equipments', content: <PharmacyProfileEquipments getProfileData={getProfileData} data={profileData?.pharmacyDrugEquipment?.filter(item => item.type === 'Equipments')} user={user} token={token}></PharmacyProfileEquipments> },
   ];
 
   return (

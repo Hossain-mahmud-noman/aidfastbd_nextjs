@@ -23,7 +23,7 @@ function InputField({ label, placeholder, type = "text", value, onChange, requir
   );
 }
 
-function PharmacyProfileBasic({ data, isRegister, token, user }) {
+function PharmacyProfileBasic({ data, getProfileData, token, user }) {
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [ownerImage, setOwnerImage] = useState(null);
@@ -79,7 +79,7 @@ function PharmacyProfileBasic({ data, isRegister, token, user }) {
     formData.append('Latitude', latitude ? parseFloat(latitude) : null);
     formData.append('Longitude', longitude ? parseFloat(longitude) : null);
     formData.append('IsOpen', isOpen);
-    formData.append('UserId', user?.id);
+    formData.append('UserId', user?.userId);
 
 
     if (selectedLogo) {
@@ -124,6 +124,9 @@ function PharmacyProfileBasic({ data, isRegister, token, user }) {
 
       if (response.ok) {
         toast.success("Profile saved successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         if (result.errors) {
           let errorMessages = "Please address the following errors:\n";
@@ -199,7 +202,7 @@ function PharmacyProfileBasic({ data, isRegister, token, user }) {
               height={1000}
               src={coverImage}
               alt="Selected Cover"
-              className="h-40 w-full object-cover rounded-md"
+              className="h-40 w-full object-contain rounded-md"
             />
           ) : (
             <div className="flex flex-col items-center">
@@ -210,7 +213,7 @@ function PharmacyProfileBasic({ data, isRegister, token, user }) {
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => handleImageChange(e, setCoverImage)} 
+          onChange={(e) => handleImageChange(e, setCoverImage)}
           className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
         />
       </div>

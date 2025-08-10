@@ -4,8 +4,7 @@ import { base_endpoint } from "../../../utils/constants";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 
-function PharmacyProfileEquipments({ token, user, data }) {
-  const [drugs, setDrugs] = useState([]);
+function PharmacyProfileEquipments({ token, user, data, getProfileData }) {
   const [showDialog, setShowDialog] = useState(false);
   const [formData, setFormData] = useState({ name: "", packSize: "", unitPrice: "" });
   const [editIndex, setEditIndex] = useState(null);
@@ -23,7 +22,7 @@ function PharmacyProfileEquipments({ token, user, data }) {
 
   const handleEdit = (index) => {
     setShowDialog(true);
-    setFormData(drugs[index]);
+    setFormData(data[index]);
     setEditIndex(index);
   };
 
@@ -38,7 +37,7 @@ function PharmacyProfileEquipments({ token, user, data }) {
     }
 
     const payload = {
-      pharmacyUserId: user.id,
+      pharmacyUserId: user.userId,
       name: formData.name,
       packSize: formData.packSize,
       unitPrice: formData.unitPrice,
@@ -48,29 +47,44 @@ function PharmacyProfileEquipments({ token, user, data }) {
     };
 
     try {
-      const res = await fetch(
-        `${base_endpoint}/GeneralInformation/SavePharmacyDrugEquipment`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      let res, result;
 
-      const result = await res.json();
+      if (editIndex !== null) {
+        // Editing existing equipment
+        payload.id = data[editIndex].id; // Keep the original id
+        res = await fetch(
+          `${base_endpoint}/GeneralInformation/UpdatePharmacyDrugEquipment`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+          }
+        );
+      } else {
+        // Adding new equipment
+        res = await fetch(
+          `${base_endpoint}/GeneralInformation/SavePharmacyDrugEquipment`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+          }
+        );
+      }
+
+      result = await res.json();
 
       if (res.ok) {
-        payload.id = result.id;
-        const updatedDrugs =
-          editIndex !== null
-            ? drugs.map((drug, idx) => (idx === editIndex ? { ...payload } : drug))
-            : [...drugs, { ...payload }];
-
-        setDrugs(updatedDrugs);
-        toast.success("Equipment saved successfully!");
+        toast.success(editIndex !== null ? "Equipment updated successfully!" : "Equipment added successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
         setShowDialog(false);
       } else {
         const errorMessages = result.errors
@@ -85,8 +99,9 @@ function PharmacyProfileEquipments({ token, user, data }) {
     }
   };
 
+
   const handleDelete = async (index) => {
-    const drugToDelete = drugs[index];
+    const drugToDelete = data[index];
 
     const confirm = await Swal.fire({
       title: "Are you sure?",
@@ -115,8 +130,10 @@ function PharmacyProfileEquipments({ token, user, data }) {
         );
 
         if (res.ok) {
-          setDrugs(drugs.filter((_, idx) => idx !== index));
           Swal.fire("Deleted!", `"${drugToDelete.name}" has been removed.`, "success");
+          if (typeof getProfileData === 'function') {
+            await getProfileData();
+          }
         } else {
           const result = await res.json();
           Swal.fire("Error", result.message || "Failed to delete equipment", "error");
@@ -128,17 +145,12 @@ function PharmacyProfileEquipments({ token, user, data }) {
   };
 
 
-  useEffect(() => {
-    if (data) {
-      setDrugs(data);
-    }
-  }, [data]);
 
   return (
     <div className="p-4 max-w-3xl mx-auto">
       <h2 className="text-lg font-bold mb-4">Pharmacy Equipment List</h2>
       <div className="overflow-x-auto">
-        {drugs.length > 0 ? (
+        {data.length > 0 ? (
           <table className="w-full border-collapse border border-gray-300 mb-4">
             <thead>
               <tr>
@@ -150,7 +162,7 @@ function PharmacyProfileEquipments({ token, user, data }) {
               </tr>
             </thead>
             <tbody>
-              {drugs.map((drug, index) => (
+              {data.map((drug, index) => (
                 <tr key={index}>
                   <td className="border border-gray-300 px-2 py-1">{drug.name}</td>
                   <td className="border border-gray-300 px-2 py-1">{drug.packSize}</td>

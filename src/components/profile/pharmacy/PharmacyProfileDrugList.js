@@ -3,15 +3,11 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from "sonner";
 import { base_endpoint } from "../../../utils/constants";
 import Swal from 'sweetalert2';
-function PharmacyProfileDrugList({ token, user, data }) {
-  const [drugs, setDrugs] = useState([]);
+function PharmacyProfileDrugList({ token, user, data, getProfileData }) {
   const [showDialog, setShowDialog] = useState(false);
   const [formData, setFormData] = useState({ name: "", packSize: "", unitPrice: "" });
   const [editIndex, setEditIndex] = useState(null);
 
-  useEffect(() => {
-    if (data) setDrugs(data);
-  }, [data]);
 
   const calculateTotal = (packSize, unitPrice) => {
     const total = parseFloat(packSize) * parseFloat(unitPrice);
@@ -30,7 +26,7 @@ function PharmacyProfileDrugList({ token, user, data }) {
   };
 
   const handleEdit = (index) => {
-    setFormData(drugs[index]);
+    setFormData(data[index]);
     setEditIndex(index);
     setShowDialog(true);
   };
@@ -44,7 +40,7 @@ function PharmacyProfileDrugList({ token, user, data }) {
     }
 
     const payload = {
-      pharmacyUserId: user.id,
+      pharmacyUserId: user.userId,
       name,
       packSize,
       unitPrice,
@@ -54,30 +50,32 @@ function PharmacyProfileDrugList({ token, user, data }) {
     };
 
     try {
-      const res = await fetch(
-        `${base_endpoint}/GeneralInformation/SavePharmacyDrugEquipment`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      let url = `${base_endpoint}/GeneralInformation/SavePharmacyDrugEquipment`;
+      let method = "POST";
+
+      // If editing
+      if (editIndex !== null) {
+        payload.id = data[editIndex].id; // Keep existing ID
+        url = `${base_endpoint}/GeneralInformation/UpdatePharmacyDrugEquipment`;
+        method = "PUT";
+      }
+
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
 
       const result = await res.json();
 
       if (res.ok) {
-        payload["id"] = result.id;
-
-        const updatedDrugs =
-          editIndex !== null
-            ? drugs.map((drug, idx) => (idx === editIndex ? { ...payload } : drug))
-            : [...drugs, { ...payload }];
-
-        setDrugs(updatedDrugs);
-        toast.success("Drug saved successfully!");
+        toast.success(editIndex !== null ? "Drug updated successfully!" : "Drug saved successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
         setShowDialog(false);
       } else {
         const errorMessages = result.errors
@@ -92,8 +90,9 @@ function PharmacyProfileDrugList({ token, user, data }) {
     }
   };
 
+
   const handleDelete = async (index) => {
-    const drugToDelete = drugs[index];
+    const drugToDelete = data[index];
     const payload = { ...drugToDelete, isDelete: true };
 
     const confirm = await Swal.fire({
@@ -123,8 +122,10 @@ function PharmacyProfileDrugList({ token, user, data }) {
         const result = await res.json();
 
         if (res.ok) {
-          setDrugs(drugs.filter((_, idx) => idx !== index));
-          Swal.fire('Deleted!', 'The drug has been deleted.', 'success');
+          toast.success("Drug had been Deleted Successfuly")
+          if (typeof getProfileData === 'function') {
+            await getProfileData();
+          }
         } else {
           Swal.fire('Error', result.message || 'Failed to delete drug.', 'error');
         }
@@ -140,7 +141,7 @@ function PharmacyProfileDrugList({ token, user, data }) {
       <h2 className="text-xl font-semibold mb-4 text-gray-800">Pharmacy Drug List</h2>
 
       <div className="overflow-x-auto">
-        {drugs.length > 0 ? (
+        {data.length > 0 ? (
           <table className="w-full border-collapse border border-gray-300 mb-4 text-sm">
             <thead className="bg-gray-100">
               <tr>
@@ -152,7 +153,7 @@ function PharmacyProfileDrugList({ token, user, data }) {
               </tr>
             </thead>
             <tbody>
-              {drugs.map((drug, index) => (
+              {data.map((drug, index) => (
                 <tr key={index}>
                   <td className="border px-3 py-2">{drug.name}</td>
                   <td className="border px-3 py-2">{drug.packSize}</td>

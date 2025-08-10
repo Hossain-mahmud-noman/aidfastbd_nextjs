@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { headerx } from "../../../utils/constants";
 
-function PharmacyProfileServices({ data, user, token }) {
+function PharmacyProfileServices({ data, user, token, getProfileData }) {
   const [services, setServices] = useState(data?.services || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -31,7 +31,7 @@ function PharmacyProfileServices({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            userId: user.id,
+            userId: user.userId,
             title: "Other Services",
             details: services,
           }),
@@ -42,6 +42,9 @@ function PharmacyProfileServices({ data, user, token }) {
 
       if (response.ok) {
         toast.success("Pharmacy services saved successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         const errorMessages = result.errors
           ? Object.entries(result.errors)
