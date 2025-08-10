@@ -7,15 +7,18 @@ import EyeCareProfileBasic from './eyeCareProfile/EyeCareProfileBasic';
 import EyeCareProfileDoctors from './eyeCareProfile/EyeCareProfileDoctors';
 import EyeCareProfileInfo from './eyeCareProfile/EyeCareProfileInfo';
 import EyeCareProfileServices from './eyeCareProfile/EyeCareProfileServices';
+import { useAuth } from '../../context/AuthContext';
 
 
-function EyeCareprofile({ token, user }) {
+function EyeCareprofile() {
+  const { user, token } = useAuth()
   const [profileData, setProfileData] = useState(null);
 
   const getProfileData = async () => {
+    if (!user?.userId || !token) return;
     headerx['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=5&userId=${user.id}`, { headers: headerx });
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=5&userId=${user.userId}`, { headers: headerx });
 
     const data = await res.json();
     if (res.status == 200) {
@@ -29,15 +32,16 @@ function EyeCareprofile({ token, user }) {
   }
 
   useEffect(() => {
-    getProfileData();
-  }, [token]);
+    if (user && token)
+      getProfileData();
+  }, [user, token]);
 
-  
+
   const tabs = [
-    { label: 'Basic', content: <EyeCareProfileBasic data={profileData} user={user} token={token} /> },
-    { label: 'Info', content: <EyeCareProfileInfo id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}/> },
-    { label: 'Doctors', content: <EyeCareProfileDoctors id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token}/> },
-    { label: 'Services', content: <EyeCareProfileServices genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token}/> },
+    { label: 'Basic', content: <EyeCareProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token} /> },
+    { label: 'Info', content: <EyeCareProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
+    { label: 'Doctors', content: <EyeCareProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
+    { label: 'Services', content: <EyeCareProfileServices getProfileData={getProfileData} genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token} /> },
   ];
 
   return (
