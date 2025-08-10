@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import ServiceForm from "../../../components/forms/ServiceForm";
 import Image from "next/image";
 import { toast } from "sonner";
+import { Image as AntdImage, Button } from "antd";
+import { FaEdit } from "react-icons/fa";
 
-export default function DentalProfileServices({ data, token, genericServiceId, userId }) {
-  const [services, setServices] = useState(data);
+export default function DentalProfileServices({ data, token, genericServiceId, userId, getProfileData }) {
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -67,14 +68,10 @@ export default function DentalProfileServices({ data, token, genericServiceId, u
         throw new Error(responseData?.message || "Something went wrong!");
       }
 
-      const updatedService = isUpdating ? payload : payload[0];
 
-      setServices((prev) =>
-        isUpdating
-          ? prev.map((s) => (s.id === updatedService.id ? { ...s, ...updatedService } : s))
-          : [...prev, { ...updatedService, id: responseData.id }]
-      );
-
+      if (typeof getProfileData === 'function') {
+        await getProfileData();
+      }
       toast.success(
         isUpdating
           ? "Service updated successfully!"
@@ -111,18 +108,19 @@ export default function DentalProfileServices({ data, token, genericServiceId, u
           </div>
 
           <div className="space-y-4">
-            {services?.map((service) => (
+            {data?.map((service) => (
               <div
                 key={service.id}
                 className="relative bg-gray-50 border border-purple-200 p-4 rounded-lg shadow-sm"
               >
-                <button
+                <Button
+                  icon={<FaEdit />}
                   onClick={() => handleEditService(service)}
-                  className="absolute top-3 right-3 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full shadow"
+                  className="absolute top-3 right-3 "
                   title="Edit Service"
                 >
-                  ✎
-                </button>
+                  Edit
+                </Button>
 
                 <h3 className="text-lg font-semibold text-purple-800 mb-1">
                   {service.title}
@@ -134,13 +132,13 @@ export default function DentalProfileServices({ data, token, genericServiceId, u
                     {service.imgList.map((img, index) => (
                       <div
                         key={index}
-                        className="w-16 h-16 relative rounded overflow-hidden border"
+                        className="relative rounded border"
                       >
-                        <Image
+                        <AntdImage
                           src={img.imgUrl}
                           alt="Service"
-                          layout="fill"
-                          objectFit="cover"
+                          width={100}
+                          height={100}
                         />
                       </div>
                     ))}

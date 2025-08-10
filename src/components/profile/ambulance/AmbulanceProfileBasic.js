@@ -25,7 +25,7 @@ function InputField({ label, placeholder, type = "text", value, onChange, requir
 }
 
 
-function AmbulanceProfileBasic({ data, user, token }) {
+function AmbulanceProfileBasic({ data, user, token, getProfileData }) {
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [ownerImage, setOwnerImage] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
@@ -79,7 +79,7 @@ function AmbulanceProfileBasic({ data, user, token }) {
     formData.append('Latitude', latitude ? parseFloat(latitude) : null);
     formData.append('Longitude', longitude ? parseFloat(longitude) : null);
     formData.append('IsOpen', isOpen);
-    formData.append('UserId', user?.id);
+    formData.append('UserId', user?.userId);
 
 
     if (selectedLogo) {
@@ -125,6 +125,9 @@ function AmbulanceProfileBasic({ data, user, token }) {
 
       if (response.ok) {
         toast.success("Profile Saved successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         if (result.errors) {
           let errorMessages = "Please address the following errors:\n";
@@ -193,11 +196,11 @@ function AmbulanceProfileBasic({ data, user, token }) {
         <div className="mb-4 flex justify-center items-center border rounded-md p-4 bg-gray-50">
           {coverImage ? (
             <Image
-              width={1000}
-              height={1000}
+              width={100}
+              height={100}
               src={coverImage}
               alt="Selected Cover"
-              className="h-40 w-full object-cover rounded-md"
+              className="h-40 w-full object-contain rounded-md"
             />
           ) : (
             <div className="flex flex-col items-center">

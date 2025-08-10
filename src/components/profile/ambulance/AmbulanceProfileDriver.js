@@ -23,7 +23,7 @@ function InputField({ label, placeholder, type = "text", value, onChange, requir
 }
 
 // Main Component
-function AmbulanceProfileDriver({ data, user, token }) {
+function AmbulanceProfileDriver({ data, user, token, getProfileData }) {
   const [driverName, setDriverName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [driverNID, setDriverNID] = useState("");
@@ -49,7 +49,7 @@ function AmbulanceProfileDriver({ data, user, token }) {
 
     // Prepare payload
     const formData = new FormData();
-    formData.append("UserId", user.id);
+    formData.append("UserId", user.userId);
     formData.append("Name", driverName);
     formData.append("MobileNo", mobileNumber);
     formData.append("NIDNumber", driverNID);
@@ -70,6 +70,9 @@ function AmbulanceProfileDriver({ data, user, token }) {
       if (response.ok) {
         const result = await response.json();
         toast.success("Driver information saved successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         console.error("Error saving driver info:", response.statusText);
         toast.error("Failed to save driver information.");
@@ -135,9 +138,8 @@ function AmbulanceProfileDriver({ data, user, token }) {
       <button
         onClick={handleSubmit}
         disabled={isSubmitting}
-        className={`w-full ${
-          isSubmitting ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
-        } text-white p-2 rounded-md transition`}
+        className={`w-full ${isSubmitting ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+          } text-white p-2 rounded-md transition`}
       >
         {isSubmitting ? "Submitting..." : "Save / Update"}
       </button>

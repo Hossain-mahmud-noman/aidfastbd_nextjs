@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { image_base_endpoint } from '../../../utils/constants';
 import Image from 'next/image';
 import { toast } from 'sonner';
-function BloodProfileInfo({ data, user, token }) {
+function BloodProfileInfo({ data, user, token, getProfileData }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState(data?.title);
   const [details, setDetails] = useState(data?.details);
@@ -35,7 +35,7 @@ function BloodProfileInfo({ data, user, token }) {
     setIsSubmitting(true);
 
     const formData = new FormData();
-    formData.append('UserId', user?.id);
+    formData.append('UserId', user?.userId);
     formData.append('Lat', '0');
     formData.append('Lon', '0');
     formData.append('Title', title);
@@ -59,6 +59,9 @@ function BloodProfileInfo({ data, user, token }) {
       const result = await response.json();
       if (response.ok) {
         toast.success('Profile updated successfully!');
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         toast.error(`Error: ${result?.message || 'Failed to update profile'}`);
       }

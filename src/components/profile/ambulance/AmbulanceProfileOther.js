@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "sonner";
-function AmbulanceProfileOther({ data, user, token }) {
+function AmbulanceProfileOther({ data, user, token, getProfileData }) {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,7 +20,7 @@ function AmbulanceProfileOther({ data, user, token }) {
     }
 
     const payload = {
-      userId: user.id,
+      userId: user.userId,
       title: title,
       details: details,
     };
@@ -43,6 +43,9 @@ function AmbulanceProfileOther({ data, user, token }) {
       if (response.ok) {
         const result = await response.json();
         toast.success("Other facility information saved successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         console.error("Error saving other facility info:", response.statusText);
         toast.error("Failed to save other facility information.");
@@ -89,9 +92,8 @@ function AmbulanceProfileOther({ data, user, token }) {
       <button
         onClick={handleSave}
         disabled={isSubmitting}
-        className={`w-full ${
-          isSubmitting ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
-        } text-white p-2 rounded-md transition`}
+        className={`w-full ${isSubmitting ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+          } text-white p-2 rounded-md transition`}
       >
         {isSubmitting ? "Submitting..." : "Save / Update"}
       </button>

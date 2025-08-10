@@ -8,15 +8,17 @@ import AmbulanceProfileInfo from './ambulance/AmbulanceProfileInfo';
 import AmbulanceProfileOther from './ambulance/AmbulanceProfileOther';
 import AmbulanceProfileDriver from './ambulance/AmbulanceProfileDriver';
 import AmbulanceProfileFacilities from './ambulance/AmbulanceProfileFacilities';
+import { useAuth } from '../../context/AuthContext';
 
-function AmbulanceProfile({ token, user }) {
+function AmbulanceProfile() {
+  const { token, user } = useAuth();
   const [profileData, setProfileData] = useState(null);
 
   const getProfileData = async () => {
-
+    if (!user?.userId || !token) return;
     headerx['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllAmbulanceList?userid=${user.id}`, { headers: headerx });
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllAmbulanceList?userid=${user.userId}`, { headers: headerx });
 
     const data = await res.json();
     if (res.status == 200) {
@@ -26,20 +28,19 @@ function AmbulanceProfile({ token, user }) {
     } else if (res.status === 401) {
       window.location.href = "/login";
     }
-
-    //
   }
 
   useEffect(() => {
-    getProfileData();
-  }, [token]);
+    if (user && token)
+      getProfileData();
+  }, [user, token]);
 
   const tabs = [
-    { label: 'Basic', content: <AmbulanceProfileBasic data={profileData} token={token} user={user} /> },
-    { label: 'Info', content: <AmbulanceProfileInfo data={profileData?.ambulanceAbout} token={token} user={user}></AmbulanceProfileInfo> },
-    { label: 'Driver', content: <AmbulanceProfileDriver data={profileData?.ambulanceDriverInfo} token={token} user={user}></AmbulanceProfileDriver> },
-    { label: 'Facilities', content: <AmbulanceProfileFacilities data={profileData?.ambulanceFacility} token={token} user={user}></AmbulanceProfileFacilities> },
-    { label: 'Other Services', content: <AmbulanceProfileOther data={profileData?.ambulanceOtherFacility} token={token} user={user}></AmbulanceProfileOther> },
+    { label: 'Basic', content: <AmbulanceProfileBasic getProfileData={getProfileData} data={profileData} token={token} user={user} /> },
+    { label: 'Info', content: <AmbulanceProfileInfo getProfileData={getProfileData} data={profileData?.ambulanceAbout} token={token} user={user} /> },
+    { label: 'Driver', content: <AmbulanceProfileDriver getProfileData={getProfileData} data={profileData?.ambulanceDriverInfo} token={token} user={user} /> },
+    { label: 'Facilities', content: <AmbulanceProfileFacilities getProfileData={getProfileData} data={profileData?.ambulanceFacility} token={token} user={user} /> },
+    { label: 'Other Services', content: <AmbulanceProfileOther getProfileData={getProfileData} data={profileData?.ambulanceOtherFacility} token={token} user={user} /> },
 
   ];
   return (

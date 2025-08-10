@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "sonner";
-function AmbulanceProfileFacilities({ data, user, token }) {
+function AmbulanceProfileFacilities({ data, user, token, getProfileData }) {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,7 +20,7 @@ function AmbulanceProfileFacilities({ data, user, token }) {
     }
 
     const formData = new FormData();
-    formData.append("UserId", user.id);
+    formData.append("UserId", user.userId);
     formData.append("Title", title);
     formData.append("Details", details);
 
@@ -41,6 +41,9 @@ function AmbulanceProfileFacilities({ data, user, token }) {
       if (response.ok) {
         const result = await response.json();
         toast.success("Facility information saved successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         console.error("Error saving facility info:", response.statusText);
         toast.error("Failed to save facility information.");

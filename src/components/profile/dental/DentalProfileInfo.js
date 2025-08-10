@@ -2,8 +2,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
-function DentalProfileInfo({ data, user, token, id }) {
-  
+function DentalProfileInfo({ data, user, token, id, getProfileData }) {
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState(data?.title || "");
   const [details, setDetails] = useState(data?.details || "");
@@ -65,7 +65,7 @@ function DentalProfileInfo({ data, user, token, id }) {
 
     const simplifiedData = imgList.map(({ imgUrl, details }) => ({ imgUrl, details }));
 
-    const payload = { "userId": user?.id, "title": title, "imgList": simplifiedData, "details": details, "serviceType": 1, "id": id };
+    const payload = { "userId": user?.userId, "title": title, "imgList": simplifiedData, "details": details, "serviceType": 1, "id": id };
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalInfo",
@@ -79,6 +79,9 @@ function DentalProfileInfo({ data, user, token, id }) {
       const result = await response.json();
       if (response.ok) {
         toast.success("Profile updated successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         toast.error(result?.message || "Failed to update profile");
       }

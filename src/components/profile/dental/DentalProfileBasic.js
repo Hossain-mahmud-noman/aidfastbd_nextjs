@@ -53,7 +53,7 @@ function Dropdown({ label, options, value, onChange, required = false }) {
   );
 }
 
-function DrugProfileBasic({ data, token, user }) {
+function DrugProfileBasic({ data, token, user, getProfileData }) {
 
   const [selectedCover, setSelectedCover] = useState(null);
   const [selectedLogo, setSelectedLogo] = useState(null);
@@ -116,7 +116,7 @@ function DrugProfileBasic({ data, token, user }) {
     const file = event.target.files[0];
     if (file) {
       if (file.size > 2 * 1024 * 1024) {
-        alert("File size should be less than 2MB");
+        toast.warning("File size should be less than 2MB");
         return;
       }
       const reader = new FileReader();
@@ -154,12 +154,12 @@ function DrugProfileBasic({ data, token, user }) {
       form.append('IsOpen', availablityStatus === "true");
       form.append('Latitude', latitude);
       form.append('Longitude', longitude);
-      form.append('UserId', user?.id); 
+      form.append('UserId', user?.userId);
 
       if (selectedLogo) {
         if (typeof selectedLogo === 'string' && !selectedLogo.startsWith(image_base_endpoint)) {
           const blob = await fetch(selectedLogo).then((res) => res.blob());
-          form.append('ProfileImageFile', blob, 'image.jpg'); 
+          form.append('ProfileImageFile', blob, 'image.jpg');
         } else if (selectedLogo instanceof File) {
           form.append('ProfileImageFile', selectedLogo);
         }
@@ -188,14 +188,17 @@ function DrugProfileBasic({ data, token, user }) {
         {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
-          body: form, 
+          body: form,
         }
       );
       // Handle response
       if (response.ok) {
         toast.success('Profile Updated Successfully');
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         const errorData = await response.json();
         toast.error(`Error: ${errorData.message || 'Failed to update profile. Please try again'}`);
@@ -239,7 +242,7 @@ function DrugProfileBasic({ data, token, user }) {
               height={100}
               src={selectedCover}
               alt="Selected Cover"
-              className="h-40 w-full object-cover rounded-md"
+              className="h-40 w-full object-contain rounded-md"
             />
           ) : (
             <div className="flex flex-col items-center">

@@ -7,15 +7,18 @@ import DentalProfileBasic from './dental/DentalProfileBasic';
 import DentalProfileInfo from './dental/DentalProfileInfo';
 import DentalProfileServices from './dental/DentalProfileServices';
 import DentalProfileDoctors from './dental/DentalProfileDoctors';
+import { useAuth } from '../../context/AuthContext';
 
 
-function DentalProfile({ token, user }) {
+function DentalProfile() {
+  const { token, user } = useAuth()
   const [profileData, setProfileData] = useState(null);
 
   const getProfileData = async () => {
+    if (!user?.userId || !token) return;
     headerx['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=1&userId=${user.id}`, { headers: headerx });
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=1&userId=${user.userId}`, { headers: headerx });
 
     const data = await res.json();
     if (res.status == 200) {
@@ -29,20 +32,20 @@ function DentalProfile({ token, user }) {
 
 
   useEffect(() => {
-    getProfileData();
-  }, [token]);
+    if (user && token)
+      getProfileData();
+  }, [user, token]);
 
   const tabs = [
-    { label: 'Basic', content: <DentalProfileBasic data={profileData} user={user} token={token}></DentalProfileBasic> },
-    { label: 'Info', content: <DentalProfileInfo id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}></DentalProfileInfo> },
-    { label: 'Doctors', content: <DentalProfileDoctors id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token}></DentalProfileDoctors> },
-    { label: 'Services', content: <DentalProfileServices genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token}></DentalProfileServices> },
+    { label: 'Basic', content: <DentalProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token} /> },
+    { label: 'Info', content: <DentalProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
+    { label: 'Doctors', content: <DentalProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
+    { label: 'Services', content: <DentalProfileServices getProfileData={getProfileData} genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} token={token} /> },
   ];
 
   return (
     <div>
-
-      <TabBar tabs={tabs}/>
+      <TabBar tabs={tabs} />
     </div>
   )
 }

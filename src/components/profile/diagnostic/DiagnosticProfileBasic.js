@@ -119,7 +119,7 @@ function DiagnosticProfileBasic({ data, token, user, getProfileData }) {
     const file = event.target.files[0];
     if (file) {
       if (file.size > 2 * 1024 * 1024) {
-        alert("File size should be less than 2MB");
+        toast.warning("File size should be less than 2MB");
         return;
       }
       const reader = new FileReader();

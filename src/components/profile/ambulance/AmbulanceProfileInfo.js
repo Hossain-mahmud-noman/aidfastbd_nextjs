@@ -50,14 +50,14 @@ function Dropdown({ label, options, value, onChange, required = false }) {
 }
 
 
-function AmbulanceProfileInfo({ data, user, token }) {
+function AmbulanceProfileInfo({ data, user, token, getProfileData }) {
   const [ambulanceName, setAmbulanceName] = useState("");
   const [ambulanceNumber, setAmbulanceNumber] = useState("");
   const [ambulanceType, setAmbulanceType] = useState("");
   const [dropdownData, setDropdownData] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  
+
   useEffect(() => {
     if (data) {
       setAmbulanceName(data.name || "");
@@ -76,7 +76,7 @@ function AmbulanceProfileInfo({ data, user, token }) {
 
 
     const payload = {
-      userId: user.id,
+      userId: user.userId,
       type: ambulanceType,
       name: ambulanceName,
       number: ambulanceNumber,
@@ -99,6 +99,9 @@ function AmbulanceProfileInfo({ data, user, token }) {
       if (response.ok) {
         const result = await response.json();
         toast.success("Ambulance information saved successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         console.error("Error saving ambulance:", response.statusText);
         toast.error("Failed to save ambulance information.");
@@ -155,9 +158,8 @@ function AmbulanceProfileInfo({ data, user, token }) {
       <button
         onClick={handleSubmit}
         disabled={isSubmitting}
-        className={`w-full ${
-          isSubmitting ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
-        } text-white p-2 rounded-md transition`}
+        className={`w-full ${isSubmitting ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+          } text-white p-2 rounded-md transition`}
       >
         {isSubmitting ? "Submitting..." : "Save / Update"}
       </button>

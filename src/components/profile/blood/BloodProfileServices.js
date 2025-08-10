@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from "sonner";
 import Swal from 'sweetalert2';
-function BloodProfileServices({ data, user, token }) {
+function BloodProfileServices({ data, user, token, getProfileData }) {
 
   const [bloodGroups, setBloodGroups] = useState([]);
   const [bloodProducts, setBloodProducts] = useState([]);
@@ -46,7 +46,7 @@ function BloodProfileServices({ data, user, token }) {
     try {
       const payload = {
         id: formData.id,
-        bloodBankInformationUserId: user.id,
+        bloodBankInformationUserId: user.userId,
         serviceType: formData.serviceType,
         serviceName: formData.serviceName,
         price: formData.price,
@@ -75,10 +75,16 @@ function BloodProfileServices({ data, user, token }) {
           );
           toast.success("Services Updated SUccessfully")
           setBloodData(updatedData);
+          if (typeof getProfileData === 'function') {
+            await getProfileData();
+          }
         } else {
           payload['id'] = responseData.id;
           toast.success("Services Created SUccessfully")
           setBloodData([...data, payload]);
+          if (typeof getProfileData === 'function') {
+            await getProfileData();
+          }
         }
 
         setShowDialog(false);
@@ -101,7 +107,7 @@ function BloodProfileServices({ data, user, token }) {
     }
   };
 
-  
+
 
   const handleDelete = async (index, dataSet) => {
     const result = await Swal.fire({
@@ -144,6 +150,9 @@ function BloodProfileServices({ data, user, token }) {
           const updatedData = data.filter((_, idx) => idx !== index);
           toast.success("Service deleted successfully");
           setBloodData(updatedData);
+          if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
         } else {
           const errorData = await response.json();
           console.error("Error deleting blood service", errorData);

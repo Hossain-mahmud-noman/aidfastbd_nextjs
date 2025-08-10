@@ -25,7 +25,7 @@ function InputField({ label, placeholder, type = "text", value, onChange, requir
   );
 }
 
-function BloodProfileBasic({ data, user, token }) {
+function BloodProfileBasic({ data, user, token, getProfileData }) {
 
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [selectedCover, setSelectedCover] = useState(null);
@@ -98,7 +98,7 @@ function BloodProfileBasic({ data, user, token }) {
     formData.append("Latitude", latitude);
     formData.append("Longitude", longitude);
     formData.append("IsOpen", isOpen);
-    formData.append("UserId", user.id);
+    formData.append("UserId", user.userId);
     formData.append("Contact", emergencyContact);
 
     if (selectedLogo) {
@@ -138,11 +138,17 @@ function BloodProfileBasic({ data, user, token }) {
       });
 
       if (response.ok) {
-        if (data.id) {
+        if (data?.id) {
           toast.success("Blood Profile Updated Successfully!");
+          if (typeof getProfileData === 'function') {
+            await getProfileData();
+          }
         }
         else {
           toast.success("Blood Profile Created Successfully!");
+          if (typeof getProfileData === 'function') {
+            await getProfileData();
+          }
         }
 
       } else {
@@ -211,7 +217,7 @@ function BloodProfileBasic({ data, user, token }) {
               height={1000}
               src={selectedCover}
               alt="Selected Cover"
-              className="h-40 w-full object-cover rounded-md"
+              className="h-40 w-full object-contain rounded-md"
             />
           ) : (
             <div className="flex flex-col items-center">
