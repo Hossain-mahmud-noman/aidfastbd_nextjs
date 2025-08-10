@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
-
 import { toast } from "sonner";
+
 
 function InputField({
   label,
@@ -44,7 +44,7 @@ function Dropdown({ label, options, value, onChange, required = false }) {
         </label>
       )}
       <select
-        value={value} 
+        value={value}
         onChange={onChange}
         className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
       >
@@ -61,7 +61,7 @@ function Dropdown({ label, options, value, onChange, required = false }) {
   );
 }
 
-function DoctorProfileBasic({ data, user, token }) {
+function DoctorProfileBasic({ user, token, data, refreshProfile }) {
   const [specialities, setSpecialities] = useState([]);
   const [gender, setGender] = useState("");
   const [BMDCType, setBMDCType] = useState("");
@@ -194,7 +194,7 @@ function DoctorProfileBasic({ data, user, token }) {
         !selectedLogo.startsWith(image_base_endpoint)
       ) {
         const blob = await fetch(selectedLogo).then((res) => res.blob());
-        formData.append("File", blob, "image.jpg"); 
+        formData.append("File", blob, "image.jpg");
       } else if (selectedLogo instanceof File) {
 
         formData.append("File", selectedLogo);
@@ -219,6 +219,9 @@ function DoctorProfileBasic({ data, user, token }) {
 
       const result = await response.json();
       toast.success("Profile saved successfully!");
+      if (typeof refreshProfile === 'function') {
+        await refreshProfile();
+      }
     } catch (error) {
       toast.error("Something went wrong!, Please Try Again");
       console.error("Error submitting the form:", error);

@@ -55,7 +55,7 @@ function Dropdown({ label, options, value, onChange, required = false }) {
   );
 }
 
-function DiagnosticProfileBasic({ data, token, user }) {
+function DiagnosticProfileBasic({ data, token, user, getProfileData }) {
   const [selectedCover, setSelectedCover] = useState(null);
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [ownerImage, setOwnerImage] = useState(null);
@@ -156,7 +156,7 @@ function DiagnosticProfileBasic({ data, token, user }) {
       form.append('IsOpen', availablityStatus === "true");
       form.append('Latitude', latitude);
       form.append('Longitude', longitude);
-      form.append('UserId', user?.id);
+      form.append('UserId', user?.userId);
 
       if (selectedLogo) {
         if (typeof selectedLogo === 'string' && !selectedLogo.startsWith(image_base_endpoint)) {
@@ -197,6 +197,9 @@ function DiagnosticProfileBasic({ data, token, user }) {
       // Handle response
       if (response.ok) {
         toast.success("Profile Updated Successfully")
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         const errorData = await response.json();
         toast.error(`Error: ${errorData.message || 'An error occurred, Pleasy Try again'}`);

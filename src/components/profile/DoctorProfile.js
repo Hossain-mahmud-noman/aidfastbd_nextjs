@@ -53,7 +53,7 @@ function DoctorProfile() {
 
 
    const tabs = [
-      { label: 'Basic', content: <DoctorProfileBasic user={user} token={token} data={profileData} /> },
+      { label: 'Basic', content: <DoctorProfileBasic user={user} token={token} data={profileData} refreshProfile={getProfileData} /> },
       { label: 'Info', content: <DoctorProfileInfo user={user} token={token} data={profileData?.doctorAdditionalInfo} refreshProfile={getProfileData} /> },
       { label: 'Chamber', content: <DoctorProfileChamber user={user} token={token} data={profileData?.chamberInformation} refreshProfile={getProfileData} /> },
       { label: 'Experience', content: <DoctorProfileExperience user={user} token={token} data={profileData?.doctorExperiencelInfo} refreshProfile={getProfileData} /> },

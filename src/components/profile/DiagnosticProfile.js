@@ -10,15 +10,17 @@ import DiagnosticProfileAmbulance from './diagnostic/DiagnosticProfileAmbulance'
 import DiagnosticProfilePharmacy from './diagnostic/DiagnosticProfilePharmacy';
 import DiagnosticProfileBlood from './diagnostic/DiagnosticProfileBlood';
 import DiagnosticProfileDoctors from './diagnostic/DiagnosticProfileDoctors';
+import { useAuth } from '../../context/AuthContext';
 
 
-function DiagnosticProfile({ token, user }) {
+function DiagnosticProfile() {
   const [profileData, setProfileData] = useState(null);
-
+  const { token, user } = useAuth()
 
   const getProfileData = async () => {
+    if (!user?.userId || !token) return;
     headerx['Authorization'] = `Bearer ${token}`;
-    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllDiagnosticCenterList?userid=${user.id}`, { headers: headerx });
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllDiagnosticCenterList?userid=${user.userId}`, { headers: headerx });
 
     const data = await res.json();
     if (res.status == 200) {
@@ -33,21 +35,20 @@ function DiagnosticProfile({ token, user }) {
   }
 
   useEffect(() => {
-    getProfileData();
-  }, [token]);
-
+    if (user && token)
+      getProfileData();
+  }, [user, token]);
 
 
   const tabs = [
-    { label: 'Basic', content: <DiagnosticProfileBasic data={profileData} user={user} token={token}></DiagnosticProfileBasic> },
-    { label: 'Info', content: <DiagnosticProfileInfo data={profileData?.diagnosticCenterAdditionalInfo} user={user} token={token}></DiagnosticProfileInfo> },
-    { label: 'Doctors', content: <DiagnosticProfileDoctors data={profileData?.diagnosticCenterDoctors} user={user} token={token}></DiagnosticProfileDoctors> },
-    { label: 'Blood Bank', content: <DiagnosticProfileBlood data={profileData?.diagnosticCenterBloodBank} user={user} token={token}></DiagnosticProfileBlood> },
-    { label: 'Pharmacy', content: <DiagnosticProfilePharmacy data={profileData?.diagnosticCenterPharmacy} user={user} token={token}></DiagnosticProfilePharmacy> },
-    { label: 'Ambulance', content: <DiagnosticProfileAmbulance data={profileData?.diagnosticCenterAmbulance} user={user} token={token}></DiagnosticProfileAmbulance> },
-    { label: 'Services', content: <DiagnosticProfileServices data={profileData?.diagnosticCenterServices} user={user} token={token}></DiagnosticProfileServices> },
+    { label: 'Basic', content: <DiagnosticProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token}></DiagnosticProfileBasic> },
+    { label: 'Info', content: <DiagnosticProfileInfo getProfileData={getProfileData} data={profileData?.diagnosticCenterAdditionalInfo} user={user} token={token}></DiagnosticProfileInfo> },
+    { label: 'Doctors', content: <DiagnosticProfileDoctors getProfileData={getProfileData} data={profileData?.diagnosticCenterDoctors} user={user} token={token}></DiagnosticProfileDoctors> },
+    { label: 'Blood Bank', content: <DiagnosticProfileBlood getProfileData={getProfileData} data={profileData?.diagnosticCenterBloodBank} user={user} token={token}></DiagnosticProfileBlood> },
+    { label: 'Pharmacy', content: <DiagnosticProfilePharmacy getProfileData={getProfileData} data={profileData?.diagnosticCenterPharmacy} user={user} token={token}></DiagnosticProfilePharmacy> },
+    { label: 'Ambulance', content: <DiagnosticProfileAmbulance getProfileData={getProfileData} data={profileData?.diagnosticCenterAmbulance} user={user} token={token}></DiagnosticProfileAmbulance> },
+    { label: 'Services', content: <DiagnosticProfileServices getProfileData={getProfileData} data={profileData?.diagnosticCenterServices} user={user} token={token}></DiagnosticProfileServices> },
   ];
-
 
   return (
     <div>

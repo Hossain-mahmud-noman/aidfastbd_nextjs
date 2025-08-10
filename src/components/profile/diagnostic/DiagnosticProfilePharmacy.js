@@ -3,9 +3,11 @@ import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
+import { Button } from "antd";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
-function DiagnosticProfilePharmacy({ data, user, token }) {
-  const [pharmacys, setPharmacys] = useState(data || []);
+
+function DiagnosticProfilePharmacy({ data, user, token, getProfileData }) {
   const [allPharmacys, setAllPharmacys] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,7 +17,7 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=Pharmacy&userId=${user.id}&searchValue=${searchTerm}`,
+        `https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=Pharmacy&userId=${user.userId}&searchValue=${searchTerm}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -42,7 +44,7 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            diagnosticCenterUserId: user.id,
+            diagnosticCenterUserId: user.userId,
             pharmacyUserId: pharmacy.value,
             isDelete: false,
           }),
@@ -50,12 +52,9 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
       );
       if (response.ok) {
         toast.success("Pharmacy added successfully.");
-        const updated = {
-          pharmacyUserId: pharmacy.value,
-          imageUrl: pharmacy.imageUrl,
-          name: pharmacy.text,
-        };
-        setPharmacys((prev) => [...prev, updated]);
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
         setShowPopup(false);
       } else {
         toast.error("Failed to add pharmacy.");
@@ -87,7 +86,7 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            diagnosticCenterUserId: user.id,
+            diagnosticCenterUserId: user.userId,
             pharmacyUserId: id,
             isDelete: true,
           }),
@@ -95,9 +94,9 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
       );
       if (response.ok) {
         toast.success("Pharmacy removed successfully.");
-        setPharmacys((prev) =>
-          prev.filter((pharmacy) => pharmacy.pharmacyUserId !== id)
-        );
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         toast.error("Failed to remove pharmacy.");
       }
@@ -106,9 +105,6 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
     }
   };
 
-  useEffect(() => {
-    setPharmacys(data || []);
-  }, [data]);
 
   useEffect(() => {
     fetchPharmacyList();
@@ -120,15 +116,16 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
         Add Pharmacy profile of your Diagnostic/Hospital (if any)
       </h1>
 
-      <button
+      <Button
+      icon={<IoMdAddCircleOutline />}
         onClick={() => setShowPopup(true)}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
         Add Pharmacy
-      </button>
+      </Button>
 
       <div className="mt-4 space-y-4">
-        {pharmacys.map((pharmacy) => (
+        {data.map((pharmacy) => (
           <div
             key={pharmacy.pharmacyUserId}
             className="border p-4 rounded shadow flex items-center space-x-4"
@@ -143,12 +140,12 @@ function DiagnosticProfilePharmacy({ data, user, token }) {
             <div className="flex-1">
               <h2 className="font-bold">{pharmacy.name}</h2>
             </div>
-            <button
+            <Button danger
               onClick={() => removePharmacy(pharmacy.pharmacyUserId)}
               className="text-red-600 hover:text-red-800 font-medium"
             >
               Remove
-            </button>
+            </Button>
           </div>
         ))}
       </div>

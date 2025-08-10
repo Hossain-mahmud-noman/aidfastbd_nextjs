@@ -3,9 +3,9 @@ import ServiceForm from "../../../components/forms/ServiceForm";
 import Image from "next/image";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
+import { Button } from "antd";
 
-function DiagnosticProfileServices({ data = [], token, user }) {
-  const [services, setServices] = useState(data);
+function DiagnosticProfileServices({ data = [], token, user, getProfileData }) {
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -67,7 +67,7 @@ function DiagnosticProfileServices({ data = [], token, user }) {
     let payload = {
       ...formData,
       isDelete: false,
-      diagnosticCenterUserId: user.id,
+      diagnosticCenterUserId: user.userId,
     };
 
     switch (section) {
@@ -121,6 +121,9 @@ function DiagnosticProfileServices({ data = [], token, user }) {
           return { ...prevData, [section]: updatedSection };
         });
         toast.success(`${editIndex !== null ? "Updated" : "Added"} successfully.`);
+        if (typeof getProfileData === 'function') {
+          getProfileData();
+        }
         closeDialog();
       })
       .catch((error) => {
@@ -168,13 +171,10 @@ function DiagnosticProfileServices({ data = [], token, user }) {
 
       const responseData = await response.json();
 
-      setServices((prev) =>
-        isUpdating
-          ? prev.map((s) => (s.id === payload.id ? { ...s, ...payload } : s))
-          : [...prev, { ...payload, id: responseData.id }]
-      );
-
       toast.success(`Service ${isUpdating ? "updated" : "added"} successfully.`);
+      if (typeof getProfileData === 'function') {
+        await getProfileData();
+      }
     } catch (error) {
       toast.error(`Error: ${error.message}`);
     } finally {
@@ -210,6 +210,9 @@ function DiagnosticProfileServices({ data = [], token, user }) {
               [section]: prevData[section].filter((item) => item.id !== data.id),
             }));
             toast.success("Deleted successfully.");
+            if (typeof getProfileData === 'function') {
+              getProfileData();
+            }
           })
           .catch((error) => {
             toast.error("Error occurred while deleting service.");
@@ -290,18 +293,18 @@ function DiagnosticProfileServices({ data = [], token, user }) {
                   </td>
                 ))}
                 <td className="border border-gray-300 px-2 py-1 whitespace-nowrap flex items-center justify-between">
-                  <button
+                  <Button
                     className="text-blue-500 mr-2"
                     onClick={() => openDialog(section, index)}
                   >
                     Edit
-                  </button>
-                  <button
+                  </Button>
+                  <Button danger
                     className="text-red-500"
                     onClick={() => handleDelete(section, item)}
                   >
                     Delete
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}
@@ -327,12 +330,12 @@ function DiagnosticProfileServices({ data = [], token, user }) {
             selectedService == null
               ? null
               : {
-                  title: selectedService?.serviceName || "",
-                  details: selectedService?.price || "",
-                  imgList: selectedService?.remarks
-                    ? selectedService.remarks.split(",").map((i) => i.trim())
-                    : [],
-                }
+                title: selectedService?.serviceName || "",
+                details: selectedService?.price || "",
+                imgList: selectedService?.remarks
+                  ? selectedService.remarks.split(",").map((i) => i.trim())
+                  : [],
+              }
           }
           onSubmit={handleFormSubmit}
           token={token}
@@ -340,7 +343,7 @@ function DiagnosticProfileServices({ data = [], token, user }) {
         />
       ) : (
         <>
-          {services
+          {data
             ?.filter((service) => service.serviceType === "heading")
             .map((service) => (
               <div

@@ -3,9 +3,11 @@ import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { Button } from "antd";
 
-function DiagnosticProfileAmbulance({ data, user, token }) {
-  const [ambulances, setAmbulances] = useState(data || []);
+
+function DiagnosticProfileAmbulance({ data, user, token, getProfileData }) {
   const [allAmbulances, setAllAmbulances] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,7 +17,7 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=Ambulance&userId=${user.id}&searchValue=${searchTerm}`,
+        `https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=Ambulance&userId=${user.userId}&searchValue=${searchTerm}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -42,7 +44,7 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            diagnosticCenterUserId: user.id,
+            diagnosticCenterUserId: user.userId,
             ambulanceUserId: ambulance.value,
             isDelete: false,
           }),
@@ -51,13 +53,10 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
 
       if (response.ok) {
         toast.success("Ambulance added successfully.");
-        const updated = {
-          ambulanceUserId: ambulance.value,
-          imageUrl: ambulance.imageUrl,
-          name: ambulance.text,
-          rating: ambulance.rating ?? "0.0",
-        };
-        setAmbulances((prev) => [...prev, updated]);
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
+        
         setShowPopup(false);
       } else {
         toast.error("Failed to add ambulance.");
@@ -89,7 +88,7 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            diagnosticCenterUserId: user.id,
+            diagnosticCenterUserId: user.userId,
             ambulanceUserId: id,
             isDelete: true,
           }),
@@ -98,9 +97,9 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
 
       if (response.ok) {
         toast.success("Ambulance removed successfully.");
-        setAmbulances((prev) =>
-          prev.filter((a) => a.ambulanceUserId !== id)
-        );
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         toast.error("Failed to remove ambulance.");
       }
@@ -108,10 +107,6 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
       toast.error("Error removing ambulance.");
     }
   };
-
-  useEffect(() => {
-    setAmbulances(data || []);
-  }, [data]);
 
   useEffect(() => {
     fetchAmbulanceList();
@@ -123,15 +118,16 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
         Add Ambulance profile of your Diagnostic/Hospital (if any)
       </h1>
 
-      <button
+      <Button
+        icon={<IoMdAddCircleOutline />}
         onClick={() => setShowPopup(true)}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
         Add Ambulance
-      </button>
+      </Button>
 
       <div className="mt-4 space-y-4">
-        {ambulances.map((ambulance) => (
+        {data.map((ambulance) => (
           <div
             key={ambulance.ambulanceUserId}
             className="border p-4 rounded shadow flex items-center space-x-4"
@@ -149,12 +145,12 @@ function DiagnosticProfileAmbulance({ data, user, token }) {
                 ⭐ {ambulance.rating ?? "0.0"}
               </p>
             </div>
-            <button
+            <Button danger
               onClick={() => removeAmbulance(ambulance.ambulanceUserId)}
               className="text-red-600 hover:text-red-800 font-medium"
             >
               Remove
-            </button>
+            </Button>
           </div>
         ))}
       </div>

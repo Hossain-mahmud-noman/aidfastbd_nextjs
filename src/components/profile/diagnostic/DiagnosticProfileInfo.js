@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
-function DiagnosticProfileInfo({ data, user, token }) {
+function DiagnosticProfileInfo({ data, user, token, getProfileData }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState(data?.title || "");
   const [details, setDetails] = useState(data?.details || "");
@@ -61,7 +61,7 @@ function DiagnosticProfileInfo({ data, user, token }) {
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
-    const payload = { "userId": user?.id, "title": title, "imgs": imgList, "deatails": details };
+    const payload = { "userId": user?.userId, "title": title, "imgs": imgList, "deatails": details };
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveDiagnosticCenterAdditionalInfoMultipleImg",
@@ -75,6 +75,9 @@ function DiagnosticProfileInfo({ data, user, token }) {
       const result = await response.json();
       if (response.ok) {
         toast.success("Profile updated successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         toast.error(result?.message || "Failed to update profile");
       }

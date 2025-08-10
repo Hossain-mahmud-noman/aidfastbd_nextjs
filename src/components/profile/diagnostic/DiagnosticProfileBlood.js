@@ -3,9 +3,11 @@ import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
+import { Button } from "antd";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
-function DiagnosticProfileBlood({ data, user, token }) {
-  const [bloods, setBloods] = useState(data || []);
+
+function DiagnosticProfileBlood({ data, user, token, getProfileData }) {
   const [allBloods, setAllBloods] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,7 +17,7 @@ function DiagnosticProfileBlood({ data, user, token }) {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=BloodBank&userId=${user.id}&searchValue=${searchTerm}`,
+        `https://api.aidfastbd.com/api/Dropdown/GetDropDownList?type=BloodBank&userId=${user.userId}&searchValue=${searchTerm}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -42,7 +44,7 @@ function DiagnosticProfileBlood({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            diagnosticCenterUserId: user.id,
+            diagnosticCenterUserId: user.userId,
             bloodBankUserId: blood.value,
             isDelete: false,
           }),
@@ -50,12 +52,9 @@ function DiagnosticProfileBlood({ data, user, token }) {
       );
       if (response.ok) {
         toast.success("Blood bank added successfully.");
-        const updated = {
-          bloodBankUserId: blood.value,
-          imageUrl: blood.imageUrl,
-          name: blood.text,
-        };
-        setBloods((prev) => [...prev, updated]);
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
         setShowPopup(false);
       } else {
         toast.error("Failed to add blood bank.");
@@ -87,7 +86,7 @@ function DiagnosticProfileBlood({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            diagnosticCenterUserId: user.id,
+            diagnosticCenterUserId: user.userId,
             bloodBankUserId: id,
             isDelete: true,
           }),
@@ -95,7 +94,9 @@ function DiagnosticProfileBlood({ data, user, token }) {
       );
       if (response.ok) {
         toast.success("Blood bank removed successfully.");
-        setBloods((prev) => prev.filter((blood) => blood.bloodBankUserId !== id));
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         toast.error("Failed to remove blood bank.");
       }
@@ -104,9 +105,6 @@ function DiagnosticProfileBlood({ data, user, token }) {
     }
   };
 
-  useEffect(() => {
-    setBloods(data || []);
-  }, [data]);
 
   useEffect(() => {
     fetchBloodList();
@@ -118,15 +116,16 @@ function DiagnosticProfileBlood({ data, user, token }) {
         Add Blood Bank profile of your Diagnostic/Hospital (if any)
       </h1>
 
-      <button
+      <Button
+      icon={<IoMdAddCircleOutline />}
         onClick={() => setShowPopup(true)}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
         Add Blood Bank
-      </button>
+      </Button>
 
       <div className="mt-4 space-y-4">
-        {bloods.map((blood) => (
+        {data.map((blood) => (
           <div
             key={blood.bloodBankUserId}
             className="border p-4 rounded shadow flex items-center space-x-4"
@@ -136,17 +135,17 @@ function DiagnosticProfileBlood({ data, user, token }) {
               height={60}
               src={`${image_base_endpoint}${blood.imageUrl}`}
               alt={blood.name}
-              className="rounded-full object-cover"
+              className="rounded-full w-16 h-16 object-cover"
             />
             <div className="flex-1">
               <h2 className="font-bold">{blood.name}</h2>
             </div>
-            <button
+            <Button danger
               onClick={() => removeBlood(blood.bloodBankUserId)}
-              className="text-red-600 hover:text-red-800 font-medium"
+              className=""
             >
               Remove
-            </button>
+            </Button>
           </div>
         ))}
       </div>
@@ -173,11 +172,11 @@ function DiagnosticProfileBlood({ data, user, token }) {
                     onClick={() => addBlood(blood)}
                   >
                     <Image
-                      width={50}
-                      height={50}
+                      width={1000}
+                      height={1000}
                       src={`${image_base_endpoint}${blood.imageUrl}`}
                       alt={blood.text}
-                      className="rounded-full"
+                      className="rounded-full h-14 w-14 object-cover"
                     />
                     <div>
                       <h3 className="font-semibold">{blood.text}</h3>

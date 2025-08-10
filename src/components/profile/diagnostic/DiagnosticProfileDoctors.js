@@ -5,8 +5,7 @@ import Swal from "sweetalert2";
 import { toast } from "sonner";
 import { Button, Input, Modal } from "antd";
 
-function DiagnosticProfileDoctors({ data, user, token }) {
-  const [doctors, setDoctors] = useState([]);
+function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
   const [allDoctors, setAllDoctors] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -44,15 +43,18 @@ function DiagnosticProfileDoctors({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            diagnosticCenterUserId: user.id,
+            diagnosticCenterUserId: user.userId,
             doctorUserId: doctor.id,
             isDelete: false,
           }),
         }
       );
       if (response.ok) {
-        setDoctors((prev) => [...prev, doctor]);
+        // setDoctors((prev) => [...prev, doctor]);
         toast.success("Doctor added successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
         setShowPopup(false);
       } else {
         toast.error("Failed to add doctor.");
@@ -85,17 +87,20 @@ function DiagnosticProfileDoctors({ data, user, token }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            diagnosticCenterUserId: user.id,
+            diagnosticCenterUserId: user.userId,
             doctorUserId: id,
             isDelete: true,
           }),
         }
       );
       if (response.ok) {
-        setDoctors((prev) =>
-          prev.filter((doctor) => doctor.doctorUserId !== id)
-        );
+        // setDoctors((prev) =>
+        //   prev.filter((doctor) => doctor.doctorUserId !== id)
+        // );
         toast.success("Doctor removed successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         toast.error("Failed to remove doctor.");
       }
@@ -104,11 +109,6 @@ function DiagnosticProfileDoctors({ data, user, token }) {
     }
   };
 
-  useEffect(() => {
-    if (data) {
-      setDoctors(data);
-    }
-  }, [data]);
 
   useEffect(() => {
     fetchDoctorList();
@@ -197,17 +197,17 @@ function DiagnosticProfileDoctors({ data, user, token }) {
       </Button>
 
       <div className="mt-4 space-y-4">
-        {doctors.map((doctor) => (
+        {data.map((doctor) => (
           <div
             key={doctor.id}
             className="border p-4 rounded shadow flex items-center space-x-4"
           >
             <Image
-              width={60}
-              height={60}
+              width={1000}
+              height={1000}
               src={`${image_base_endpoint}${doctor.imageUrl}`}
               alt={doctor.name}
-              className="rounded-full object-cover"
+              className="rounded-full object-cover h-14 w-16"
             />
             <div className="flex-1">
               <h2 className="font-bold">{doctor.name}</h2>
@@ -237,7 +237,7 @@ function DiagnosticProfileDoctors({ data, user, token }) {
 
       {/* Doctor Selection Modal */}
       {showPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[2000]">
           <div className="bg-white p-6 rounded shadow-lg w-full max-w-md">
             <h2 className="text-lg font-bold mb-4">Select a Doctor</h2>
             <input
@@ -258,11 +258,11 @@ function DiagnosticProfileDoctors({ data, user, token }) {
                     onClick={() => saveDoctor(doctor)}
                   >
                     <Image
-                      width={50}
-                      height={50}
+                      width={1000}
+                      height={1000}
                       src={`${image_base_endpoint}${doctor.imageUrl}`}
                       alt={doctor.name}
-                      className="rounded-full"
+                      className="rounded-full w-14 h-14"
                     />
                     <div>
                       <h3 className="font-semibold">{doctor.name}</h3>
