@@ -7,15 +7,18 @@ import HearingCareProfileBasic from './hearnigCareProfile/HearingCareProfileBasi
 import HearingCareProfileInfo from './hearnigCareProfile/HearingCareProfileInfo';
 import HearingCareProfileDoctors from './hearnigCareProfile/HearingCareProfileDoctors';
 import HearingCareProfileServices from './hearnigCareProfile/HearingCareProfileServices';
+import { useAuth } from '../../context/AuthContext';
 
 
-function HearingCareprofile({ token, user }) {
+function HearingCareprofile() {
+  const { user, token } = useAuth()
   const [profileData, setProfileData] = useState(null);
 
   const getProfileData = async () => {
+    if (!user?.userId || !token) return;
     headerx['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=4&userId=${user.id}`, { headers: headerx });
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=4&userId=${user.userId}`, { headers: headerx });
 
     const data = await res.json();
     if (res.status == 200) {
@@ -29,15 +32,16 @@ function HearingCareprofile({ token, user }) {
   }
 
   useEffect(() => {
-    getProfileData();
-  }, [token]);
+    if (user && token)
+      getProfileData();
+  }, [user, token]);
 
-  
+
   const tabs = [
-    { label: 'Basic', content: <HearingCareProfileBasic data={profileData} user={user} token={token} /> },
-    { label: 'Info', content: <HearingCareProfileInfo id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}/> },
-    { label: 'Doctors', content: <HearingCareProfileDoctors id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token}/> },
-    { label: 'Services', content: <HearingCareProfileServices genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token}/> },
+    { label: 'Basic', content: <HearingCareProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token} /> },
+    { label: 'Info', content: <HearingCareProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
+    { label: 'Doctors', content: <HearingCareProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
+    { label: 'Services', content: <HearingCareProfileServices getProfileData={getProfileData} genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token} /> },
   ];
 
   return (

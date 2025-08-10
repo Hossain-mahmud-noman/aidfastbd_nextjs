@@ -3,9 +3,10 @@ import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
+import { Button } from "antd";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
-function HearingCareProfileDoctors({ data, user, token, id }) {
-  const [doctors, setDoctors] = useState([]);
+function HearingCareProfileDoctors({ data, user, token, id, getProfileData }) {
   const [allDoctors, setAllDoctors] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,7 +50,9 @@ function HearingCareProfileDoctors({ data, user, token, id }) {
         }
       );
       if (response.ok) {
-        setDoctors([...doctors, doctor]);
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
         setShowPopup(false);
         toast.success("Doctor added successfully!");
       } else {
@@ -84,7 +87,7 @@ function HearingCareProfileDoctors({ data, user, token, id }) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            genericServiceUserId: user.id,
+            genericServiceUserId: user.userId,
             doctorUserId: id,
             isDelete: true,
             serviceType: 4
@@ -92,7 +95,9 @@ function HearingCareProfileDoctors({ data, user, token, id }) {
         }
       );
       if (response.ok) {
-        setDoctors(doctors.filter((doctor) => doctor.doctorUserId !== id));
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
         toast.success("Doctor removed successfully!");
       } else {
         toast.error("Failed to remove doctor.");
@@ -103,11 +108,6 @@ function HearingCareProfileDoctors({ data, user, token, id }) {
     }
   };
 
-  useEffect(() => {
-    if (data) {
-      setDoctors(data);
-    }
-  }, [data]);
 
   useEffect(() => {
     fetchDoctorList();
@@ -119,15 +119,16 @@ function HearingCareProfileDoctors({ data, user, token, id }) {
         Add Doctor profile of your Hearing Care Center
       </h1>
 
-      <button
+      <Button
+        icon={<IoMdAddCircleOutline />}
         onClick={() => setShowPopup(true)}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
         Add Doctor
-      </button>
+      </Button>
 
       <div className="mt-4 space-y-4">
-        {doctors.map((doctor) => (
+        {data.map((doctor) => (
           <div
             key={doctor.id}
             className="border p-4 rounded shadow flex items-center space-x-4"
@@ -145,12 +146,11 @@ function HearingCareProfileDoctors({ data, user, token, id }) {
               <p className="text-sm text-gray-600">{doctor.degree}</p>
               <p className="text-sm text-gray-500">{doctor.location}</p>
             </div>
-            <button
+            <Button danger
               onClick={() => removeDoctor(doctor.doctorUserId)}
-              className="text-red-500 hover:text-red-600"
             >
               Remove
-            </button>
+            </Button>
           </div>
         ))}
       </div>
