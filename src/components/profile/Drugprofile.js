@@ -7,15 +7,18 @@ import DrugProfileBasic from './drug/DrugProfileBasic';
 import DrugProfileInfo from './drug/DrugProfileInfo';
 import DrugProfileServices from './drug/DrugProfileServices';
 import DrugProfileDoctors from './drug/DrugProfileDoctors';
+import { useAuth } from '../../context/AuthContext';
 
 
-function DrugProfile({ token, user }) {
+function DrugProfile() {
+  const { token, user } = useAuth()
   const [profileData, setProfileData] = useState(null);
 
   const getProfileData = async () => {
+    if (!user?.userId || !token) return;
     headerx['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=2&userId=${user.id}`, { headers: headerx });
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=2&userId=${user.userId}`, { headers: headerx });
 
     const data = await res.json();
     if (res.status == 200) {
@@ -29,15 +32,16 @@ function DrugProfile({ token, user }) {
   }
 
   useEffect(() => {
-    getProfileData();
-  }, [token]);
+    if (user, token)
+      getProfileData();
+  }, [user, token]);
 
-  
+
   const tabs = [
-    { label: 'Basic', content: <DrugProfileBasic data={profileData} user={user} token={token} /> },
-    { label: 'Info', content: <DrugProfileInfo  id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}/> },
-    { label: 'Doctors', content: <DrugProfileDoctors id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token}/> },
-    { label: 'Services', content: <DrugProfileServices genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token}/> },
+    { label: 'Basic', content: <DrugProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token} /> },
+    { label: 'Info', content: <DrugProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
+    { label: 'Doctors', content: <DrugProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
+    { label: 'Services', content: <DrugProfileServices getProfileData={getProfileData} genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token} /> },
   ];
 
   return (

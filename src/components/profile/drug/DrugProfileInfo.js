@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
-function DrugProfileInfo({ data, user, token, id }) {
+function DrugProfileInfo({ data, user, token, id, getProfileData }) {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState(data?.title || "");
@@ -65,7 +65,7 @@ function DrugProfileInfo({ data, user, token, id }) {
 
     const simplifiedData = imgList.map(({ imgUrl, details }) => ({ imgUrl, details }));
 
-    const payload = { "userId": user?.id, "title": title, "imgList": simplifiedData, "details": details, "serviceType": 2, "id": id };
+    const payload = { "userId": user?.userId, "title": title, "imgList": simplifiedData, "details": details, "serviceType": 2, "id": id };
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalInfo",
@@ -79,6 +79,9 @@ function DrugProfileInfo({ data, user, token, id }) {
       const result = await response.json();
       if (response.ok) {
         toast.success("Profile updated successfully!");
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       } else {
         toast.error(result?.message || "Failed to update profile");
       }
@@ -142,7 +145,7 @@ function DrugProfileInfo({ data, user, token, id }) {
                 height={100}
                 src={`${image.imgUrl}`}
                 alt="Uploaded"
-                className="w-full h-32 object-cover rounded-md"
+                className="w-full h-32 object-contain rounded-md"
               />
 
               {/* Delete Icon */}
@@ -175,7 +178,7 @@ function DrugProfileInfo({ data, user, token, id }) {
               height={100}
               src={selectedImage}
               alt="Preview"
-              className="h-20 w-20 object-cover rounded-md"
+              className="h-20 w-20 object-contain rounded-md"
             />
             <button
               onClick={handleImageUpload}
