@@ -28,7 +28,8 @@ function InputField({ label, placeholder, value, onChange, type = "text", requir
   );
 }
 
-function DoctorProfileChamber({ data, user, token }) {
+function DoctorProfileChamber({ data, user, token, refreshProfile }) {
+  console.log("🚀 ~ DoctorProfileChamber ~ data:", data)
   const [copied, setCopied] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [chamberName, setChamberName] = useState('');
@@ -107,7 +108,7 @@ function DoctorProfileChamber({ data, user, token }) {
       name: chamberName,
       location: address,
       notice: noticeNumber,
-      userId: user.id,
+      userId: user.userId,
       lat: latitude.toString(),
       lon: longitude.toString(),
       additionalInfo
@@ -151,6 +152,9 @@ function DoctorProfileChamber({ data, user, token }) {
 
       if (response.status == 200) {
         const result = await response.json();
+        if (typeof refreshProfile === 'function') {
+          await refreshProfile();
+        }
 
         if (!editingChamber) {
           toast.success("Chamber Information Save successfully")
@@ -211,6 +215,9 @@ function DoctorProfileChamber({ data, user, token }) {
 
       if (response.status === 200) {
         Swal.fire('Deleted!', 'Chamber deleted successfully.', 'success');
+        if (typeof refreshProfile === 'function') {
+          await refreshProfile();
+        }
         setChamberList((prevList) => prevList.filter((chamber) => chamber.id !== id));
       } else {
         Swal.fire('Error', 'Failed to delete chamber.', 'error');
@@ -278,14 +285,14 @@ function DoctorProfileChamber({ data, user, token }) {
 
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-3xl mx-auto p-6">
+    <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       <p className="text-xs text-red-500 mb-4">
         ** Add a Chamber and Set Chamber location on map otherwise patients cannot see your profile on the user end **
       </p>
 
       {isModalOpen == false ? <>
         <Button
-        type='primary'
+          type='primary'
           onClick={() => {
             resetModal();
             setIsModalOpen(true);
@@ -298,12 +305,44 @@ function DoctorProfileChamber({ data, user, token }) {
         {/* Chamber List */}
         <div className="mt-6">
           {chamberList?.map((chamber, index) => (
-            <div key={`chamber_id_${index}`} className="mb-6 p-4 border rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold">{chamber.name}</h3>
-              <p className="text-sm text-gray-500">{chamber.location}</p>
-              <p className="text-sm">{chamber.notice}</p>
-              <p className="text-sm">{chamber.phoneNumber}</p>
-
+            <div key={`chamber_id_${index}`} className="mb-6 p-4 border rounded-lg">
+              <h3 className="text-2xl font-semibold my-4">Chember Name:<span className='text-primary'>{chamber.name}</span> </h3>
+              {/* Address and Contact */}
+              <div className="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <p className="text-sm text-gray-600">Address:</p>
+                  <p className="font-medium">{chamber.location || 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Notice:</p>
+                  <p className="font-medium">{chamber.notice || 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Phone:</p>
+                  <p className="font-medium">{chamber.phoneNumber || 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Floor / Room:</p>
+                  <p className="font-medium">
+                    {chamber.floor || 'N/A'} / {chamber.room || 'N/A'}
+                  </p>
+                </div>
+              </div>
+              {/* Fees */}
+              <div className="grid md:grid-cols-3 gap-4 mb-4">
+                <div>
+                  <p className="text-sm text-gray-600">Fee:</p>
+                  <p className="font-medium">{chamber.fee || 'N/A'} Taka</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Old Patient Fee:</p>
+                  <p className="font-medium">{chamber.oldPatient || 'N/A'} Taka</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Report Show Fee:</p>
+                  <p className="font-medium">{chamber.reportShow || 'N/A'} Taka</p>
+                </div>
+              </div>
               {/* Time Table */}
               <div className="mt-4">
                 <h4 className="font-medium">Visiting Hours:</h4>
@@ -362,11 +401,22 @@ function DoctorProfileChamber({ data, user, token }) {
 
 
               </div>
+              {chamber.lat && chamber.lon && (
+                <div className="mt-4">
+                  <h4 className="font-medium mb-2">Location Preview</h4>
+                  <div className=" rounded-lg overflow-hidden border">
+                    <MapComponent lat={+chamber.lat} lon={+chamber.lon} readOnly show={false} />
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
       </> : (
-        <div className="bg-white rounded-lg w-full max-w-md  md:mx-auto">
+
+
+
+        <div className="bg-white rounded-lg w-full max-w-3xl mx-auto">
           <h2 className="text-xl font-semibold mb-4">
             {editingChamber ? 'Edit Chamber' : 'Add New Chamber'}
           </h2>

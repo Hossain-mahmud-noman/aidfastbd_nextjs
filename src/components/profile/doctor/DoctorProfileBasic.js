@@ -182,7 +182,7 @@ function DoctorProfileBasic({ data, user, token }) {
     formData.append("MedicalCollege", medicalCollege);
     formData.append("Batch", batch);
     formData.append("Session", session);
-    formData.append("UserId", user?.id);
+    formData.append("UserId", user?.userId);
     formData.append("BirthDate", dateOfBirth);
     formData.append("Qualification", otherDegree);
     formData.append("Experience", experienceAfterMbbs);

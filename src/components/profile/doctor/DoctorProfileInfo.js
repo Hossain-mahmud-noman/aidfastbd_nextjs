@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { image_base_endpoint } from '../../../utils/constants';
 import Image from 'next/image';
 import { toast } from 'sonner';
-function DoctorProfileInfo({ data, user, token }) {
+function DoctorProfileInfo({ data, user, token, refreshProfile }) {
     const [selectedImage, setSelectedImage] = useState(data?.imageUrl !== undefined ? image_base_endpoint + data?.imageUrl : null);
     const [title, setTitle] = useState(data?.title);
     const [details, setDetails] = useState(data?.details);
@@ -35,7 +35,7 @@ function DoctorProfileInfo({ data, user, token }) {
         setIsSubmitting(true);
 
         const formData = new FormData();
-        formData.append('UserId', user?.id || '96afe4ea-6021-4f6f-e116-08dceabe4a3c');
+        formData.append('UserId', user?.userId);
         formData.append('Lat', '0');
         formData.append('Lon', '0');
         formData.append('Title', title);
@@ -59,6 +59,9 @@ function DoctorProfileInfo({ data, user, token }) {
             const result = await response.json();
             if (response.ok) {
                 toast.success("Profile information updated successfully!")
+                if (typeof refreshProfile === 'function') {
+                    await refreshProfile();
+                }
             } else {
                 toast.error(`Error: ${result?.message || 'Failed to update profile information'}`)
             }
@@ -156,9 +159,8 @@ function DoctorProfileInfo({ data, user, token }) {
             <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className={`w-full p-2 rounded-md transition ${
-                    isSubmitting ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'
-                } text-white`}
+                className={`w-full p-2 rounded-md transition ${isSubmitting ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'
+                    } text-white`}
             >
                 {isSubmitting ? 'Saving...' : 'Save / Update'}
             </button>

@@ -10,20 +10,20 @@ const containerStyle = {
   "block-size": "400px",
 };
 
-function MapComponent({ onLocationSelect, lat, lon }) {
+function MapComponent({ onLocationSelect, lat, lon, show = true }) {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: map_key, 
-    libraries: ["places"], 
+    googleMapsApiKey: map_key,
+    libraries: ["places"],
   });
 
 
   const [markerPosition, setMarkerPosition] = useState({
-    lat: lat ?? 23.8103, 
-    lng: lon ?? 90.4125, 
+    lat: lat ?? 23.8103,
+    lng: lon ?? 90.4125,
   });
 
-  const [zoomLevel, setZoomLevel] = useState(13); 
-  const autocompleteRef = useRef(null); 
+  const [zoomLevel, setZoomLevel] = useState(13);
+  const autocompleteRef = useRef(null);
 
   const handleMapClick = (event) => {
     const lat = event.latLng.lat();
@@ -36,7 +36,7 @@ function MapComponent({ onLocationSelect, lat, lon }) {
     const newLat = event.latLng.lat();
     const newLng = event.latLng.lng();
     setMarkerPosition({ lat: newLat, lng: newLng });
-    onLocationSelect(newLat, newLng); 
+    onLocationSelect(newLat, newLng);
   };
 
   const handlePlaceChanged = () => {
@@ -50,7 +50,7 @@ function MapComponent({ onLocationSelect, lat, lon }) {
         const newLat = lat();
         const newLng = lng();
         setMarkerPosition({ lat: newLat, lng: newLng });
-        setZoomLevel(16); 
+        setZoomLevel(16);
         onLocationSelect(newLat, newLng);
       }
     }
@@ -61,7 +61,7 @@ function MapComponent({ onLocationSelect, lat, lon }) {
     if (lat !== undefined && lon !== undefined) {
 
       setMarkerPosition({ lat, lng: lon });
-      setZoomLevel(16); 
+      setZoomLevel(16);
     }
   }, [lat, lon]);
 
@@ -69,17 +69,20 @@ function MapComponent({ onLocationSelect, lat, lon }) {
 
   return (
     <div>
-      <Autocomplete
-        className="z-[1000000]"
-        onLoad={(ref) => (autocompleteRef.current = ref)}
-        onPlaceChanged={handlePlaceChanged}
-      >
-        <input
-          type="text"
-          placeholder="Search for a location"
-          className="w-full p-2 mb-4 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-        />
-      </Autocomplete>
+      {
+        show === true &&
+        <Autocomplete
+          className="z-[1000000]"
+          onLoad={(ref) => (autocompleteRef.current = ref)}
+          onPlaceChanged={handlePlaceChanged}
+        >
+          <input
+            type="text"
+            placeholder="Search for a location"
+            className="w-full p-2 mb-4 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+          />
+        </Autocomplete>
+      }
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={markerPosition}

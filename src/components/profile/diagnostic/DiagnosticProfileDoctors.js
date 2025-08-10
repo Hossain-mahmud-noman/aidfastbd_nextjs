@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { Button, Input, Modal } from "antd";
 
 function DiagnosticProfileDoctors({ data, user, token }) {
-  console.log("🚀 ~ DiagnosticProfileDoctors ~ data:", data)
   const [doctors, setDoctors] = useState([]);
   const [allDoctors, setAllDoctors] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -162,7 +161,7 @@ function DiagnosticProfileDoctors({ data, user, token }) {
 
     try {
       const res = await fetch("https://api.aidfastbd.com/api/Doctor/UpdateChamberAccessDiagnostic", {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"

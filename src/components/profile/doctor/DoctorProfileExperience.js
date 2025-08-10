@@ -3,11 +3,11 @@
 import { headerx } from '../../../utils/constants';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
+import { FaEdit, FaPlus } from 'react-icons/fa';
+import { Button } from 'antd';
 
-function DoctorProfileExperience({ data, user, token }) {
+function DoctorProfileExperience({ data, user, token, refreshProfile }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [experienceList, setExperienceList] = useState(data || []);
-
   const [experience, setExperience] = useState({
     id: null,
     officeName: '',
@@ -17,24 +17,6 @@ function DoctorProfileExperience({ data, user, token }) {
     employmentTo: '',
     period: '',
   });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setExperience((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const openEditModal = (exp) => {
-    setExperience({
-      id: exp.id,
-      officeName: exp.officeName || '',
-      designation: exp.designation || '',
-      department: exp.department || '',
-      employmentFrom: exp.startDate ? new Date(exp.startDate).toISOString().split('T')[0] : '',
-      employmentTo: exp.endDate ? new Date(exp.endDate).toISOString().split('T')[0] : '',
-      period: exp.period || '',
-    });
-    setIsModalOpen(true);
-  };
 
   const resetForm = () => {
     setExperience({
@@ -48,6 +30,29 @@ function DoctorProfileExperience({ data, user, token }) {
     });
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setExperience((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const openEditModal = (exp) => {
+    setExperience({
+      id: exp.id,
+      officeName: exp.officeName || '',
+      designation: exp.designation || '',
+      department: exp.department || '',
+      employmentFrom: exp.startDate
+        ? new Date(exp.startDate).toISOString().split('T')[0]
+        : '',
+      employmentTo:
+        exp.endtDate && exp.endtDate !== '0001-01-01T00:00:00'
+          ? new Date(exp.endtDate).toISOString().split('T')[0]
+          : '',
+      period: exp.period || '',
+    });
+    setIsModalOpen(true);
+  };
+
   const validateForm = () => {
     const { officeName, designation, employmentFrom } = experience;
     return officeName && designation && employmentFrom;
@@ -55,7 +60,7 @@ function DoctorProfileExperience({ data, user, token }) {
 
   const handleSubmit = async () => {
     if (!validateForm()) {
-      alert('Please fill in all required fields.');
+      toast.error('Please fill in all required fields.');
       return;
     }
 
@@ -70,190 +75,138 @@ function DoctorProfileExperience({ data, user, token }) {
       designation: experience.designation,
       department: experience.department,
       startDate: experience.employmentFrom,
-      endDate: experience.employmentTo,
+      endtDate: experience.employmentTo || null, 
       period: experience.period,
-      userId: user.id,
+      userId: user.userId,
     };
 
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
-        headers: { ...headerx, 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: {
+          ...headerx,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(body),
       });
 
       if (response.ok) {
-        if (isUpdate) {
-          toast.success("Experience Information updated successfully!");
-          setExperienceList((prevList) =>
-            prevList.map((item) =>
-              item.id === experience.id
-                ? {
-                    ...item,
-                    officeName: experience.officeName,
-                    designation: experience.designation,
-                    department: experience.department,
-                    startDate: experience.employmentFrom,
-                    endDate: experience.employmentTo,
-                    period: experience.period,
-                  }
-                : item
-            )
-          );
-        } else {
-          toast.success("Experience Information saved successfully!");
-          setExperienceList((prevList) => [
-            ...prevList,
-            {
-              ...body,
-              startDate: experience.employmentFrom,
-              endDate: experience.employmentTo,
-            },
-          ]);
+        toast.success(isUpdate ? 'Experience updated successfully!' : 'Experience saved successfully!');
+        if (typeof refreshProfile === 'function') {
+          await refreshProfile();
         }
         setIsModalOpen(false);
         resetForm();
       } else {
-        console.error('Failed to save experience:', await response.text());
-        toast.error("Failed to save experience. Please try again.");
+        toast.error('Failed to save experience.');
       }
     } catch (error) {
       console.error('Error saving experience:', error);
-      toast.error("Failed to save experience. Please try again.");
+      toast.error('Error saving experience.');
     }
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-3xl mx-auto p-6">
-      <p>You can add or update your experience details below.</p>
+    <div className="bg-white shadow-custom-light rounded-xl w-full max-w-4xl mx-auto p-6 border border-gray-100">
+      {/* Header */}
+      <div className="flex justify-between items-center border-b pb-4 mb-6">
+        <h2 className="text-2xl font-semibold text-gray-800">Professional Experience</h2>
+        <button
+          onClick={() => {
+            resetForm();
+            setIsModalOpen(true);
+          }}
+          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+        >
+          <FaPlus size={16} /> Add Experience
+        </button>
+      </div>
 
-      {isModalOpen == false ? (
-        <>
-          <button
-            onClick={() => {
-              resetForm();
-              setIsModalOpen(true);
-            }}
-            className="mt-4 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition"
-          >
-            Add New Experience
-          </button>
-
-          <ul className="mt-4">
-            {experienceList.map((exp, idx) => (
-              <li key={idx} className="mb-2 border-b pb-2">
-                <p><strong>Institute:</strong> {exp.officeName}</p>
-                <p><strong>Designation:</strong> {exp.designation}</p>
-                <p><strong>Department:</strong> {exp.department}</p>
-                <p><strong>Period:</strong> {exp.period}</p>
-                <p>
-                  <strong>From:</strong> {exp.startDate ? new Date(exp.startDate).toLocaleDateString() : 'N/A'}{' '}
-                  <strong>To:</strong> {exp.endDate ? new Date(exp.endDate).toLocaleDateString() : 'Present'}
-                </p>
-                <button
+      {/* Experience List */}
+      {data.length > 0 ? (
+        <div className="space-y-4">
+          {data.map((exp, idx) => (
+            <div
+              key={idx}
+              className="border border-gray-200 rounded-lg p-5 bg-gray-50 hover:shadow-md transition"
+            >
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-800">{exp.officeName}</h3>
+                  <p className="text-sm text-gray-600">{exp.designation} - {exp.department}</p>
+                  <p className="text-sm text-gray-500 mt-1">
+                    {exp.startDate
+                      ? new Date(exp.startDate).toLocaleDateString()
+                      : 'N/A'}{' '}
+                    -{' '}
+                    {exp.endtDate && exp.endtDate !== '0001-01-01T00:00:00'
+                      ? new Date(exp.endtDate).toLocaleDateString()
+                      : 'Present'}
+                  </p>
+                  <p className="text-sm text-gray-500">{exp.period}</p>
+                </div>
+                <Button
                   onClick={() => openEditModal(exp)}
-                  className="mt-2 bg-yellow-500 text-white p-1 rounded-md hover:bg-yellow-600 transition"
+                  className="flex items-center gap-1 text-yellow-600 hover:text-yellow-700 transition"
                 >
-                  Edit
-                </button>
-              </li>
-            ))}
-          </ul>
-        </>
+                  <FaEdit size={16} /> Edit
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
-        <div className="bg-white rounded-lg w-full max-w-md md:mx-auto">
-          <h2 className="text-xl font-semibold mb-4">
-            {experience.id ? 'Update Experience' : 'Add New Experience'}
-          </h2>
+        <p className="text-gray-500 italic">No experience added yet.</p>
+      )}
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Institute Name</label>
-            <input
-              type="text"
-              name="officeName"
-              value={experience.officeName}
-              onChange={handleInputChange}
-              placeholder="Institute Name"
-              className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6">
+            <h2 className="text-xl font-semibold mb-4">
+              {experience.id ? 'Update Experience' : 'Add New Experience'}
+            </h2>
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Designation</label>
-            <input
-              type="text"
-              name="designation"
-              value={experience.designation}
-              onChange={handleInputChange}
-              placeholder="Designation"
-              className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
+            {[
+              { label: 'Institute Name', name: 'officeName', type: 'text' },
+              { label: 'Designation', name: 'designation', type: 'text' },
+              { label: 'Department', name: 'department', type: 'text' },
+              { label: 'Employment From', name: 'employmentFrom', type: 'date' },
+              { label: 'Employment To (Optional)', name: 'employmentTo', type: 'date' },
+              { label: 'Period', name: 'period', type: 'text' },
+            ].map((field, idx) => (
+              <div className="mb-4" key={idx}>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {field.label}
+                </label>
+                <input
+                  type={field.type}
+                  name={field.name}
+                  value={experience[field.name]}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+            ))}
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Department</label>
-            <input
-              type="text"
-              name="department"
-              value={experience.department}
-              onChange={handleInputChange}
-              placeholder="Department"
-              className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Employment From</label>
-            <input
-              type="date"
-              name="employmentFrom"
-              value={experience.employmentFrom || ''}
-              onChange={handleInputChange}
-              placeholder="Start Date"
-              className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Employment To (Optional)</label>
-            <input
-              type="date"
-              name="employmentTo"
-              value={experience.employmentTo || ''}
-              onChange={handleInputChange}
-              placeholder="End Date"
-              className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Period</label>
-            <input
-              type="text"
-              name="period"
-              value={experience.period}
-              onChange={handleInputChange}
-              placeholder="e.g., 2 years"
-              className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
-
-          <div className="flex justify-end mt-4">
-            <button
-              onClick={() => {
-                resetForm();
-                setIsModalOpen(false);
-              }}
-              className="bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600 mr-2"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleSubmit}
-              className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-            >
-              {experience.id ? 'Update' : 'Save'}
-            </button>
+            <div className="flex justify-end gap-3 mt-6">
+              <button
+                onClick={() => {
+                  resetForm();
+                  setIsModalOpen(false);
+                }}
+                className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmit}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              >
+                {experience.id ? 'Update' : 'Save'}
+              </button>
+            </div>
           </div>
         </div>
       )}

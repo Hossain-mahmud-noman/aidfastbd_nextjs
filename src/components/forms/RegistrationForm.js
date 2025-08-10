@@ -5,8 +5,10 @@ import { base_endpoint } from '../../utils/constants';
 import OTPVerification from './OTPVerification';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { useI18n } from '../../context/i18n';
 const RegistrationForm = () => {
   const router = useRouter();
+  const i18n = useI18n()
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -85,8 +87,8 @@ const RegistrationForm = () => {
         {isSuccessed === null ? (
           <div className="flex flex-col items-center justify-center pt-4 px-4">
             <div className="bg-white p-6 rounded-lg shadow-custom-light w-full max-w-md mt-6">
-              <p className="text-center text-gray-700 mb-6">
-                Register with the best healthcare providers
+              <p className="text-center font-semibold text-lg mb-6 text-primary">
+                {i18n.t("With the best healthcare providers")}
               </p>
               {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
@@ -96,7 +98,7 @@ const RegistrationForm = () => {
                     value={mobileEmailNo}
                     type="text"
                     onChange={(e) => setMobileEmailNo(e.target.value)}
-                    placeholder="Enter email or phone number"
+                    placeholder={i18n.t("Enter email or phone number")}
                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   />
@@ -104,7 +106,7 @@ const RegistrationForm = () => {
                 <div className="mb-4 relative">
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="Enter password"
+                    placeholder={i18n.t("Enter password")}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -122,7 +124,7 @@ const RegistrationForm = () => {
                 <div className="mb-4 relative">
                   <input
                     type={showConfirmPassword ? 'text' : 'password'}
-                    placeholder="Confirm password"
+                    placeholder={i18n.t("Confirm password")}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -145,15 +147,15 @@ const RegistrationForm = () => {
                     required
                   >
                     <option value="" disabled>
-                      Select Registration Type
+                      {i18n.t("Select Registration Type")}
                     </option>
-                    <option value="patient">User or Patient</option>
-                    <option value="doctor">Doctor</option>
-                    <option value="pharmacy">Pharmacy</option>
-                    <option value="diagnostic">Diagnostic Center</option>
-                    <option value="bloodbank">Blood Bank Club</option>
-                    <option value="ambulance">Ambulance</option>
-                    <option value="dentalClinic">Dental Clinic</option>
+                    <option value="patient">{i18n.t("User or Patient")}</option>
+                    <option value="doctor">{i18n.t("Doctor")}</option>
+                    <option value="pharmacy">{i18n.t("Pharmacy")}</option>
+                    <option value="diagnostic">{i18n.t("Diagnostic Center")}</option>
+                    <option value="bloodbank">{i18n.t("Blood Bank")}</option>
+                    <option value="ambulance">{i18n.t("Ambulance")}</option>
+                    <option value="dentalClinic">{i18n.t("Dental Clinic")}</option>
                   </select>
                 </div>
 
@@ -170,16 +172,16 @@ const RegistrationForm = () => {
               </form>
 
               <p className="text-center mt-4">
-                Have an account?{' '}
-                <a href="/login" className="text-blue-500 hover:underline">
-                  Login
+                {i18n.t("Don't Have Account?")}
+                <a href="/login" className="ml-2 text-blue-500 hover:underline">
+                  {i18n.t("login")}
                 </a>
               </p>
             </div>
           </div>
         ) : (
           <>
-            <OTPVerification mobileEmailNo={mobileEmailNo}  user={isSuccessed} otpCode={otpCode} />
+            <OTPVerification mobileEmailNo={mobileEmailNo} user={isSuccessed} otpCode={otpCode} />
           </>)}
       </div>
     </div>

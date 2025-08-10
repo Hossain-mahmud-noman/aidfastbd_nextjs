@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { base_endpoint } from '../../utils/constants';
 import OTPVerification from './OTPVerification';
 import { toast } from 'sonner';
+import { useI18n } from '../../context/i18n';
 
 const SmsLoginForm = () => {
+   const i18n = useI18n()
    const [error, setError] = useState('');
    const [isLoading, setIsLoading] = useState(false);
    const [mobileNo, setMobileNo] = useState('');
@@ -72,18 +74,16 @@ const SmsLoginForm = () => {
          {isSuccessed === null ?
             <div className="max-w-md mx-auto flex flex-col items-center justify-center rounded-lg p-4 mt-6 shadow-custom-light">
                <div className="p-6 rounded-lg  w-full">
-                  <p className="text-center text-gray-700 mb-6">Be Happy and Be Healthy</p>
+                  <p className="text-center text-lg text-primary font-semibold mb-6">{i18n.t("Be Happy and be healthy")}</p>
 
                   {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-
-
                   <form onSubmit={handleSubmit}>
                      <div className="mb-4 relative">
                         <input
                            value={mobileNo}
                            onChange={(e) => setMobileNo(e.target.value)}
                            type="text"
-                           placeholder="Enter mobile number"
+                           placeholder={i18n.t("Enter Your Phone Number")}
                            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                            required
                         />
@@ -95,19 +95,19 @@ const SmsLoginForm = () => {
                         className={`w-full p-3 text-white rounded-lg transition duration-200 ${isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
                            }`}
                      >
-                        {isLoading ? 'Processing...' : 'Next'}
+                        {isLoading ? 'Processing...' : i18n.t("Next")}
                      </button>
                   </form>
 
 
-                  <div className="text-center mt-2 mb-2">
+                  <div className="text-center my-6">
                      <a href="/registration" className="text-blue-500 hover:underline">
-                        Signup using email or mobile number.
+                        {i18n.t("Signup using email or mobile number")}
                      </a>
                   </div>
-                  <div className="text-center mt-2 mb-2">
+                  <div className="text-center ">
                      <a href="/login" className="text-blue-500 hover:underline">
-                        Login using password.
+                        {i18n.t("login")}
                      </a>
                   </div>
                </div>

@@ -7,49 +7,61 @@ import DoctorProfileInfo from './doctor/DoctorProfileInfo';
 import DoctorProfileBasic from './doctor/DoctorProfileBasic';
 import DoctorProfileChamber from './doctor/DoctorProfileChamber';
 import DoctorProfileExperience from './doctor/DoctorProfileExperience';
+import { useAuth } from '../../context/AuthContext';
 
-
-function DoctorProfile({ token, user }) {
+function DoctorProfile() {
 
    const [profileData, setProfileData] = useState(null);
+   const { user, token } = useAuth()
 
    const getProfileData = async () => {
+      if (!user?.userId || !token) return;
 
-      headerx['Authorization'] = `Bearer ${token}`;
+      const headers = {
+         ...headerx,
+         'Authorization': `Bearer ${token}`
+      };
 
-      const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetDoctorInfoList?userid=${user.id}`, { headers: headerx });
+      try {
+         const res = await fetch(
+            `https://api.aidfastbd.com/api/GeneralInformation/GetDoctorInfoList?userid=${user.userId}`,
+            { headers }
+         );
 
-      const data = await res.json();
-      if (res.status == 200) {
-
-         if (data[0] !== null) {
-            setProfileData(data[0]);
+         if (res.status === 401) {
+            window.location.href = "/login";
+            return;
          }
-      } else if (res.status === 401) {
-         window.location.href = "/login";
-      } else {
+
+         if (res.ok) {
+            const data = await res.json();
+            setProfileData(data[0] || null);
+         } else {
+            setProfileData(null);
+         }
+      } catch (error) {
+         console.error("Failed to fetch profile:", error);
          setProfileData(null);
       }
-
-   }
-
+   };
 
    useEffect(() => {
-      getProfileData();
-   }, [token]);
-
+      if (user && token) {
+         getProfileData();
+      }
+   }, [user, token]);
 
 
    const tabs = [
-      { label: 'Basic', content: <DoctorProfileBasic user={user} token={token} data={profileData}></DoctorProfileBasic> },
-      { label: 'Info', content: <DoctorProfileInfo user={user} token={token} data={profileData?.doctorAdditionalInfo}></DoctorProfileInfo> },
-      { label: 'Chamber', content: <DoctorProfileChamber user={user} token={token} data={profileData?.chamberInformation}></DoctorProfileChamber> },
-      { label: 'Experience', content: <DoctorProfileExperience user={user} token={token} data={profileData?.doctorExperiencelInfo}></DoctorProfileExperience> },
+      { label: 'Basic', content: <DoctorProfileBasic user={user} token={token} data={profileData} /> },
+      { label: 'Info', content: <DoctorProfileInfo user={user} token={token} data={profileData?.doctorAdditionalInfo} refreshProfile={getProfileData} /> },
+      { label: 'Chamber', content: <DoctorProfileChamber user={user} token={token} data={profileData?.chamberInformation} refreshProfile={getProfileData} /> },
+      { label: 'Experience', content: <DoctorProfileExperience user={user} token={token} data={profileData?.doctorExperiencelInfo} refreshProfile={getProfileData} /> },
    ];
 
    return (
       <div>
-         <TabBar tabs={tabs}></TabBar>
+         <TabBar tabs={tabs} />
       </div>
    )
 }

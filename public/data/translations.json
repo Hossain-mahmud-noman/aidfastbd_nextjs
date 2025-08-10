@@ -231,7 +231,7 @@
     "Browse updated blogs": "Browse updated blogs",
     "Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy": "Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy",
     "Read More": "Read More",
-     "Contact Us": "Contact Us",
+    "Contact Us": "Contact Us",
     "Write your question or inquiry below and provide as much detail as possible. We will get back to you as soon as possible.": "Write your question or inquiry below and provide as much detail as possible. We will get back to you as soon as possible.",
     "Email": "Email",
     "Input Name": "Input Name",
@@ -242,7 +242,14 @@
     "Type your message": "Type your message",
     "Sent Message": "Sent Message",
     "Request a quote — let's work together!": "Request a quote — let's work together!",
-    "Whether you need a custom solution or just have a question — we’re always here for you. Send us a message now.": "Whether you need a custom solution or just have a question — we’re always here for you. Send us a message now."
+    "Whether you need a custom solution or just have a question — we’re always here for you. Send us a message now.": "Whether you need a custom solution or just have a question — we’re always here for you. Send us a message now.",
+    "With the best healthcare providers": "With the best healthcare providers",
+    "Enter email or phone number": "Enter email or phone number",
+    "Enter password": "Enter password",
+    "Forget Password?": "Forget Password?",
+    "Login by using mobile number": "Login by using mobile number",
+    "Don't Have Account?": "Don't Have Account?",
+    "Registration": "Registration"
   },
   "bn": {
     "Doctor": "ডাক্তার",
@@ -462,7 +469,7 @@
     "FAQ Description": "আমাদের সেবাসমূহ সম্পর্কিত সাধারণ প্রশ্নের স্পষ্ট ও সংক্ষিপ্ত উত্তর পেতে নিচের তথ্যগুলো পড়ুন। আপনার সুবিধার জন্য আমরা সবচেয়ে গুরুত্বপূর্ণ ও সাধারণ প্রশ্নগুলো সহজ ভাষায় বুঝিয়ে দিতে চেষ্টা করেছি।",
     "Browse updated blogs": "আপডেট ব্লগ ব্রাউজ করুন",
     "Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy": "নিয়মিত স্বাস্থ্য সচেতনতা ও যত্ন সম্পর্কে জানুন আমাদের ব্লগ পোস্ট থেকে। ডাক্তার ও বিশেষজ্ঞদের লেখা এই লেখা গুলো আপনাকে ও আপনার পরিবারকে সুস্থ রাখতে সাহায্য করবে।",
-    "Read More":"বিস্তারিত পড়ুন",
+    "Read More": "বিস্তারিত পড়ুন",
     "Filter by Blood Group": "ব্লাডগ্রুপ দিয়ে ফিল্টার করুন",
     "Contact Us": "যোগাযোগ করুন",
     "Write your question or inquiry below and provide as much detail as possible. We will get back to you as soon as possible.": "আপনার প্রশ্ন বা জিজ্ঞাসাটি নিচে লিখুন এবং যতটা সম্ভব বিস্তারিত দিন। আমরা যত দ্রুত সম্ভব আপনার সাথে যোগাযোগ করব।",
@@ -475,6 +482,20 @@
     "Type your message": "আপনার বার্তা লিখুন",
     "Sent Message": "বার্তা পাঠান",
     "Request a quote — let's work together!": "উদ্ধৃতি চেয়ে নিন — চলুন একসাথে কাজ করি!",
-    "Whether you need a custom solution or just have a question — we’re always here for you. Send us a message now.": "কাস্টম সলিউশন নিতে বা কেবল একটি প্রশ্ন করতে — আমরা সব সময় পাশে আছি এখনই বার্তা দিন"
+    "Whether you need a custom solution or just have a question — we’re always here for you. Send us a message now.": "কাস্টম সলিউশন নিতে বা কেবল একটি প্রশ্ন করতে — আমরা সব সময় পাশে আছি এখনই বার্তা দিন",
+    "With the best healthcare providers": "সেরা স্বাস্থ্যসেবা প্রদানকারীদের সাথে থাকুন",
+    "Enter email or phone number": "ইমেইল বা ফোন নম্বর লিখুন",
+    "Enter password": "পাসওয়ার্ড লিখুন",
+    "Forget Password?": "পাসওয়ার্ড ভুলে গেছেন?",
+    "Login by using mobile number": "মোবাইল নম্বর দিয়ে লগইন করুন",
+    "Don't Have Account?": "আপনার কি অ্যাকাউন্ট নেই?",
+    "Registration": "রেজিস্টার করুন",
+    "Confirm password": "পাসওয়ার্ড কনফার্ম করুন",
+    "Select Registration Type": "রেজিষ্ট্রেশন টাইপ সিলেক্ট করুন",
+    "User or Patient": "উইজার অথবা রোগী",
+    "Be Happy and be healthy": "সুখী থাকুন এবং সুস্থ থাকুন",
+    "Enter Your Phone Number": "মোবাইল নাম্বার লিখুন",
+    "Next": "পরবর্তী",
+    "Signup using email or mobile number": "মোবাইল নাম্বার অথবা ইমেল দিয়ে সাইন-আপ করুন"
   }
 }
