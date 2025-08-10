@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import ServiceForm from "../../../components/forms/ServiceForm";
 import Image from "next/image";
 import { toast } from "sonner";
+import { Button } from "antd";
+import { FaEdit } from "react-icons/fa";
 
-export default function PhysioProfileServices({ data, token, genericServiceId, userId }) {
-  const [services, setServices] = useState(data);
+export default function PhysioProfileServices({ data, token, genericServiceId, userId, getProfileData }) {
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -19,74 +20,70 @@ export default function PhysioProfileServices({ data, token, genericServiceId, u
   };
 
   const handleFormSubmit = async (newData) => {
-      const isUpdating = selectedService !== null;
-  
-      const commonService = {
-        otherInfo: "heading",
-        title: newData.heading,
-        details: newData.details,
-        imgList: (newData.imgList || []).map((img) => ({
-          imgUrl: img.imgUrl,
-          details: img.details || ""
-        })),
-        userId: userId,
-        id: genericServiceId,
-        serviceType: 1
-      };
-      const updatingService = {
-        otherInfo: "heading",
-        title: newData.heading,
-        details: newData.details,
-        imgList: (newData.imgList || []).map((img) => ({
-          imgUrl: img.imgUrl,
-          details: img.details || ""
-        })),
-        userId: userId,
-        id: selectedService?.id,
-      };
-  
-      const payload = isUpdating ? updatingService : [commonService];
-  
-      try {
-        const response = await fetch(
-          isUpdating
-            ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateGenericService_Services"
-            : "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericService_Services",
-          {
-            method: isUpdating ? "PUT" : "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          }
-        );
-  
-        const responseData = await response.json();
-  
-        if (!response.ok) {
-          throw new Error(responseData?.message || "Something went wrong!");
-        }
-  
-        const updatedService = isUpdating ? payload : payload[0];
-  
-        setServices((prev) =>
-          isUpdating
-            ? prev.map((s) => (s.id === updatedService.id ? { ...s, ...updatedService } : s))
-            : [...prev, { ...updatedService, id: responseData.id }]
-        );
-  
-        toast.success(
-          isUpdating
-            ? "Service updated successfully!"
-            : "New service added successfully!"
-        );
-      } catch (error) {
-        toast.error(`Error: ${error.message}`);
-      } finally {
-        setIsModalOpen(false);
-      }
+    const isUpdating = selectedService !== null;
+
+    const commonService = {
+      otherInfo: "heading",
+      title: newData.heading,
+      details: newData.details,
+      imgList: (newData.imgList || []).map((img) => ({
+        imgUrl: img.imgUrl,
+        details: img.details || ""
+      })),
+      userId: userId,
+      id: genericServiceId,
+      serviceType: 3
+
     };
+    const updatingService = {
+      otherInfo: "heading",
+      title: newData.heading,
+      details: newData.details,
+      imgList: (newData.imgList || []).map((img) => ({
+        imgUrl: img.imgUrl,
+        details: img.details || ""
+      })),
+      userId: userId,
+      id: selectedService?.id,
+    };
+
+    const payload = isUpdating ? updatingService : [commonService];
+
+    try {
+      const response = await fetch(
+        isUpdating
+          ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateGenericService_Services"
+          : "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericService_Services",
+        {
+          method: isUpdating ? "PUT" : "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData?.message || "Something went wrong!");
+      }
+
+      if (typeof getProfileData === 'function') {
+        await getProfileData();
+      }
+      toast.success(
+        isUpdating
+          ? "Service updated successfully!"
+          : "New service added successfully!"
+      );
+    } catch (error) {
+      toast.error(`Error: ${error.message}`);
+    } finally {
+      setIsModalOpen(false);
+    }
+  };
 
   return (
     <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
@@ -110,18 +107,19 @@ export default function PhysioProfileServices({ data, token, genericServiceId, u
           </div>
 
           <div className="space-y-4">
-            {services?.map((service) => (
+            {data?.map((service) => (
               <div
                 key={service.id}
                 className="relative bg-gray-50 border border-purple-200 p-4 rounded-lg shadow-sm"
               >
-                <button
+                <Button
+                  icon={<FaEdit />}
                   onClick={() => handleEditService(service)}
-                  className="absolute top-3 right-3 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full shadow"
+                  className="absolute top-3 right-3 "
                   title="Edit Service"
                 >
-                  ✎
-                </button>
+                  Edit
+                </Button>
 
                 <h3 className="text-lg font-semibold text-purple-800 mb-1">
                   {service.title}

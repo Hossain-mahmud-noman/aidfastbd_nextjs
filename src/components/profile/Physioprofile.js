@@ -7,15 +7,18 @@ import PhysioProfileBasic from './physioProfile/PhysioProfileBasic';
 import PhysioProfileServices from './physioProfile/PhysioProfileServices';
 import PhysioProfileDoctors from './physioProfile/PhysioProfileDoctors';
 import PhysioProfileInfo from './physioProfile/PhysioProfileInfo';
+import { useAuth } from '../../context/AuthContext';
 
 
-function Physioprofile({ token, user }) {
+function Physioprofile() {
+  const { user, token } = useAuth()
   const [profileData, setProfileData] = useState(null);
 
   const getProfileData = async () => {
+    if (!user?.userId || !token) return;
     headerx['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=3&userId=${user.id}`, { headers: headerx });
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=3&userId=${user.userId}`, { headers: headerx });
 
     const data = await res.json();
     if (res.status == 200) {
@@ -29,15 +32,16 @@ function Physioprofile({ token, user }) {
   }
 
   useEffect(() => {
-    getProfileData();
-  }, [token]);
+    if (user, token)
+      getProfileData();
+  }, [user, token]);
 
-  
+
   const tabs = [
-    { label: 'Basic', content: <PhysioProfileBasic data={profileData} user={user} token={token} /> },
-    { label: 'Info', content: <PhysioProfileInfo id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token}/> },
-    { label: 'Doctors', content: <PhysioProfileDoctors id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token}/> },
-    { label: 'Services', content: <PhysioProfileServices genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token}/> },
+    { label: 'Basic', content: <PhysioProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token} /> },
+    { label: 'Info', content: <PhysioProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
+    { label: 'Doctors', content: <PhysioProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
+    { label: 'Services', content: <PhysioProfileServices getProfileData={getProfileData} genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token} /> },
   ];
 
   return (
