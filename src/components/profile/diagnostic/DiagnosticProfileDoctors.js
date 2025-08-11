@@ -140,8 +140,6 @@ function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
       } else {
         const data = await res.json();
         router.push("/profile/doctor/access")
-        // toast.success("Access granted");
-        // console.log("✅ Chamber data:", data);
       }
     } catch (error) {
       console.error("Fetch access failed:", error);
@@ -175,7 +173,7 @@ function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
       if (res.ok) {
         toast.success("Access granted successfully");
         setIsModalVisible(false);
-        router.push("/profile/doctor/access")
+        // router.push("/profile/doctor/access")
         setChamberIdInput("");
       } else {
         toast.error("Failed to grant access");
