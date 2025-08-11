@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
       <head>
         {/*  Google tag (gtag.js)  */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-MRBPNNQ8V6"
+          src="https://www.googletagmanager.com/gtag/js?id=G-8YNM25L12S"
           strategy="afterInteractive"
           async
         />
@@ -42,32 +42,10 @@ export default function RootLayout({ children }) {
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
 
-              gtag('config', 'G-MRBPNNQ8V6');
-            `,
-          }}
-        />
-        {/* <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
               gtag('config', 'G-8YNM25L12S');
             `,
           }}
-        /> */}
-
-        {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRBPNNQ8V6"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-MRBPNNQ8V6');
-        </script> */}
+        />
 
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`

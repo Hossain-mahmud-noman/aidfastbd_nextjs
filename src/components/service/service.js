@@ -89,7 +89,7 @@ const Service = () => {
                <h1 className="text-[#212121] heading1">{i18n.t("AidFastBD Services")}</h1>
                <p className="text-[#061C3D] description2 mt-3 lg;mt-4">{i18n.t("AidFastBD Services Description")}</p>
             </div>
-            <Link href={"/service"} target="_blank" className="flex items-center gap-1.5">
+            <Link href={"/service"}  className="flex items-center gap-1.5">
                <p className="text-[#1087EF] description2 whitespace-pre"> {i18n.t("Explore More")}</p>
                <FaArrowRightLong className="description1 text-[#1087EF]" />
             </Link>
@@ -100,7 +100,6 @@ const Service = () => {
                   <Link
                      href={item.link}
                      key={index}
-                     target="_blank"
                      className="hover:scale-105 transition-all hover:border-primary duration-300 flex flex-col justify-start items-center border border-[#3056D321] bg-white xl:rounded-2xl lg:rounded-xl rounded-lg p-6 mx-auto w-full text-center"
                   >
                      <Image

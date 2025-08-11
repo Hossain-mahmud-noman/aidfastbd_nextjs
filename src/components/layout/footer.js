@@ -164,7 +164,7 @@ const Footer = () => {
                                     key={index}
                                     className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 description1 text-white transform duration-300 hover:text-black cursor-pointer"
                                  >
-                                    <Link target="_blank" className="text-center" href={item?.link}>
+                                    <Link className="text-center" href={item?.link}>
                                        {item?.name}
                                     </Link>
                                  </li>
@@ -180,7 +180,7 @@ const Footer = () => {
                                     key={index}
                                     className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 description1 text-white transform duration-300 hover:text-black cursor-pointer"
                                  >
-                                    <Link target="_blank" href={item?.link}>
+                                    <Link href={item?.link}>
                                        {item?.name}
                                     </Link>
                                  </li>
@@ -195,7 +195,7 @@ const Footer = () => {
                         <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-5">
                            {navLinks1?.map((item, index) => (
                               <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 descruiption1 text-white transform duration-300 hover:text-black cursor-pointer">
-                                 <Link target="_blank" className="text-center" href={item?.link}>{item?.name}</Link>
+                                 <Link className="text-center" href={item?.link}>{item?.name}</Link>
                               </li>
                            ))}
                         </ul>
@@ -205,7 +205,7 @@ const Footer = () => {
                         <ul className="xl:mt-[60px] lg:mt-12 md:mt-10 mt-8">
                            {navLinks2?.map((item, index) => (
                               <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 description1 text-white transform duration-300 hover:text-black cursor-pointer">
-                                 <Link target="_blank" className="" href={item?.link}>{item?.name}</Link>
+                                 <Link className="" href={item?.link}>{item?.name}</Link>
                               </li>
                            ))}
                         </ul>
@@ -231,7 +231,6 @@ const Footer = () => {
                                  ) : (
                                     <Link
                                        className="flex items-center gap-2"
-                                       target="_blank"
                                        href={item.link}
                                     >
                                        {item.icon}
@@ -262,7 +261,6 @@ const Footer = () => {
                                     <Link
                                        key={index}
                                        href={item.link}
-                                       target="_blank"
                                        rel="noopener noreferrer"
                                        className={commonClasses}
                                     >
@@ -283,10 +281,10 @@ const Footer = () => {
                   {i18n.t("Copyright")} © {currentYear || new Date().getFullYear()} {i18n.t("All rights reserved")} <Link className="text-black/70 description2 hover:text-white/50 transition-all duration-300" href="/">AidFast</Link>
                </p>
                <div className="flex items-center gap-3 md:gap-4 xl:gap-10 mt-3 md:mt-0">
-                  <Link target="_blank" href="/privacy" className="text-white description1 hover:text-black transition-all duration-300">
+                  <Link href="/privacy" className="text-white description1 hover:text-black transition-all duration-300">
                      {i18n.t("Privacy & Policy")}
                   </Link>
-                  <Link target="_blank" href="/terms" className="text-white description1 hover:text-black transition-all duration-300">
+                  <Link href="/terms" className="text-white description1 hover:text-black transition-all duration-300">
                      {i18n.t("Terms & Conditions")}
                   </Link>
                </div>
