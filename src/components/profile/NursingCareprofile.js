@@ -7,15 +7,18 @@ import NursingCareProfileInfo from './nursingCareProfile/NursingCareProfileInfo'
 import NursingCareProfileBasic from './nursingCareProfile/NursingCareProfileBasic';
 import NursingCareProfileDoctors from './nursingCareProfile/NursingCareProfileDoctors';
 import NursingCareProfileServices from './nursingCareProfile/NursingCareProfileServices';
+import { useAuth } from '../../context/AuthContext';
 
 
-function NursingCareprofile({ token, user }) {
+function NursingCareprofile() {
+  const { token, user } = useAuth()
   const [profileData, setProfileData] = useState(null);
 
   const getProfileData = async () => {
+    if (!user?.userId || !token) return;
     headerx['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=6&userId=${user.id}`, { headers: headerx });
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=6&userId=${user.userId}`, { headers: headerx });
 
     const data = await res.json();
     if (res.status == 200) {
@@ -29,15 +32,16 @@ function NursingCareprofile({ token, user }) {
   }
 
   useEffect(() => {
-    getProfileData();
-  }, [token]);
+    if (user, token)
+      getProfileData();
+  }, [user, token]);
 
 
   const tabs = [
-    { label: 'Basic', content: <NursingCareProfileBasic data={profileData} user={user} token={token} /> },
-    { label: 'Info', content: <NursingCareProfileInfo id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
-    { label: 'Doctors', content: <NursingCareProfileDoctors id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
-    { label: 'Services', content: <NursingCareProfileServices genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token} /> },
+    { label: 'Basic', content: <NursingCareProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token} /> },
+    { label: 'Info', content: <NursingCareProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
+    { label: 'Doctors', content: <NursingCareProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
+    { label: 'Services', content: <NursingCareProfileServices getProfileData={getProfileData} genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token} /> },
   ];
 
   return (
