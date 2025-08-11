@@ -42,8 +42,8 @@ const Footer = () => {
       { name: i18n.t("Physiotherapy Center"), link: "/physiotherapy-center" },
       { name: i18n.t("Nursing Care Home"), link: "/nursing-home-care" },
       { name: i18n.t("Eye Care Center"), link: "/eye-care-center" },
-      { name: i18n.t("Drug Rehabilitation"), link: "/drug-de-addiction" },
-      { name: i18n.t("Hearing Care Center"), link: "/hearing-care-center" },
+      { name: i18n.t("Drug De-Addiction Center"), link: "/drug-de-addiction" },
+      { name: i18n.t("Hearing Aid Center"), link: "/hearing-care-center" },
    ];
 
    const navLinks3 = [
@@ -120,7 +120,7 @@ const Footer = () => {
                   <Image
                      className="cursor-pointer"
                      onClick={() => {
-                       router.push("/")
+                        router.push("/")
                      }}
                      src="/logo1.png"
                      alt="logo"
@@ -154,8 +154,43 @@ const Footer = () => {
                </div>
                <div className="w-full md:w-[70%] lg:w-[65%] mt-5 sm:mt-0">
                   <div className="flex flex-col sm:flex-row justify-between ">
+                     {/* for small device */}
+                     <div className="flex items-center gap-10 justify-center sm:hidden">
+                        <div className="flex flex-col items-center sm:items-start">
+                           <h3 className="description3 text-white mt-4 sm:mt-0">{i18n.t("Services")}</h3>
+                           <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-5">
+                              {navLinks1?.map((item, index) => (
+                                 <li
+                                    key={index}
+                                    className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 description1 text-white transform duration-300 hover:text-black cursor-pointer"
+                                 >
+                                    <Link target="_blank" className="text-center" href={item?.link}>
+                                       {item?.name}
+                                    </Link>
+                                 </li>
+                              ))}
+                           </ul>
+                        </div>
+
+                        {/* second part */}
+                        <div className="flex flex-col items-center sm:items-start -mt-4">
+                           <ul className="xl:mt-[60px] lg:mt-12 md:mt-10 mt-8">
+                              {navLinks2?.map((item, index) => (
+                                 <li
+                                    key={index}
+                                    className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 description1 text-white transform duration-300 hover:text-black cursor-pointer"
+                                 >
+                                    <Link target="_blank" href={item?.link}>
+                                       {item?.name}
+                                    </Link>
+                                 </li>
+                              ))}
+                           </ul>
+                        </div>
+                     </div>
+
                      {/* first part */}
-                     <div className="flex flex-col items-center sm:items-start">
+                     <div className="hidden sm:flex flex-col items-center sm:items-start">
                         <h3 className="description3 text-white mt-4 sm:mt-0">{i18n.t("Services")}</h3>
                         <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-5">
                            {navLinks1?.map((item, index) => (
@@ -166,7 +201,7 @@ const Footer = () => {
                         </ul>
                      </div>
                      {/* second part */}
-                     <div className="flex flex-col items-center sm:items-start -mt-4 sm:-mt-0">
+                     <div className="hidden sm:flex flex-col items-center sm:items-start -mt-4 sm:-mt-0">
                         <ul className="xl:mt-[60px] lg:mt-12 md:mt-10 mt-8">
                            {navLinks2?.map((item, index) => (
                               <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 description1 text-white transform duration-300 hover:text-black cursor-pointer">

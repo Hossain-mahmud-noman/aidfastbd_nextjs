@@ -255,6 +255,7 @@
     "Doctor": "ডাক্তার",
     "Diagnostic": "ডায়াগনস্টিক",
     "Blood Bank": "ব্লাড ব্যাংক",
+    "Eye Care Center": "আই কেয়ার সেন্টার",
     "Eye Care Center and Hospital": "আই কেয়ার সেন্টার ও হাসপাতাল",
     "Blog": "ব্লগ",
     "Pages": "পৃষ্ঠা",
@@ -496,6 +497,8 @@
     "Be Happy and be healthy": "সুখী থাকুন এবং সুস্থ থাকুন",
     "Enter Your Phone Number": "মোবাইল নাম্বার লিখুন",
     "Next": "পরবর্তী",
-    "Signup using email or mobile number": "মোবাইল নাম্বার অথবা ইমেল দিয়ে সাইন-আপ করুন"
+    "Signup using email or mobile number": "মোবাইল নাম্বার অথবা ইমেল দিয়ে সাইন-আপ করুন",
+    "Other profiles you can create": "আপনি অন্য প্রফাইলে ও একেউন্ট খুলতে পারেন",
+    "General Profile": "সাধারন প্রফাইল"
   }
 }
