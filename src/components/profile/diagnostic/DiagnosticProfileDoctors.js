@@ -4,9 +4,11 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
 import { Button, Input, Modal } from "antd";
+import { useRouter } from "next/navigation";
 
 function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
   const [allDoctors, setAllDoctors] = useState([]);
+  const router = useRouter()
   const [showPopup, setShowPopup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
@@ -137,8 +139,9 @@ function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
         setIsModalVisible(true);
       } else {
         const data = await res.json();
-        toast.success("Access granted");
-        console.log("✅ Chamber data:", data);
+        router.push("/profile/doctor/access")
+        // toast.success("Access granted");
+        // console.log("✅ Chamber data:", data);
       }
     } catch (error) {
       console.error("Fetch access failed:", error);
@@ -172,6 +175,7 @@ function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
       if (res.ok) {
         toast.success("Access granted successfully");
         setIsModalVisible(false);
+        router.push("/profile/doctor/access")
         setChamberIdInput("");
       } else {
         toast.error("Failed to grant access");

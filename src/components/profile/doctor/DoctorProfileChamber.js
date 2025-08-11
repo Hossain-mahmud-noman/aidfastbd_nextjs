@@ -29,7 +29,7 @@ function InputField({ label, placeholder, value, onChange, type = "text", requir
 }
 
 function DoctorProfileChamber({ data, user, token, refreshProfile }) {
-  console.log("🚀 ~ DoctorProfileChamber ~ data:", data)
+
   const [copied, setCopied] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [chamberName, setChamberName] = useState('');
