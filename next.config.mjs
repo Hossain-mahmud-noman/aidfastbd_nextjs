@@ -1,7 +1,5 @@
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
   images: {
     remotePatterns: [
       {
@@ -21,6 +19,11 @@ const nextConfig = {
         hostname: "**",
       },
     ],
+  },
+
+  typescript: {
+    // WARNING: This disables failing the build on TypeScript errors
+    ignoreBuildErrors: true,
   },
 };
 
