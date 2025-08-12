@@ -5,10 +5,13 @@ import Swal from "sweetalert2";
 import { toast } from "sonner";
 import { Button, Input, Modal } from "antd";
 import { useRouter } from "next/navigation";
+import DoctorChemberProfileAccess from "../../../app/profile/doctor/access/page";
 
 function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
   const [allDoctors, setAllDoctors] = useState([]);
   const router = useRouter()
+  const [modalVisible, setModalVisible] = useState(false);
+  const [chamberData, setChamberData] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
@@ -96,9 +99,6 @@ function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
         }
       );
       if (response.ok) {
-        // setDoctors((prev) =>
-        //   prev.filter((doctor) => doctor.doctorUserId !== id)
-        // );
         toast.success("Doctor removed successfully!");
         if (typeof getProfileData === 'function') {
           await getProfileData();
@@ -139,7 +139,11 @@ function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
         setIsModalVisible(true);
       } else {
         const data = await res.json();
-        router.push("/profile/doctor/access")
+        setChamberData(data);
+        setModalVisible(true);
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
       }
     } catch (error) {
       console.error("Fetch access failed:", error);
@@ -171,6 +175,9 @@ function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
       });
 
       if (res.ok) {
+        if (typeof getProfileData === 'function') {
+          await getProfileData();
+        }
         toast.success("Access granted successfully");
         setIsModalVisible(false);
         // router.push("/profile/doctor/access")
@@ -200,25 +207,23 @@ function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
 
       <div className="mt-4 space-y-4">
         {data.map((doctor) => (
-          <div
-            key={doctor.id}
-            className="border p-4 rounded shadow flex items-center space-x-4"
-          >
-            <Image
-              width={1000}
-              height={1000}
-              src={`${image_base_endpoint}${doctor.imageUrl}`}
-              alt={doctor.name}
-              className="rounded-full object-cover h-14 w-16"
-            />
-            <div className="flex-1">
-              <h2 className="font-bold">{doctor.name}</h2>
-              <p className="text-sm text-gray-600">{doctor.degree}</p>
-              <p className="text-sm text-gray-500">{doctor.location}</p>
+          <div key={doctor.id} className="border p-4 rounded shadow flex items-center justify-between flex-col sm:flex-row" >
+            <div className="flex items-center space-x-4">
+              <Image
+                width={1000}
+                height={1000}
+                src={`${image_base_endpoint}${doctor.imageUrl}`}
+                alt={doctor.name}
+                className="rounded-full object-cover h-16 w-16"
+              />
+              <div className="flex-1">
+                <h2 className="font-bold">{doctor.name}</h2>
+                <p className="text-sm text-gray-600">{doctor.degree}</p>
+                <p className="text-sm text-gray-500">{doctor.location}</p>
+              </div>
             </div>
 
-            <div className="flex items-center flex-col lg:flex-row gap-4
-            ">
+            <div className="flex items-center gap-4 mt-4 sm:mt-0">
               <Button
                 danger
                 onClick={() => removeDoctor(doctor.doctorUserId)}
@@ -308,6 +313,24 @@ function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
           onChange={(e) => setChamberIdInput(e.target.value)}
           className="mt-2"
         />
+      </Modal>
+
+
+      <Modal
+        title="Chamber Profile Access"
+        open={modalVisible}
+        onCancel={() => setModalVisible(false)}
+        footer={null}
+        width={800}
+      >
+        {modalVisible && (
+          <DoctorChemberProfileAccess
+            isModalOpen={modalVisible}
+            modalOpen={setModalVisible}
+            data={chamberData}
+            getProfileData={getProfileData}
+          />
+        )}
       </Modal>
     </div>
   );

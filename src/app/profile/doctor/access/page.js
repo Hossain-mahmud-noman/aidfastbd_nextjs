@@ -2,503 +2,281 @@
 
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import Swal from 'sweetalert2';
-import { Button } from 'antd';
-import { useAuth } from '../../../../context/AuthContext';
-import { headerx } from '../../../../utils/constants';
 import MapComponent from '../../../../components/MapComponent';
-// Reusable InputField component
-function InputField({ label, placeholder, value, onChange, type = "text", required = false }) {
+import { useAuth } from '../../../../context/AuthContext';
+
+function InputField({ label, value, onChange, required = false, type = 'text' }) {
    return (
       <div className="mb-4">
          {label && (
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-               {label}
-               {required && <span className="text-red-500"> *</span>}
+            <label className="block font-medium mb-1">
+               {label} {required && <span className="text-red-500">*</span>}
             </label>
          )}
          <input
             type={type}
-            placeholder={placeholder}
+            className="w-full p-2 border rounded"
             value={value}
             onChange={onChange}
-            className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            required={required}
          />
       </div>
    );
 }
 
-function DoctorChemberProfileAccess() {
-   const { user, token } = useAuth()
-   const [data, setData] = useState()
-   const [isModalOpen, setIsModalOpen] = useState(false);
-   const [chamberName, setChamberName] = useState('');
-   const [address, setAddress] = useState('');
-   const [noticeNumber, setNoticeNumber] = useState('');
-   const [fee, setFee] = useState('');
-   const [oldPatientFee, setOldPatientFee] = useState('');
-   const [reportShowFee, setReportShowFee] = useState('');
-   const [floor, setFloor] = useState('');
-   const [roomNo, setRoomNo] = useState('');
-   const [phoneNumber, setPhoneNumber] = useState('');
+function initialVisitingHours() {
+   return {
+      Sat: { morning: '', evening: '' },
+      Sun: { morning: '', evening: '' },
+      Mon: { morning: '', evening: '' },
+      Tue: { morning: '', evening: '' },
+      Wed: { morning: '', evening: '' },
+      Thu: { morning: '', evening: '' },
+      Fri: { morning: '', evening: '' },
+   };
+}
+
+export default function DoctorChemberProfileAccess({ isModalOpen, modalOpen, data, getProfileData }) {
+
+   const { user, token } = useAuth();
+
+   const [chamber, setChamber] = useState({
+      id: '',
+      name: '',
+      state: '',
+      location: '',
+      fee: '',
+      oldPatientFee: '',
+      reportShowFee: '',
+      roomNo: '',
+      floor: '',
+      additionalInfo: '',
+      phoneNumber: '',
+      notice: '',
+      lat: null,
+      lon: null,
+   });
+
    const [visitingHours, setVisitingHours] = useState(initialVisitingHours());
-   const [chamberList, setChamberList] = useState([]);
-   const [editingChamber, setEditingChamber] = useState(null);
    const [isSubmitting, setIsSubmitting] = useState(false);
-   const [latitude, setLatitude] = useState(null);
-   const [longitude, setLongitude] = useState(null);
 
-   const getProfileData = async () => {
-      if (!user?.userId || !token) return;
+   useEffect(() => {
+      if (isModalOpen && data) {
+         setChamber({
+            id: data.id || '',
+            name: data.name || '',
+            state: data.state || '',
+            location: data.location || '',
+            fee: data.fee || '',
+            oldPatientFee: data.oldPatientFee || data.oldPatient || '',
+            reportShowFee: data.reportShowFee || data.reportShow || '',
+            roomNo: data.roomNo || data.room || '',
+            floor: data.floor || '',
+            additionalInfo: data.additionalInfo || '',
+            phoneNumber: data.phoneNumber || '',
+            notice: data.notice || '',
+            lat: data.lat ? +data.lat : null,
+            lon: data.lon ? +data.lon : null,
+         });
 
-      const headers = {
-         ...headerx,
-         'Authorization': `Bearer ${token}`
-      };
+         const hours = initialVisitingHours();
 
-      try {
-         const res = await fetch(
-            `https://api.aidfastbd.com/api/GeneralInformation/GetDoctorInfoList?userid=${user.userId}`,
-            { headers }
-         );
+         (data.chamberTimeDetails || []).forEach(({ dayName, dayTime, eveningTime }) => {
+            const dayKey = dayName.charAt(0) + dayName.slice(1).toLowerCase(); // e.g. "SAT" -> "Sat"
+            if (hours[dayKey]) {
+               hours[dayKey] = { morning: dayTime || '', evening: eveningTime || '' };
+            }
+         });
 
-         if (res.status === 401) {
-            window.location.href = "/login";
-            return;
-         }
-
-         if (res.ok) {
-            const data = await res.json();
-            setData(data[0]?.chamberInformation || null);
-         } else {
-            setData(null);
-         }
-      } catch (error) {
-         console.error("Failed to fetch profile:", error);
-         setData(null);
+         setVisitingHours(hours);
       }
+   }, [isModalOpen, data]);
+
+   const handleInputChange = (key) => (e) => {
+      setChamber((prev) => ({ ...prev, [key]: e.target.value }));
    };
 
-   useEffect(() => {
-      if (user && token) {
-         getProfileData();
-      }
-   }, [user, token]);
-
-
-   useEffect(() => {
-      setChamberList(data);
-   }, [data]);
-
-   function initialVisitingHours() {
-      return {
-         Sat: { morning: '', evening: '' },
-         Sun: { morning: '', evening: '' },
-         Mon: { morning: '', evening: '' },
-         Tue: { morning: '', evening: '' },
-         Wed: { morning: '', evening: '' },
-         Thu: { morning: '', evening: '' },
-         Fri: { morning: '', evening: '' },
-      };
-   }
-
-   function resetModal() {
-      setChamberName('');
-      setAddress('');
-      setNoticeNumber('');
-      setFee('');
-      setOldPatientFee('');
-      setReportShowFee('');
-      setFloor('');
-      setRoomNo('');
-      setPhoneNumber('');
-      setVisitingHours(initialVisitingHours());
-      setLatitude(null);
-      setLongitude(null);
-      setEditingChamber(null);
-   }
-
-   const handleChange = (day, time, value) => {
+   const handleVisitingHoursChange = (day, time) => (e) => {
       setVisitingHours((prev) => ({
          ...prev,
-         [day]: { ...prev[day], [time]: value },
+         [day]: { ...prev[day], [time]: e.target.value },
       }));
    };
 
    const handleSubmit = async () => {
-      if (!latitude || !longitude) {
-         alert("Please set the chamber location on the map.");
+      if (!chamber.lat || !chamber.lon) {
+         toast.error('Please select the chamber location on the map.');
          return;
       }
 
-      const updatedChamber = {
-         name: chamberName,
-         location: address,
-         notice: noticeNumber,
-         userId: user.userId,
-         lat: latitude.toString(),
-         lon: longitude.toString(),
-         additionalInfo
-            :
-            "",
-         fee,
-         oldPatientFee,
-         reportShowFee,
-         roomNo,
-         floor,
-         phoneNumber,
-         timeDetails: Object.keys(visitingHours).map((day) => ({
+      setIsSubmitting(true);
+
+      const payload = {
+         id: chamber.id,
+         name: chamber.name,
+         state: chamber.state,
+         location: chamber.location,
+         fee: chamber.fee,
+         oldPatientFee: chamber.oldPatientFee,
+         reportShowFee: chamber.reportShowFee,
+         roomNo: chamber.roomNo,
+         floor: chamber.floor,
+         additionalInfo: chamber.additionalInfo,
+         phoneNumber: chamber.phoneNumber,
+         notice: chamber.notice,
+         lat: chamber.lat.toString(),
+         lon: chamber.lon.toString(),
+         userId: user?.userId || '',
+         timeDetails: Object.entries(visitingHours).map(([day, times]) => ({
             dayName: day.toUpperCase(),
-            dayTime: visitingHours[day].morning || '',
-            eveningTime: visitingHours[day].evening || '',
-            isOpen: !!visitingHours[day].morning || !!visitingHours[day].evening,
+            dayTime: times.morning,
+            eveningTime: times.evening,
+            isOpen: !!times.morning || !!times.evening,
          })),
       };
 
       try {
-         let response;
-         if (editingChamber) {
-            response = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/ChamberInformationUpdate`, {
+         const res = await fetch(
+            'https://api.aidfastbd.com/api/GeneralInformation/ChamberInformationUpdate',
+            {
                method: 'PUT',
                headers: {
                   'Content-Type': 'application/json',
                   Authorization: `Bearer ${token}`,
                },
-               body: JSON.stringify({ id: editingChamber.id, ...updatedChamber }),
-            });
-         } else {
-            response = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/ChamberInformationSave`, {
-               method: 'POST',
-               headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${token}`,
-               },
-               body: JSON.stringify(updatedChamber),
-            });
-         }
-
-         if (response.status == 200) {
-            const result = await response.json();
-            if (typeof getProfileData === 'function') {
-               await getProfileData();
+               body: JSON.stringify(payload),
             }
+         );
 
-            if (!editingChamber) {
-               toast.success("Chamber Information Save successfully")
-               setChamberList((prev) => [...prev, {
-                  id: result.id, chamberTimeDetails
-                     : updatedChamber['timeDetails'], ...updatedChamber,
-               }]);
-            } else {
-               toast.success("Chamber Information update successfully")
-               setChamberList((prev) =>
-                  prev.map((chamber) =>
-                     chamber.id === editingChamber.id ? { ...chamber, ...updatedChamber } : chamber
-                  )
-               );
-            }
-
-            setIsModalOpen(false);
-            resetModal();
+         if (res.ok) {
+            toast.success('Chamber information updated successfully');
+            getProfileData()
+            modalOpen(false);
          } else {
-            console.error('Failed to save/update chamber.');
+            toast.error('Failed to update chamber information');
          }
       } catch (error) {
-         console.error('Error in API call:', error);
+         toast.error('An error occurred. Please try again.');
+         console.error(error);
+      } finally {
+         setIsSubmitting(false);
       }
    };
-
-
-   const handleDelete = async (id) => {
-      const result = await Swal.fire({
-         title: 'Are you sure?',
-         text: "This chamber will be permanently deleted.",
-         icon: 'warning',
-         showCancelButton: true,
-         confirmButtonColor: '#d33',
-         cancelButtonColor: '#3085d6',
-         confirmButtonText: 'Yes, delete it!',
-      });
-
-      if (!result.isConfirmed) return;
-
-      const apiUrl = 'https://api.aidfastbd.com/api/GeneralInformation/ChamberInformationDelete';
-      const payload = {
-         id: id,
-         isDeleted: true
-      };
-
-      try {
-         const response = await fetch(apiUrl, {
-            method: 'DELETE',
-            headers: {
-               'Content-Type': 'application/json',
-               Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(payload),
-         });
-
-         const data = await response.json();
-
-         if (response.status === 200) {
-            Swal.fire('Deleted!', 'Chamber deleted successfully.', 'success');
-            if (typeof getProfileData === 'function') {
-               await getProfileData();
-            }
-            setChamberList((prevList) => prevList.filter((chamber) => chamber.id !== id));
-         } else {
-            Swal.fire('Error', 'Failed to delete chamber.', 'error');
-         }
-      } catch (error) {
-         console.error('Error deleting chamber:', error);
-         Swal.fire('Error', 'An error occurred while deleting the chamber.', 'error');
-      }
-   };
-
-
-   useEffect(() => {
-      if (editingChamber) {
-         const visitingHoursData = editingChamber.chamberTimeDetails.reduce((acc, timeDetail) => {
-            acc[timeDetail.dayName] = {
-               morning: timeDetail.dayTime || '',
-               evening: timeDetail.eveningTime || '',
-            };
-            return acc;
-         }, {});
-
-         setVisitingHours(visitingHoursData);
-      }
-   }, [editingChamber]);
-
-   const handleEdit = (chamber) => {
-      setEditingChamber(chamber);
-      setChamberName(chamber.name || '');
-      setAddress(chamber.location || '');
-      setNoticeNumber(chamber.notice || '');
-      setFee(chamber.fee || '');
-      setOldPatientFee(chamber.oldPatient || '');
-      setReportShowFee(chamber.reportShow || '');
-      setFloor(chamber.floor || '');
-      setRoomNo(chamber.room || '');
-      setPhoneNumber(chamber.phoneNumber || '');
-      setLatitude(+chamber.lat || null);
-      setLongitude(+chamber.lon || null);
-
-      const visitingHoursData = {
-         Sat: { morning: '', evening: '' },
-         Sun: { morning: '', evening: '' },
-         Mon: { morning: '', evening: '' },
-         Tue: { morning: '', evening: '' },
-         Wed: { morning: '', evening: '' },
-         Thu: { morning: '', evening: '' },
-         Fri: { morning: '', evening: '' },
-      };
-
-      chamber.chamberTimeDetails?.forEach((timeDetail) => {
-         const day = timeDetail.dayName.charAt(0) + timeDetail.dayName.slice(1).toLowerCase(); // e.g., 'SAT' -> 'Sat'
-         if (visitingHoursData[day]) {
-            visitingHoursData[day] = {
-               morning: timeDetail.dayTime || '',
-               evening: timeDetail.eveningTime || '',
-            };
-         }
-      });
-
-      setVisitingHours(visitingHoursData);
-      setIsModalOpen(true);
-   };
-
 
    return (
-      <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
-         <p className="text-xs text-red-500 mb-4">
-            ** Add a Chamber and Set Chamber location on map otherwise patients cannot see your profile on the user end **
-         </p>
+      <div>
+         <InputField
+            label="Chamber Name"
+            value={chamber.name}
+            onChange={handleInputChange('name')}
+            required
+         />
+         <InputField
+            label="Location"
+            value={chamber.location}
+            onChange={handleInputChange('location')}
+            required
+         />
+         <InputField
+            label="Notice"
+            value={chamber.notice}
+            onChange={handleInputChange('notice')}
+         />
+         <InputField
+            label="Fee"
+            value={chamber.fee}
+            onChange={handleInputChange('fee')}
+         />
+         <InputField
+            label="Old Patient Fee"
+            value={chamber.oldPatientFee}
+            onChange={handleInputChange('oldPatientFee')}
+         />
+         <InputField
+            label="Report Show Fee"
+            value={chamber.reportShowFee}
+            onChange={handleInputChange('reportShowFee')}
+         />
+         <InputField
+            label="Floor"
+            value={chamber.floor}
+            onChange={handleInputChange('floor')}
+         />
+         <InputField
+            label="Room No"
+            value={chamber.roomNo}
+            onChange={handleInputChange('roomNo')}
+         />
+         <InputField
+            label="Additional Info"
+            value={chamber.additionalInfo}
+            onChange={handleInputChange('additionalInfo')}
+         />
+         <InputField
+            label="Phone Number"
+            value={chamber.phoneNumber}
+            onChange={handleInputChange('phoneNumber')}
+            required
+            type="tel"
+         />
 
-         {isModalOpen == false ? <>
-            {/* Chamber List */}
-            <div className="mt-6">
-               {chamberList?.map((chamber, index) => (
-                  <div key={`chamber_id_${index}`} className="mb-6 p-4 border rounded-lg">
-                     <h3 className="text-2xl font-semibold my-4">Chember Name:<span className='text-primary'>{chamber.name}</span> </h3>
-                     {/* Address and Contact */}
-                     <div className="grid md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                           <p className="text-sm text-gray-600">Address:</p>
-                           <p className="font-medium">{chamber.location || 'N/A'}</p>
-                        </div>
-                        <div>
-                           <p className="text-sm text-gray-600">Notice:</p>
-                           <p className="font-medium">{chamber.notice || 'N/A'}</p>
-                        </div>
-                        <div>
-                           <p className="text-sm text-gray-600">Phone:</p>
-                           <p className="font-medium">{chamber.phoneNumber || 'N/A'}</p>
-                        </div>
-                        <div>
-                           <p className="text-sm text-gray-600">Floor / Room:</p>
-                           <p className="font-medium">
-                              {chamber.floor || 'N/A'} / {chamber.room || 'N/A'}
-                           </p>
-                        </div>
-                     </div>
-                     {/* Fees */}
-                     <div className="grid md:grid-cols-3 gap-4 mb-4">
-                        <div>
-                           <p className="text-sm text-gray-600">Fee:</p>
-                           <p className="font-medium">{chamber.fee || 'N/A'} Taka</p>
-                        </div>
-                        <div>
-                           <p className="text-sm text-gray-600">Old Patient Fee:</p>
-                           <p className="font-medium">{chamber.oldPatient || 'N/A'} Taka</p>
-                        </div>
-                        <div>
-                           <p className="text-sm text-gray-600">Report Show Fee:</p>
-                           <p className="font-medium">{chamber.reportShow || 'N/A'} Taka</p>
-                        </div>
-                     </div>
-                     {/* Time Table */}
-                     <div className="mt-4">
-                        <h4 className="font-medium">Visiting Hours:</h4>
-                        <table className="w-full table-auto mt-2">
-                           <thead>
-                              <tr>
-                                 <th className="border px-4 py-2">Day</th>
-                                 <th className="border px-4 py-2">Morning</th>
-                                 <th className="border px-4 py-2">Evening</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              {chamber?.chamberTimeDetails.map((timeDetail) => (
-                                 <tr key={timeDetail.id}>
-                                    <td className="border px-4 py-2">{timeDetail?.dayName}</td>
-                                    <td className="border px-4 py-2">{timeDetail?.dayTime || 'Not Available'}</td>
-                                    <td className="border px-4 py-2">{timeDetail?.eveningTime || 'Not Available'}</td>
-                                 </tr>
-                              ))}
-                           </tbody>
-                        </table>
+         <div className="mb-4">
+            <label className="block font-medium mb-1">Select Chamber Location</label>
+            <MapComponent
+               lat={chamber.lat}
+               lon={chamber.lon}
+               onLocationSelect={(lat, lon) =>
+                  setChamber((prev) => ({ ...prev, lat, lon }))
+               }
+            />
+            <p className="mt-2 text-sm">
+               Selected Location: Lat {chamber.lat ?? 'N/A'}, Lon {chamber.lon ?? 'N/A'}
+            </p>
+         </div>
 
-                     </div>
-                     {chamber.lat && chamber.lon && (
-                        <div className="mt-4">
-                           <h4 className="font-medium mb-2">Location Preview</h4>
-                           <div className=" rounded-lg overflow-hidden border">
-                              <MapComponent lat={+chamber.lat} lon={+chamber.lon} readOnly show={false} />
-                           </div>
-                        </div>
-                     )}
-                     <div className="mt-4 md:mt-6 lg:mt-8 w-full">
-                        <Button
-                           type="primary"
-                           onClick={() => handleEdit(chamber)}
-                           className=" w-full"
-                        >
-                           Edit
-                        </Button>
-                     </div>
-                  </div>
-               ))}
-            </div>
-         </> : (
+         <div className="mb-4">
+            <label className="block font-medium mb-2">Visiting Hours</label>
+            <table className="w-full border border-gray-300 text-sm">
+               <thead>
+                  <tr>
+                     <th className="border px-3 py-1">Day</th>
+                     <th className="border px-3 py-1">Morning Time</th>
+                     <th className="border px-3 py-1">Evening Time</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {Object.keys(visitingHours).map((day) => (
+                     <tr key={day}>
+                        <td className="border px-3 py-1">{day.toUpperCase()}</td>
+                        <td className="border px-3 py-1">
+                           <input
+                              type="text"
+                              className="w-full p-1 border rounded"
+                              value={visitingHours[day].morning}
+                              onChange={handleVisitingHoursChange(day, 'morning')}
+                           />
+                        </td>
+                        <td className="border px-3 py-1">
+                           <input
+                              type="text"
+                              className="w-full p-1 border rounded"
+                              value={visitingHours[day].evening}
+                              onChange={handleVisitingHoursChange(day, 'evening')}
+                           />
+                        </td>
+                     </tr>
+                  ))}
+               </tbody>
+            </table>
+         </div>
 
-
-
-            <div className="bg-white rounded-lg w-full max-w-3xl mx-auto">
-               <h2 className="text-xl font-semibold mb-4">
-                  {editingChamber ? 'Edit Chamber' : 'Add New Chamber'}
-               </h2>
-
-               <InputField label="Chamber Name" value={chamberName} onChange={(e) => setChamberName(e.target.value)} required />
-               <InputField label="Address" value={address} onChange={(e) => setAddress(e.target.value)} required />
-               <InputField label="Notice Number" value={noticeNumber} onChange={(e) => setNoticeNumber(e.target.value)} />
-               <InputField label="Fee" value={fee} onChange={(e) => setFee(e.target.value)} />
-               <InputField label="Old Patient Fee" value={oldPatientFee} onChange={(e) => setOldPatientFee(e.target.value)} />
-               <InputField label="Report Show Fee" value={reportShowFee} onChange={(e) => setReportShowFee(e.target.value)} />
-               <InputField label="Floor" value={floor} onChange={(e) => setFloor(e.target.value)} />
-               <InputField label="Room No" value={roomNo} onChange={(e) => setRoomNo(e.target.value)} />
-               <InputField label="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
-
-
-               <div className="mb-4 border">
-                  <label className="block text-sm font-medium text-gray-700 mb-2 ">Select Chamber Location</label>
-                  <MapComponent
-                     lat={latitude}
-                     lon={longitude}
-                     onLocationSelect={(lat, lon) => {
-                        setLatitude(lat);
-                        setLongitude(lon);
-                     }}
-                  />
-                  <p className="text-sm mt-2">
-                     Selected Location: Lat {latitude || "N/A"}, Lon {longitude || "N/A"}
-                  </p>
-               </div>
-
-
-               {/* Visiting Hours */}
-               <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                     Visiting Hours
-                  </label>
-                  <table className="w-full border-collapse">
-                     <thead>
-                        <tr>
-                           <th className="border px-4 py-2">Day</th>
-                           <th className="border px-4 py-2">Morning Time</th>
-                           <th className="border px-4 py-2">Evening Time</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        {Object.keys(visitingHours).map((day) => (
-                           <tr key={day}>
-                              <td className="border px-4 py-2">{day.toUpperCase()}</td>
-                              <td className="border px-4 py-2">
-                                 <input
-                                    type="text"
-                                    value={visitingHours[day].morning}
-                                    onChange={(e) => handleChange(day, 'morning', e.target.value)}
-                                    className="w-full p-1"
-                                 />
-                              </td>
-                              <td className="border px-4 py-2">
-                                 <input
-                                    type="text"
-                                    value={visitingHours[day].evening}
-                                    onChange={(e) => handleChange(day, 'evening', e.target.value)}
-                                    className="w-full p-1"
-                                 />
-                              </td>
-                           </tr>
-                        ))}
-                     </tbody>
-                  </table>
-               </div>
-
-
-               <div className="flex justify-end mt-4">
-                  <button
-                     onClick={() => {
-                        setIsModalOpen(false);
-                        resetModal();
-                     }}
-                     className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 mr-2"
-                  >
-                     Cancel
-                  </button>
-                  <button
-                     onClick={handleSubmit}
-                     className={`${isSubmitting ? 'bg-blue-300' : 'bg-blue-500'} text-white px-4 py-2 rounded-md hover:bg-blue-600`}
-                     disabled={isSubmitting}
-                  >
-                     {editingChamber ? 'Update Chamber' : 'Save Chamber'}
-                  </button>
-               </div>
-            </div>
-         )}
+         <button
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+            className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2 px-4 rounded"
+         >
+            {isSubmitting ? 'Saving...' : 'Save / Update'}
+         </button>
       </div>
    );
 }
-
-
-export default DoctorChemberProfileAccess;

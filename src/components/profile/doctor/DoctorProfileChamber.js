@@ -383,16 +383,16 @@ function DoctorProfileChamber({ data, user, token, refreshProfile }) {
                   </Button>
                 </div>
 
-
-                <div className="mt-5 flex items-center gap-3 bg-white shadow-md rounded-xl p-4 border w-fit">
-                  <span className="text-gray-800 font-semibold">Secret Key:</span>
+                <div className="mt-5 flex items-center justify-between flex-col md:flex-row gap-3 bg-white shadow-md rounded-xl p-4 border w-full">
+                  <span className="text-gray-800 font-semibold">Chamber Security Key:</span>
                   <span className="text-blue-700 font-mono">{data?.[0]?.id}</span>
                   <button
                     onClick={handleCopy}
-                    className="text-gray-500 hover:text-blue-600 transition"
+                    className="text-gray-500 hover:text-blue-600 transition flex items-center gap-2 border rounded-md p-1 px-2 bg-green-200"
                     title="Copy ID"
                   >
                     <FaRegCopy className="text-xl" />
+                    Copy
                   </button>
                   {copied && (
                     <span className="text-green-600 text-sm animate-fadeIn">Copied!</span>
