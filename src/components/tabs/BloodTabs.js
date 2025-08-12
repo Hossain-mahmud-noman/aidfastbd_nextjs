@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { Modal, Input, Form, Button, Select } from "antd";
 
 function BloodTabs({ data, UserId }) {
-  console.log("🚀 ~ BloodTabs ~ data:", data)
+
   const i18n = useI18n();
   const [reviewData, setReviewdData] = useState(data);
   const [blooddata, setBloodData] = useState(data)

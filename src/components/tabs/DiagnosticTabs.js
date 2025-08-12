@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { base_endpoint, image_base_endpoint } from "../../utils/constants";
-import DiagnostickDoctorCard from "../DiagnostickDoctorCard";
 import ReviewList from "../ReviewList";
 import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";

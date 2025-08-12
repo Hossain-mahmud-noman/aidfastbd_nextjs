@@ -35,7 +35,7 @@ function PharmacyProfile() {
       getProfileData();
     }
   }, [user, token]);
-  console.log("dataaaaaaaaaaaaaa", profileData)
+
   const tabs = [
     { label: 'Basic', content: <PharmacyProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token}></PharmacyProfileBasic> },
     { label: 'Info', content: <PharmacyProfileInfo getProfileData={getProfileData} data={profileData?.pharmacyAdditionalInfo} user={user} token={token}></PharmacyProfileInfo> },
