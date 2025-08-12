@@ -1,45 +1,36 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import AppointmentCard from "../../components/card/AppointmentCard";
-import { getUserProfile } from "../../context/getUserProfile";
+import { useAuth } from "../../context/AuthContext";
 
-export default function AppointmentClient({ token }) {
+export default function AppointmentClient() {
+  const { user, token } = useAuth();
   const [data, setData] = useState([]);
-  const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true);
 
-  const fetchProfile = async () => {
-    const profile = await getUserProfile();
-    setUser(profile)
-  }
+  const fetchAppointments = async () => {
+    try {
+      const res = await fetch(
+        `https://api.aidfastbd.com/api/GeneralInformation/GetAllBookAppointmentList?IsCanceled=false&userId=${user.userId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const result = await res.json();
+      setData(result);
+    } catch (err) {
+      console.error("Error fetching appointments", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetchProfile();
-  }, [token])
-
-
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const res = await fetch(
-          `https://api.aidfastbd.com/api/GeneralInformation/GetAllBookAppointmentList?IsCanceled=false&userId=${user.id}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const result = await res.json();
-        setData(result);
-      } catch (err) {
-        console.error("Error fetching appointments", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAppointments();
+    if (user && token) fetchAppointments();
   }, [token, user]);
 
   if (loading) {
@@ -50,11 +41,76 @@ export default function AppointmentClient({ token }) {
     return <div className="text-center py-10">Sorry! No appointments found.</div>;
   }
 
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const todaysAppointments = data.filter((item) => {
+    const apptDate = new Date(item.appointmentDate);
+    apptDate.setHours(0, 0, 0, 0);
+    return apptDate.getTime() === today.getTime();
+  });
+
+  const previousAppointments = data.filter((item) => {
+    const apptDate = new Date(item.appointmentDate);
+    apptDate.setHours(0, 0, 0, 0);
+    return apptDate.getTime() < today.getTime();
+  });
+
+  const upcomingAppointments = data.filter((item) => {
+    const apptDate = new Date(item.appointmentDate);
+    apptDate.setHours(0, 0, 0, 0);
+    return apptDate.getTime() > today.getTime();
+  });
+
   return (
-    <div className="space-y-4">
-      {data?.map((e, index) => (
-        <AppointmentCard key={index} data={e} token={token} />
-      ))}
+    <div className="aid-container space-y-12">
+      {
+        todaysAppointments.length > 0 &&
+        <section>
+          <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300 pb-2 text-gray-800">
+            {"Today's Appointments"}
+          </h2>
+          <div className="space-y-4">
+            {todaysAppointments.map((appt) => (
+              <AppointmentCard key={appt.id} data={appt} token={token} />
+            ))}
+          </div>
+        </section>
+      }
+
+      {
+        upcomingAppointments.length > 0 &&
+        <section>
+          <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300 pb-2 text-gray-800">
+            Upcoming Appointments
+          </h2>
+          <div className="space-y-4">
+            {upcomingAppointments.map((appt) => (
+              <AppointmentCard key={appt.id} data={appt} token={token} />
+            ))}
+          </div>
+        </section>
+      }
+
+      {
+        previousAppointments.length > 0 &&
+        <section>
+          <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300 pb-2 text-gray-800">
+            Previous Appointments
+          </h2>
+          <div className="space-y-4">
+            {previousAppointments.map((appt) => (
+              <AppointmentCard
+                key={appt.id}
+                data={appt}
+                token={token}
+                isHistory={true}
+              />
+            ))}
+          </div>
+        </section>
+      }
     </div>
   );
 }

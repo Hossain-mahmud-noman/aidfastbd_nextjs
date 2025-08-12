@@ -121,7 +121,7 @@ function DoctorTabs({ data, UserId }) {
               <div>
                 {data?.chamberInformation?.map((e, index) => {
                   return (
-                    <div key={`chamber_${index}`}>
+                    <div className="border border-primary rounded-lg my-3 lg:my-6 p-3 lg:p-6" key={`chamber_${index}`}>
                       <div className="mt-3 lg:mt-4">
                         <h4 className="font-bold text-lg text-blue-700">
                           {e?.name}
@@ -249,11 +249,11 @@ function DoctorTabs({ data, UserId }) {
         {activeTab === i18n.t("Chamber") && (
           <div>
             <h3 className="font-bold text-lg">{i18n.t("Chamber Information")}</h3>
-            <div>
+            <div className="">
               {data?.chamberInformation?.map((e, index) => {
                 return (
-                  <div key={`chamber_${index}`}>
-                    <div className="mt-3 lg:mt-4">
+                  <div className="border border-primary rounded-lg my-3 lg:my-6 p-3 lg:p-6" key={`chamber_${index}`}>
+                    <div className="">
                       <h4 className="font-bold text-lg text-blue-700">
                         {e?.name}
                       </h4>

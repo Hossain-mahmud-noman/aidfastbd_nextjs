@@ -7,79 +7,148 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 
 function AppointmentBooking({ id, token, chambers }) {
-   const { user } = useAuth()
-   console.log("🚀 ~ AppointmentBooking ~ user:", user)
+   const { user } = useAuth();
    const router = useRouter();
    const [isOpen, setIsOpen] = useState(false);
+   const [slots, setSlots] = useState([]);
+   const today = new Date().toISOString().split('T')[0];
+
    const [formData, setFormData] = useState({
-      name: "",
-      age: "",
-      mobile: "",
-      selectedChamber: "",
-      appointmentDate: "",
+      name: '',
+      age: '',
+      mobile: '',
+      selectedChamber: '',
+      appointmentDate: '',
       slot: null,
    });
-
-   const today = new Date().toISOString().split('T')[0];
-   const [slots, setSlots] = useState([]);
-
 
    const handleAppoinment = () => {
       if (user) {
          toggleModal();
+      } else {
+         toast.warning(
+            'Please log in first to continue with your appointment booking.'
+         );
+         router.push(`/login?id=${id}&slug=doctor`);
       }
-      else {
-         toast.warning("Please log in first to continue with your appointment booking.");
-         router.push(`/login?id=${id}&slug=doctor`)
-      }
-   }
-
+   };
 
    const toggleModal = () => {
       setIsOpen(!isOpen);
-      document.body.style.overflow = isOpen ? "" : "hidden";
+      document.body.style.overflow = isOpen ? '' : 'hidden';
    };
 
    const closeModal = (e) => {
-      if (e.target.id === "modal-background") {
+      if (e.target.id === 'modal-background') {
          toggleModal();
       }
    };
 
    const handleKeyDown = (e) => {
-      if (e.key === "Escape" && isOpen) {
+      if (e.key === 'Escape' && isOpen) {
          toggleModal();
       }
    };
 
    const handleChange = (e) => {
       const { name, value } = e.target;
-
       setFormData((prev) => ({ ...prev, [name]: value }));
 
       if (name === "selectedChamber") {
-         setFormData((prev) => ({ ...prev, appointmentDate: "", slot: null }));
+         setFormData((prev) => ({
+            ...prev,
+            appointmentDate: "",
+            slot: null,
+         }));
          setSlots([]);
       }
 
       if (name === "appointmentDate") {
          const selectedDate = new Date(value);
-         const dayName = selectedDate
+         const dayNameEn = selectedDate
             .toLocaleDateString("en-US", { weekday: "short" })
-            .toUpperCase();
+            .toUpperCase(); // e.g. "FRI"
+
+         const dayNameBnMap = {
+            SUN: "রবি",
+            MON: "সোম",
+            TUE: "মঙ্গল",
+            WED: "বুধ",
+            THU: "বৃহস্পতি",
+            FRI: "শুক্র",
+            SAT: "শনি",
+         };
+         const dayNameBn = dayNameBnMap[dayNameEn];
 
          const chamberId = formData.selectedChamber;
          const chamber = chambers.find((ch) => ch.id === chamberId);
 
          if (chamber) {
-            const allSlots = chamber.chamberTimeDetails.map((time) => ({
-               id: time.id,
-               value: `${time.dayName} ${time.dayTime}-${time.eveningTime}`,
-               day: time.dayName,
-            }));
+            const noticeText = chamber.notice || "";
 
-            const filteredSlots = allSlots.filter((slot) => slot.day === dayName);
-            setSlots(filteredSlots);
+            // Auto-detect closed days from notice
+            const closedDaysFromNotice = [
+               "FRI", "SAT", "SUN", "MON", "TUE", "WED", "THU",
+               "শুক্র", "শনি", "রবি", "সোম", "মঙ্গল", "বুধ", "বৃহস্পতি",
+            ].filter((day) => noticeText.includes(day));
+
+            const closedDays = [...new Set([...closedDaysFromNotice])];
+
+            if (closedDays.includes(dayNameEn) || closedDays.includes(dayNameBn)) {
+               setSlots([]);
+            } else {
+               const filteredSlots = chamber.chamberTimeDetails
+                  .filter(
+                     (time) =>
+                        time.dayName === dayNameEn || time.dayName === dayNameBn
+                  )
+                  .flatMap((time) => {
+                     const slotsArr = [];
+
+                     // Morning slots
+                     if (Array.isArray(time.dayTime) && time.dayTime.length > 0) {
+                        slotsArr.push(
+                           ...time.dayTime.map((slot) => ({
+                              // id only time.id (without appended time)
+                              id: time.id,
+                              value: slot,
+                              period: "Morning",
+                              day: time.dayName,
+                           }))
+                        );
+                     } else if (typeof time.dayTime === "string" && time.dayTime.trim()) {
+                        slotsArr.push({
+                           id: time.id,
+                           value: time.dayTime,
+                           period: "Morning",
+                           day: time.dayName,
+                        });
+                     }
+
+                     // Evening slots
+                     if (Array.isArray(time.eveningTime) && time.eveningTime.length > 0) {
+                        slotsArr.push(
+                           ...time.eveningTime.map((slot) => ({
+                              id: time.id,
+                              value: slot,
+                              period: "Evening",
+                              day: time.dayName,
+                           }))
+                        );
+                     } else if (typeof time.eveningTime === "string" && time.eveningTime.trim()) {
+                        slotsArr.push({
+                           id: time.id,
+                           value: time.eveningTime,
+                           period: "Evening",
+                           day: time.dayName,
+                        });
+                     }
+
+                     return slotsArr;
+                  });
+
+               setSlots(filteredSlots);
+            }
          } else {
             setSlots([]);
          }
@@ -89,8 +158,9 @@ function AppointmentBooking({ id, token, chambers }) {
    };
 
    const handleSubmit = async (e) => {
-      e.preventDefault()
-      const { name, age, mobile, selectedChamber, appointmentDate, slot } = formData;
+      e.preventDefault();
+      const { name, age, mobile, selectedChamber, appointmentDate, slot } =
+         formData;
 
       if (
          !name ||
@@ -98,63 +168,63 @@ function AppointmentBooking({ id, token, chambers }) {
          !mobile ||
          !selectedChamber ||
          !appointmentDate ||
-         !slot ||
-         !slot.id
+         !slot
       ) {
-         toast.warning("Please fill in all required fields.");
+         toast.warning('Please fill in all required fields.');
          return;
       }
 
       const payload = {
-         name: name,
-         age: age,
+         name,
+         age,
          mobileNo: mobile,
-         userId: user.id,
+         userId: user.userId,
          doctorInformationId: id,
          chamberInformationId: selectedChamber,
-         chamberTimeDetailsId: slot.id,
-         appointmentDate: appointmentDate,
-         appointmentTimeSlot: slot.value,
+         chamberTimeDetailsId: slot.id, // only the id from chamberTimeDetails
+         appointmentDate,
+         appointmentTimeSlot: slot.value, // the time string (e.g. "4:30pm")
          isDay: true,
          isDeleted: false,
          isConfirmed: true,
       };
 
-      headerx["Authorization"] = `Bearer ${token}`;
+      headerx['Authorization'] = `Bearer ${token}`;
 
       try {
-         const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/BookAppointment`, {
-            method: "POST",
-            headers: headerx,
-            body: JSON.stringify(payload),
-         });
+         const res = await fetch(
+            `https://api.aidfastbd.com/api/GeneralInformation/BookAppointment`,
+            {
+               method: 'POST',
+               headers: headerx,
+               body: JSON.stringify(payload),
+            }
+         );
 
          const data = await res.json();
 
          if (res.ok) {
-            toast.success("Successfully booked appointment");
-            router.push("/appointments")
+            toast.success('Successfully booked appointment');
+            router.push('/appointments');
          } else {
-            toast.error(data?.message || "Something went wrong!");
+            toast.error(data?.message || 'Something went wrong!');
          }
       } catch (error) {
-         toast.error("Something went wrong!");
+         toast.error('Something went wrong!');
       } finally {
          toggleModal();
       }
    };
 
-
    useEffect(() => {
-      if (isOpen) document.addEventListener("keydown", handleKeyDown);
-      return () => document.removeEventListener("keydown", handleKeyDown);
+      if (isOpen) document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
    }, [isOpen]);
 
    return (
       <nav className="fixed bottom-0 left-0 right-0 shadow-lg p-2 z-[10000] aid-container">
          <button
-
-            onClick={() => handleAppoinment()}
+            onClick={handleAppoinment}
             className="w-full bg-green-500 text-white py-2 px-4 rounded-lg"
          >
             Book Appointment
@@ -188,12 +258,12 @@ function AppointmentBooking({ id, token, chambers }) {
                            name="selectedChamber"
                            value={formData.selectedChamber}
                            onChange={handleChange}
-                           className="w-full border border-gray-300 rounded-md px-4 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-500"
+                           className="w-full border border-gray-300 rounded-md px-4 py-2"
                         >
                            <option value="">Select Chamber</option>
                            {chambers.map((chamber) => (
                               <option key={chamber.id} value={chamber.id}>
-                                 {chamber.name}
+                                 {chamber.name || chamber.location || "Chamber"}
                               </option>
                            ))}
                         </select>
@@ -208,7 +278,8 @@ function AppointmentBooking({ id, token, chambers }) {
                            value={formData.appointmentDate}
                            onChange={handleChange}
                            min={today}
-                           className="w-full border border-gray-300 rounded-md px-4 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-500"
+                           className="w-full border border-gray-300 rounded-md px-4 py-2"
+                           disabled={!formData.selectedChamber}
                         />
                      </div>
 
@@ -225,19 +296,19 @@ function AppointmentBooking({ id, token, chambers }) {
                                  slot: selectedSlot || null,
                               }));
                            }}
-                           className="w-full border border-gray-300 rounded-md px-4 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-500"
+                           className="w-full border border-gray-300 rounded-md px-4 py-2"
                            disabled={slots.length === 0}
                         >
                            <option value="">Select Slot</option>
                            {slots.map((slot) => (
-                              <option key={slot.id} value={slot.id}>
-                                 {slot.value}
+                              <option key={`${slot.id}-${slot.period}-${slot.value}`} value={slot.id}>
+                                 {slot.period} {slot.value}
                               </option>
                            ))}
                         </select>
-                        {slots.length === 0 && (
+                        {slots.length === 0 && formData.selectedChamber && formData.appointmentDate && (
                            <p className="text-sm text-red-500 mt-1">
-                              Please select a chamber and date to view available slots.
+                              No available slots for this date.
                            </p>
                         )}
                      </div>
@@ -281,7 +352,7 @@ function AppointmentBooking({ id, token, chambers }) {
                         />
                      </div>
 
-                     {/* Submit Button */}
+                     {/* Submit */}
                      <button
                         type="submit"
                         className="w-full bg-green-500 text-white py-2 px-4 rounded-lg"
