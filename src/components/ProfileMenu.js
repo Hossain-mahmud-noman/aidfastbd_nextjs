@@ -27,7 +27,7 @@ const ProfileMenu = ({ data }) => {
     const inactiveProfiles = allProfiles.filter(profile => !data[profile.key]);
 
     return (
-        <div className="min-h-screen bg-white p-4">
+        <div className="p-4">
             <div className="space-y-4">
                 {activeProfiles.map((item, index) => (
                     <div
@@ -35,7 +35,7 @@ const ProfileMenu = ({ data }) => {
                             window.location.href = `${item.link}`;
                         }}
                         key={index}
-                        className="flex items-center space-x-4 border-b pb-2 cursor-pointer"
+                        className="flex items-center space-x-4 border-b last:border-b-0 pb-2 cursor-pointer"
                     >
                         <span className="text-2xl">{item.icon}</span>
                         <span className="text-gray-700">{item.label}</span>

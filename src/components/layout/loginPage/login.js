@@ -18,7 +18,7 @@ const Login = () => {
       label: <Link href="/profile">{i18n.t("Profile")}</Link>,
     },
     {
-      key: 't',
+      key: '2',
       label: (
         <Link href='/appointments' className="w-full text-left">
           {i18n.t("Appoinments")}
@@ -26,7 +26,15 @@ const Login = () => {
       ),
     },
     {
-      key: '2',
+      key: '3',
+      label: (
+        <button href='/more' className="w-full text-left">
+          {i18n.t("More Menu")}
+        </button>
+      ),
+    },
+    {
+      key: '4',
       label: (
         <button onClick={logout} className="w-full text-left">
           {i18n.t("Logout")}

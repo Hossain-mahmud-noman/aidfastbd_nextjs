@@ -5,11 +5,12 @@ import { useRouter } from 'next/navigation';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from 'sonner';
 import handleLogout from '../../context/logout';
+import { useI18n } from '../../context/i18n';
 
 
 const ResetForm = ({ user }) => {
    const router = useRouter();
-
+   const i18n = useI18n()
    const [showPassword, setShowPassword] = useState(false);
    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
    const [password, setPassword] = useState('');
@@ -61,8 +62,8 @@ const ResetForm = ({ user }) => {
 
    return (
       <div className="flex flex-col items-center justify-center pt-4 px-4">
-         <div className="bg-white p-6 rounded-lg shadow-custom-light w-full max-w-3xl mx-auto">
-            <p className="text-center text-gray-700 mb-6">Be happy and be healthy</p>
+         <div className="bg-white p-6 rounded-lg shadow-custom-light w-full max-w-md mx-auto">
+            <p className="text-center text-gray-700 mb-6">{i18n.t("Be Happy and be healthy")}</p>
 
             <form onSubmit={handleSubmit}>
                {/* Password Field */}
@@ -71,7 +72,7 @@ const ResetForm = ({ user }) => {
                      type={showPassword ? "text" : "password"}
                      value={password}
                      onChange={(e) => setPassword(e.target.value)}
-                     placeholder="Enter New Password"
+                     placeholder={i18n.t("Enter password")}
                      className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                      required
                   />
@@ -90,7 +91,7 @@ const ResetForm = ({ user }) => {
                      type={showConfirmPassword ? "text" : "password"}
                      value={confirmPassword}
                      onChange={(e) => setConfirmPassword(e.target.value)}
-                     placeholder="Enter Confirm Password"
+                     placeholder={i18n.t("Confirm password")}
                      className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                      required
                   />
@@ -112,7 +113,7 @@ const ResetForm = ({ user }) => {
                   disabled={isLoading}
                   className={`w-full p-3 rounded-lg text-white ${isLoading ? 'bg-blue-300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'} transition duration-200`}
                >
-                  {isLoading ? 'Submitting...' : 'Submit'}
+                  {isLoading ? 'Submitting...' : i18n.t("Submit")}
                </button>
             </form>
          </div>

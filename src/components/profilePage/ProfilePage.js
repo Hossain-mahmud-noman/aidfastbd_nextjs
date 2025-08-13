@@ -6,11 +6,15 @@ import { useAuth } from '../../context/AuthContext';
 import ProfileMenu from '../ProfileMenu';
 import Loader from '../../context/loader';
 import { base_endpoint, headerx } from '../../utils/constants';
+import AppBar from '../AppBar';
+import { FaArrowLeft } from 'react-icons/fa6';
+import { useI18n } from '../../context/i18n';
 
 const ProfilePage = () => {
   const { user, token, loading } = useAuth();
   const [data, setData] = useState(null);
   const router = useRouter();
+  const i18n = useI18n()
 
   useEffect(() => {
     if (loading) return;
@@ -43,8 +47,14 @@ const ProfilePage = () => {
   if (!user || !token) return null;
 
   return (
-    <div className="pt-10 aid-container">
-      {data ? <ProfileMenu data={data} /> : <div><Loader /></div>}
+    <div className="aid-container">
+      <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title={i18n.t("Profile")} />
+      {data ?
+        <div className='mt-5 lg:mt-6 p-4 shadow-custom-light'>
+          <ProfileMenu data={data} />
+        </div>
+        :
+        <div><Loader /></div>}
     </div>
   );
 };

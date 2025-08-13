@@ -2,11 +2,15 @@
 import React, { useEffect, useState } from "react";
 import AppointmentCard from "../../components/card/AppointmentCard";
 import { useAuth } from "../../context/AuthContext";
+import AppBar from "../../components/AppBar";
+import { FaArrowLeft } from "react-icons/fa6";
+import { useI18n } from "../../context/i18n";
 
 export default function AppointmentClient() {
   const { user, token } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const i18n = useI18n()
 
   const fetchAppointments = async () => {
     try {
@@ -64,53 +68,56 @@ export default function AppointmentClient() {
   });
 
   return (
-    <div className="aid-container space-y-12">
-      {
-        todaysAppointments.length > 0 &&
-        <section>
-          <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300 pb-2 text-gray-800">
-            {"Today's Appointments"}
-          </h2>
-          <div className="space-y-4">
-            {todaysAppointments.map((appt) => (
-              <AppointmentCard key={appt.id} data={appt} token={token} />
-            ))}
-          </div>
-        </section>
-      }
+    <div className="aid-container">
+      <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title={i18n.t("Appointment")} />
 
-      {
-        upcomingAppointments.length > 0 &&
-        <section>
-          <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300 pb-2 text-gray-800">
-            Upcoming Appointments
-          </h2>
-          <div className="space-y-4">
-            {upcomingAppointments.map((appt) => (
-              <AppointmentCard key={appt.id} data={appt} token={token} />
-            ))}
-          </div>
-        </section>
-      }
+      <div className="space-y-6 lg:space-y-10 mt-6">
+        {
+          todaysAppointments.length > 0 &&
+          <section>
+            <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300 pb-2 text-gray-800">
+              {"Today's Appointments"}
+            </h2>
+            <div className="space-y-4">
+              {todaysAppointments.map((appt) => (
+                <AppointmentCard key={appt.id} data={appt} token={token} />
+              ))}
+            </div>
+          </section>
+        }
+        {
+          upcomingAppointments.length > 0 &&
+          <section>
+            <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300 pb-2 text-gray-800">
+              Upcoming Appointments
+            </h2>
+            <div className="space-y-4">
+              {upcomingAppointments.map((appt) => (
+                <AppointmentCard key={appt.id} data={appt} token={token} />
+              ))}
+            </div>
+          </section>
+        }
 
-      {
-        previousAppointments.length > 0 &&
-        <section>
-          <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300 pb-2 text-gray-800">
-            Previous Appointments
-          </h2>
-          <div className="space-y-4">
-            {previousAppointments.map((appt) => (
-              <AppointmentCard
-                key={appt.id}
-                data={appt}
-                token={token}
-                isHistory={true}
-              />
-            ))}
-          </div>
-        </section>
-      }
+        {
+          previousAppointments.length > 0 &&
+          <section>
+            <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300 pb-2 text-gray-800">
+              Previous Appointments
+            </h2>
+            <div className="space-y-4">
+              {previousAppointments.map((appt) => (
+                <AppointmentCard
+                  key={appt.id}
+                  data={appt}
+                  token={token}
+                  isHistory={true}
+                />
+              ))}
+            </div>
+          </section>
+        }
+      </div>
     </div>
   );
 }

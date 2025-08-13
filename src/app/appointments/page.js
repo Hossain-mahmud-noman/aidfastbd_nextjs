@@ -8,7 +8,7 @@ export const metadata = {
 async function page() {
 
   return (
-    <div className="pt-16 mt-3">
+    <div className="mt-3">
       <AppointmentClient  />
     </div>
   );

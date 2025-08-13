@@ -1,8 +1,6 @@
-import { cookies } from "next/headers";
-import BottomNavigation from "../../components/BottomNavigation"
-import LayoutAppBar from "../../components/LayoutAppBar";
+
 import MoreMenu from '../../components/MoreMenu';
-import { appname, map_key } from "../../utils/constants";
+import { appname } from "../../utils/constants";
 
 
 export const metadata = {
@@ -10,27 +8,12 @@ export const metadata = {
 };
 
 
-const checkLogin = async () => {
-  try {
-    const locationCookie = cookies().get('userLocation') ?? null;
-    const tokenCookie = cookies().get('token') ?? "";
-    const userCookie = cookies().get('user') ?? null;
-
-    return { token: tokenCookie, user: userCookie, location: locationCookie !== null ? JSON.parse(locationCookie.value) : { "lat": 23.8103, "lng": 90.412, "name": "" } };
-
-  } catch (err) {
-    return { token: "", user: null, location: { "lat": 23.8103, "lng": 90.412, "name": "" } };
-  }
-}
-
 async function page() {
-
-  const { token, location } = await checkLogin();
 
   return (
     <>
-      <div className="aid-container py-10">
-        <MoreMenu token={token} />
+      <div className="aid-container">
+        <MoreMenu />
       </div>
     </>
   )
