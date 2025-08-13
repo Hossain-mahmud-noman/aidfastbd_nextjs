@@ -14,11 +14,8 @@ const Location = () => {
   const inputRef = useRef(null);
   const router = useRouter();
 
-  const defaultLat = 23.8103;
-  const defaultLng = 90.4125;
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [mapCenter, setMapCenter] = useState({ lat: defaultLat, lng: defaultLng });
+  const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 });
   const [searchLocation, setSearchLocation] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [locationName, setLocationName] = useState("Detecting location...");
@@ -35,13 +32,10 @@ const Location = () => {
 
   const formatAddress = (results) => {
     if (!results || results.length === 0) return "Location not specified";
-
-    // Try to get the most precise address first
     const preciseAddress = results.find(result =>
       result.types.includes("street_address") ||
       result.types.includes("premise")
     ) || results[0];
-
     return preciseAddress.formatted_address;
   };
 
@@ -87,6 +81,8 @@ const Location = () => {
 
         localStorage.setItem("lat", lat);
         localStorage.setItem("lon", lng);
+        localStorage.setItem("fullAddress", formattedAddress);
+        localStorage.setItem("locationName", displayName);
       } else {
         setLocationName("Location not found");
         setFullAddress("Address not available");
@@ -144,48 +140,38 @@ const Location = () => {
     setIsGeolocating(true);
     setError(null);
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          setMapCenter({ lat: latitude, lng: longitude });
-          await fetchLocationDetails(latitude, longitude);
-          setIsModalOpen(false); // Close modal after getting location
-        },
-        async (error) => {
-          console.error("Geolocation error:", error);
-          setIsGeolocating(false);
-
-          const latStored = localStorage.getItem("lat");
-          const lngStored = localStorage.getItem("lon");
-
-          if (latStored && lngStored) {
-            setMapCenter({
-              lat: parseFloat(latStored),
-              lng: parseFloat(lngStored)
-            });
-            await fetchLocationDetails(
-              parseFloat(latStored),
-              parseFloat(lngStored)
-            );
-          } else {
-            setMapCenter({ lat: defaultLat, lng: defaultLng });
-            await fetchLocationDetails(defaultLat, defaultLng);
-          }
-
-          setError("Couldn't get precise location. Using approximate location.");
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0
-        }
-      );
-    } else {
-      alert("Geolocation is not supported by your browser");
-      setMapCenter({ lat: defaultLat, lng: defaultLng });
-      fetchLocationDetails(defaultLat, defaultLng);
+    if (!navigator.geolocation) {
+      setIsGeolocating(false);
+      setError("Geolocation is not supported by your browser.");
+      return;
     }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        setMapCenter({ lat: latitude, lng: longitude });
+        await fetchLocationDetails(latitude, longitude);
+        setIsModalOpen(false);
+      },
+      (err) => {
+        setIsGeolocating(false);
+        console.error("Geolocation error:", err);
+        if (err.code === 1) {
+          setError("Location access denied. Please enable GPS.");
+        } else if (err.code === 2) {
+          setError("Location unavailable. Please check your GPS signal.");
+        } else if (err.code === 3) {
+          setError("Location request timed out. Try again.");
+        } else {
+          setError("Failed to get your location.");
+        }
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 20000, // wait up to 20 seconds
+        maximumAge: 0   // always fresh location
+      }
+    );
   };
 
   const handleMarkerDrag = async (event) => {
@@ -222,20 +208,6 @@ const Location = () => {
 
     initializeLocation();
   }, [i18n]);
-
-  const getDisplayText = () => {
-    if (isGeolocating) return "Detecting location...";
-    if (isLoading) return "Loading...";
-    if (error) return "Tap to set location";
-
-    if (window.innerWidth < 768) {
-      return locationName.length > 10
-        ? `${locationName.substring(0, 10)}...`
-        : locationName;
-    }
-
-    return fullAddress || locationName;
-  };
 
   const cleanLocationName = (locationName || "").replace(/^[^,]+,\s*/, "");
   const formattedShortLocation =
