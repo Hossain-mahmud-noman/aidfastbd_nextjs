@@ -14,7 +14,7 @@ const DoctorCategory = ({ specialityData = [] }) => {
    const [spData, setSpData] = useState([]);
    const [spActive, setSpActive] = useState(null);
    const [spLoading, setSpLoading] = useState(false);
-
+   const i18n = useI18n()
    const swiperRef = useRef(null);
 
    useEffect(() => {
@@ -34,8 +34,8 @@ const DoctorCategory = ({ specialityData = [] }) => {
          swiperRef.current.swiper.slidePrev();
       }
    };
-   
-   const i18n = useI18n()
+
+
 
    return (
       <>
@@ -93,9 +93,8 @@ const DoctorCategory = ({ specialityData = [] }) => {
 
                                     setSpActive(index === spActive ? null : index);
                                  }}
-                                 className={`cursor-pointer flex-shrink-0 w-[150px] h-[220px] bg-white shadow-custom-light rounded-lg p-1 ${
-                                    index === spActive ? "border-green-500 border-t-4 border-2" : ""
-                                 }`}
+                                 className={`cursor-pointer flex-shrink-0 w-[150px] h-[220px] bg-white shadow-custom-light rounded-lg p-1 ${index === spActive ? "border-green-500 border-t-4 border-2" : ""
+                                    }`}
                               >
                                  <Image
                                     width={150}
@@ -105,7 +104,12 @@ const DoctorCategory = ({ specialityData = [] }) => {
                                     className="w-full object-cover rounded-t-lg"
                                  />
                                  <div className="mt-4 text-center">
-                                    <p className="text-sm font-semibold">{speciality.text}</p>
+                                    {/* language */}
+                                    <p className="text-sm font-semibold">
+                                       {
+                                          i18n?.language == 'bn' ? speciality.textBn : speciality.text
+                                       }
+                                       </p>
                                  </div>
                               </div>
                            </SwiperSlide>

@@ -1,4 +1,4 @@
-import { appname, base_endpoint, } from "../../utils/constants";
+import { appname } from "../../utils/constants";
 import DoctorList from '../../components/list/DoctorList';
 import DoctorCategory from '../../components/category/DoctorCategory.js'
 import SearchDoctor from "../../components/search/SearchDoctor";
@@ -8,7 +8,7 @@ export const metadata = {
 
 const fetchSpecialityData = async () => {
   try {
-    const res = await fetch(`${base_endpoint}/Dropdown/GetDropDownList?type=Speciality`, { next: { revalidate: 3600 } });
+    const res = await fetch(`https://api.aidfastbd.com/api/Dropdown/GetSpecialityDropDownList`, { next: { revalidate: 3600 } });
     if (res.status) {
       const data = await res.json();
       return data;
