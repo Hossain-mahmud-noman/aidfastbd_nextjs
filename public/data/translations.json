@@ -313,7 +313,7 @@
     "AidFastBD Services": "AidFastBD এর সেবাসমূহ",
     "AidFastBD Services Description": "দেশের সকল স্বাস্থ্যসেবা এখন AidFast এ",
     "Book Specialist Doctor": "নিকটতম পছন্দের ডাক্তারের সিরিয়াল নিন",
-    "Book Specialist Doctor Description": "বিশ্বস্ত ও অভিজ্ঞ ডাক্তারদের সঙ্গে আপনার সুবিধামতো তারিখ ও সময়ে অ্যাপয়েন্টমেন্ট বুক করুন।  AidFastBD-এর মাধ্যমে দ্রুত ও নিশ্চিন্তে সেবা নিন",
+    "Book Specialist Doctor Description": "বিশ্বস্ত ও অভিজ্ঞ ডাক্তারদের সঙ্গে আপনার সুবিধামতো তারিখ ও সময়ে অ্যাপয়েন্টমেন্ট বুক করুন। AidFastBD-এর মাধ্যমে দ্রুত ও নিশ্চিন্তে সেবা নিন",
     "Nearby diagnostic and hospital facilities": "নিকটতম ডায়াগনস্টিক সেন্টার ও হাসপাতাল",
     "Diagnostics and Hospitals Description": "AidFastBD থেকে সহজেই আপনার প্রয়োজন অনুযায়ী সেরা সেবা নিশ্চিত করুন। আধুনিক সুবিধা ও দ্রুততম সময়ে টেস্ট চিকিৎসার জন্য বুক করুন পছন্দের সেন্টার",
     "Get the nearest ambulance service in emergencies — just one click away": "জরুরি মুহুর্তে নিকটতম এম্বুলেন্স সার্ভিস নিন -মাত্র এক ক্লিকেই",
@@ -502,6 +502,10 @@
     "General Profile": "সাধারন প্রফাইল",
     "Appointment": "অ্যাপয়েন্টমেন্ট",
     "More Menu": "মোর মেনু",
-    "Seamless healthcare solutions, now at your fingertips.": "স্বাস্থ্যসেবার ঝামেলাহীন সমাধান এখন আপনার ফোনেই।"
+    "Seamless healthcare solutions, now at your fingertips.": "স্বাস্থ্যসেবার ঝামেলাহীন সমাধান এখন আপনার ফোনেই।",
+    "Nearest Diagnostic Center": "নিকটতম ডায়াগনস্টিক সেন্টার",
+    "Nearest Doctor": "নিকটতম ডাক্তার",
+    "See More Diagnostick Center": "আরো ডায়াগনস্টিক সেন্টার দেখুন",
+    "See All Doctor": "সকল ডাক্তার দেখুন"
   }
 }

@@ -35,8 +35,6 @@ const DoctorCategory = ({ specialityData = [] }) => {
       }
    };
 
-
-
    return (
       <>
          <div className='mb-1'>

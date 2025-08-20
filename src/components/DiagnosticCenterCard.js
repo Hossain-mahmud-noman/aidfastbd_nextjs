@@ -3,13 +3,13 @@ import { image_base_endpoint } from '../utils/constants';
 import { FaStar, FaPhone } from "react-icons/fa";
 import Image from 'next/image';
 
-const DiagnosticCenterCard = ({ diagnostic }) => {
+const DiagnosticCenterCard = ({ diagnostic, slug }) => {
     const defaultImageUrl = "/images/diagnostic.jpg";
     const imageUrl = diagnostic.profileImage !== null && diagnostic.profileImage !== "" ? `${image_base_endpoint}${diagnostic.profileImage}` : defaultImageUrl;
     return (
         <Link href={"/diagnostic/" + diagnostic.userId}>
             <div
-                className="flex flex-col h-full bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-custom-light"
+                className={`${slug === 'page' ? "shadow-custom-light" : "shadow-md hover:shadow-custom-light"} flex flex-col h-full bg-white rounded-lg transition-all duration-300`}
                 aria-label={`Diagnostic ${diagnostic.name} information card`}
             >
                 <div className="flex-1 pl-3 pt-3 pr-3 pb-1">
