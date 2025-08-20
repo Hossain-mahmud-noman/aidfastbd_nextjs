@@ -52,7 +52,7 @@ body {
   @apply xl:text-xl text-[18px]  font-inter font-medium;
 }
 .heading1 {
-  @apply xl:text-5xl lg:text-4xl md:text-3xl text-2xl font-inter font-bold leading-10;
+  @apply xl:text-4xl lg:text-3xl md:text-2xl text-xl font-inter font-bold leading-10;
 }
 .app-heading {
   @apply xl:text-4xl lg:text-3xl md:text-2xl text-xl font-inter font-bold leading-10;

@@ -1,9 +1,9 @@
 'use client'
 
 import Image from "next/image"
-import { useI18n } from "../../context/i18n"
+import { useI18n } from "../../../context/i18n"
 import { FiDownload } from "react-icons/fi"
-import { event } from "../../lib/gtag";
+import { event } from "../../../lib/gtag";
 
 const MobileApp = () => {
    const i18n = useI18n();
@@ -26,7 +26,7 @@ const MobileApp = () => {
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 aid-container">
          <div className="flex items-center justify-between flex-col md:flex-row xl:gap-[105px] lg:gap-14 md:gap-8 gap-5">
             <div className="w-full">
-               <h1 className="app-heading text-[#212B36] !leading-[60px]">
+               <h1 className="heading1 text-[#212B36] !leading-[60px]">
                   {i18n.t("AidFast app — free to download")}
                </h1>
                <p className="description2 text[#061C3D] mt-4 md:mt-5 lg:mt-6 xl:mt-[30px]">

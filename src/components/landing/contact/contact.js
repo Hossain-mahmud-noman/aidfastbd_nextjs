@@ -1,11 +1,11 @@
 'use client'
 
 import { FaArrowRightLong } from "react-icons/fa6";
-import FormInput from "../../form/input";
+import FormInput from "../../../form/input";
 import { Form } from "antd";
 import { FiMail } from "react-icons/fi";
 import { toast, Toaster } from "sonner";
-import { useI18n } from "../../context/i18n";
+import { useI18n } from "../../../context/i18n";
 
 const Contact = () => {
    const [form] = Form.useForm();

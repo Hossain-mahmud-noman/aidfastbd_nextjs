@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { FaArrowRightLong } from "react-icons/fa6"
-import { useI18n } from "../../context/i18n"
+import { useI18n } from "../../../context/i18n"
 
 const Blog = () => {
    const i18n = useI18n()

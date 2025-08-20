@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image"
-import { useI18n } from "../../context/i18n";
+import { useI18n } from "../../../context/i18n";
 
 const Information = () => {
    const i18n = useI18n()

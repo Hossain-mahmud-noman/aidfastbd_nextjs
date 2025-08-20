@@ -1,6 +1,6 @@
 'use client'
 
-import { useI18n } from "../../context/i18n";
+import { useI18n } from "../../../context/i18n";
 import { Collapse } from "antd";
 import { useState } from "react";
 import { FaAngleUp } from "react-icons/fa";
