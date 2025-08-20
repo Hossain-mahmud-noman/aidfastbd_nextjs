@@ -8,22 +8,22 @@ const Information = () => {
    const data = [
       {
          image: "/home/info/i1.png",
-         heading: i18n.t("15400+"),
+         heading: i18n.t("15249+"),
          description: i18n.t("AidFast Beneficiary")
       },
       {
          image: "/home/info/i2.png",
          heading: i18n.t("98%"),
-         description: i18n.t("98% of customers gave a 5-star rating")
+         description: i18n.t("Rated 5 stars by our customers.")
       },
       {
          image: "/home/info/i3.png",
-         heading: i18n.t("700+"),
-         description: i18n.t("Diagnostic and medical centers included")
+         heading: i18n.t("16 + Service"),
+         description: i18n.t("Available through AidFast app")
       },
       {
          image: "/home/info/i4.png",
-         heading: i18n.t("1200+"),
+         heading: i18n.t("5000+"),
          description: i18n.t("App Installs Across Devices")
       }
    ];

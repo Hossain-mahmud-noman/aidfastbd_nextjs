@@ -54,6 +54,9 @@ body {
 .heading1 {
   @apply xl:text-5xl lg:text-4xl md:text-3xl text-2xl font-inter font-bold leading-10;
 }
+.app-heading {
+  @apply xl:text-4xl lg:text-3xl md:text-2xl text-xl font-inter font-bold leading-10;
+}
 
 .heading2 {
   @apply xl:text-3xl lg:text-2xl md:text-xl text-base font-inter font-semibold;

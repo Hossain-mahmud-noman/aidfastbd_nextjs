@@ -104,16 +104,7 @@ const Footer = () => {
                />
             </div>
          </div>
-         <div className="aid-container "
-            style={{
-               backgroundImage: `url('/lung.png')`,
-               backgroundRepeat: 'no-repeat',
-               backgroundPosition: 'center',
-               backgroundSize: 'contain',
-               backgroundBlendMode: 'overlay',
-               opacity: 1,
-            }}
-         >
+         <div className="aid-container">
 
             <div className="flex flex-col md:flex-row justify-center gap-3 lg:gap-0">
                <div className="w-full md:w-[30%] lg:w-[35%]">
@@ -142,14 +133,6 @@ const Footer = () => {
                         <FiDownload className="text-primary group-hover:text-white text-base" />
                         <p className="text-base lg:text-sm xl:text-base text-primary group-hover:text-white whitespace-pre">{i18n.t("Download Now")}</p>
                      </Link>
-                     {/* <Link href="/www.google.com" className="relative w-[150px] h-[50px]">
-                        <Image
-                           src="/home/service/apple.png"
-                           fill
-                           alt="App Store"
-                           className="object-contain"
-                        />
-                     </Link> */}
                   </div>
                </div>
                <div className="w-full md:w-[70%] lg:w-[65%] mt-5 sm:mt-0">
