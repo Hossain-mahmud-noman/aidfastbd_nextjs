@@ -78,7 +78,7 @@ const DoctorSpeciality = () => {
                 <SwiperSlide key={index} className="!w-auto">
                   <div
                     onClick={async () => {
-                      router.push(`/doctor?value=${speciality?.value}`)
+                      router.push(`/doctor?value=${speciality?.text}`)
                     }}
                     className={`cursor-pointer flex-shrink-0 w-[150px] h-[220px] bg-white shadow-custom-light rounded-lg p-1`}
                   >

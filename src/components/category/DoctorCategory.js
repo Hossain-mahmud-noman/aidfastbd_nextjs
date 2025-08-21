@@ -9,13 +9,54 @@ import "swiper/css/pagination";
 import { Keyboard, Navigation, Mousewheel } from "swiper/modules";
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
 import { useI18n } from '../../context/i18n';
+import { useSearchParams } from 'next/navigation';
 
 const DoctorCategory = ({ specialityData = [] }) => {
    const [spData, setSpData] = useState([]);
    const [spActive, setSpActive] = useState(null);
    const [spLoading, setSpLoading] = useState(false);
-   const i18n = useI18n()
+   const i18n = useI18n();
    const swiperRef = useRef(null);
+   const param = useSearchParams();
+   const value = param.get('value'); 
+
+
+   const fetchDoctors = async (specialityText, index = null) => {
+      try {
+         setSpLoading(true);
+         let Specialty = "";
+         if (specialityText) {
+            Specialty = `&Specialty=${specialityText}`;
+         }
+         let location = "";
+         let lat = localStorage.getItem("lat");
+         let lon = localStorage.getItem("lon");
+         if (lat && lon) {
+            location = `&lat=${lat}&lon=${lon}`;
+         }
+         const url = `${base_endpoint}/GeneralWeb/GetDoctorSearchList?pageNumber=1&pageSize=40${Specialty}${location}`;
+         const response = await fetch(url);
+         if (response.status === 200) {
+            const data = await response.json();
+            setSpData(data['data']);
+         } else {
+            setSpData([]);
+         }
+      } catch (err) {
+         setSpData([]);
+      } finally {
+         setSpLoading(false);
+      }
+      if (index !== null) {
+         setSpActive(index === spActive ? null : index);
+      }
+   };
+
+   useEffect(() => {
+      if (value) {
+         fetchDoctors(value); 
+      }
+   }, [value]);
 
    useEffect(() => {
       if (swiperRef.current && swiperRef.current.swiper) {
@@ -62,35 +103,7 @@ const DoctorCategory = ({ specialityData = [] }) => {
                         {specialityData.map((speciality, index) => (
                            <SwiperSlide key={index} className="!w-auto">
                               <div
-                                 onClick={async () => {
-                                    try {
-                                       setSpLoading(true);
-                                       let Specialty = "";
-                                       if (speciality) {
-                                          Specialty = `&Specialty=${speciality.text}`;
-                                       }
-                                       let location = "";
-                                       let lat = localStorage.getItem("lat");
-                                       let lon = localStorage.getItem("lon");
-                                       if (lat && lon) {
-                                          location = `&lat=${lat}&lon=${lon}`;
-                                       }
-                                       const url = `${base_endpoint}/GeneralWeb/GetDoctorSearchList?pageNumber=1&pageSize=40${Specialty}${location}`;
-                                       const response = await fetch(url);
-                                       if (response.status === 200) {
-                                          const data = await response.json();
-                                          setSpData(data['data']);
-                                       } else {
-                                          setSpData([]);
-                                       }
-                                    } catch (err) {
-                                       setSpData([]);
-                                    } finally {
-                                       setSpLoading(false);
-                                    }
-
-                                    setSpActive(index === spActive ? null : index);
-                                 }}
+                                 onClick={() => fetchDoctors(speciality.text, index)}
                                  className={`cursor-pointer flex-shrink-0 w-[150px] h-[220px] bg-white shadow-custom-light rounded-lg p-1 ${index === spActive ? "border-green-500 border-t-4 border-2" : ""
                                     }`}
                               >
@@ -102,12 +115,9 @@ const DoctorCategory = ({ specialityData = [] }) => {
                                     className="w-full object-cover rounded-t-lg"
                                  />
                                  <div className="mt-4 text-center">
-                                    {/* language */}
                                     <p className="text-sm font-semibold">
-                                       {
-                                          i18n?.language == 'bn' ? speciality.textBn : speciality.text
-                                       }
-                                       </p>
+                                       {i18n?.language == 'bn' ? speciality.textBn : speciality.text}
+                                    </p>
                                  </div>
                               </div>
                            </SwiperSlide>
@@ -130,13 +140,13 @@ const DoctorCategory = ({ specialityData = [] }) => {
                </div>
             ) : (
                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 mt-5 xl:mt-12">
-                  {spActive !== null && spData.map((d, index) => (
+                  {(spActive !== null || value) && spData.map((d, index) => (
                      <DoctorCard key={`Speciality_${index}`} doctor={d} />
                   ))}
                </div>
             )}
          </div>
-         {spActive !== null && <h3 className="text-lg ml-3 mb-2">{i18n.t("Nearest Doctors")}</h3>}
+         {(spActive !== null || value) && <h3 className="text-lg ml-3 mb-2">{i18n.t("Nearest Doctors")}</h3>}
       </>
    );
 };
