@@ -5,6 +5,7 @@ import Service from '../components/landing/service/service.js'
 import Information from '../components/landing/information/information.js'
 import DoctorSpeciality from '../components/landing/specialty/doctorSpeciality.js'
 import Doctor from '../components/landing/Doctor/doctor.js'
+import Consultation from '../components/landing/consultation/consultation.js'
 import DiagnostickCenter from '../components/landing/diagnosticCenter/diagnostickCenter.js'
 import MobileApp from '../components/landing/mobileApp/mobileApp.js'
 import Testimonials from '../components/landing/testimonials/testimonials.js'
@@ -22,6 +23,7 @@ export default async function Home() {
         {/* <About /> */}
         <DoctorSpeciality />
         <Doctor />
+        <Consultation />
         <DiagnostickCenter />
         <Information />
         <MobileApp />

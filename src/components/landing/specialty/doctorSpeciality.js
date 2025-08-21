@@ -52,7 +52,7 @@ const DoctorSpeciality = () => {
     }
   };
   return (
-    <div className="aid-container pt-10">
+    <div className="aid-container mt-10 md:mt-14 lg:mt-20 xl:mt-[120px]">
       <h1 className="heading1 text-center text-[#252525]">{i18n.t("Find doctors by specialty")}</h1>
       <div className="w-full mt-7 md:mt-9 lg:mt-12">
         <div className="w-full">

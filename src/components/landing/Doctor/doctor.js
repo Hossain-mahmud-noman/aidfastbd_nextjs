@@ -11,7 +11,7 @@ const Doctor = () => {
       'https://api.aidfastbd.com/api/GeneralWeb/GetDoctorSearchList'
    );
    return (
-      <div className="mt-8 md:mt-10 lg:mt-16">
+      <div className="mt-8 md:mt-16 lg:mt-20 xl:mt-[109px]">
          <div className="aid-container">
             <h1 className="heading1 text-center text-[#252525]">{i18n.t("Nearest Doctor")}</h1>
             <div className="mt-7 md:mt-9 lg:mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
