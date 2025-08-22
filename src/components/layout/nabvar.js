@@ -83,7 +83,7 @@ const Navbar = ({ textColor = "text-black" }) => {
                   textColor={textColor}
                />
             </ul>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0.5 md:gap-1">
                <Location />
                <Language />
                <LoginPage />
@@ -91,7 +91,7 @@ const Navbar = ({ textColor = "text-black" }) => {
                   className={`lg:hidden text-primary text-2xl `}
                   onClick={() => setIsDrawerOpen(true)}
                >
-                  <IoMenuOutline className="text-2xl relative z-20 ml-1 sm:ml-0" />
+                  <IoMenuOutline className="text-3xl md:text-4xl relative z-20 sm:ml-0" />
                </button>
             </div>
          </div>
@@ -141,7 +141,7 @@ const Navbar = ({ textColor = "text-black" }) => {
                >
                   {i18n.t("Ambulance")}
                </Link>
-               <MobileDropdown title="Pages" items={pagesItems} />
+               <MobileDropdown  title="Pages" items={pagesItems} />
             </div>
          </Drawer>
       </div>

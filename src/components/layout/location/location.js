@@ -241,7 +241,7 @@ const Location = () => {
               width={24}
               height={24}
               alt="Location pin"
-              className="w-6 h-6"
+              className="w-6 md:w-8 h-6 md:h-8"
             />
           </button>
         </div>

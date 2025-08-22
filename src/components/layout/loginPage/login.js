@@ -62,8 +62,8 @@ const Login = () => {
         </Dropdown>
       ) : (
         <Link href="/login">
-          <div className="border rounded-md text-white bg-primary md:px-2 px-1 py-1">
-            <p className="text-xs md:text-base">{i18n.t("login")}</p>
+          <div className="border rounded-full text-white bg-primary  md:px-4 md:py-2 px-2 py-1">
+            <p className="text-xs lg:text-base">{i18n.t("login")}</p>
           </div>
         </Link>
       )}

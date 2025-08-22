@@ -117,10 +117,10 @@ const Consultation = () => {
                                  width={500}
                                  height={500}
                                  alt={item.user}
-                                 className="w-full md:w-[277px] h-[234px] object-fill md:pl-4 lg:pl-10 xl:pl-12 pt-3 lg:pt-4"
+                                 className="w-full md:w-[277px] h-[184px] md:h-[234px] object-fill md:pl-4 lg:pl-10 xl:pl-12 pt-3 lg:pt-4"
                               />
                            </div>
-                           <div>
+                           <div className="py-5 md:py-0">
                               <p className="description1 text-[#474747] ">{i18n.t(item.heading)}</p>
                               <h3 className="mt-3 heading4 text-[#000000] ">
                                  {i18n.t(item.description.before)}
