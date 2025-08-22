@@ -176,6 +176,18 @@ body {
   }
 }
 
+.hero .custom-pagination {
+  @apply flex justify-center items-center;
+}
+
+.hero .swiper-pagination-bullet {
+  @apply rounded-full w-[8px] h-[8px] bg-[#1087EF] cursor-pointer opacity-30;
+}
+
+.hero .swiper-pagination-bullet-active {
+  @apply opacity-100;
+}
+
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;

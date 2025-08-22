@@ -4,23 +4,10 @@ import Image from "next/image"
 import { useI18n } from "../../../context/i18n"
 import { FiDownload } from "react-icons/fi"
 import { event } from "../../../lib/gtag";
+import Link from "next/link";
 
 const MobileApp = () => {
    const i18n = useI18n();
-
-   const handleClick = (label, url) => {
-      event({
-         action: 'app_download_click',
-         category: 'App Download',
-         label: label,
-      });
-
-      setTimeout(() => {
-         window.open(url, "_blank");
-      }, 150); 
-   };
-
-   const playStoreUrl = "https://play.google.com/store/apps/details?id=com.aidfastbd.app";
 
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 aid-container">
@@ -37,9 +24,8 @@ const MobileApp = () => {
                </p>
                <div className="mt-7 md:mt-8 lg:mt-10 xl:mt-12 flex items-center flex-col md:flex-row gap-3 md:gap-4 xl:gap-5">
 
-                  {/* Google Play Image Link */}
-                  <button
-                     onClick={() => handleClick("Google Play Image", playStoreUrl)}
+                  <Link
+                  href="https://play.google.com/store/apps/details?id=com.aidfastbd.app"
                      className="relative w-[150px] h-[50px]"
                   >
                      <Image
@@ -48,16 +34,16 @@ const MobileApp = () => {
                         alt="Google Play"
                         className="object-contain"
                      />
-                  </button>
+                  </Link>
 
-                  {/* Download Button */}
-                  <button
-                     onClick={() => handleClick("Google Play Button", playStoreUrl)}
+
+                  <Link
+                  href="https://play.google.com/store/apps/details?id=com.aidfastbd.app"
                      className="hover:scale-105 bg-[#1087EF] px-6 py-3 rounded-[12px] description2 hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2"
                   >
                      <FiDownload className="text-white description1" />
                      <p className="description2 text-white">{i18n.t("Download Now")}</p>
-                  </button>
+                  </Link>
                </div>
             </div>
 

@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useEffect, useRef } from "react"
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Keyboard, Navigation, Autoplay } from "swiper/modules";
+import { Keyboard, Navigation, Autoplay, Pagination } from "swiper/modules";
 import { GoArrowRight, GoArrowLeft } from "react-icons/go";
 import { useI18n } from "../../../context/i18n";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -75,10 +75,10 @@ const Consultation = () => {
          }
       },
    ];
-
+   const paginationRef = useRef(null);
 
    return (
-      <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20  rouonded-[12px] relative max-w-[1320px] mx-auto">
+      <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20  rouonded-[12px] relative max-w-[1320px] mx-auto hero">
          <div className="aid-container py-6 md:py-7 lg:py-8 xl:py-10 w-full">
             <div className="w-full bg-[#E6F4FF] rounded-xl lg:rounded-[20px]">
                <button onClick={Previous} className="swipper-button-left">
@@ -94,12 +94,19 @@ const Consultation = () => {
                   }}
                   autoplay={{
                      delay: 3000,
+                     disableOnInteraction: false,
                   }}
+                  speed={1000}
                   loop={true}
-                  mousewheel={true}
-                  modules={[Keyboard, Navigation, Autoplay]}
-                  ref={swiperRef}
-                  className="w-full "
+                  pagination={{
+                     clickable: true,
+                     el: paginationRef.current,
+                  }}
+                  onBeforeInit={(swiper) => {
+                     swiper.params.pagination.el = paginationRef.current;
+                  }}
+                  modules={[Keyboard, Autoplay, Pagination]}
+                  className="w-full"
                >
                   {data.map((item, index) => (
                      <SwiperSlide key={index} >
@@ -137,8 +144,9 @@ const Consultation = () => {
                   <GoArrowRight size={20} />
                </button>
             </div>
-
+            <div ref={paginationRef} className="custom-pagination py-4 flex justify-center"></div>
          </div>
+
       </section >
    )
 }
