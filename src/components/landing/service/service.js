@@ -6,7 +6,7 @@ import { FaArrowRightLong } from "react-icons/fa6"
 import { useI18n } from '../../../context/i18n.js'
 import { useState } from "react"
 import ContacTactModal from "../../../utils/contactModal.js"
-const Service = () => {
+const Service = ({ slug = null }) => {
    const [showModal, setShowModal] = useState(false);
    const handleOpen = () => setShowModal(true);
    const handleClose = () => setShowModal(false);
@@ -109,12 +109,15 @@ const Service = () => {
          <div className="flex items-center justify-between gap-2">
             <div>
                <h1 className="text-[#212121] heading1">{i18n.t("AidFastBD Services")}</h1>
-               {/* <p className="text-[#061C3D] description2 mt-3 lg;mt-4">{i18n.t("AidFastBD Services Description")}</p> */}
             </div>
-            <Link href={"/service"} className="flex items-center gap-1.5">
-               <p className="text-[#1087EF] description2 whitespace-pre"> {i18n.t("Explore More")}</p>
-               <FaArrowRightLong className="description1 text-[#1087EF]" />
-            </Link>
+            {
+               slug == null ?
+                  <Link href={"/service"} className="flex items-center gap-1.5">
+                     <p className="text-[#1087EF] description2 whitespace-pre"> {i18n.t("Explore More")}</p>
+                     <FaArrowRightLong className="description1 text-[#1087EF]" />
+                  </Link> :
+                  ""
+            }
          </div>
          <div className="mt-8 md:mt-12 lg:mt-14 xl:mt-[70px]">
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:gap-5 lg:gap-4 gap-4">
@@ -164,7 +167,6 @@ const Service = () => {
                            onClose={handleClose}
                         />
                      </div>
-                  // <EmergencyCallButton number={item.phone} />
                ))}
             </div>
          </div>

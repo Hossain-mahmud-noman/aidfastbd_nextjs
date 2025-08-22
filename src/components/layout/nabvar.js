@@ -60,14 +60,8 @@ const Navbar = ({ textColor = "text-black" }) => {
                   textColor={textColor}
                />
                <NavItem
-                  path="/pharmacy"
-                  label={i18n.t("Pharmacy")}
-                  pathname={pathname}
-                  textColor={textColor}
-               />
-               <NavItem
-                  path="/ambulance"
-                  label={i18n.t("Ambulance")}
+                  path="/blood"
+                  label={i18n.t("Blood Bank")}
                   pathname={pathname}
                   textColor={textColor}
                />
@@ -78,7 +72,7 @@ const Navbar = ({ textColor = "text-black" }) => {
                   textColor={textColor}
                />
                <DropdownMenuTrigger
-                  label={i18n.t("Pages")}
+                  label={i18n.t("Others")}
                   items={pagesItems}
                   textColor={textColor}
                />
