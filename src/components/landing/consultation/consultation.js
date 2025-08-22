@@ -1,18 +1,18 @@
 'use client'
 
 import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { Keyboard, Navigation, Autoplay, Pagination } from "swiper/modules";
-import { GoArrowRight, GoArrowLeft } from "react-icons/go";
-import { useI18n } from "../../../context/i18n";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { useRef, useState } from "react"
+import { Swiper, SwiperSlide } from "swiper/react"
+import "swiper/css"
+import { Keyboard, Autoplay, Pagination } from "swiper/modules"
+import { GoArrowRight, GoArrowLeft } from "react-icons/go"
+import { useI18n } from "../../../context/i18n"
+import { FaArrowRightLong } from "react-icons/fa6"
 
 const Consultation = () => {
    const i18n = useI18n()
-   const [swiperInstance, setSwiperInstance] = useState(null);
-   const paginationRef = useRef(null);
+   const [swiperInstance, setSwiperInstance] = useState(null)
+   const paginationRef = useRef(null)
 
    const data = [
       {
@@ -62,30 +62,19 @@ const Consultation = () => {
       },
    ];
 
-   const Next = () => {
-      if (swiperInstance) {
-         swiperInstance.slideNext();
-      }
-   };
-
-   const Previous = () => {
-      if (swiperInstance) {
-         swiperInstance.slidePrev();
-      }
-   };
-
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20  rouonded-[12px] relative max-w-[1320px] mx-auto hero">
          <div className="aid-container py-6 md:py-7 lg:py-8 xl:py-10 w-full">
+
             {/* Prev Button */}
             <button
-               onClick={Previous}
+               onClick={() => swiperInstance?.slidePrev()}
                className="swipper-button-left z-50 absolute left-3 top-1/2 -translate-y-1/2"
             >
                <GoArrowLeft size={24} />
             </button>
-            <div className="w-full bg-[#E6F4FF] rounded-xl lg:rounded-[20px] relative">
 
+            <div className="w-full bg-[#E6F4FF] rounded-xl lg:rounded-[20px] relative">
                <Swiper
                   onSwiper={setSwiperInstance}
                   keyboard={{ enabled: true }}
@@ -106,7 +95,7 @@ const Consultation = () => {
                      el: paginationRef.current,
                   }}
                   onBeforeInit={(swiper) => {
-                     swiper.params.pagination.el = paginationRef.current;
+                     swiper.params.pagination.el = paginationRef.current
                   }}
                   modules={[Keyboard, Autoplay, Pagination]}
                   className="w-full"
@@ -132,7 +121,10 @@ const Consultation = () => {
                               </h3>
 
                               <div className="mt-5 md:mt-6 lg:mt-7 xl:mt-[30px]">
-                                 <button type="button" className="bg-[#1087EF] px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4  rounded-full description1 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
+                                 <button
+                                    type="button"
+                                    className="bg-[#1087EF] px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4  rounded-full description1 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2"
+                                 >
                                     <p className="description2 text-white">{i18n.t("Begin Live Consultation")}</p>
                                     <FaArrowRightLong className="text-white description2" />
                                  </button>
@@ -142,16 +134,16 @@ const Consultation = () => {
                      </SwiperSlide>
                   ))}
                </Swiper>
-
             </div>
 
             {/* Next Button */}
             <button
-               onClick={Next}
+               onClick={() => swiperInstance?.slideNext()}
                className="swipper-button-right z-50 absolute right-3 top-1/2 -translate-y-1/2"
             >
                <GoArrowRight size={24} />
             </button>
+
             <div ref={paginationRef} className="custom-pagination py-4 flex justify-center"></div>
          </div>
       </section>
