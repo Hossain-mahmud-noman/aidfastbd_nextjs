@@ -77,7 +77,7 @@ const SearchableDropdown = ({ label, options, value, onChange, slug }) => {
   );
 };
 
-const SearchDental = () => {
+const SearchDoctorHomeVisit = () => {
   const i18n = useI18n();
 
   // Single filters object for all filter fields
@@ -250,4 +250,4 @@ const SearchDental = () => {
   );
 };
 
-export default SearchDental;
+export default SearchDoctorHomeVisit;

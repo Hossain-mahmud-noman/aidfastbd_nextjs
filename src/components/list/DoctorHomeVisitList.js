@@ -3,10 +3,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { FaSpinner } from 'react-icons/fa';
-import DentalCard from '../DentalCard';
 import ServiceCard from '../ServiceCard';
 
-const DentalList = () => {
+const DoctorHomeVisitList = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -23,7 +22,7 @@ const DentalList = () => {
       const lon = localStorage.getItem('lon') || '';
 
       const res = await axios.get(
-        `https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=1&pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`
+        `https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=7&pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`
       );
 
       const response = res.data;
@@ -77,7 +76,7 @@ const DentalList = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Dental List</h1>
+      <h1 className="text-xl font-bold mb-4">Doctor Home Visit List</h1>
 
       {data.length === 0 && !loading ? (
         <div className="h-[300px] w-full flex items-center justify-center text-2xl text-gray-500">
@@ -86,7 +85,7 @@ const DentalList = () => {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-3">
           {data.map((d, index) => (
-            <ServiceCard key={`${d.id}-${index}`} data={d}  slug='dental' />
+            <ServiceCard key={`${d.id}-${index}`} data={d}  slug='doctor-home-visit' />
           ))}
         </div>
       )}
@@ -100,7 +99,7 @@ const DentalList = () => {
           {loading && (
             <div className="flex items-center space-x-2 text-indigo-600">
               <FaSpinner className="animate-spin text-xl" />
-              <span>Loading dental...</span>
+              <span>Loading Doctor Home Visit...</span>
             </div>
           )}
         </div>
@@ -108,11 +107,11 @@ const DentalList = () => {
 
       {!hasMore && data.length > 0 && (
         <div className="text-center text-gray-500 mt-6">
-          No more dentals.
+          No more Doctor Home Visit...
         </div>
       )}
     </div>
   );
 };
 
-export default DentalList;
+export default DoctorHomeVisitList;
