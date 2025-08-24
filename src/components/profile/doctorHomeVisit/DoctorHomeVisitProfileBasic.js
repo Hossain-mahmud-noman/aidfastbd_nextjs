@@ -53,7 +53,7 @@ function Dropdown({ label, options, value, onChange, required = false }) {
   );
 }
 
-function DrugProfileBasic({ data, token, user, getProfileData }) {
+function DoctorHomeVisitProfileBasic({ data, token, user, getProfileData }) {
 
   const [selectedCover, setSelectedCover] = useState(null);
   const [selectedLogo, setSelectedLogo] = useState(null);
@@ -135,7 +135,7 @@ function DrugProfileBasic({ data, token, user, getProfileData }) {
   const handleSubmit = async () => {
     try {
       const form = new FormData();
-      form.append('ServiceType', '1');
+      form.append('ServiceType', '7');
       form.append('CenterInformation', 'test');
       form.append('Name', formData.dentalCenterEnglish);
       form.append('NameBn', formData.dentalCenterBangla);
@@ -276,7 +276,7 @@ function DrugProfileBasic({ data, token, user, getProfileData }) {
 
       <InputField
         required
-        label="Dental Name (English)"
+        label="Doctor Home Visit Name (English)"
         placeholder="Dental Name"
         value={formData.dentalCenterEnglish}
         onChange={handleInputChange}
@@ -285,7 +285,7 @@ function DrugProfileBasic({ data, token, user, getProfileData }) {
 
       <InputField
         required
-        label="Dental Name (Bangla)"
+        label="Doctor Home Visit Name (Bangla)"
         placeholder="Dental Name Bangla"
         value={formData.dentalCenterBangla}
         onChange={handleInputChange}
@@ -460,4 +460,4 @@ function DrugProfileBasic({ data, token, user, getProfileData }) {
   );
 }
 
-export default DrugProfileBasic
+export default DoctorHomeVisitProfileBasic
