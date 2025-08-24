@@ -93,8 +93,10 @@ const Service = ({ slug = null }) => {
       {
          image: "/home/service/s14.png",
          heading: i18n.t("Caregiver Center"),
-         button: i18n.t("Call Now"),
-         phone: "+8801338988734",
+         button: i18n.t("Book Appointment"),
+         // button: i18n.t("Call Now"),
+         link: "/care-giver-center"
+         // phone: "+8801338988734",
       },
       {
          image: "/home/service/s15.png",
