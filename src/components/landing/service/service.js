@@ -52,7 +52,7 @@ const Service = ({ slug = null }) => {
          image: "/home/service/s7.png",
          heading: i18n.t("Doctor Home Visit"),
          button: i18n.t("Book Appointment"),
-         link: "/doctor",
+         link: "/doctor-home-visit",
       },
       {
          image: "/home/service/s8.png",

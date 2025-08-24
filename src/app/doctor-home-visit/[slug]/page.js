@@ -5,18 +5,18 @@ import {
   frontend_url,
   image_base_endpoint,
 } from "../../../utils/constants";
-import DentalDetails from "../../../components/dental/DentalDetails";
+import DoctorHomeVisitDetails from "../../../components/doctorHomeVisit/DoctorHomeVisit";
 
 export async function generateMetadata({ params }) {
   const res = await fetch(
-    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=1&genericServiceId=${params.slug}`,
+    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=7&genericServiceId=${params.slug}`,
     { cache: "no-store" }
   );
   const json = await res.json();
   const data = json?.data?.[0];
 
   if (!data) {
-    return { title: "Dental Not Found" };
+    return { title: "Doctor Home Visit Not Found" };
   }
 
   const profile = data?.profileImageUrl
@@ -45,10 +45,10 @@ export default async function DoctorPage({ params }) {
   const data = json?.data?.[0];
 
   if (!data) {
-    return <div className="p-8 text-center text-lg">Dental not found.</div>;
+    return <div className="p-8 text-center text-lg">Doctor Home Visit not found.</div>;
   }
 
-  return <DentalDetails data={data} url={`${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`} />;
+  return <DoctorHomeVisitDetails data={data} url={`${base_endpoint}/GeneralInformation/GetAllGenericServiceList?genericServiceId=${params.slug}`} />;
 }
 
 

@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { FaSpinner } from 'react-icons/fa';
-import DentalCard from '../DentalCard';
 import ServiceCard from '../ServiceCard';
 
 const DentalList = () => {

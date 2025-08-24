@@ -15,7 +15,7 @@ import DiaLocation from "../DiaLocation";
 import TextTicker from "../TextTicker";
 import { useI18n } from "../../context/i18n";
 
-const DocrotHomeVisitDetails = ({ data, url }) => {
+const DoctorHomeVisitDetails = ({ data, url }) => {
   const i18n = useI18n()
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
@@ -53,10 +53,10 @@ const DocrotHomeVisitDetails = ({ data, url }) => {
       </Head>
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        title={i18n.t("Dental Detail")}
+        title={i18n.t("Doctor Home Visit Details")}
         trailingComponents={
           <div className="flex">
-            <ProfileQR slug={"newService"} id={data?.id} type={"DocrotHomeVisit"} />
+            <ProfileQR slug={"newService"} id={data?.id} type={"Dental"} />
             <FavouriteToggle
               isFill={data?.isFavourite}
               userId={user?.id}
@@ -116,4 +116,4 @@ const DocrotHomeVisitDetails = ({ data, url }) => {
   );
 };
 
-export default DocrotHomeVisitDetails;
+export default DoctorHomeVisitDetails;

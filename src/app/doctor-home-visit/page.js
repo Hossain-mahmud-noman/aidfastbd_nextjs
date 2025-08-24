@@ -1,10 +1,10 @@
 import React from "react";
 import { appname } from "../../utils/constants";
-import DentalList from "../../components/list/DentalList";
+import DoctorHomeVisitList from "../../components/list/DoctorHomeVisitList";
 import SearchDoctorHomeVisit from "../../components/search/SearchDoctorHomeVisit";
 
 export const metadata = {
-  title: "Dentals | " + appname,
+  title: "Doctor Home Visit | " + appname,
 };
 
 function Page() {
@@ -13,7 +13,7 @@ function Page() {
       <div className="pt-10" >
         <div className="aid-container ">
           {/* <SearchDoctorHomeVisit /> */}
-          <DentalList />
+          <DoctorHomeVisitList />
         </div>
       </div>
     </>
