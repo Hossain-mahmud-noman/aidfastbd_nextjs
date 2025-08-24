@@ -19,6 +19,7 @@ const ProfileMenu = ({ data }) => {
       { key: 'isEyeCenter', icon: '👁️', label: i18n.t('Hearing Aid Center'), link: '/profile/eyeCareProfile' },
       { key: 'isNurse', icon: '🧑‍⚕️', label: i18n.t('Nursing Care Home'), link: '/profile/nursingCareProfile' },
       { key: 'isDoctorHomeVisit', icon: '🏠', label: i18n.t('Doctor Home Visit'), link: '/profile/doctorHomeVisit' },
+      { key: 'isCareGiver', icon: '👩‍🍼', label: i18n.t('Caregiver Center'), link: '/profile/careGiver' },
    ];
 
 

@@ -4,7 +4,7 @@ import { headerx } from '../../utils/constants';
 import React, { useEffect, useState } from 'react'
 import TabBar from '../Tabbar';
 import DoctorHomeVisitProfileBasic from './doctorHomeVisit/DoctorHomeVisitProfileBasic';
-import DentalProfileInfo from './dental/DentalProfileInfo';
+import DoctorHomeVisitProfileInfo from './doctorHomeVisit/DoctorHomeVisitProfileInfo';
 import DoctorHomeVisitServices from './doctorHomeVisit/DoctorHomeVisitServices';
 import DoctorHomeVisitProfileDoctors from './doctorHomeVisit/DoctorHomeVisitProfileDoctors';
 import { useAuth } from '../../context/AuthContext';
@@ -38,7 +38,7 @@ function DoctorHomeVisitProfile() {
 
   const tabs = [
     { label: 'Basic', content: <DoctorHomeVisitProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token} /> },
-    { label: 'Info', content: <DentalProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
+    { label: 'Info', content: <DoctorHomeVisitProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
     { label: 'Doctors', content: <DoctorHomeVisitProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
     { label: 'Services', content: <DoctorHomeVisitServices getProfileData={getProfileData} genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} token={token} /> },
   ];

@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { Image as AntdImage, Button } from "antd";
 import { FaEdit } from "react-icons/fa";
 
-export default function DoctorHomeVisitServices({ data, token, genericServiceId, userId, getProfileData }) {
+export default function CareGiverVisitServices({ data, token, genericServiceId, userId, getProfileData }) {
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
