@@ -125,7 +125,8 @@ const Service = ({ slug = null }) => {
             <div className="grid grid-cols-3 xl:gap-5 lg:gap-4 md:gap-3 gap-2">
                {data.map((item, index) => (
                   item.link ?
-                     <div
+                     <Link
+                        href={item.link}
                         key={index}
                         className="shadow-custom-light hover:scale-105 transition-all hover:border-primary duration-300 flex flex-col justify-start items-center border border-[#3056D321] bg-white xl:rounded-[20px] lg:rounded-xl rounded-lg mx-auto w-full text-center"
                      >
@@ -138,12 +139,12 @@ const Service = ({ slug = null }) => {
                         />
                         <h4 className="service-title mt-1.5 md:mt-4 lg:mt-6 text-[#061C3D] whitespace-pre">{item.heading}</h4>
                         <div className="my-2 md:my-4 lg:my-7 flex justify-center">
-                           <Link href={item.link} className="flex items-center gap-1 lg:gap-2">
+                           <div className="flex items-center gap-1 lg:gap-2">
                               <p className="service-button text-primary whitespace-pre">{item.button}</p>
                               <FaArrowRightLong className="text-primary service-button" />
-                           </Link>
+                           </div>
                         </div>
-                     </div> :
+                     </Link> :
                      <div
                         key={index}
                         className="shadow-custom-light hover:scale-105 transition-all hover:border-primary duration-300 flex flex-col justify-start items-center border border-[#3056D321] bg-white xl:rounded-2xl lg:rounded-xl rounded-lg mx-auto w-full text-center"
@@ -157,7 +158,7 @@ const Service = ({ slug = null }) => {
                         />
                         <h4 className="service-title mt-1.5 md:mt-4 lg:mt-6 text-[#061C3D] whitespace-pre">{item.heading}</h4>
                         <div className="my-2 md:my-4 lg:my-7 flex justify-center">
-                           <button onClick={handleOpen}  className="flex items-center gap-2">
+                           <button onClick={handleOpen} className="flex items-center gap-2">
                               <p className="service-button text-primary">{item.button}</p>
                               <FaArrowRightLong className="text-primary service-button" />
                            </button>
