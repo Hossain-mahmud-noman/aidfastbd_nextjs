@@ -20,7 +20,7 @@ const Service = ({ slug = null }) => {
       },
       {
          image: "/home/service/s2.png",
-         heading: i18n.t("Diagnostic Centers and Hospitals"),
+         heading: i18n.t("Diagnostic Center"),
          button: i18n.t("Find Center"),
          link: "/diagnostic",
       },
@@ -110,41 +110,40 @@ const Service = ({ slug = null }) => {
       <section className="mt-8 md:mt-16 lg:mt-20 xl:mt-[109px] aid-container">
          <div className="flex items-center justify-between gap-2">
             <div>
-               <h1 className="text-[#212121] heading1">{i18n.t("AidFastBD Services")}</h1>
+               <h1 className="text-[#212121] service-heading">{i18n.t("AidFastBD Services")}</h1>
             </div>
             {
                slug == null ?
                   <Link href={"/service"} className="flex items-center gap-1.5">
-                     <p className="text-[#1087EF] description2 whitespace-pre"> {i18n.t("Explore More")}</p>
-                     <FaArrowRightLong className="description1 text-[#1087EF]" />
+                     <p className="text-[#1087EF] hero-description whitespace-pre"> {i18n.t("Explore More")}</p>
+                     <FaArrowRightLong className="hero-description  text-[#1087EF]" />
                   </Link> :
                   ""
             }
          </div>
          <div className="mt-8 md:mt-12 lg:mt-14 xl:mt-[70px]">
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:gap-5 lg:gap-4 gap-4">
+            <div className="grid grid-cols-3 xl:gap-5 lg:gap-4 md:gap-3 gap-2">
                {data.map((item, index) => (
                   item.link ?
-                     <Link
-                        href={item.link}
+                     <div
                         key={index}
-                        className="shadow-custom-light hover:scale-105 transition-all hover:border-primary duration-300 flex flex-col justify-start items-center border border-[#3056D321] bg-white xl:rounded-2xl lg:rounded-xl rounded-lg mx-auto w-full text-center"
+                        className="shadow-custom-light hover:scale-105 transition-all hover:border-primary duration-300 flex flex-col justify-start items-center border border-[#3056D321] bg-white xl:rounded-[20px] lg:rounded-xl rounded-lg mx-auto w-full text-center"
                      >
                         <Image
                            src={item.image}
                            width={500}
                            height={500}
-                           className="w-full md:w-[358px] md:h-[230px] object-contain -mt-1"
+                           className="w-full md:w-[358px] xl:h-[230px] lg:h-[200px] md:h-[150px] object-fill"
                            alt="Service image"
                         />
-                        <h4 className="service-heading mt-6 text-[#061C3D] whitespace-pre">{item.heading}</h4>
-                        <div className="my-5 md:my-6 lg:my-7 flex justify-center">
-                           <button type="submit" href="tel: 01980445424" className="bg-[#1087EF] px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4  rounded-full description1 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
-                              <p className="description2 text-white">{item.button}</p>
-                              <FaArrowRightLong className="text-white description2" />
-                           </button>
+                        <h4 className="service-title mt-1.5 md:mt-4 lg:mt-6 text-[#061C3D] whitespace-pre">{item.heading}</h4>
+                        <div className="my-2 md:my-4 lg:my-7 flex justify-center">
+                           <Link href={item.link} className="flex items-center gap-1 lg:gap-2">
+                              <p className="service-button text-primary whitespace-pre">{item.button}</p>
+                              <FaArrowRightLong className="text-primary service-button" />
+                           </Link>
                         </div>
-                     </Link> :
+                     </div> :
                      <div
                         key={index}
                         className="shadow-custom-light hover:scale-105 transition-all hover:border-primary duration-300 flex flex-col justify-start items-center border border-[#3056D321] bg-white xl:rounded-2xl lg:rounded-xl rounded-lg mx-auto w-full text-center"
@@ -153,14 +152,14 @@ const Service = ({ slug = null }) => {
                            src={item.image}
                            width={500}
                            height={500}
-                           className="w-full md:w-[358px] md:h-[230px] object-contain -mt-1"
+                           className="w-full md:w-[358px] xl:h-[230px] lg:h-[200px] md:h-[150px] object-fill"
                            alt="Service image"
                         />
-                        <h4 className="service-heading mt-6 text-[#061C3D] whitespace-pre">{item.heading}</h4>
-                        <div className="my-5 md:my-6 lg:my-7 flex justify-center">
-                           <button onClick={handleOpen} type="submit" href="tel: 01980445424" className="bg-[#1087EF] px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4  rounded-full description1 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
-                              <p className="description2 text-white">{item.button}</p>
-                              <FaArrowRightLong className="text-white description2" />
+                        <h4 className="service-title mt-1.5 md:mt-4 lg:mt-6 text-[#061C3D] whitespace-pre">{item.heading}</h4>
+                        <div className="my-2 md:my-4 lg:my-7 flex justify-center">
+                           <button onClick={handleOpen}  className="flex items-center gap-2">
+                              <p className="service-button text-primary">{item.button}</p>
+                              <FaArrowRightLong className="text-primary service-button" />
                            </button>
                         </div>
                         <ContacTactModal

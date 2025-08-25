@@ -74,7 +74,7 @@ const Hero = () => {
                {data.map((item, index) => (
                   <SwiperSlide key={index} >
                      <div className="border py-4 md:py-10 lg:py-[55px] aid-container mx-auto flex items justify-between gap-3 md:gap-2 lg:gap-4 xl:gap-10 items-center overflow-hidden">
-                        <div className='border'>
+                        <div className=''>
                            <span className="hero-description text-[#000000] font-semibold bg-[#B1CFEA2E] px-2 py-1 md:px-4 md:py-2.4 rounded-md inline-block">
                               {i18n.t(item.heading)}
                            </span>
