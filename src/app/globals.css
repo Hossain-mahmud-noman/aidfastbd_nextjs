@@ -51,7 +51,7 @@ body {
   @apply xl:text-[18px] lg:text-base text-sm font-inter font-medium;
 }
 .service-button {
-  @apply xl:text-[18px] lg:text-base md:text-[10px] text-[7px] font-inter font-medium;
+  @apply xl:text-[18px] lg:text-base md:text-xs text-[7px] font-inter font-medium;
 }
 
 .hero-heading {
@@ -91,7 +91,7 @@ body {
 }
 
 .service-title {
-  @apply xl:text-2xl lg:text-xl md:text-sm text-[8px] font-inter font-medium;
+  @apply xl:text-2xl lg:text-xl md:text-base text-[8px] font-inter font-medium;
 }
 
 /* faq.css */
