@@ -89,6 +89,9 @@ body {
 .heading4 {
   @apply xl:text-[22px] lg:text-xl text-[18px] font-inter font-semibold;
 }
+.cons-heading {
+  @apply xl:text-[22px] lg:text-xl md:text-base text-[10px] font-inter font-semibold;
+}
 
 .service-title {
   @apply xl:text-2xl lg:text-xl md:text-base text-[8px] font-inter font-medium;
@@ -252,9 +255,9 @@ body {
 }
 
 .swipper-button-left {
-  @apply absolute top-1/2 left-1 z-50 transition-all duration-300 border border-[#1087EF] bg-white hover:bg-primary hover:text-white text-[#1087EF] flex items-center justify-center w-10 h-10 rounded-full shadow-custom-light
+  @apply absolute top-1/2 left-1 z-50 transition-all duration-300 border border-[#1087EF] bg-white hover:bg-primary hover:text-white text-[#1087EF] flex items-center justify-center w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 rounded-full shadow-custom-light
 }
 
 .swipper-button-right {
-  @apply absolute top-1/2 right-1 z-50 transition-all duration-300 border border-[#1087EF] bg-white hover:bg-primary hover:text-white text-[#1087EF] flex items-center justify-center w-10 h-10 rounded-full shadow-custom-light
+  @apply absolute top-1/2 right-1 z-50 transition-all duration-300 border border-[#1087EF] bg-white hover:bg-primary hover:text-white text-[#1087EF] flex items-center justify-center w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 rounded-full shadow-custom-light
 }
