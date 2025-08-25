@@ -80,18 +80,18 @@ const DoctorSpeciality = () => {
                     onClick={async () => {
                       router.push(`/doctor?value=${speciality?.text}`)
                     }}
-                    className={`cursor-pointer flex-shrink-0 w-[150px] h-[220px] bg-white shadow-custom-light rounded-lg p-1`}
+                    className={`cursor-pointer flex-shrink-0 bg-white shadow-custom-light rounded-lg p-0.5 md:p-1`}
                   >
                     <Image
                       width={150}
                       height={150}
                       src={speciality.imageUrl}
                       alt={speciality.text}
-                      className="w-full object-cover rounded-t-lg"
+                      className="object-cover w-[80px] h-[80px] md:h-[150px] md:w-[150px] rounded-t-lg"
                     />
-                    <div className="mt-4 text-center">
+                    <div className="mt-2 md:mt-3 lg:mt-4 text-center">
                       {/* language */}
-                      <p className="text-sm font-semibold">
+                      <p className="md:text-sm text-[8px] font-semibold">
                         {
                           i18n?.language == 'bn' ? speciality.textBn : speciality.text
                         }
