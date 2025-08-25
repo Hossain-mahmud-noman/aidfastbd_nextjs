@@ -69,7 +69,7 @@ const Consultation = () => {
             {/* Prev Button */}
             <button
                onClick={() => swiperInstance?.slidePrev()}
-               className="swipper-button-left z-50 absolute left-3 top-1/2 -translate-y-1/2"
+               className="swipper-button-left "
             >
                <GoArrowLeft className="text-sm md:text-base lg:text-lg xl:text-xl" />
             </button>
@@ -139,7 +139,7 @@ const Consultation = () => {
             {/* Next Button */}
             <button
                onClick={() => swiperInstance?.slideNext()}
-               className="swipper-button-right z-50 absolute right-3 top-1/2 -translate-y-1/2"
+               className="swipper-button-right"
             >
                <GoArrowRight className="text-sm md:text-base lg:text-lg xl:text-xl" />
             </button>
