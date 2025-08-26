@@ -15,32 +15,17 @@ const Hero = () => {
       {
          heading: "Welcome to AidFast",
          title: "All-in-One Healthcare – AidFast",
-         image: "/home/service/app.png"
+         image: "/home/hero/h1.png"
       },
       {
          heading: "Welcome to AidFast",
          title: "All-in-One Healthcare – AidFast",
-         image: "/home/service/app.png"
+         image: "/home/hero/h2.png"
       },
       {
          heading: "Welcome to AidFast",
          title: "All-in-One Healthcare – AidFast",
-         image: "/home/service/app.png"
-      },
-      {
-         heading: "Welcome to AidFast",
-         title: "All-in-One Healthcare – AidFast",
-         image: "/home/service/app.png"
-      },
-      {
-         heading: "Welcome to AidFast",
-         title: "All-in-One Healthcare – AidFast",
-         image: "/home/service/app.png"
-      },
-      {
-         heading: "Welcome to AidFast",
-         title: "All-in-One Healthcare – AidFast",
-         image: "/home/service/app.png"
+         image: "/home/hero/h3.png"
       },
    ]
 
@@ -73,7 +58,7 @@ const Hero = () => {
             >
                {data.map((item, index) => (
                   <SwiperSlide key={index} >
-                     <div className="py-4 md:py-10 lg:py-[55px] aid-container mx-auto flex items justify-between gap-3 md:gap-2 lg:gap-4 xl:gap-10 items-center overflow-hidden">
+                     {/* <div className="py-4 md:py-10 lg:py-[55px] aid-container mx-auto flex items justify-between gap-3 md:gap-2 lg:gap-4 xl:gap-10 items-center overflow-hidden">
                         <div className=''>
                            <span className="hero-description text-[#000000] font-semibold bg-[#B1CFEA2E] px-2 py-1 md:px-4 md:py-2.4 rounded-md inline-block">
                               {i18n.t(item.heading)}
@@ -114,11 +99,20 @@ const Hero = () => {
                               className="w-[64px] h-[137px] md:w-[143px] md:h-[300px] lg:w-[172px] lg:h-[361px] object-fill"
                            />
                         </div>
+                     </div> */}
+                     <div className='w-full'>
+                        <Image
+                           src={item.image}
+                           width={2000}
+                           height={2000}
+                           alt="mobile"
+                           className="h-[141px] sm:h-[250px] lg:h-[380px] xl:h-[540px] 2xl:h-[700px]"
+                        />
                      </div>
                   </SwiperSlide>
                ))}
             </Swiper>
-            
+
          </div>
          <div ref={paginationRef} className="custom-pagination py-4 flex justify-center"></div>
       </div>

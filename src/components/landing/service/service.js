@@ -107,7 +107,7 @@ const Service = ({ slug = null }) => {
    ];
 
    return (
-      <section className="mt-8 md:mt-16 lg:mt-20 xl:mt-[109px] aid-container">
+      <section className="mt-2 md:mt-4 lg:mt-10 xl:mt-12 2xl:mt-14 aid-container">
          <div className="flex items-center justify-between gap-2">
             <div>
                <h1 className="text-[#212121] service-heading">{i18n.t("AidFastBD Services")}</h1>
