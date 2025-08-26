@@ -50,6 +50,7 @@ body {
 .description2 {
   @apply xl:text-[18px] lg:text-base text-sm font-inter font-medium;
 }
+
 .service-button {
   @apply xl:text-[18px] lg:text-base md:text-xs text-[7px] font-inter font-medium;
 }
@@ -72,6 +73,14 @@ body {
 
 .heading1 {
   @apply xl:text-4xl lg:text-3xl md:text-2xl text-xl font-inter font-bold leading-10;
+}
+
+.mobile-heading {
+  @apply xl:text-4xl lg:text-3xl md:text-xl text-xs font-inter font-bold md:leading-10;
+}
+
+.mobile-description {
+  @apply xl:text-xl lg:text-lg md:text-base text-[10px] font-inter font-medium;
 }
 
 .app-heading {
