@@ -83,9 +83,9 @@ const Testimonials = () => {
             <div className="w-full relative">
                <button
                   onClick={Previous}
-                  className={`absolute top-1/2 left-1 z-50 transition-all duration-300 text-white border hover:border-[#1087EF] hover:bg-white border-white hover:text-[#1087EF] flex items-center justify-center w-10 h-10 rounded-full shadow-md`}
+                  className={`absolute top-1/2 left-1 z-50 transition-all duration-300 text-white border hover:border-[#1087EF] hover:bg-white border-white hover:text-[#1087EF] flex items-center justify-center w-7 h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 rounded-full shadow-md`}
                >
-                  <GoArrowLeft size={20} />
+                  <GoArrowLeft className="" />
                </button>
                <Swiper
                   keyboard={{ enabled: true }}
@@ -114,15 +114,15 @@ const Testimonials = () => {
                                  width={100}
                                  height={100}
                                  alt={item.user}
-                                 className="w-[68px] h-[68px] rounded-full object-fill mx-auto"
+                                 className="w-8 h-8 md:w-12 md:h-12 lg:w-[68px] lg:h-[68px] rounded-full object-fill mx-auto"
                               />
-                              <p className="mt-2 description2 text-white text-center whitespace-pre">{item.user}  ({item.identity}) </p>
-                              <p className="mt-3 description1 text-white text-center max-w-[731px] mx-4 flex items-center gap-2 justify-center">
+                              <p className="mt-1 md:mt-2 testimonials-name text-white text-center whitespace-pre">{item.user}  ({item.identity}) </p>
+                              <p className="mt-1.5 md:mt-3 testimonials-name text-white text-center max-w-[731px] mx-4 flex items-center gap-2 justify-center">
                                  <FaMapMarkerAlt />
                                  <span>{item.location}</span>
                               </p>
-                              <p className="mt-3 lg:mt-4 xl:mt-[18px] description1 text-white text-center max-w-[731px] mx-4">{item.comment}</p>
-                              <Rate count={item.rate} defaultValue={item.rate} className="mt-4 lg:mt-5 text-[#FFA500] text-center flex items-center justify-center" />
+                              <p className="mt-2 md:mt-3 lg:mt-4 xl:mt-[18px] service-button text-white text-center max-w-[731px] mx-4">{item.comment}</p>
+                              <Rate count={item.rate} defaultValue={item.rate} className="cons-heading mt-2 md:mt-4 lg:mt-5 text-[#FFA500] text-center flex items-center justify-center" />
                            </div>
                         </div>
                      </SwiperSlide>
@@ -131,9 +131,9 @@ const Testimonials = () => {
 
                <button
                   onClick={Next}
-                  className={`absolute top-1/2 right-1 z-50 transition-all duration-300 text-white border hover:border-[#1087EF] hover:bg-white border-white hover:text-[#1087EF] flex items-center justify-center w-10 h-10 rounded-full shadow-md`}
+                  className={`absolute top-1/2 right-1 z-50 transition-all duration-300 text-white border hover:border-[#1087EF] hover:bg-white border-white hover:text-[#1087EF] flex items-center justify-center w-7 h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 rounded-full shadow-md`}
                >
-                  <GoArrowRight size={20} />
+                  <GoArrowRight className="" />
                </button>
             </div>
 
