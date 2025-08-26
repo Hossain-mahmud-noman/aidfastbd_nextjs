@@ -70,12 +70,12 @@ const FAQ = () => {
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 aid-container">
          <div>
-            <h1 className="heading1 text-[#1A1A1A] text-center">{i18n.t("Frequent Asked Question (FAQ)")}</h1>
-            <p className="description2 text-[#061C3D] text-center max-w-[964px] mx-auto mt-4 lg:mt-5">
+            <h1 className="mobile-heading text-[#1A1A1A] text-center">{i18n.t("General Questions and Answers about AidFast")}</h1>
+            <p className="testimonials-name !font-normal text-[#061C3D] text-center max-w-[964px] mx-auto mt-1.5 md:mt-3 lg:mt-5">
                {i18n.t("FAQ Description")}
             </p>
          </div>
-         <div className="w-full mt-6 md:mt-7 lg:mt-8 xl:mt-10">
+         <div className="w-full mt-3 md:mt-7 lg:mt-8 xl:mt-10">
             <Collapse
                accordion
                activeKey={activeKey}
@@ -90,13 +90,13 @@ const FAQ = () => {
                   <Collapse.Panel
                      key={item.key}
                      header={
-                        <p className="description2 text-[#212121] xl:p-5 lg:p-4 md:p-3 p-2">
+                        <p className="testimonials-name !font-semibold text-[#212121] xl:p-5 lg:p-4 md:p-3 p-1">
                            {item.question}
                         </p>
                      }
                      className={`faq-panel ${activeKey === item.key ? "active" : ""}`}
                   >
-                     <p className="xl:p-5 lg:p-4 md:p-3 p-2 description1 text-[#212121]">{item.answer}</p>
+                     <p className="xl:p-5 lg:p-4 md:p-3 p-1 hero-description text-[#212121]">{item.answer}</p>
                   </Collapse.Panel>
                ))}
             </Collapse>

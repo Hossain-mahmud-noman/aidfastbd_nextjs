@@ -59,7 +59,7 @@ const DoctorSpeciality = () => {
           <div className="w-full relative">
             <button
               onClick={Previous}
-              className="absolute bottom-1/2 left-0 z-50 transition-all duration-300 border bg-primary border-[#D7D7D7] text-white flex items-center justify-center w-10 h-10 rounded-full shadow-md"
+              className="absolute bottom-1/2 left-0 z-50 transition-all duration-300 border bg-primary border-[#D7D7D7] text-white flex items-center justify-center w-7 h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 rounded-full shadow-md"
             >
               <GoArrowLeft size={20} />
             </button>
@@ -104,7 +104,7 @@ const DoctorSpeciality = () => {
 
             <button
               onClick={Next}
-              className="absolute bottom-1/2 right-0 z-50 transition-all duration-300 border bg-primary border-[#D7D7D7] text-white flex items-center justify-center w-10 h-10 rounded-full shadow-md"
+              className="absolute bottom-1/2 right-0 z-50 transition-all duration-300 border bg-primary border-[#D7D7D7] text-white flex items-center justify-center w-7 h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 rounded-full shadow-md"
             >
               <GoArrowRight size={20} />
             </button>
