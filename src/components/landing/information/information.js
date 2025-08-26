@@ -32,7 +32,7 @@ const Information = () => {
    return (
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-[97px]  bg-[#F8FCFF]">
          <div className="aid-container">
-            <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-10 gap-3">
+            <div className="grid grid-cols-4 lg:gap-10 md:gap-3 gap-0">
                {
                   data.map((Item, index) => (
                      <div key={index} className="mx-auto xl:py-[46px] lg:py-9 md:py-6 py-4">
@@ -40,11 +40,11 @@ const Information = () => {
                            src={Item.image}
                            width={100}
                            height={100}
-                           className="w-8 md:w-12 h-8 md:h-12 object-fill mx-auto animate-bounce [animation-duration:1500ms]"
+                           className="w-7 md:w-12 h-7 md:h-12 object-fill mx-auto animate-bounce [animation-duration:1500ms]"
                            alt="Service image"
                         />
-                        <h4 className="heading3 mt-4 md:mt-5 xl:mt-6 text-[#061C3D] text-center">{Item.heading}</h4>
-                        <h4 className="description1 mt-2 md:mt-3 text-[#42526B] text-center ">{Item.description}</h4>
+                        <h4 className="cons-heading mt-2 md:mt-5 xl:mt-6 text-[#061C3D] text-center">{Item.heading}</h4>
+                        <h4 className="hero-description mt-2 md:mt-3 text-[#42526B] text-center ">{Item.description}</h4>
                      </div>
                   ))
                }
