@@ -257,13 +257,13 @@ body {
 .swipper-button-left {
   @apply absolute bottom-1/2 lg:top-1/2 -translate-y-1/2 left-1 md:left-3 z-50 transition-all duration-300 
          border border-[#1087EF] bg-white hover:bg-primary hover:text-white text-[#1087EF] 
-         flex items-center justify-center w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 
+         flex items-center justify-center w-7 h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 
          rounded-full shadow-custom-light;
 }
 
 .swipper-button-right {
   @apply absolute bottom-1/2 lg:top-1/2 -translate-y-1/2 right-1 md:right-3 z-50 transition-all duration-300 
          border border-[#1087EF] bg-white hover:bg-primary hover:text-white text-[#1087EF] 
-         flex items-center justify-center w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 
+         flex items-center justify-center w-7 h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 
          rounded-full shadow-custom-light;
 }
