@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Keyboard, Pagination, Autoplay } from "swiper/modules";
 import { useRef } from 'react'
+import { useRouter } from 'next/navigation.js'
 const Hero = () => {
    const paginationRef = useRef(null);
    const i18n = useI18n();
@@ -28,7 +29,7 @@ const Hero = () => {
          image: "/home/hero/h3.png"
       },
    ]
-
+   const router = useRouter()
    return (
       <div className='hero'>
          <div className="bg-[#F2F4F8] w-full ">
@@ -100,7 +101,9 @@ const Hero = () => {
                            />
                         </div>
                      </div> */}
-                     <div className='w-full'>
+                     <div className='w-full'
+                     onClick={() => router.push("https://play.google.com/store/apps/details?id=com.aidfastbd.app")}
+                     >
                         <Image
                            src={item.image}
                            width={2000}
