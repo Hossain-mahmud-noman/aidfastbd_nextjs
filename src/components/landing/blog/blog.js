@@ -33,16 +33,16 @@ const Blog = () => {
       <section className="mt-10 md:mt-14 lg:mt-20 xl:mt-20 aid-container">
          <div className="flex justify-between">
             <div className="max-w-[230px] md:max-w-[834px]">
-               <h1 className="text-[#212121] heading1">{i18n.t("Browse updated blogs")}</h1>
-               <p className="text-[#061C3D] description2 mt-3 lg:mt-4 ">{i18n.t("Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy")}</p>
+               <h1 className="text-[#212121] mobile-heading ">{i18n.t("Browse updated blogs")}</h1>
+               <p className="text-[#061C3D] service-button mt-3 lg:mt-4 ">{i18n.t("Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy")}</p>
             </div>
             <Link href={"/blog"} target="_blank" className="flex items-center gap-1.5">
-               <p className="text-[#1087EF] description2">{i18n.t("Explore More")}</p>
-               <FaArrowRightLong className="description1 text-[#1087EF]" />
+               <p className="text-[#1087EF] service-button">{i18n.t("Explore More")}</p>
+               <FaArrowRightLong className="service-button text-[#1087EF]" />
             </Link>
          </div>
          <div className="mt-8 md:mt-12 lg:mt-14 xl:mt-[70px]">
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:gap-6 lg:gap-5 md:gap-4 gap-2">
+            <div className="grid grid-cols-3 xl:gap-6 lg:gap-5 md:gap-2 gap-2">
                {
                   data.map((Item, index) => (
                      <div key={index} className="border border-[#3056D321] bg-[#FFFFFF] rounded-lg lg:rounded-[14px] mx-auto">
@@ -50,12 +50,13 @@ const Blog = () => {
                            src={Item.image}
                            width={1000}
                            height={1000}
-                           className="w-[360px] h-[264] object-fill mx-auto rounded-t-lg lg:rounded-t-[14px]"
+                           className="w-[766px] h-[66px] md:h-[165px] lg:h-[205px]  xl:h-[265px] object-fill mx-auto rounded-t-lg lg:rounded-t-[14px]"
                            alt="Service image"
                         />
-                        <div className="p-4 xl:p-5">
-                           <h4 className="description2 text-[#061C3D]">{Item.heading}</h4>
-                           <div className="py-4 xl:py-5 flex items-center justify-between">
+                        <div className="p-1 md:p-3 lg:p-4 xl:p-5">
+                           <h4 className="hidden md:block hero-description text-[#061C3D]">{Item.heading}</h4>
+                           <h4 className="md:hidden hero-description text-[#061C3D]">{Item.heading.slice(0,50)}...</h4>
+                           {/* <div className="py-2 md:py-3 lg:py-4 xl:py-5 flex items-center justify-between">
                               <div className="flex items-center gap-2">
                                  <div className="bg-[#BBEFFF] rounded-full w-6 h-6 overflow-hidden">
                                     <Image
@@ -63,18 +64,18 @@ const Blog = () => {
                                        width={100}
                                        height={100}
                                        alt="Logo"
-                                       className="object-fill"
+                                       className=" object-fill"
                                     />
                                  </div>
-                                 <p className="description2 text-[#061C3D]">AidFast</p>
+                                 <p className="hero-description text-[#061C3D]">AidFast</p>
                               </div>
-                              <p className="text-xs text-[#717070]">{Item.time} Hours ago</p>
-                           </div>
-                           <h4 className="text-xs text-[#42526B] text-justify">{Item.description}</h4>
+                              <p className="hero-description text-[#717070]">{Item.time} Hours ago</p>
+                           </div> */}
+                           <h4 className="hero-description text-[#42526B] text-justify mt-1.5 md:mt-3 lg:mt-4 xl:mt-5">{Item.description}</h4>
 
                            <Link href={`/blog/${index + 1}`} className="flex items-center gap-1.5 mt-3 md:mt-4">
-                              <p className="text-[#1087EF] description1">{i18n.t("Read More")}</p>
-                              <FaArrowRightLong className="description1 text-[#1087EF]" />
+                              <p className="text-[#1087EF] service-button">{i18n.t("Read More")}</p>
+                              <FaArrowRightLong className="service-button text-[#1087EF]" />
                            </Link>
                         </div>
 
