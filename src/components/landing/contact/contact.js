@@ -38,48 +38,48 @@ const Contact = () => {
          <Toaster
             position="top-right"
          />
-         <div className="flex flex-col md:flex-row xl:gap-[94px] lg:gap-8 gap-5 aid-container py-10 lg:py-16 xl:py-20">
-            <div className="flex-1 mt-5">
-               <h1 className="text-white heading1">{i18n.t("Contact Us")}</h1>
-               <p className="text-white description2 mt-2 max-w-[477px]">
+         <div className="flex flex-col md:flex-row xl:gap-[94px] lg:gap-8 gap-5 aid-container py-4 md:py-8 lg:py-16 xl:py-20">
+            <div className="flex-1 mt-2 md:mt-3 lg:mt-5">
+               <h1 className="text-white contact-heading">{i18n.t("Contact Us")}</h1>
+               <p className="text-white contact-description mt-1 md:mt-2 max-w-[477px]">
                   {i18n.t("Write your question or inquiry below and provide as much detail as possible. We will get back to you as soon as possible.")}
                </p>
                <div className="mt-4 md:mt-5 lg:mt-6 xl:mt-[30px] flex items-center gap-4">
                   <div className="bg-[#30C1EB] h-[64px] w-[64px] rounded-full flex items-center justify-center">
-                     <FiMail size={30} className="w-full text-white z-50" />
+                     <FiMail className="text-2xl md:text-3xl lg:text-4xl w-full text-white" />
                   </div>
                   <div>
-                     <p className="description1 text-white">{i18n.t("Email")}</p>
+                     <p className="description2 text-white">{i18n.t("Email")}</p>
                      <p className="description2 text-white">aidfast@gmail.com</p>
                   </div>
                </div>
             </div>
 
-            <div className="flex-1 shadow-custom-light bg-white rounded-lg lg:rounded-2xl xl:rounded-[24px] xl:p-10 lg:p-6 p-5">
-               <h4 className="heading3 text-[#1A1A1A]">
-                  {i18n.t("Request a quote — let's work together!")}
+            <div className="flex-1 shadow-custom-light bg-white rounded-lg lg:rounded-2xl xl:rounded-[24px] xl:p-10 lg:p-6 md:p-4 p-3">
+               <h4 className="contact-title text-[#1A1A1A]">
+                  {i18n.t("You can provide any questions or suggestions to help improve the quality of Aidfast’s services")}
                </h4>
-               <p className="description1 text-[#494949] mt-3 lg:mt-4">
+               <p className="contact-description1 text-[#494949] mt-2 md:mt-3 lg:mt-4">
                   {
-                     i18n.t("Whether you need a custom solution or just have a question — we’re always here for you. Send us a message now.")
+                     i18n.t("We are committed to providing you with the highest level of sincere service")
                   }
                </p>
                <div className="mt-5 lg:mt-6 w-full">
                   <Form layout="vertical" form={form} onFinish={handleSubmit}>
-                     <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-3 w-full">
+                     <div className="grid grid-cols-1 md:grid-cols-2 items-center lg:gap-3 md:gap-2 gap-0 w-full">
                         <FormInput
                            name="name"
                            label={i18n.t("Name")}
                            required
                            placeholder={i18n.t("Input Name")}
-                           className="w-full rounded-xl bg-transparent p-3 dashinput focus:outline-primary"
+                           className="w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
                         />
                         <FormInput
                            name="email"
                            label={i18n.t("Email")}
                            required
                            isEmail={true}
-                           className="w-full rounded-xl bg-transparent p-3 dashinput focus:outline-primary"
+                           className="w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
                            placeholder={i18n.t("Input Email")}
                         />
                      </div>
@@ -87,7 +87,7 @@ const Contact = () => {
                         name="subject"
                         label={i18n.t("Subject")}
                         required
-                        className="w-full rounded-xl bg-transparent p-3 dashinput focus:outline-primary"
+                        className="w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
                         placeholder={i18n.t("Input Subject")}
                      />
                      <FormInput
@@ -97,9 +97,9 @@ const Contact = () => {
                         required
                         textArea={true}
                         rows={5}
-                        className="mt-4 w-full rounded-xl bg-transparent p-3 dashinput focus:outline-primary"
+                        className="mt-4 w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
                      />
-                     <button type="submit" href="tel: 01980445424" className="bg-[#1087EF]  px-6 py-3 rounded-[12px] description1 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
+                     <button type="submit" className="bg-[#1087EF] px-6 py-3 rounded-[12px] description1 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
                         <p className="description2 text-white">{i18n.t("Sent Message")}</p>
                         <FaArrowRightLong className="text-white description2" />
                      </button>

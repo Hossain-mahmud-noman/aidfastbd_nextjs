@@ -19,9 +19,9 @@ export default async function Home() {
     <>
       <div className="">
         <Hero />
-        <Service />
+        {/* <Service /> */}
         {/* <About /> */}
-        <DoctorSpeciality />
+        {/* <DoctorSpeciality />
         <Doctor />
         <Consultation />
         <DiagnostickCenter />
@@ -29,7 +29,7 @@ export default async function Home() {
         <MobileApp />
         <Testimonials />
         <FAQ />
-        <Blog />
+        <Blog /> */}
         <Contact />
       </div>
     </>

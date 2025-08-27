@@ -90,6 +90,14 @@ body {
   @apply xl:text-4xl lg:text-3xl md:text-2xl text-xl font-inter font-bold leading-10;
 }
 
+.contact-heading {
+  @apply xl:text-4xl lg:text-3xl md:text-xl text-lg font-inter font-bold leading-10;
+}
+
+.contact-description {
+  @apply xl:text-[18px] lg:text-base md:text-sm text-[8px] font-inter font-semibold;
+}
+
 .heading2 {
   @apply xl:text-3xl lg:text-2xl md:text-xl text-base font-inter font-semibold;
 }
@@ -107,6 +115,13 @@ body {
 
 .service-title {
   @apply xl:text-2xl lg:text-xl md:text-base text-[8px] font-inter font-medium;
+}
+.contact-title {
+  @apply xl:text-2xl lg:text-xl md:text-base text-xs font-inter font-medium;
+}
+
+.contact-description1 {
+  @apply lg:text-base md:text-sm text-[10px] font-inter font-normal;
 }
 
 /* faq.css */
@@ -177,13 +192,15 @@ body {
 }
 
 .dashinput::placeholder {
+  @apply lg:!text-base md:!text-sm !text-xs;
   color: #717171 !important;
   opacity: 1;
 }
 
 .dashinput .ant-form-item .ant-form-item-label>label {
   color: #212121 !important;
-  font-size: 14px !important;
+  @apply lg:!text-base md:!text-sm !text-xs;
+  /* font-size: 14px !important; */
 }
 
 .ant-form-item-control textarea {
@@ -193,8 +210,9 @@ body {
 
 
 .ant-form-item-label>label {
+  @apply lg:!text-base md:!text-sm !text-xs;
   margin-block-end: 1px !important;
-  font-size: 14px;
+  /* font-size: 14px; */
   color: #05073c !important;
   font-weight: 500;
 }
