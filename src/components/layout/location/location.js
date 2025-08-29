@@ -186,6 +186,14 @@ const Location = () => {
     setIsModalOpen(false);
   };
 
+  const isInAppBrowser = () => {
+    const ua = navigator.userAgent || '';
+    return (
+      ua.includes("FBAN") || ua.includes("FBAV") || ua.includes("Instagram") || ua.includes("Messenger")
+    );
+  };
+
+
   useEffect(() => {
     const initializeLocation = async () => {
       const latStored = localStorage.getItem("lat");
@@ -205,8 +213,13 @@ const Location = () => {
         fetchCurrentLocation();
       }
     };
+    if (isInAppBrowser()) {
+      setError("⚠️ Location access is blocked inside Facebook/Instagram browser. Please open this page in Chrome or Safari for precise location.");
+    } else {
+      initializeLocation();
+    }
 
-    initializeLocation();
+    // initializeLocation();
   }, [i18n]);
 
   const cleanLocationName = (locationName || "").replace(/^[^,]+,\s*/, "");
