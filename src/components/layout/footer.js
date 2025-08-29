@@ -105,7 +105,6 @@ const Footer = () => {
             </div>
          </div>
          <div className="aid-container">
-
             <div className="flex flex-col md:flex-row justify-center gap-3 lg:gap-0">
                <div className="w-full md:w-[30%] lg:w-[35%]">
                   <Image
@@ -118,9 +117,9 @@ const Footer = () => {
                      width={137}
                      height={34}
                   />
-                  <p className="description1 mt-4 text-white md:max-w-[326px]">{i18n.t("AidFast Tagline")}</p>
-                  <p className="description1 mt-4 text-white ">{i18n.t("Download AidFast App")}</p>
-                  <div className="mt-4 lg:mt-5 xl:mt-8 flex items-center flex-row md:flex-col lg:flex-row gap-3 md:gap-2 xl:gap-5">
+                  <p className="footer-description mt-2 md:mt-4 text-white md:max-w-[326px]">{i18n.t("AidFast Tagline")}</p>
+                  <p className="footer-description mt-2 md:mt-4 text-white ">{i18n.t("Download AidFast App")}</p>
+                  <div className="mt-3 md:mt-4 lg:mt-5 xl:mt-8 flex items-center flex-row md:flex-col lg:flex-row gap-3 md:gap-2 xl:gap-5">
                      <Link href="https://play.google.com/store/apps/details?id=com.aidfastbd.app" className="relative w-[150px] h-[50px] hover:scale-105 transition-all duration-300">
                         <Image
                            src="/home/service/google.png"
@@ -135,17 +134,17 @@ const Footer = () => {
                      </Link>
                   </div>
                </div>
-               <div className="w-full md:w-[70%] lg:w-[65%] mt-5 sm:mt-0">
+               <div className="w-full md:w-[70%] lg:w-[65%] ">
                   <div className="flex flex-col sm:flex-row justify-between ">
                      {/* for small device */}
                      <div className="flex items-center gap-10 justify-center sm:hidden">
                         <div className="flex flex-col items-center sm:items-start">
-                           <h3 className="description3 text-white mt-4 sm:mt-0">{i18n.t("Services")}</h3>
-                           <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-5">
+                           <h3 className="description3 text-white mt-2 md:mt-4 sm:mt-0">{i18n.t("Services")}</h3>
+                           <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-2">
                               {navLinks1?.map((item, index) => (
                                  <li
                                     key={index}
-                                    className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 description1 text-white transform duration-300 hover:text-black cursor-pointer"
+                                    className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-3 footer-description text-white transform duration-300 hover:text-black cursor-pointer"
                                  >
                                     <Link className="text-center" href={item?.link}>
                                        {item?.name}
@@ -156,12 +155,12 @@ const Footer = () => {
                         </div>
 
                         {/* second part */}
-                        <div className="flex flex-col items-center sm:items-start -mt-4">
-                           <ul className="xl:mt-[60px] lg:mt-12 md:mt-10 mt-8">
+                        <div className="flex flex-col items-center sm:items-start md:-mt-4">
+                           <ul className="xl:mt-[60px] lg:mt-12 md:mt-10 mt-10">
                               {navLinks2?.map((item, index) => (
                                  <li
                                     key={index}
-                                    className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 description1 text-white transform duration-300 hover:text-black cursor-pointer"
+                                    className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-3 footer-description text-white transform duration-300 hover:text-black cursor-pointer"
                                  >
                                     <Link href={item?.link}>
                                        {item?.name}
@@ -174,10 +173,10 @@ const Footer = () => {
 
                      {/* first part */}
                      <div className="hidden sm:flex flex-col items-center sm:items-start">
-                        <h3 className="description3 text-white mt-4 sm:mt-0">{i18n.t("Services")}</h3>
-                        <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-5">
+                        <h3 className="description3 text-white sm:mt-0">{i18n.t("Services")}</h3>
+                        <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-3">
                            {navLinks1?.map((item, index) => (
-                              <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 descruiption1 text-white transform duration-300 hover:text-black cursor-pointer">
+                              <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-2 footer-description text-white transform duration-300 hover:text-black cursor-pointer">
                                  <Link className="text-center" href={item?.link}>{item?.name}</Link>
                               </li>
                            ))}
@@ -187,7 +186,7 @@ const Footer = () => {
                      <div className="hidden sm:flex flex-col items-center sm:items-start -mt-4 sm:-mt-0">
                         <ul className="xl:mt-[60px] lg:mt-12 md:mt-10 mt-8">
                            {navLinks2?.map((item, index) => (
-                              <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 description1 text-white transform duration-300 hover:text-black cursor-pointer">
+                              <li key={index} className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 footer-description text-white transform duration-300 hover:text-black cursor-pointer">
                                  <Link className="" href={item?.link}>{item?.name}</Link>
                               </li>
                            ))}
@@ -195,12 +194,12 @@ const Footer = () => {
                      </div>
                      {/* third part */}
                      <div className="flex flex-col items-center sm:items-start">
-                        <h3 className="description3 text-white mt-8 sm:mt-0">{i18n.t("Address")}</h3>
-                        <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-5">
+                        <h3 className="description3 text-white mt-4 sm:mt-0">{i18n.t("Address")}</h3>
+                        <ul className="xl:mt-8 lg:mt-7 md:mt-6 mt-2">
                            {navLinks3?.map((item, index) => (
                               <li
                                  key={index}
-                                 className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 descruiption1 text-white transform duration-300 hover:text-black cursor-pointer"
+                                 className="flex flex-col items-center sm:items-start first:mt-0 md:mt-[18px] mt-4 footer-description text-white transform duration-300 hover:text-black cursor-pointer"
                               >
                                  {typeof item.link === "function" ? (
                                     <button
@@ -258,16 +257,16 @@ const Footer = () => {
                   </div>
                </div>
             </div>
-            <div className="xl:mt-14 lg:mt-12 md:mt-10 mt-5 bg-white w-full h-[1px]"> </div>
+            <div className="xl:mt-14 lg:mt-12 md:mt-10 mt-3 bg-white w-full h-[1px]"> </div>
             <div className="xl:my-7 lg:my-6 md:my-5 my-4 flex flex-col sm:flex-row items-center justify-between ">
-               <p className="text-white description-2 mt-3 sm:mt-0">
+               <p className="text-white footer-description sm:mt-0">
                   {i18n.t("Copyright")} © {currentYear || new Date().getFullYear()} {i18n.t("All rights reserved")} <Link className="text-black/70 description2 hover:text-white/50 transition-all duration-300" href="/">AidFast</Link>
                </p>
-               <div className="flex items-center gap-3 md:gap-4 xl:gap-10 mt-3 md:mt-0">
-                  <Link href="/privacy" className="text-white description1 hover:text-black transition-all duration-300">
+               <div className="flex items-center gap-3 md:gap-4 xl:gap-10 mt-2 md:mt-0">
+                  <Link href="/privacy" className="text-white footer-description hover:text-black transition-all duration-300">
                      {i18n.t("Privacy & Policy")}
                   </Link>
-                  <Link href="/terms" className="text-white description1 hover:text-black transition-all duration-300">
+                  <Link href="/terms" className="text-white footer-description hover:text-black transition-all duration-300">
                      {i18n.t("Terms & Conditions")}
                   </Link>
                </div>

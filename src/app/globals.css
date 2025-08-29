@@ -43,6 +43,10 @@ body {
   @apply lg:text-base text-sm font-inter font-normal;
 }
 
+.footer-description {
+  @apply lg:text-base md:text-sm text-xs font-inter font-normal;
+}
+
 .description5 {
   @apply lg:text-base md:text-sm text-xs font-inter font-normal;
 }
