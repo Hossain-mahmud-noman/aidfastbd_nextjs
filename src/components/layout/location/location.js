@@ -8,12 +8,12 @@ import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { map_key } from "../../../utils/constants.js";
 import { FiSearch, FiTarget, FiX } from "react-icons/fi";
 import { useI18n } from "../../../context/i18n.js";
-
+import { Modal, Button } from "antd";
 const Location = () => {
   const i18n = useI18n();
   const inputRef = useRef(null);
   const router = useRouter();
-
+  const [showInAppBrowserModal, setShowInAppBrowserModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 });
   const [searchLocation, setSearchLocation] = useState("");
@@ -214,7 +214,8 @@ const Location = () => {
       }
     };
     if (isInAppBrowser()) {
-      setError("⚠️ Location access is blocked inside Facebook/Instagram browser. Please open this page in Chrome or Safari for precise location.");
+      setError("⚠️ Location access is blocked inside Facebook/Instagram browser.");
+      setShowInAppBrowserModal(true);
     } else {
       initializeLocation();
     }
@@ -261,7 +262,7 @@ const Location = () => {
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
+        <div className="fixed inset-0 z-[2000] overflow-y-auto ">
           <div className="flex items-center justify-center min-h-screen p-4">
             <div
               className="fixed inset-0 bg-gray-500 bg-opacity-75"
@@ -366,6 +367,40 @@ const Location = () => {
           </div>
         </div>
       )}
+
+      <Modal
+        title="Open in Chrome/Safari"
+        open={showInAppBrowserModal}
+        footer={null}
+        closable={false}
+        centered
+      >
+        <p>
+          Facebook/Instagram’s in-app browser does not allow GPS access.
+          Please open this page in your default browser for full location support.
+        </p>
+        <div className="mt-4 flex gap-2">
+          <Button
+            type="primary"
+            block
+            onClick={() => {
+              if (/android/i.test(navigator.userAgent)) {
+                // Android: try open in Chrome
+                window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
+              } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // iOS: cannot auto-open Safari, but instruct user
+                alert("Please tap the ••• menu and choose 'Open in Safari'");
+              } else {
+                // fallback
+                window.open(window.location.href, "_system");
+              }
+            }}
+          >
+            Open in Browser
+          </Button>
+        </div>
+      </Modal>
+
     </div>
   );
 };
