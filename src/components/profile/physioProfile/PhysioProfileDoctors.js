@@ -16,15 +16,22 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
     try {
       const formData = new FormData();
       formData.append("GenericServiceId", id);
-      formData.append("ServiceType", 3); 
+      formData.append("ServiceType", 3);
       formData.append("Name", values.Name);
       formData.append("Degree", values.Degree);
       formData.append("Age", values.Age);
       formData.append("Experience", values.Experience);
 
       if (image) {
-        formData.append("ImageUrl", image); 
+        if (typeof image === "string" && !image.startsWith(image_base_endpoint)) {
+          const blob = await fetch(image).then((res) => res.blob());
+          formData.append("ImageFile", blob, "image.jpg");
+        } else if (image instanceof File) {
+          formData.append("ImageFile", image);
+        }
       }
+
+
 
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalProfile",
@@ -69,20 +76,17 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
     if (!result.isConfirmed) return;
 
     try {
+      const formData = new FormData();
+      formData.append("id", doctorId);
+
       const response = await fetch(
-        "https://api.aidfastbd.com/api/GeneralInformation/SaveUpdateGenericServiceDoctors",
+        "https://api.aidfastbd.com/api/GeneralInformation/DeleteGenericServiceAdditionalProfile",
         {
-          method: "POST",
+          method: "DELETE",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            genericServiceUserId: user.userId,
-            doctorUserId: doctorId,
-            isDelete: true,
-            serviceType: 3,
-          }),
+          body: formData,
         }
       );
 
@@ -100,17 +104,20 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
     }
   };
 
+
   // Handle file input
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        toast.warning("File size should be less than 2MB");
-        return;
-      }
-      setImage(file);
-    }
-  };
+ const handleImageChange = (event, setImage) => {
+     const file = event.target.files[0];
+     if (file) {
+       if (file.size > 2 * 1024 * 1024) {
+         toast.warning("File size should be less than 2MB");
+         return;
+       }
+       const reader = new FileReader();
+       reader.onload = () => setImage(reader.result);
+       reader.readAsDataURL(file);
+     }
+   };
 
   return (
     <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
@@ -145,7 +152,7 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
               <p className="text-sm text-gray-600">{doctor.degree}</p>
               <p className="text-sm text-gray-500">{doctor.experience}</p>
             </div>
-            <Button danger onClick={() => removeDoctor(doctor.doctorUserId)}>
+            <Button danger onClick={() => removeDoctor(doctor.id)}>
               Remove
             </Button>
           </div>
@@ -163,8 +170,10 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
           <Form.Item label="Profile Image">
             <input
               type="file"
+              id="imageUpload"
+              className="hidden"
               accept="image/*"
-              onChange={handleImageChange}
+              onChange={(e) =>handleImageChange(e, setImage)}
             />
           </Form.Item>
 

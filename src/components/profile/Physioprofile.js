@@ -14,6 +14,7 @@ function Physioprofile() {
   const { user, token } = useAuth()
   const [profileData, setProfileData] = useState(null);
 
+
   const getProfileData = async () => {
     if (!user?.userId || !token) return;
     headerx['Authorization'] = `Bearer ${token}`;
@@ -36,11 +37,10 @@ function Physioprofile() {
       getProfileData();
   }, [user, token]);
 
-
   const tabs = [
     { label: 'Basic', content: <PhysioProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token} /> },
     { label: 'Info', content: <PhysioProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
-    { label: 'Physiotherapist', content: <PhysioProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
+    { label: 'Physiotherapist', content: <PhysioProfileDoctors getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceAdditionalProfiles} user={user} token={token} /> },
     { label: 'Services', content: <PhysioProfileServices getProfileData={getProfileData} genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token} /> },
   ];
 
