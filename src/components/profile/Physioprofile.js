@@ -40,7 +40,7 @@ function Physioprofile() {
   const tabs = [
     { label: 'Basic', content: <PhysioProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token} /> },
     { label: 'Info', content: <PhysioProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
-    { label: 'Doctors', content: <PhysioProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
+    { label: 'Physiotherapist', content: <PhysioProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
     { label: 'Services', content: <PhysioProfileServices getProfileData={getProfileData} genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token} /> },
   ];
 

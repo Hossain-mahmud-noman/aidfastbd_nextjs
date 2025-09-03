@@ -129,7 +129,7 @@ function DoctorHomeVisitProfileDoctors({ data, user, token, id, getProfileData }
       </Button>
 
       <div className="mt-4 space-y-4">
-        {data.map((doctor) => (
+        {data?.map((doctor) => (
           <div
             key={doctor.id}
             className="border p-4 rounded shadow flex items-center space-x-4"
@@ -172,7 +172,7 @@ function DoctorHomeVisitProfileDoctors({ data, user, token, id, getProfileData }
             ) : (
               <div className="overflow-y-auto max-h-[60vh]">
                 <ul className="space-y-2">
-                  {allDoctors.map((doctor) => (
+                  {allDoctors?.map((doctor) => (
                     <li
                       key={doctor.id}
                       className="p-2 hover:bg-gray-100 cursor-pointer flex gap-3 items-center border rounded"

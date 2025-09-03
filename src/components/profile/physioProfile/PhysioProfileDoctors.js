@@ -1,71 +1,61 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { image_base_endpoint } from "../../../utils/constants";
 import Image from "next/image";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
-import { Button } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import { IoMdAddCircleOutline } from "react-icons/io";
 
 function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
-  const [allDoctors, setAllDoctors] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [image, setImage] = useState(null);
 
-  // Fetch doctor list from API
-  const fetchDoctorList = async () => {
-    setLoading(true);
+  // Save new physiotherapist
+  const saveDoctor = async (values) => {
     try {
-      const response = await fetch(
-        `https://api.aidfastbd.com/api/GeneralInformation/GetAllDoctorList?doctorName=${searchTerm}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const data = await response.json();
-      setAllDoctors(data || []);
-    } catch (error) {
-      console.error("Error fetching doctors:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+      const formData = new FormData();
+      formData.append("GenericServiceId", id);
+      formData.append("ServiceType", 3); 
+      formData.append("Name", values.Name);
+      formData.append("Degree", values.Degree);
+      formData.append("Age", values.Age);
+      formData.append("Experience", values.Experience);
 
+      if (image) {
+        formData.append("ImageUrl", image); 
+      }
 
-  const saveDoctor = async (doctor) => {
-    try {
       const response = await fetch(
-        "https://api.aidfastbd.com/api/GeneralInformation/SaveUpdateGenericServiceDoctors",
+        "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalProfile",
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            genericServiceUserId: id,
-            doctorUserId: doctor.id,
-            isDelete: false,
-            serviceType: 3
-          }),
+          body: formData,
         }
       );
+
       if (response.ok) {
-        setShowPopup(false);
-        if (typeof getProfileData === 'function') {
+        setModalVisible(false);
+        form.resetFields();
+        setImage(null);
+        if (typeof getProfileData === "function") {
           await getProfileData();
         }
-        toast.success("Doctor added successfully!");
+        toast.success("Physiotherapist added successfully!");
       } else {
-        toast.error("Failed to add doctor.");
+        toast.error("Failed to add physiotherapist.");
       }
     } catch (error) {
       console.error("Error saving doctor:", error);
-      toast.error("Something went wrong while adding doctor.");
+      toast.error("Something went wrong while adding physiotherapist.");
     }
   };
 
-  const removeDoctor = async (id) => {
+  // Remove doctor
+  const removeDoctor = async (doctorId) => {
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "Do you want to remove this doctor?",
@@ -89,14 +79,15 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
           },
           body: JSON.stringify({
             genericServiceUserId: user.userId,
-            doctorUserId: id,
+            doctorUserId: doctorId,
             isDelete: true,
-            serviceType: 3
+            serviceType: 3,
           }),
         }
       );
+
       if (response.ok) {
-        if (typeof getProfileData === 'function') {
+        if (typeof getProfileData === "function") {
           await getProfileData();
         }
         toast.success("Doctor removed successfully!");
@@ -109,27 +100,34 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
     }
   };
 
-
-  useEffect(() => {
-    fetchDoctorList();
-  }, [searchTerm]);
+  // Handle file input
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        toast.warning("File size should be less than 2MB");
+        return;
+      }
+      setImage(file);
+    }
+  };
 
   return (
     <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
       <h1 className="text-lg font-bold mb-4">
-        Add Doctor profile of your Physiotherapy Center
+        Add Physiotherapist profile of your Physiotherapy Center
       </h1>
 
       <Button
-        icon={ <IoMdAddCircleOutline />}
-        onClick={() => setShowPopup(true)}
+        icon={<IoMdAddCircleOutline />}
+        onClick={() => setModalVisible(true)}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
-        Add Doctor
+        Add Physiotherapist
       </Button>
 
       <div className="mt-4 space-y-4">
-        {data.map((doctor) => (
+        {data?.map((doctor) => (
           <div
             key={doctor.id}
             className="border p-4 rounded shadow flex items-center space-x-4"
@@ -145,66 +143,70 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
             <div className="flex-1">
               <h2 className="font-bold">{doctor.name}</h2>
               <p className="text-sm text-gray-600">{doctor.degree}</p>
-              <p className="text-sm text-gray-500">{doctor.location}</p>
+              <p className="text-sm text-gray-500">{doctor.experience}</p>
             </div>
-            <Button danger
-              onClick={() => removeDoctor(doctor.doctorUserId)}
-            >
+            <Button danger onClick={() => removeDoctor(doctor.doctorUserId)}>
               Remove
             </Button>
           </div>
         ))}
       </div>
 
-      {showPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-96 max-h-[80vh] overflow-y-auto">
-            <h2 className="text-lg font-bold mb-4">Select a Doctor</h2>
+      {/* Modal for Add Physiotherapist */}
+      <Modal
+        title="Add New Physiotherapist"
+        open={modalVisible}
+        onCancel={() => setModalVisible(false)}
+        footer={null}
+      >
+        <Form layout="vertical" form={form} onFinish={saveDoctor}>
+          <Form.Item label="Profile Image">
             <input
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full border px-3 py-2 rounded mb-4"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
             />
-            {loading ? (
-              <p>Loading doctors...</p>
-            ) : (
-              <div className="overflow-y-auto max-h-[60vh]">
-                <ul className="space-y-2">
-                  {allDoctors.map((doctor) => (
-                    <li
-                      key={doctor.id}
-                      className="p-2 hover:bg-gray-100 cursor-pointer flex gap-3 items-center border rounded"
-                      onClick={() => saveDoctor(doctor)}
-                    >
-                      <div className="h-12 w-12 rounded-full overflow-hidden">
-                        <Image
-                          width={48}
-                          height={48}
-                          src={`${image_base_endpoint}${doctor.imageUrl}`}
-                          alt={doctor.name}
-                        />
-                      </div>
-                      <div>
-                        <h3 className="font-bold">{doctor.name}</h3>
-                        <p className="text-sm text-gray-600">{doctor.degree}</p>
-                        <p className="text-xs text-gray-400">{doctor.location}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <button
-              onClick={() => setShowPopup(false)}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+          </Form.Item>
+
+          <Form.Item
+            name="Name"
+            label="Name"
+            rules={[{ required: true, message: "Please enter name" }]}
+          >
+            <Input placeholder="Enter physiotherapist name" />
+          </Form.Item>
+
+          <Form.Item
+            name="Degree"
+            label="Degree"
+            rules={[{ required: true, message: "Please enter degree" }]}
+          >
+            <Input placeholder="Enter degree" />
+          </Form.Item>
+
+          <Form.Item
+            name="Experience"
+            label="Experience"
+            rules={[{ required: true, message: "Please enter experience" }]}
+          >
+            <Input placeholder="Enter years of experience" />
+          </Form.Item>
+
+          <Form.Item
+            name="Age"
+            label="Age"
+            rules={[{ required: true, message: "Please enter age" }]}
+          >
+            <Input placeholder="Enter age" type="number" />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" className="w-full">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 }
