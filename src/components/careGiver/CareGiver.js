@@ -54,7 +54,7 @@ const CareGiverDetails = ({ data, url }) => {
       </Head>
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        title={i18n.t("Doctor Home Visit Details")}
+        title={i18n.t("Care giver Details")}
         trailingComponents={
           <div className="flex">
             <ProfileQR slug={"newService"} id={data?.id} type={"care-giver-center"} />

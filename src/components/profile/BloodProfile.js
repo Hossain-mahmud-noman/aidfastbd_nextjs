@@ -43,7 +43,7 @@ function BloodProfile() {
 
   return (
     <div>
-      <TabBar tabs={tabs}></TabBar>
+      <TabBar tabs={tabs}/>
     </div>
   )
 }

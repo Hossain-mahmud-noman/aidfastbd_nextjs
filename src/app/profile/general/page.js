@@ -3,6 +3,8 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { appname } from '../../../utils/constants';
 import ProfileCard from '../../../components/card/ProfileCard'
+import AppBar from '../../../components/AppBar';
+import { FaArrowLeft } from 'react-icons/fa6';
 
 export const metadata = {
    title: "General Profile | " + appname,
@@ -24,8 +26,11 @@ async function Page() {
 
    return (
       user && (
-         <div className="py-10">
-            <ProfileCard token={token} user={user}></ProfileCard>
+         <div className="pb-10">
+            <div className='mb-6'>
+               <AppBar leadingIcon={<FaArrowLeft className="h-5 w-5" />} title="Profile" />
+            </div>
+            <ProfileCard token={token} user={user} />
          </div>
       )
    )

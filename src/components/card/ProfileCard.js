@@ -96,7 +96,7 @@ const ProfileCard = ({ token, user }) => {
 
   return (
     <div className=" flex py-2 px-4 justify-center">
-      <div className="w-full max-w-sm rounded-lg shadow-custom-light p-6">
+      <div className="w-full max-w-3xl rounded-lg shadow-custom-light p-6">
         {/* Profile Picture */}
         <div className="relative flex justify-center">
           <div className="w-28 h-28 rounded-full bg-gradient-to-r from-teal-500 to-blue-500 flex items-center justify-center">
@@ -114,7 +114,7 @@ const ProfileCard = ({ token, user }) => {
           </div>
           <label
             htmlFor="imageUpload"
-            className="absolute bottom-1 right-20 bg-white p-2 rounded-full shadow-md cursor-pointer"
+            className="absolute bottom-1 right-20 lg:right-64 bg-white p-2 rounded-full shadow-md cursor-pointer"
           >
             <FaCamera />
 
