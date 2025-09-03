@@ -125,7 +125,7 @@ function DiagnosticProfilePharmacy({ data, user, token, getProfileData }) {
       </Button>
 
       <div className="mt-4 space-y-4">
-        {data.map((pharmacy) => (
+        {data?.map((pharmacy) => (
           <div
             key={pharmacy.pharmacyUserId}
             className="border p-4 rounded shadow flex items-center space-x-4"
@@ -165,7 +165,7 @@ function DiagnosticProfilePharmacy({ data, user, token, getProfileData }) {
               <p className="text-center">Loading pharmacies...</p>
             ) : (
               <ul className="max-h-72 overflow-y-auto divide-y">
-                {allPharmacys.map((pharmacy) => (
+                {allPharmacys?.map((pharmacy) => (
                   <li
                     key={pharmacy.value}
                     className="p-2 flex items-center space-x-3 hover:bg-gray-100 cursor-pointer"

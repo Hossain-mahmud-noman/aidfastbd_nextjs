@@ -127,7 +127,7 @@ function DiagnosticProfileAmbulance({ data, user, token, getProfileData }) {
       </Button>
 
       <div className="mt-4 space-y-4">
-        {data.map((ambulance) => (
+        {data?.map((ambulance) => (
           <div
             key={ambulance.ambulanceUserId}
             className="border p-4 rounded shadow flex items-center space-x-4"
@@ -170,7 +170,7 @@ function DiagnosticProfileAmbulance({ data, user, token, getProfileData }) {
               <p className="text-center">Loading ambulances...</p>
             ) : (
               <ul className="max-h-72 overflow-y-auto divide-y">
-                {allAmbulances.map((ambulance) => (
+                {allAmbulances?.map((ambulance) => (
                   <li
                     key={ambulance.value}
                     className="p-2 flex items-center space-x-3 hover:bg-gray-100 cursor-pointer"

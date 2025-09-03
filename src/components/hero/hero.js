@@ -28,6 +28,11 @@ const Hero = () => {
          title: "All-in-One Healthcare – AidFast",
          image: "/home/hero/h3.png"
       },
+      {
+         heading: "Welcome to AidFast",
+         title: "All-in-One Healthcare – AidFast",
+         image: "/home/hero/h4.jpg"
+      },
    ]
    const router = useRouter()
    return (
@@ -108,6 +113,7 @@ const Hero = () => {
                            src={item.image}
                            width={2000}
                            height={2000}
+                           loading='lazy'
                            alt="mobile"
                            className="h-[141px] sm:h-[250px] lg:h-[380px] xl:h-[540px] 2xl:h-[700px]"
                         />

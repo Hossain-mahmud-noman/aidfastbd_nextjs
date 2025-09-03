@@ -206,7 +206,7 @@ function DiagnosticProfileDoctors({ data, user, token, getProfileData }) {
       </Button>
 
       <div className="mt-4 space-y-4">
-        {data.map((doctor) => (
+        {data?.map((doctor) => (
           <div key={doctor.id} className="border p-4 rounded shadow flex items-center justify-between flex-col sm:flex-row" >
             <div className="flex items-center space-x-4">
               <Image

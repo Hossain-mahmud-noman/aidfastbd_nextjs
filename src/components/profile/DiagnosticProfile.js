@@ -43,7 +43,7 @@ function DiagnosticProfile() {
   const tabs = [
     { label: 'Basic', content: <DiagnosticProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token}></DiagnosticProfileBasic> },
     { label: 'Info', content: <DiagnosticProfileInfo getProfileData={getProfileData} data={profileData?.diagnosticCenterAdditionalInfo} user={user} token={token}></DiagnosticProfileInfo> },
-    { label: 'Doctors', content: <DiagnosticProfileDoctors getProfileData={getProfileData} data={profileData?.diagnosticCenterDoctors} user={user} token={token}></DiagnosticProfileDoctors> },
+    { label: 'Physiotherapist', content: <DiagnosticProfileDoctors getProfileData={getProfileData} data={profileData?.diagnosticCenterDoctors} user={user} token={token}></DiagnosticProfileDoctors> },
     { label: 'Blood Bank', content: <DiagnosticProfileBlood getProfileData={getProfileData} data={profileData?.diagnosticCenterBloodBank} user={user} token={token}></DiagnosticProfileBlood> },
     { label: 'Pharmacy', content: <DiagnosticProfilePharmacy getProfileData={getProfileData} data={profileData?.diagnosticCenterPharmacy} user={user} token={token}></DiagnosticProfilePharmacy> },
     { label: 'Ambulance', content: <DiagnosticProfileAmbulance getProfileData={getProfileData} data={profileData?.diagnosticCenterAmbulance} user={user} token={token}></DiagnosticProfileAmbulance> },

@@ -125,7 +125,7 @@ function DiagnosticProfileBlood({ data, user, token, getProfileData }) {
       </Button>
 
       <div className="mt-4 space-y-4">
-        {data.map((blood) => (
+        {data?.map((blood) => (
           <div
             key={blood.bloodBankUserId}
             className="border p-4 rounded shadow flex items-center space-x-4"
