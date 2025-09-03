@@ -70,14 +70,14 @@ const Contact = () => {
                         <FormInput
                            name="name"
                            label={i18n.t("Name")}
-                           required
+                           // required
                            placeholder={i18n.t("Input Name")}
                            className="w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
                         />
                         <FormInput
                            name="email"
                            label={i18n.t("Email")}
-                           required
+                           // required
                            isEmail={true}
                            className="w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
                            placeholder={i18n.t("Input Email")}
@@ -85,20 +85,33 @@ const Contact = () => {
                      </div>
                      <FormInput
                         name="subject"
-                        label={i18n.t("Subject")}
-                        required
+                        label={i18n.t("Phone Number")}
+                        // required
                         className="w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
-                        placeholder={i18n.t("Input Subject")}
+                        placeholder={i18n.t("Type your phone number")}
                      />
-                     <FormInput
-                        name="message"
-                        label={i18n.t("Message")}
-                        placeholder={i18n.t("Type your message")}
-                        required
-                        textArea={true}
-                        rows={5}
-                        className="mt-4 w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
-                     />
+                     <div className="hidden md:block">
+                        <FormInput
+                           name="message"
+                           label={i18n.t("Message")}
+                           placeholder={i18n.t("Type your message")}
+                           // required
+                           textArea={true}
+                           rows={5}
+                           className=" mt-4 w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
+                        />
+                     </div>
+                     <div className="block md:hidden">
+                        <FormInput
+                           name="message"
+                           label={i18n.t("Message")}
+                           placeholder={i18n.t("Type your message")}
+                           // required
+                           textArea={true}
+                           rows={2}
+                           className=" mt-4 w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
+                        />
+                     </div>
                      <button type="submit" className="bg-[#1087EF] px-6 py-3 rounded-[12px] description1 hover:bg-blue-700 transition-all duration-300 flex items-center gap-2">
                         <p className="description2 text-white">{i18n.t("Sent Message")}</p>
                         <FaArrowRightLong className="text-white description2" />
