@@ -43,7 +43,7 @@ const Contact = () => {
             <div className="flex-1 mt-2 md:mt-3 lg:mt-5">
                <h1 className="text-white contact-heading">{i18n.t("Contact Us")}</h1>
                <p className="text-white contact-description mt-1 md:mt-2 max-w-[477px]">
-                  {i18n.t("Join AidFast as a doctor or healthcare provider by filling out this form. Share your questions or suggestions—we’re committed to giving you the best care.")}
+                  {i18n.t("Contact us to add your doctor profile or healthcare institution profile on Aidfast")}
                </p>
                <div className="mt-4 md:mt-5 lg:mt-6 xl:mt-[30px] flex items-center justify-between">
                   <div className="flex items-center gap-1.5 md:gap-3">
@@ -69,11 +69,11 @@ const Contact = () => {
 
             <div className="flex-1 shadow-custom-light bg-white rounded-lg lg:rounded-2xl xl:rounded-[24px] xl:p-10 lg:p-6 md:p-4 p-3">
                <h4 className="contact-title text-[#1A1A1A]">
-                  {i18n.t("You can provide any questions or suggestions to help improve the quality of Aidfast’s services")}
+                  {i18n.t("If you want to join AidFast as a doctor or healthcare institution, please fill out this form")}
                </h4>
                <p className="contact-description1 text-[#494949] mt-2 md:mt-3 lg:mt-4">
                   {
-                     i18n.t("We are committed to providing you with the highest level of sincere service")
+                     i18n.t("You may share your questions or suggestions to improve our service. We are committed to providing the best and most sincere care.")
                   }
                </p>
                <div className="mt-5 lg:mt-6 w-full">

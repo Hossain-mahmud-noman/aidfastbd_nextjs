@@ -241,7 +241,6 @@
     "Message": "Message",
     "Type your message": "Type your message",
     "Sent Message": "Sent Message",
-    "We are committed to providing you with the highest level of sincere service": "We are committed to providing you with the highest level of sincere service",
     "With the best healthcare providers": "With the best healthcare providers",
     "Enter email or phone number": "Enter email or phone number",
     "Enter password": "Enter password",
@@ -480,7 +479,6 @@
     "Message": "বার্তা",
     "Type your message": "আপনার বার্তা লিখুন",
     "Sent Message": "বার্তা পাঠান",
-    "We are committed to providing you with the highest level of sincere service": "আপনাদের সর্বোচ্চ ও আন্তরিক সেবা দিতে আমরা বদ্ধপরিকর।",
     "With the best healthcare providers": "সেরা স্বাস্থ্যসেবা প্রদানকারীদের সাথে থাকুন",
     "Enter email or phone number": "ইমেইল বা ফোন নম্বর লিখুন",
     "Enter password": "পাসওয়ার্ড লিখুন",
@@ -518,15 +516,16 @@
     "Pharmacy & Medicines": "ফার্মেসি ও ঔষধ সরবরাহ",
     "Order Medicines": "ওষুধ অর্ডার করুন",
     "Caregiver Center": "কেয়ার গিভার সেন্টার",
-    "Emergency Helpline" : "ইমার্জেন্সি হেল্পলাইন",
+    "Emergency Helpline": "ইমার্জেন্সি হেল্পলাইন",
     "All-in-One Healthcare – AidFast": "স্বাস্থ্যসেবার সকল প্রয়োজনে- AidFast",
     "Doctor Home Visit Details": "ডাক্তার হোম ভিজিট বিস্তারিত",
     "Diagnostic Center": "ডায়াগনস্টিক সেন্টার",
     "Phone Number": "ফোন নাম্বার",
     "Type your phone number": "আপনার ফোন নাম্বার লিখুন",
     "Care giver Details": "কেয়ার গিভার ডিটেইলস",
-    "Join AidFast as a doctor or healthcare provider by filling out this form. Share your questions or suggestions—we’re committed to giving you the best care.": "AidFast-এ ডাক্তার বা স্বাস্থ্যসেবা প্রতিষ্ঠান হিসেবে যুক্ত হতে চাইলে এই ফর্মটি পূরণ করুন। সেবার মান উন্নত করতে প্রশ্ন বা পরামর্শ দিতে পারেন। সর্বোচ্চ ও আন্তরিক সেবা দিতে আমরা বদ্ধ পরিকর।",
     "WhatsApp": "হোয়াটসঅ্যাপ",
-    "You can provide any questions or suggestions to help improve the quality of Aidfast’s services" : "Aidfast এর সেবার মান আরো উন্নত করতে যেকোনো প্রশ্ন বা সাজেশন দিতে পারেন"
+    "Contact us to add your doctor profile or healthcare institution profile on Aidfast": "Aidfast এ আপনার ডাক্তার প্রোফাইল বা স্বাস্থ্যসেবা প্রতিষ্ঠান এর প্রোফাইল যুক্ত করতে যোগাযোগ করুন",
+    "If you want to join AidFast as a doctor or healthcare institution, please fill out this form": "AidFast-এ ডাক্তার বা স্বাস্থ্যসেবা প্রতিষ্ঠান হিসেবে যুক্ত হতে চাইলে এই ফর্মটি পূরণ করুন",
+    "You may share your questions or suggestions to improve our service. We are committed to providing the best and most sincere care." : "সেবার মান উন্নত করতে প্রশ্ন বা পরামর্শ দিতে পারেন। সর্বোচ্চ ও আন্তরিক সেবা দিতে আমরা বদ্ধ পরিকর"
   }
 }

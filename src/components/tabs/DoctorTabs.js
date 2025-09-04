@@ -14,7 +14,6 @@ import { useAuth } from "../../context/AuthContext";
 import { useSearchParams } from "next/navigation";
 
 function DoctorTabs({ data, UserId }) {
-  console.log("🚀 ~ DoctorTabs ~ data:", data)
   const i18n = useI18n()
   const { user } = useAuth()
   const [reviewData, setReviewdData] = useState(data)
@@ -23,7 +22,6 @@ function DoctorTabs({ data, UserId }) {
   const handleClose = () => setShowModal(false);
   const params = useSearchParams()
   let diagnosticCenter = params.get("diagnosticCenterid")
-  console.log("🚀 ~ DoctorTabs ~ diagnosticCenterid:", diagnosticCenter)
 
   const tabData = [
     i18n.t("Information"),

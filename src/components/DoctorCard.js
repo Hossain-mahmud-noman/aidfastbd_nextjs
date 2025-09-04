@@ -4,7 +4,6 @@ import { FaStar, FaStethoscope, FaPhone } from "react-icons/fa";
 import Image from 'next/image';
 
 const DoctorCard = ({ doctor, lat = null, lon = null, id = null, diagnosticCenterid = null }) => {
-console.log("🚀 ~ DoctorCard ~ diagnosticCenterid:", diagnosticCenterid)
 
   const defaultImageUrl = "/images/doctor.jpg";
   const profile = doctor.imageUrl == null || doctor.imageUrl == "" ? defaultImageUrl : image_base_endpoint + doctor.imageUrl;
