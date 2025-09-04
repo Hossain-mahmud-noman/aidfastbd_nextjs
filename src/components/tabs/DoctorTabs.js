@@ -11,14 +11,19 @@ import { useI18n } from "../../context/i18n";
 import ContacTactModal from "../../utils/contactModal";
 import PostReview from "../postReview/PostReview";
 import { useAuth } from "../../context/AuthContext";
+import { useSearchParams } from "next/navigation";
 
 function DoctorTabs({ data, UserId }) {
+  console.log("🚀 ~ DoctorTabs ~ data:", data)
   const i18n = useI18n()
   const { user } = useAuth()
   const [reviewData, setReviewdData] = useState(data)
   const [showModal, setShowModal] = useState(false);
   const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
+  const params = useSearchParams()
+  let diagnosticCenter = params.get("diagnosticCenterid")
+  console.log("🚀 ~ DoctorTabs ~ diagnosticCenterid:", diagnosticCenter)
 
   const tabData = [
     i18n.t("Information"),
@@ -118,11 +123,266 @@ function DoctorTabs({ data, UserId }) {
 
             <div className="mt-5 lg:mt-8">
               <h3 className="font-bold text-lg">{i18n.t("Chamber Information")}</h3>
-              <div>
+              <div className="">
                 {data?.chamberInformation?.map((e, index) => {
                   return (
-                    <div className="border border-primary rounded-lg my-3 lg:my-6 p-3 lg:p-6" key={`chamber_${index}`}>
-                      <div className="mt-3 lg:mt-4">
+                    diagnosticCenter === null || diagnosticCenter === "null" ?
+                      <div className="border border-primary rounded-lg my-3 lg:my-6 p-3 lg:p-6" key={index}>
+                        <div className="">
+                          <h4 className="font-bold text-lg text-blue-700">
+                            {e?.name}
+                          </h4>
+
+                          <div className="flex items-center justify-start text-left space-x-2 mt-3 lg:mt-4">
+                            {e?.location && e?.lat && e?.lon && (
+                              <>
+                                <span className="font-bold text-sm">
+                                  {i18n.t("Location")}: {e.location}
+                                </span>
+                                <Image
+                                  onClick={() => {
+                                    const mapUrl = `https://www.google.com/maps?q=${e.lat},${e.lon}`;
+                                    window.open(mapUrl, "_blank");
+                                  }}
+                                  src="/icons/map.png"
+                                  alt="Map Icon"
+                                  width={30}
+                                  height={30}
+                                  className="cursor-pointer"
+                                />
+                              </>
+                            )}
+
+                          </div>
+
+                          <div className="mt-3 lg:mt-4">
+                            {e?.notice !== null && e?.notice !== "" && (
+                              <TextTicker text={e?.notice} />
+                            )}
+                          </div>
+                          <h4 className="font-bold text-sm text-green-700 mt-3 lg:mt-4">
+                            {i18n.t("Visiting Hours")}
+                          </h4>
+
+                          <div className="overflow-x-auto mt-3 lg:mt-4">
+                            <table
+                              className="w-full text-sm"
+                              aria-label="Chamber Visiting Hours"
+                            >
+                              <thead>
+                                <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                  <th className="py-3 px-4 text-left">{i18n.t("Day")}</th>
+                                  <th className="py-3 px-4 text-left">{i18n.t("Day Time")}</th>
+                                  <th className="py-3 px-4 text-left">{i18n.t("Evening Time")}</th>
+                                  <th className="py-3 px-4 text-left">{i18n.t("Status")}</th>
+                                </tr>
+                              </thead>
+                              <tbody className="text-gray-600 text-sm font-light">
+                                {e?.chamberTimeDetails?.map((schedule, index) => (
+                                  <tr
+                                    key={`schedule_${index}`}
+                                    className={`border-b border-gray-200 hover:bg-gray-100`}
+                                  >
+                                    <td className="py-3 px-4 text-left">
+                                      {
+                                        dayNameMap[schedule?.dayName]?.[i18n.language === "bn" ? "bn" : "en"] ||
+                                        schedule?.dayName // fallback
+                                      }
+                                    </td>
+
+                                    <td className="py-3 px-4 text-left">
+                                      {schedule?.dayTime}
+                                    </td>
+                                    <td className="py-3 px-4 text-left">
+                                      {schedule.eveningTime}
+                                    </td>
+                                    <td className="py-3 px-4 text-left">
+                                      <span
+                                        className={`${schedule.isOpen
+                                          ? "bg-green-200 text-green-600"
+                                          : "bg-red-200 text-red-600"
+                                          } py-1 px-3 rounded-full text-xs`}
+                                      >
+                                        {schedule.isOpen ? i18n.t("Open") : i18n.t("Closed")}
+                                      </span>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div className="mt-4 text-gray-700">
+                          <p>
+                            <strong>{i18n.t("Fee")}:</strong> {e.fee} /=
+                          </p>
+                          <p>
+                            <strong>{i18n.t("Follow-up")}:</strong> {e.oldPatient} /=
+                          </p>
+                          <p>
+                            <strong>{i18n.t("Report Showing")}:</strong> {e.reportShow} /=
+                          </p>
+                          <p>
+                            <strong>{i18n.t("Room No")}:</strong> {e.room}
+                          </p>
+                          <p>
+                            <strong>{i18n.t("Floor")}:</strong> {e.floor}
+                          </p>
+                          <div className="mt-2 mb-2">
+                            <button
+                              onClick={handleOpen}
+                              className="bg-blue-500 text-white py-2 px-4 rounded-lg text-sm flex items-center space-x-2 max-w-fit"
+                              style={{ inlineSize: "auto" }}
+                            >
+                              <FaPhoneAlt />
+                              <span>{i18n.t("Call Now")}</span>
+                            </button>
+                          </div>
+                          <ContacTactModal
+                            contact={e.phoneNumber}
+                            open={showModal}
+                            onClose={handleClose}
+                          />
+                        </div>
+                      </div> :
+
+                      diagnosticCenter === e?.diagnosticEditableChamberId &&
+                      (
+                        <div className="border border-primary rounded-lg my-3 lg:my-6 p-3 lg:p-6" key={index}>
+                          <div className="">
+                            <h4 className="font-bold text-lg text-blue-700">
+                              {e?.name}
+                            </h4>
+
+                            <div className="flex items-center justify-start text-left space-x-2 mt-3 lg:mt-4">
+                              {e?.location && e?.lat && e?.lon && (
+                                <>
+                                  <span className="font-bold text-sm">
+                                    {i18n.t("Location")}: {e.location}
+                                  </span>
+                                  <Image
+                                    onClick={() => {
+                                      const mapUrl = `https://www.google.com/maps?q=${e.lat},${e.lon}`;
+                                      window.open(mapUrl, "_blank");
+                                    }}
+                                    src="/icons/map.png"
+                                    alt="Map Icon"
+                                    width={30}
+                                    height={30}
+                                    className="cursor-pointer"
+                                  />
+                                </>
+                              )}
+
+                            </div>
+
+                            <div className="mt-3 lg:mt-4">
+                              {e?.notice !== null && e?.notice !== "" && (
+                                <TextTicker text={e?.notice} />
+                              )}
+                            </div>
+                            <h4 className="font-bold text-sm text-green-700 mt-3 lg:mt-4">
+                              {i18n.t("Visiting Hours")}
+                            </h4>
+
+                            <div className="overflow-x-auto mt-3 lg:mt-4">
+                              <table
+                                className="w-full text-sm"
+                                aria-label="Chamber Visiting Hours"
+                              >
+                                <thead>
+                                  <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                    <th className="py-3 px-4 text-left">{i18n.t("Day")}</th>
+                                    <th className="py-3 px-4 text-left">{i18n.t("Day Time")}</th>
+                                    <th className="py-3 px-4 text-left">{i18n.t("Evening Time")}</th>
+                                    <th className="py-3 px-4 text-left">{i18n.t("Status")}</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="text-gray-600 text-sm font-light">
+                                  {e?.chamberTimeDetails?.map((schedule, index) => (
+                                    <tr
+                                      key={`schedule_${index}`}
+                                      className={`border-b border-gray-200 hover:bg-gray-100`}
+                                    >
+                                      <td className="py-3 px-4 text-left">
+                                        {
+                                          dayNameMap[schedule?.dayName]?.[i18n.language === "bn" ? "bn" : "en"] ||
+                                          schedule?.dayName // fallback
+                                        }
+                                      </td>
+
+                                      <td className="py-3 px-4 text-left">
+                                        {schedule?.dayTime}
+                                      </td>
+                                      <td className="py-3 px-4 text-left">
+                                        {schedule.eveningTime}
+                                      </td>
+                                      <td className="py-3 px-4 text-left">
+                                        <span
+                                          className={`${schedule.isOpen
+                                            ? "bg-green-200 text-green-600"
+                                            : "bg-red-200 text-red-600"
+                                            } py-1 px-3 rounded-full text-xs`}
+                                        >
+                                          {schedule.isOpen ? i18n.t("Open") : i18n.t("Closed")}
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div className="mt-4 text-gray-700">
+                            <p>
+                              <strong>{i18n.t("Fee")}:</strong> {e.fee} /=
+                            </p>
+                            <p>
+                              <strong>{i18n.t("Follow-up")}:</strong> {e.oldPatient} /=
+                            </p>
+                            <p>
+                              <strong>{i18n.t("Report Showing")}:</strong> {e.reportShow} /=
+                            </p>
+                            <p>
+                              <strong>{i18n.t("Room No")}:</strong> {e.room}
+                            </p>
+                            <p>
+                              <strong>{i18n.t("Floor")}:</strong> {e.floor}
+                            </p>
+                            <div className="mt-2 mb-2">
+                              <button
+                                onClick={handleOpen}
+                                className="bg-blue-500 text-white py-2 px-4 rounded-lg text-sm flex items-center space-x-2 max-w-fit"
+                                style={{ inlineSize: "auto" }}
+                              >
+                                <FaPhoneAlt />
+                                <span>{i18n.t("Call Now")}</span>
+                              </button>
+                            </div>
+                            <ContacTactModal
+                              contact={e.phoneNumber}
+                              open={showModal}
+                              onClose={handleClose}
+                            />
+                          </div>
+                        </div>
+                      )
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === i18n.t("Chamber") && (
+          <div>
+            <h3 className="font-bold text-lg">{i18n.t("Chamber Information")}</h3>
+            <div className="">
+              {data?.chamberInformation?.map((e, index) => {
+                return (
+                  diagnosticCenter === null || diagnosticCenter === "null" ?
+                    <div className="border border-primary rounded-lg my-3 lg:my-6 p-3 lg:p-6" key={index}>
+                      <div className="">
                         <h4 className="font-bold text-lg text-blue-700">
                           {e?.name}
                         </h4>
@@ -238,138 +498,129 @@ function DoctorTabs({ data, UserId }) {
                           onClose={handleClose}
                         />
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
+                    </div> :
 
-        {activeTab === i18n.t("Chamber") && (
-          <div>
-            <h3 className="font-bold text-lg">{i18n.t("Chamber Information")}</h3>
-            <div className="">
-              {data?.chamberInformation?.map((e, index) => {
-                return (
-                  <div className="border border-primary rounded-lg my-3 lg:my-6 p-3 lg:p-6" key={`chamber_${index}`}>
-                    <div className="">
-                      <h4 className="font-bold text-lg text-blue-700">
-                        {e?.name}
-                      </h4>
+                    diagnosticCenter === e?.diagnosticEditableChamberId &&
+                    (
+                      <div className="border border-primary rounded-lg my-3 lg:my-6 p-3 lg:p-6" key={index}>
+                        <div className="">
+                          <h4 className="font-bold text-lg text-blue-700">
+                            {e?.name}
+                          </h4>
 
-                      <div className="flex items-center justify-start text-left space-x-2 mt-3 lg:mt-4">
-                        {e?.location && e?.lat && e?.lon && (
-                          <>
-                            <span className="font-bold text-sm">
-                              {i18n.t("Location")}: {e.location}
-                            </span>
-                            <Image
-                              onClick={() => {
-                                const mapUrl = `https://www.google.com/maps?q=${e.lat},${e.lon}`;
-                                window.open(mapUrl, "_blank");
-                              }}
-                              src="/icons/map.png"
-                              alt="Map Icon"
-                              width={30}
-                              height={30}
-                              className="cursor-pointer"
-                            />
-                          </>
-                        )}
+                          <div className="flex items-center justify-start text-left space-x-2 mt-3 lg:mt-4">
+                            {e?.location && e?.lat && e?.lon && (
+                              <>
+                                <span className="font-bold text-sm">
+                                  {i18n.t("Location")}: {e.location}
+                                </span>
+                                <Image
+                                  onClick={() => {
+                                    const mapUrl = `https://www.google.com/maps?q=${e.lat},${e.lon}`;
+                                    window.open(mapUrl, "_blank");
+                                  }}
+                                  src="/icons/map.png"
+                                  alt="Map Icon"
+                                  width={30}
+                                  height={30}
+                                  className="cursor-pointer"
+                                />
+                              </>
+                            )}
 
-                      </div>
+                          </div>
 
-                      <div className="mt-3 lg:mt-4">
-                        {e?.notice !== null && e?.notice !== "" && (
-                          <TextTicker text={e?.notice} />
-                        )}
-                      </div>
-                      <h4 className="font-bold text-sm text-green-700 mt-3 lg:mt-4">
-                        {i18n.t("Visiting Hours")}
-                      </h4>
+                          <div className="mt-3 lg:mt-4">
+                            {e?.notice !== null && e?.notice !== "" && (
+                              <TextTicker text={e?.notice} />
+                            )}
+                          </div>
+                          <h4 className="font-bold text-sm text-green-700 mt-3 lg:mt-4">
+                            {i18n.t("Visiting Hours")}
+                          </h4>
 
-                      <div className="overflow-x-auto mt-3 lg:mt-4">
-                        <table
-                          className="w-full text-sm"
-                          aria-label="Chamber Visiting Hours"
-                        >
-                          <thead>
-                            <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                              <th className="py-3 px-4 text-left">{i18n.t("Day")}</th>
-                              <th className="py-3 px-4 text-left">{i18n.t("Day Time")}</th>
-                              <th className="py-3 px-4 text-left">{i18n.t("Evening Time")}</th>
-                              <th className="py-3 px-4 text-left">{i18n.t("Status")}</th>
-                            </tr>
-                          </thead>
-                          <tbody className="text-gray-600 text-sm font-light">
-                            {e?.chamberTimeDetails?.map((schedule, index) => (
-                              <tr
-                                key={`schedule_${index}`}
-                                className={`border-b border-gray-200 hover:bg-gray-100`}
-                              >
-                                <td className="py-3 px-4 text-left">
-                                  {
-                                    dayNameMap[schedule?.dayName]?.[i18n.language === "bn" ? "bn" : "en"] ||
-                                    schedule?.dayName // fallback
-                                  }
-                                </td>
-
-                                <td className="py-3 px-4 text-left">
-                                  {schedule?.dayTime}
-                                </td>
-                                <td className="py-3 px-4 text-left">
-                                  {schedule.eveningTime}
-                                </td>
-                                <td className="py-3 px-4 text-left">
-                                  <span
-                                    className={`${schedule.isOpen
-                                      ? "bg-green-200 text-green-600"
-                                      : "bg-red-200 text-red-600"
-                                      } py-1 px-3 rounded-full text-xs`}
+                          <div className="overflow-x-auto mt-3 lg:mt-4">
+                            <table
+                              className="w-full text-sm"
+                              aria-label="Chamber Visiting Hours"
+                            >
+                              <thead>
+                                <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                  <th className="py-3 px-4 text-left">{i18n.t("Day")}</th>
+                                  <th className="py-3 px-4 text-left">{i18n.t("Day Time")}</th>
+                                  <th className="py-3 px-4 text-left">{i18n.t("Evening Time")}</th>
+                                  <th className="py-3 px-4 text-left">{i18n.t("Status")}</th>
+                                </tr>
+                              </thead>
+                              <tbody className="text-gray-600 text-sm font-light">
+                                {e?.chamberTimeDetails?.map((schedule, index) => (
+                                  <tr
+                                    key={`schedule_${index}`}
+                                    className={`border-b border-gray-200 hover:bg-gray-100`}
                                   >
-                                    {schedule.isOpen ? i18n.t("Open") : i18n.t("Closed")}
-                                  </span>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                                    <td className="py-3 px-4 text-left">
+                                      {
+                                        dayNameMap[schedule?.dayName]?.[i18n.language === "bn" ? "bn" : "en"] ||
+                                        schedule?.dayName // fallback
+                                      }
+                                    </td>
+
+                                    <td className="py-3 px-4 text-left">
+                                      {schedule?.dayTime}
+                                    </td>
+                                    <td className="py-3 px-4 text-left">
+                                      {schedule.eveningTime}
+                                    </td>
+                                    <td className="py-3 px-4 text-left">
+                                      <span
+                                        className={`${schedule.isOpen
+                                          ? "bg-green-200 text-green-600"
+                                          : "bg-red-200 text-red-600"
+                                          } py-1 px-3 rounded-full text-xs`}
+                                      >
+                                        {schedule.isOpen ? i18n.t("Open") : i18n.t("Closed")}
+                                      </span>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div className="mt-4 text-gray-700">
+                          <p>
+                            <strong>{i18n.t("Fee")}:</strong> {e.fee} /=
+                          </p>
+                          <p>
+                            <strong>{i18n.t("Follow-up")}:</strong> {e.oldPatient} /=
+                          </p>
+                          <p>
+                            <strong>{i18n.t("Report Showing")}:</strong> {e.reportShow} /=
+                          </p>
+                          <p>
+                            <strong>{i18n.t("Room No")}:</strong> {e.room}
+                          </p>
+                          <p>
+                            <strong>{i18n.t("Floor")}:</strong> {e.floor}
+                          </p>
+                          <div className="mt-2 mb-2">
+                            <button
+                              onClick={handleOpen}
+                              className="bg-blue-500 text-white py-2 px-4 rounded-lg text-sm flex items-center space-x-2 max-w-fit"
+                              style={{ inlineSize: "auto" }}
+                            >
+                              <FaPhoneAlt />
+                              <span>{i18n.t("Call Now")}</span>
+                            </button>
+                          </div>
+                          <ContacTactModal
+                            contact={e.phoneNumber}
+                            open={showModal}
+                            onClose={handleClose}
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="mt-4 text-gray-700">
-                      <p>
-                        <strong>{i18n.t("Fee")}:</strong> {e.fee} /=
-                      </p>
-                      <p>
-                        <strong>{i18n.t("Follow-up")}:</strong> {e.oldPatient} /=
-                      </p>
-                      <p>
-                        <strong>{i18n.t("Report Showing")}:</strong> {e.reportShow} /=
-                      </p>
-                      <p>
-                        <strong>{i18n.t("Room No")}:</strong> {e.room}
-                      </p>
-                      <p>
-                        <strong>{i18n.t("Floor")}:</strong> {e.floor}
-                      </p>
-                      <div className="mt-2 mb-2">
-                        <button
-                          onClick={handleOpen}
-                          className="bg-blue-500 text-white py-2 px-4 rounded-lg text-sm flex items-center space-x-2 max-w-fit"
-                          style={{ inlineSize: "auto" }}
-                        >
-                          <FaPhoneAlt />
-                          <span>{i18n.t("Call Now")}</span>
-                        </button>
-                      </div>
-                      <ContacTactModal
-                        contact={e.phoneNumber}
-                        open={showModal}
-                        onClose={handleClose}
-                      />
-                    </div>
-                  </div>
+                    )
                 );
               })}
             </div>

@@ -11,6 +11,7 @@ import DoctorCard from "../DoctorCard";
 
 
 function DiagnosticTabs({ data, userId }) {
+  console.log("🚀 ~ DiagnosticTabs ~ data:", data)
   const { user } = useAuth()
   const i18n = useI18n()
   const [reviewData, setReviewdData] = useState(data)
@@ -106,6 +107,7 @@ function DiagnosticTabs({ data, userId }) {
                 {data?.diagnosticCenterDoctors.map((e, index) => {
                   return (
                     <DoctorCard
+                      diagnosticCenterid={data?.id}
                       id={e?.doctorUserId}
                       lat={data?.latitude}
                       lon={data?.longitude}

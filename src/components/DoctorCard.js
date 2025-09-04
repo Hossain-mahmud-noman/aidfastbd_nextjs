@@ -3,12 +3,13 @@ import { image_base_endpoint } from '../utils/constants';
 import { FaStar, FaStethoscope, FaPhone } from "react-icons/fa";
 import Image from 'next/image';
 
-const DoctorCard = ({ doctor, lat = null, lon = null, id = null }) => {
+const DoctorCard = ({ doctor, lat = null, lon = null, id = null, diagnosticCenterid = null }) => {
+console.log("🚀 ~ DoctorCard ~ diagnosticCenterid:", diagnosticCenterid)
 
   const defaultImageUrl = "/images/doctor.jpg";
   const profile = doctor.imageUrl == null || doctor.imageUrl == "" ? defaultImageUrl : image_base_endpoint + doctor.imageUrl;
   return (
-    <Link href={lat !== null && lon !== null && id !== null ? `/doctor/${id}?lat=${lat}&lon=${lon}` : "/doctor/" + doctor.userId}>
+    <Link href={lat !== null && lon !== null && id !== null ? `/doctor/${id}?lat=${lat}&lon=${lon}&diagnosticCenterid=${diagnosticCenterid}` : `/doctor/${doctor.userId}?diagnosticCenterid=${diagnosticCenterid}`}>
       <div
         className="flex  cursor-pointer flex-col h-full bg-white rounded-lg shadow-lg hover:shadow-custom-light transition-all duration-300 "
         aria-label={`Doctor ${doctor.name} information card`}
