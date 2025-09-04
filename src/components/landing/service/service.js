@@ -13,7 +13,7 @@ const Service = ({ slug = null }) => {
    const i18n = useI18n();
    const data = [
       {
-         image: "/home/service/s1.png",
+         image: "/home/service/d1.jpg",
          heading: i18n.t("Doctor"),
          button: i18n.t("Book Appointment"),
          link: "/doctor",
@@ -132,8 +132,8 @@ const Service = ({ slug = null }) => {
                      >
                         <Image
                            src={item.image}
-                           width={500}
-                           height={500}
+                           width={1000}
+                           height={1000}
                            className="w-full md:w-[358px] xl:h-[230px] lg:h-[200px] md:h-[150px] object-fill"
                            alt="Service image"
                         />

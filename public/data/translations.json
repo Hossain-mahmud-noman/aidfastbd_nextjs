@@ -57,7 +57,7 @@
     "Hearing Description": "Support from hearing specialists for hearing loss, including tests and devices",
     "Emergency Services": "Emergency Services",
     "Emergency Description": "All emergency services including doctor, ambulance, medicine, and blood in one place. Fast, reliable, and easily accessible",
-    "AidFastBD Services": "AidFastBD Services",
+    "AidFastBD Services": "AidFast's Services",
     "AidFastBD Services Description": "All healthcare services across the country are now available on AidFast",
     "Book Specialist Doctor": "Book an appointment with your preferred nearby doctor",
     "Book Specialist Doctor Description": "Book appointments with trusted and experienced doctors at your convenient date and time. Get fast and secure healthcare service through AidFastBD",
@@ -241,7 +241,6 @@
     "Message": "Message",
     "Type your message": "Type your message",
     "Sent Message": "Sent Message",
-    "You can provide any questions or suggestions to help improve the quality of Aidfast’s services": "You can provide any questions or suggestions to help improve the quality of Aidfast’s services",
     "We are committed to providing you with the highest level of sincere service": "We are committed to providing you with the highest level of sincere service",
     "With the best healthcare providers": "With the best healthcare providers",
     "Enter email or phone number": "Enter email or phone number",
@@ -309,7 +308,7 @@
     "Hearing Description": "শুনতে সমস্যা হলে কানে শোনার মেশিন, পরীক্ষা ও চিকিৎসার জন্য শ্রবণ বিশেষজ্ঞদের সহায়তা",
     "Emergency Services": "জরুরি সেবা",
     "Emergency Description": "জরুরি প্রয়োজনে ডাক্তার, অ্যাম্বুলেন্স, ওষুধ, রক্তসহ সকল সেবা এক জায়গায়। দ্রুত, নির্ভরযোগ্য এবং সহজে প্রাপ্তির নিশ্চয়তা",
-    "AidFastBD Services": "AidFastBD এর সেবাসমূহ",
+    "AidFastBD Services": "AidFast এর সেবাসমূহ",
     "AidFastBD Services Description": "দেশের সকল স্বাস্থ্যসেবা এখন AidFast এ",
     "Book Specialist Doctor": "নিকটতম পছন্দের ডাক্তারের সিরিয়াল নিন",
     "Book Specialist Doctor Description": "বিশ্বস্ত ও অভিজ্ঞ ডাক্তারদের সঙ্গে আপনার সুবিধামতো তারিখ ও সময়ে অ্যাপয়েন্টমেন্ট বুক করুন। AidFastBD-এর মাধ্যমে দ্রুত ও নিশ্চিন্তে সেবা নিন",
@@ -481,7 +480,6 @@
     "Message": "বার্তা",
     "Type your message": "আপনার বার্তা লিখুন",
     "Sent Message": "বার্তা পাঠান",
-    "You can provide any questions or suggestions to help improve the quality of Aidfast’s services": "Aidfast এর সেবার মান আরো উন্নত করতে যেকোনো প্রশ্ন বা সাজেশন দিতে পারেন।",
     "We are committed to providing you with the highest level of sincere service": "আপনাদের সর্বোচ্চ ও আন্তরিক সেবা দিতে আমরা বদ্ধপরিকর।",
     "With the best healthcare providers": "সেরা স্বাস্থ্যসেবা প্রদানকারীদের সাথে থাকুন",
     "Enter email or phone number": "ইমেইল বা ফোন নম্বর লিখুন",
@@ -526,6 +524,9 @@
     "Diagnostic Center": "ডায়াগনস্টিক সেন্টার",
     "Phone Number": "ফোন নাম্বার",
     "Type your phone number": "আপনার ফোন নাম্বার লিখুন",
-    "Care giver Details": "কেয়ার গিভার ডিটেইলস"
+    "Care giver Details": "কেয়ার গিভার ডিটেইলস",
+    "Join AidFast as a doctor or healthcare provider by filling out this form. Share your questions or suggestions—we’re committed to giving you the best care.": "AidFast-এ ডাক্তার বা স্বাস্থ্যসেবা প্রতিষ্ঠান হিসেবে যুক্ত হতে চাইলে এই ফর্মটি পূরণ করুন। সেবার মান উন্নত করতে প্রশ্ন বা পরামর্শ দিতে পারেন। সর্বোচ্চ ও আন্তরিক সেবা দিতে আমরা বদ্ধ পরিকর।",
+    "WhatsApp": "হোয়াটসঅ্যাপ",
+    "You can provide any questions or suggestions to help improve the quality of Aidfast’s services" : "Aidfast এর সেবার মান আরো উন্নত করতে যেকোনো প্রশ্ন বা সাজেশন দিতে পারেন"
   }
 }

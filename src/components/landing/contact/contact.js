@@ -6,6 +6,7 @@ import { Form } from "antd";
 import { FiMail } from "react-icons/fi";
 import { toast, Toaster } from "sonner";
 import { useI18n } from "../../../context/i18n";
+import { BsWhatsapp } from "react-icons/bs";
 
 const Contact = () => {
    const [form] = Form.useForm();
@@ -42,15 +43,26 @@ const Contact = () => {
             <div className="flex-1 mt-2 md:mt-3 lg:mt-5">
                <h1 className="text-white contact-heading">{i18n.t("Contact Us")}</h1>
                <p className="text-white contact-description mt-1 md:mt-2 max-w-[477px]">
-                  {i18n.t("Write your question or inquiry below and provide as much detail as possible. We will get back to you as soon as possible.")}
+                  {i18n.t("Join AidFast as a doctor or healthcare provider by filling out this form. Share your questions or suggestions—we’re committed to giving you the best care.")}
                </p>
-               <div className="mt-4 md:mt-5 lg:mt-6 xl:mt-[30px] flex items-center gap-4">
-                  <div className="bg-[#30C1EB] h-[64px] w-[64px] rounded-full flex items-center justify-center">
-                     <FiMail className="text-2xl md:text-3xl lg:text-4xl w-full text-white" />
+               <div className="mt-4 md:mt-5 lg:mt-6 xl:mt-[30px] flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 md:gap-3">
+                     <div className="bg-[#30C1EB] w-9 h-9 md:h-[64px] md:w-[64px] rounded-full flex items-center justify-center">
+                        <BsWhatsapp className="text-lg md:text-3xl lg:text-3xl w-full text-white" />
+                     </div>
+                     <div>
+                        <p className="description2 text-white">{i18n.t("WhatsApp")}</p>
+                        <p className="description2 text-white">01738548662</p>
+                     </div>
                   </div>
-                  <div>
-                     <p className="description2 text-white">{i18n.t("Email")}</p>
-                     <p className="description2 text-white">aidfast@gmail.com</p>
+                  <div className=" flex items-center gap-1.5 md:gap-3">
+                     <div className="bg-[#30C1EB] w-9 h-9 md:h-[64px] md:w-[64px] rounded-full flex items-center justify-center">
+                        <FiMail className="text-lg md:text-3xl lg:text-3xl w-full text-white" />
+                     </div>
+                     <div>
+                        <p className="description2 text-white">{i18n.t("Email")}</p>
+                        <p className="description2 text-white">aidfast@gmail.com</p>
+                     </div>
                   </div>
                </div>
             </div>
