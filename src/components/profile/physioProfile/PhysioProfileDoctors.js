@@ -9,8 +9,8 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
   const [form] = Form.useForm();
   const [modalVisible, setModalVisible] = useState(false);
-  const [image, setImage] = useState(null);
-
+  const [image, setImage] = useState(null);   
+  const [preview, setPreview] = useState(null);
   // Save new physiotherapist
   const saveDoctor = async (values) => {
     try {
@@ -106,18 +106,31 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
 
 
   // Handle file input
- const handleImageChange = (event, setImage) => {
-     const file = event.target.files[0];
-     if (file) {
-       if (file.size > 2 * 1024 * 1024) {
-         toast.warning("File size should be less than 2MB");
-         return;
-       }
-       const reader = new FileReader();
-       reader.onload = () => setImage(reader.result);
-       reader.readAsDataURL(file);
-     }
-   };
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        toast.warning("File size should be less than 2MB");
+        return;
+      }
+
+      setImage(file); // Keep file for FormData
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPreview(reader.result); // Set preview
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setImage(null);
+    setPreview(null);
+    form.resetFields();
+  };
 
   return (
     <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
@@ -163,19 +176,32 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
       <Modal
         title="Add New Physiotherapist"
         open={modalVisible}
-        onCancel={() => setModalVisible(false)}
+        onCancel={closeModal}
         footer={null}
       >
+
+        <div className="flex justify-center mb-4 relative">
+          <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+            {preview ? (
+              // Use a regular img tag for local previews
+              <img
+                src={preview}
+                alt="Doctor preview"
+                className="object-cover w-full h-full"
+              />
+            ) : (
+              <span className="text-gray-400 text-lg">+</span>
+            )}
+          </div>
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+          />
+        </div>
         <Form layout="vertical" form={form} onFinish={saveDoctor}>
-          <Form.Item label="Profile Image">
-            <input
-              type="file"
-              id="imageUpload"
-              className="hidden"
-              accept="image/*"
-              onChange={(e) =>handleImageChange(e, setImage)}
-            />
-          </Form.Item>
 
           <Form.Item
             name="Name"
