@@ -3,9 +3,7 @@
 import { useI18n } from "../../../context/i18n";
 import { Collapse } from "antd";
 import { useState } from "react";
-import { FaAngleUp } from "react-icons/fa";
 import { FaAngleDown } from "react-icons/fa6";
-import { IoChevronUpOutline } from "react-icons/io5";
 const FAQ = () => {
    const i18n = useI18n()
    const data = [
