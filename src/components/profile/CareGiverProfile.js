@@ -39,7 +39,7 @@ function CareGiverProfile() {
   const tabs = [
     { label: 'Basic', content: <CareGiverProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token} /> },
     { label: 'Info', content: <CareGiverProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
-    { label: 'Doctors', content: <CareGiverProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
+    { label: 'Care Givers', content: <CareGiverProfileDoctors getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceAdditionalProfiles} user={user} token={token} /> },
     { label: 'Services', content: <CareGiverVisitServices getProfileData={getProfileData} genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} token={token} /> },
   ];
 

@@ -16,25 +16,21 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
   const [editingDoctor, setEditingDoctor] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  // Handle file input
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
 
-      // Create preview
       const reader = new FileReader();
       reader.onload = () => setSelectedImage(reader.result);
       reader.readAsDataURL(file);
     }
   };
 
-  // Upload image function
   const uploadImage = async () => {
     if (!selectedFile) return null;
 
     try {
-      // Convert the file to blob
       const blob = await fetch(selectedImage).then((res) => res.blob());
       const formData = new FormData();
       formData.append("Deatails", "doctor-image");
@@ -62,24 +58,20 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
     }
   };
 
-  // Save new physiotherapist
   const saveDoctor = async (values) => {
     setUploading(true);
 
     try {
       let imageUrl = null;
 
-      // First upload the image if selected
       if (selectedFile) {
         imageUrl = await uploadImage();
       }
 
-      // Use the existing image URL if in edit mode and no new image was selected
       if (isEditMode && !imageUrl && editingDoctor?.imageUrl) {
         imageUrl = editingDoctor.imageUrl;
       }
 
-      // Create form data for submission
       const formData = new FormData();
       formData.append("GenericServiceId", id);
       formData.append("ServiceType", 3);
@@ -88,19 +80,17 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
       formData.append("Age", values.Age);
       formData.append("Experience", values.Experience);
 
-      // If we have an image URL, add it to the form data
       if (imageUrl) {
         formData.append("ImageUrl", imageUrl);
       }
 
-      // Determine the API endpoint and method based on mode
       const endpoint = isEditMode
         ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateGenericServiceAdditionalProfile"
         : "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalProfile";
 
       const method = isEditMode ? "PUT" : "POST";
 
-      // Add ID if in edit mode
+
       if (isEditMode && editingDoctor) {
         formData.append("Id", editingDoctor.id);
       }
@@ -137,13 +127,12 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
     }
   };
 
-  // Edit doctor
+
   const editDoctor = (doctor) => {
     setEditingDoctor(doctor);
     setIsEditMode(true);
     setModalVisible(true);
 
-    // Set form values
     form.setFieldsValue({
       Name: doctor.name,
       Degree: doctor.degree,
@@ -151,13 +140,11 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
       Age: doctor.age,
     });
 
-    // Set image preview if available
     if (doctor.imageUrl) {
       setSelectedImage(doctor.imageUrl);
     }
   };
 
-  // Remove doctor
   const removeDoctor = async (doctorId) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -176,7 +163,7 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
       formData.append("id", doctorId);
 
       const response = await fetch(
-        "https://api.aidfastfastbd.com/api/GeneralInformation/DeleteGenericServiceAdditionalProfile",
+        "https://api.aidfastbd.com/api/GeneralInformation/DeleteGenericServiceAdditionalProfile",
         {
           method: "DELETE",
           headers: {
@@ -209,7 +196,6 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
     form.resetFields();
   };
 
-  // Open modal for adding new doctor
   const openAddModal = () => {
     setEditingDoctor(null);
     setIsEditMode(false);
@@ -217,7 +203,6 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
     form.resetFields();
   };
 
-  // Update doctors when data changes
   useEffect(() => {
     if (data) {
       setDoctors(data);
@@ -277,7 +262,6 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
         ))}
       </div>
 
-      {/* Modal for Add/Edit Physiotherapist */}
       <Modal
         title={isEditMode ? "Edit Physiotherapist" : "Add New Physiotherapist"}
         open={modalVisible}

@@ -40,7 +40,7 @@ function NursingCareprofile() {
   const tabs = [
     { label: 'Basic', content: <NursingCareProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token} /> },
     { label: 'Info', content: <NursingCareProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
-    { label: 'Doctors', content: <NursingCareProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
+    { label: 'Nurses', content: <NursingCareProfileDoctors getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceAdditionalProfiles} token={token} /> },
     { label: 'Services', content: <NursingCareProfileServices getProfileData={getProfileData} genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token} /> },
   ];
 
