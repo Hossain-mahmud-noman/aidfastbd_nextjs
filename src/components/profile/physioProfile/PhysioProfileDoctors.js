@@ -1,19 +1,85 @@
-import React, { useState } from "react";
-import { image_base_endpoint } from "../../../utils/constants";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 import { Button, Form, Input, Modal } from "antd";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { FaEdit } from "react-icons/fa";
 
 function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
   const [form] = Form.useForm();
   const [modalVisible, setModalVisible] = useState(false);
-  const [image, setImage] = useState(null);   
-  const [preview, setPreview] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [doctors, setDoctors] = useState(data || []);
+  const [editingDoctor, setEditingDoctor] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  // Handle file input
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = () => setSelectedImage(reader.result);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Upload image function
+  const uploadImage = async () => {
+    if (!selectedFile) return null;
+
+    try {
+      // Convert the file to blob
+      const blob = await fetch(selectedImage).then((res) => res.blob());
+      const formData = new FormData();
+      formData.append("Deatails", "doctor-image");
+      formData.append("File", blob, "doctor-image.jpg");
+
+      const response = await fetch(
+        "https://api.aidfastbd.com/api/GeneralInformation/UploadImg",
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData,
+        }
+      );
+
+      const result = await response.json();
+      if (response.ok) {
+        return result.imgUrl; 
+      } else {
+        throw new Error(result?.message || "Failed to upload image");
+      }
+    } catch (error) {
+      console.error("Image upload error:", error);
+      toast.error("An error occurred while uploading the image.");
+      throw error;
+    }
+  };
+
   // Save new physiotherapist
   const saveDoctor = async (values) => {
+    setUploading(true);
+
     try {
+      let imageUrl = null;
+
+      // First upload the image if selected
+      if (selectedFile) {
+        imageUrl = await uploadImage();
+      }
+
+      // Use the existing image URL if in edit mode and no new image was selected
+      if (isEditMode && !imageUrl && editingDoctor?.imageUrl) {
+        imageUrl = editingDoctor.imageUrl;
+      }
+
+      // Create form data for submission
       const formData = new FormData();
       formData.append("GenericServiceId", id);
       formData.append("ServiceType", 3);
@@ -22,42 +88,72 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
       formData.append("Age", values.Age);
       formData.append("Experience", values.Experience);
 
-      if (image) {
-        if (typeof image === "string" && !image.startsWith(image_base_endpoint)) {
-          const blob = await fetch(image).then((res) => res.blob());
-          formData.append("ImageFile", blob, "image.jpg");
-        } else if (image instanceof File) {
-          formData.append("ImageFile", image);
-        }
+      // If we have an image URL, add it to the form data
+      if (imageUrl) {
+        formData.append("ImageUrl", imageUrl);
       }
 
+      // Determine the API endpoint and method based on mode
+      const endpoint = isEditMode
+        ? "https://api.aidfastbd.com/api/GeneralInformation/UpdateGenericServiceAdditionalProfile"
+        : "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalProfile";
 
+      const method = isEditMode ? "PUT" : "POST";
 
-      const response = await fetch(
-        "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalProfile",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        }
-      );
+      // Add ID if in edit mode
+      if (isEditMode && editingDoctor) {
+        formData.append("Id", editingDoctor.id);
+      }
+
+      const response = await fetch(endpoint, {
+        method: method,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
 
       if (response.ok) {
         setModalVisible(false);
+        setSelectedImage(null);
+        setSelectedFile(null);
+        setEditingDoctor(null);
+        setIsEditMode(false);
         form.resetFields();
-        setImage(null);
+
         if (typeof getProfileData === "function") {
           await getProfileData();
         }
-        toast.success("Physiotherapist added successfully!");
+
+        toast.success(`Physiotherapist ${isEditMode ? 'updated' : 'added'} successfully!`);
       } else {
-        toast.error("Failed to add physiotherapist.");
+        toast.error(`Failed to ${isEditMode ? 'update' : 'add'} physiotherapist.`);
       }
     } catch (error) {
       console.error("Error saving doctor:", error);
-      toast.error("Something went wrong while adding physiotherapist.");
+      toast.error(`Something went wrong while ${isEditMode ? 'updating' : 'adding'} physiotherapist.`);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Edit doctor
+  const editDoctor = (doctor) => {
+    setEditingDoctor(doctor);
+    setIsEditMode(true);
+    setModalVisible(true);
+
+    // Set form values
+    form.setFieldsValue({
+      Name: doctor.name,
+      Degree: doctor.degree,
+      Experience: doctor.experience,
+      Age: doctor.age,
+    });
+
+    // Set image preview if available
+    if (doctor.imageUrl) {
+      setSelectedImage(doctor.imageUrl);
     }
   };
 
@@ -80,7 +176,7 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
       formData.append("id", doctorId);
 
       const response = await fetch(
-        "https://api.aidfastbd.com/api/GeneralInformation/DeleteGenericServiceAdditionalProfile",
+        "https://api.aidfastfastbd.com/api/GeneralInformation/DeleteGenericServiceAdditionalProfile",
         {
           method: "DELETE",
           headers: {
@@ -104,33 +200,29 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
     }
   };
 
-
-  // Handle file input
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        toast.warning("File size should be less than 2MB");
-        return;
-      }
-
-      setImage(file); // Keep file for FormData
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPreview(reader.result); // Set preview
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-
   const closeModal = () => {
     setModalVisible(false);
-    setImage(null);
-    setPreview(null);
+    setSelectedImage(null);
+    setSelectedFile(null);
+    setEditingDoctor(null);
+    setIsEditMode(false);
     form.resetFields();
   };
+
+  // Open modal for adding new doctor
+  const openAddModal = () => {
+    setEditingDoctor(null);
+    setIsEditMode(false);
+    setModalVisible(true);
+    form.resetFields();
+  };
+
+  // Update doctors when data changes
+  useEffect(() => {
+    if (data) {
+      setDoctors(data);
+    }
+  }, [data]);
 
   return (
     <div className="bg-white shadow-custom-light rounded-lg w-full max-w-3xl mx-auto p-6">
@@ -140,24 +232,25 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
 
       <Button
         icon={<IoMdAddCircleOutline />}
-        onClick={() => setModalVisible(true)}
+        onClick={openAddModal}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
         Add Physiotherapist
       </Button>
 
       <div className="mt-4 space-y-4">
-        {data?.map((doctor) => (
+        {doctors?.map((doctor) => (
           <div
             key={doctor.id}
-            className="border p-4 rounded shadow flex items-center space-x-4"
+            className="border p-4 rounded shadow flex flex-col md:flex-row items-center gap-2 md:gap-3"
           >
             <div className="h-16 w-16 rounded-full overflow-hidden">
               <Image
                 width={64}
                 height={64}
-                src={`${image_base_endpoint}${doctor.imageUrl}`}
+                src={doctor?.imageUrl}
                 alt={doctor.name}
+                className="object-cover w-full h-full"
               />
             </div>
             <div className="flex-1">
@@ -165,27 +258,38 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
               <p className="text-sm text-gray-600">{doctor.degree}</p>
               <p className="text-sm text-gray-500">{doctor.experience}</p>
             </div>
-            <Button danger onClick={() => removeDoctor(doctor.id)}>
-              Remove
-            </Button>
+            <div className="flex space-x-2">
+              <Button
+                icon={<FaEdit />}
+                onClick={() => editDoctor(doctor)}
+                className="bg-green-500 text-white"
+              >
+                Edit
+              </Button>
+              <Button
+                danger
+                onClick={() => removeDoctor(doctor.id)}
+              >
+                Remove
+              </Button>
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Modal for Add Physiotherapist */}
+      {/* Modal for Add/Edit Physiotherapist */}
       <Modal
-        title="Add New Physiotherapist"
+        title={isEditMode ? "Edit Physiotherapist" : "Add New Physiotherapist"}
         open={modalVisible}
         onCancel={closeModal}
         footer={null}
+        width={600}
       >
-
         <div className="flex justify-center mb-4 relative">
           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-            {preview ? (
-              // Use a regular img tag for local previews
+            {selectedImage ? (
               <img
-                src={preview}
+                src={selectedImage}
                 alt="Doctor preview"
                 className="object-cover w-full h-full"
               />
@@ -201,8 +305,8 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           />
         </div>
-        <Form layout="vertical" form={form} onFinish={saveDoctor}>
 
+        <Form layout="vertical" form={form} onFinish={saveDoctor}>
           <Form.Item
             name="Name"
             label="Name"
@@ -236,8 +340,19 @@ function PhysioProfileDoctors({ data, user, token, id, getProfileData }) {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="w-full">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="w-full"
+              loading={uploading}
+              size="large"
+            >
+              {uploading
+                ? "Processing..."
+                : isEditMode
+                  ? "Update Physiotherapist"
+                  : "Add Physiotherapist"
+              }
             </Button>
           </Form.Item>
         </Form>
