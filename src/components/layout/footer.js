@@ -117,7 +117,7 @@ const Footer = () => {
                      width={137}
                      height={34}
                   />
-                  <p className="footer-description mt-2 md:mt-4 text-white md:max-w-[326px]">{i18n.t("AidFast Tagline")}</p>
+                  <p className="footer-description mt-2 md:mt-4 text-white md:max-w-[326px]">{i18n.t("The only trusted destination for reliable healthcare — AidFast")}</p>
                   <p className="footer-description mt-2 md:mt-4 text-white ">{i18n.t("Download AidFast App")}</p>
                   <div className="mt-3 md:mt-4 lg:mt-5 xl:mt-8 flex items-center flex-row md:flex-col lg:flex-row gap-3 md:gap-2 xl:gap-5">
                      <Link href="https://play.google.com/store/apps/details?id=com.aidfastbd.app" className="relative w-[150px] h-[50px] hover:scale-105 transition-all duration-300">

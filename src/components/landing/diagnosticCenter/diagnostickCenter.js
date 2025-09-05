@@ -15,7 +15,7 @@ const DiagnostickCenter = () => {
    return (
       <div className="mt-8 md:mt-10 lg:mt-16">
          <div className="aid-container">
-            <h1 className="service-heading text-center text-[#252525]">{i18n.t("Nearest Diagnostic Center")}</h1>
+            <h1 className="service-heading text-center text-[#252525]">{i18n.t("Nearest Diagnostic Center and Hospital")}</h1>
             <div className="hidden mt-7 md:mt-9 lg:mt-12 lg:grid grid-cols-3 lg:grid-cols-4 gap-1.5 md:gap-2 lg:gap-3 xl:gap-4">
                {data.slice(0, 4).map((d, index) => (
                   <DiagnosticCenterCard2 key={`${d.id}-${index}`} diagnostic={d} slug='page' />

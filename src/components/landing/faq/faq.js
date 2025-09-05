@@ -4,6 +4,7 @@ import { useI18n } from "../../../context/i18n";
 import { Collapse } from "antd";
 import { useState } from "react";
 import { FaAngleUp } from "react-icons/fa";
+import { FaAngleDown } from "react-icons/fa6";
 import { IoChevronUpOutline } from "react-icons/io5";
 const FAQ = () => {
    const i18n = useI18n()
@@ -82,7 +83,7 @@ const FAQ = () => {
                onChange={handlePanelChange}
                expandIconPosition="end"
                expandIcon={({ isActive }) => (
-                  <FaAngleUp size={16} className={`transition-transform xl:!mt-5 lg:!mt-4 md:!mt-3 !mt-2 duration-300 ${isActive ? "rotate-icon" : ""}`} />
+                  <FaAngleDown size={16} className={`transition-transform xl:!mt-5 lg:!mt-4 md:!mt-3 !mt-2 duration-300 ${isActive ? "rotate-icon" : ""}`} />
                )}
                className="custom-collapse"
             >
