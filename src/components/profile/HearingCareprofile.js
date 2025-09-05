@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react'
 import TabBar from '../Tabbar';
 import HearingCareProfileBasic from './hearnigCareProfile/HearingCareProfileBasic';
 import HearingCareProfileInfo from './hearnigCareProfile/HearingCareProfileInfo';
-import HearingCareProfileDoctors from './hearnigCareProfile/HearingCareProfileDoctors';
 import HearingCareProfileServices from './hearnigCareProfile/HearingCareProfileServices';
 import { useAuth } from '../../context/AuthContext';
 
@@ -40,7 +39,6 @@ function HearingCareprofile() {
   const tabs = [
     { label: 'Basic', content: <HearingCareProfileBasic getProfileData={getProfileData} data={profileData} user={user} token={token} /> },
     { label: 'Info', content: <HearingCareProfileInfo getProfileData={getProfileData} id={profileData?.id} data={profileData?.genericServiceInfos} user={user} token={token} /> },
-    { label: 'Doctors', content: <HearingCareProfileDoctors getProfileData={getProfileData} id={profileData?.userId} data={profileData?.genericServiceDoctors} user={user} token={token} /> },
     { label: 'Services', content: <HearingCareProfileServices getProfileData={getProfileData} genericServiceId={profileData?.id} userId={profileData?.userId} data={profileData?.genericServiceDetails} user={user} token={token} /> },
   ];
 
