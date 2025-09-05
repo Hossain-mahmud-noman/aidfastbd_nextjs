@@ -61,7 +61,7 @@ const Contact = () => {
                      </div>
                      <div>
                         <p className="description2 text-white">{i18n.t("Email")}</p>
-                        <p className="description2 text-white">aidfast@gmail.com</p>
+                        <p className="description2 text-white">aidfastbd@gmail.com</p>
                      </div>
                   </div>
                </div>
