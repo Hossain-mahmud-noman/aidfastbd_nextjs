@@ -34,7 +34,7 @@ const Blog = () => {
          <div className="flex items-center justify-between">
             <div>
                <h1 className="text-[#212121] heading1">{i18n.t("Browse updated blogs")}</h1>
-               <p className="text-[#061C3D] description2 mt-3 lg:mt-4 max-w-[834px]">{i18n.t("Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy")}</p>
+               <p className="text-[#061C3D] description2 mt-3 lg:mt-4 lg:max-w-[834px]">{i18n.t("Learn about regular health awareness and care from our blog posts. Written by doctors and experts, these articles will help you and your family stay healthy")}</p>
             </div>
             
          </div>
