@@ -135,7 +135,7 @@ function PractitionerBasic({ data, token, user, getProfileData }) {
   const handleSubmit = async () => {
     try {
       const form = new FormData();
-      form.append('ServiceType', '9');
+      form.append('ServiceType', '8');
       form.append('CenterInformation', 'test');
       form.append('Name', formData.dentalCenterEnglish);
       form.append('NameBn', formData.dentalCenterBangla);

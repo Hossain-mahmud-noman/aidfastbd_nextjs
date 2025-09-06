@@ -65,7 +65,7 @@ function PractitionerProfileInfo({ data, user, token, id, getProfileData }) {
 
     const simplifiedData = imgList.map(({ imgUrl, details }) => ({ imgUrl, details }));
 
-    const payload = { "userId": user?.userId, "title": title, "imgList": simplifiedData, "details": details, "serviceType": 9, "id": id };
+    const payload = { "userId": user?.userId, "title": title, "imgList": simplifiedData, "details": details, "serviceType": 8, "id": id };
     try {
       const response = await fetch(
         "https://api.aidfastbd.com/api/GeneralInformation/SaveGenericServiceAdditionalInfo",

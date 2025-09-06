@@ -1,7 +1,7 @@
 import React from "react";
 import { appname } from "../../utils/constants";
-import DentalList from "../../components/list/DentalList";
-import SearchDental from "../../components/search/SearchDental";
+import PractitionerList from "../../components/list/practitionerList";
+import SearchPractitioner from "../../components/search/SearchPractitioner";
 
 export const metadata = {
   title: "Dentals | " + appname,
@@ -12,8 +12,8 @@ function Page() {
     <>
       <div className="pt-10" >
         <div className="aid-container ">
-          <SearchDental />
-          <DentalList />
+          <SearchPractitioner />
+          <PractitionerList />
         </div>
       </div>
     </>

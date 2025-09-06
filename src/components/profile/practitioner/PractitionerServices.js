@@ -31,7 +31,7 @@ export default function PractitionerServices({ data, token, genericServiceId, us
       })),
       userId: userId,
       id: genericServiceId,
-      serviceType: 9
+      serviceType: 8
     };
     const updatingService = {
       otherInfo: "heading",

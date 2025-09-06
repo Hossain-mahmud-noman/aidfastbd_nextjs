@@ -110,7 +110,7 @@ const CareGiverDetails = ({ data, url }) => {
 
       </div>
       <div className="aid-container mt-6">
-        <DentalTabs data={data} typeId="7" url={url} />
+        <DentalTabs data={data} typeId="15" url={url} />
       </div>
       <FloatingCallButton number={data?.contact} />
     </>

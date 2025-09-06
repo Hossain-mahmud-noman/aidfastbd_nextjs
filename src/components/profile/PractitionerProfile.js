@@ -18,7 +18,7 @@ function PractitionerProfile() {
     if (!user?.userId || !token) return;
     headerx['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=9&userId=${user.userId}`, { headers: headerx });
+    const res = await fetch(`https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=8&userId=${user.userId}`, { headers: headerx });
 
     const data = await res.json();
     if (res.status == 200) {

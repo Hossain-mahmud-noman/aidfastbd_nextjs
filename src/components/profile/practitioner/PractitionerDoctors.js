@@ -46,7 +46,7 @@ function PractitionerDoctors({ data, user, token, id, getProfileData }) {
             genericServiceUserId: id,
             doctorUserId: doctor.id,
             isDelete: false,
-            serviceType: 9
+            serviceType: 8
           }),
         }
       );
@@ -91,7 +91,7 @@ function PractitionerDoctors({ data, user, token, id, getProfileData }) {
             genericServiceUserId: user.userId,
             doctorUserId: id,
             isDelete: true,
-            serviceType: 9
+            serviceType: 8
           }),
         }
       );

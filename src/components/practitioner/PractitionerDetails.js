@@ -15,7 +15,7 @@ import DiaLocation from "../DiaLocation";
 import TextTicker from "../TextTicker";
 import { useI18n } from "../../context/i18n";
 
-const DoctorHomeVisitDetails = ({ data, url }) => {
+const PractitionerDetails = ({ data, url }) => {
   const i18n = useI18n()
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
@@ -49,14 +49,14 @@ const DoctorHomeVisitDetails = ({ data, url }) => {
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
         <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/doctor-home-visit/${data?.id}`} />
+        <meta property="og:url" content={`${frontend_url}/practitioner/${data?.id}`} />
       </Head>
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
-        title={i18n.t("Doctor Home Visit Details")}
+        title={i18n.t("Practitioner Detail")}
         trailingComponents={
           <div className="flex">
-            <ProfileQR slug={"newService"} id={data?.id} type={"Dental"} />
+            <ProfileQR slug={"newService"} id={data?.id} type={"practitioner"} />
             <FavouriteToggle
               isFill={data?.isFavourite}
               userId={user?.id}
@@ -64,7 +64,7 @@ const DoctorHomeVisitDetails = ({ data, url }) => {
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/doctor-home-visit/${data?.id}`} />
+            <ShareButton link={`${frontend_url}/practitioner/${data?.id}`} />
           </div>
         }
       />
@@ -75,7 +75,7 @@ const DoctorHomeVisitDetails = ({ data, url }) => {
             width={1000}
             height={1000}
             src={cover}
-            alt="Dental cover"
+            alt="Practitioner cover"
             className="w-full h-full object-fill"
           />
         </div>
@@ -86,7 +86,7 @@ const DoctorHomeVisitDetails = ({ data, url }) => {
               width={1000}
               height={1000}
               src={profile}
-              alt="Dental Logo"
+              alt="Practitioner Logo"
               className="w-16 h-16 rounded-full mr-3"
             />
             <div>
@@ -109,11 +109,11 @@ const DoctorHomeVisitDetails = ({ data, url }) => {
 
       </div>
       <div className="aid-container mt-6">
-        <DentalTabs data={data} typeId="13" url={url} />
+        <DentalTabs data={data} typeId="14" url={url} />
       </div>
       <FloatingCallButton number={data?.contact} />
     </>
   );
 };
 
-export default DoctorHomeVisitDetails;
+export default PractitionerDetails;
