@@ -19,7 +19,7 @@ const Service = ({ slug = null }) => {
          link: "/doctor",
       },
       {
-         image: "/home/service/s2.png",
+         image: "/home/service/d2.jpg",
          heading: i18n.t("Diagnostic Center"),
          button: i18n.t("Find Center"),
          link: "/diagnostic",
@@ -31,25 +31,25 @@ const Service = ({ slug = null }) => {
          link: "/dental",
       },
       {
-         image: "/home/service/s4.png",
+         image: "/home/service/d4.jpg",
          heading: i18n.t("Eye Care Center"),
          button: i18n.t("Book Appointment"),
          link: "/eye-care-center",
       },
       {
-         image: "/home/service/s5.png",
+         image: "/home/service/d5.jpg",
          heading: i18n.t("Blood Bank and Donor Club"),
          button: i18n.t("Find Doner"),
          link: "/blood",
       },
       {
-         image: "/home/service/s6.png",
+         image: "/home/service/d6.jpg",
          heading: i18n.t("Ambulance Service"),
          button: i18n.t("Book Ambulance"),
          link: "/ambulance",
       },
       {
-         image: "/home/service/s7.png",
+         image: "/home/service/d7.jpg",
          heading: i18n.t("Doctor Home Visit"),
          button: i18n.t("Book Appointment"),
          link: "/doctor-home-visit",
@@ -73,7 +73,7 @@ const Service = ({ slug = null }) => {
          link: "/physiotherapy-center",
       },
       {
-         image: "/home/service/s11.png",
+         image: "/home/service/d11.jpg",
          heading: i18n.t("Hearing Aid Center"),
          button: i18n.t("Find Center"),
          link: "/hearing-care-center",
@@ -134,7 +134,7 @@ const Service = ({ slug = null }) => {
                            src={item.image}
                            width={1000}
                            height={1000}
-                           className="w-full md:w-[358px] xl:h-[230px] lg:h-[200px] md:h-[150px] h-[78px] object-fill"
+                           className="xl:rounded-t-[20px] lg:rounded-t-xl rounded-t-lg w-full md:w-[358px] xl:h-[230px] lg:h-[200px] md:h-[150px] h-[78px] object-fill"
                            alt="Service image"
                         />
                         <h4 className="service-title mt-1.5 md:mt-4 lg:mt-6 text-[#061C3D] whitespace-pre">{item.heading}</h4>
@@ -153,7 +153,7 @@ const Service = ({ slug = null }) => {
                            src={item.image}
                            width={500}
                            height={500}
-                           className="w-full md:w-[358px] xl:h-[230px] lg:h-[200px] md:h-[150px] h-[78px] object-fill"
+                           className="xl:rounded-t-[20px] lg:rounded-t-xl rounded-t-lg w-full md:w-[358px] xl:h-[230px] lg:h-[200px] md:h-[150px] h-[78px] object-fill"
                            alt="Service image"
                         />
                         <h4 className="service-title mt-1.5 md:mt-4 lg:mt-6 text-[#061C3D] whitespace-pre">{item.heading}</h4>
