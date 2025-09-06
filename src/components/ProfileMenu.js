@@ -20,6 +20,7 @@ const ProfileMenu = ({ data }) => {
       { key: 'isNurse', icon: '🧑‍⚕️', label: i18n.t('Nursing Care Home'), link: '/profile/nursingCareProfile' },
       { key: 'isDoctorHomeVisit', icon: '🏠', label: i18n.t('Doctor Home Visit'), link: '/profile/doctorHomeVisit' },
       { key: 'isCareGiver', icon: '👩‍🍼', label: i18n.t('Caregiver Center'), link: '/profile/careGiver' },
+      { key: 'isGeneralPractitioner', icon: '🧑‍⚕️', label: i18n.t('General Practitioner'), link: '/profile/practitioner' },
    ];
 
 
