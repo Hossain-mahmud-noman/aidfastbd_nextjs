@@ -56,9 +56,9 @@ const Service = ({ slug = null }) => {
       },
       {
          image: "/home/service/s8.png",
-         heading: i18n.t("Primary Healthcare Center"),
+         heading: i18n.t("General Practitioner"),
          button: i18n.t("Book Appointment"),
-         link: "/doctor",
+         link: "/practitioner",
       },
       {
          image: "/home/service/s9.png",
@@ -134,7 +134,7 @@ const Service = ({ slug = null }) => {
                            src={item.image}
                            width={1000}
                            height={1000}
-                           className="w-full md:w-[358px] xl:h-[230px] lg:h-[200px] md:h-[150px] object-fill"
+                           className="w-full md:w-[358px] xl:h-[230px] lg:h-[200px] md:h-[150px] h-[78px] object-fill"
                            alt="Service image"
                         />
                         <h4 className="service-title mt-1.5 md:mt-4 lg:mt-6 text-[#061C3D] whitespace-pre">{item.heading}</h4>
@@ -153,7 +153,7 @@ const Service = ({ slug = null }) => {
                            src={item.image}
                            width={500}
                            height={500}
-                           className="w-full md:w-[358px] xl:h-[230px] lg:h-[200px] md:h-[150px] object-fill"
+                           className="w-full md:w-[358px] xl:h-[230px] lg:h-[200px] md:h-[150px] h-[78px] object-fill"
                            alt="Service image"
                         />
                         <h4 className="service-title mt-1.5 md:mt-4 lg:mt-6 text-[#061C3D] whitespace-pre">{item.heading}</h4>
