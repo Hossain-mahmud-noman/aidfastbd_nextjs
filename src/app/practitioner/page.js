@@ -1,6 +1,6 @@
 import React from "react";
 import { appname } from "../../utils/constants";
-import PractitionerList from "../../components/list/practitionerList";
+import PractitionerList from "../../components/list/PractitionerList";
 import SearchPractitioner from "../../components/search/SearchPractitioner";
 
 export const metadata = {
