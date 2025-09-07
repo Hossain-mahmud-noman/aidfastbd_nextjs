@@ -1,70 +1,70 @@
-'use client'
+"use client";
 
-import { useI18n } from '../../context/i18n.js'
-import Image from 'next/image'
-import Link from 'next/link'
-import { FiDownload } from 'react-icons/fi'
+import { useI18n } from "../../context/i18n.js";
+import Image from "next/image";
+import Link from "next/link";
+import { FiDownload } from "react-icons/fi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Keyboard, Pagination, Autoplay } from "swiper/modules";
-import { useRef } from 'react'
-import { useRouter } from 'next/navigation.js'
+import { useRef } from "react";
+import { useRouter } from "next/navigation.js";
 const Hero = () => {
-   const paginationRef = useRef(null);
-   const i18n = useI18n();
-   const data = [
-      {
-         heading: "Welcome to AidFast",
-         title: "All-in-One Healthcare – AidFast",
-         image: "/home/hero/h1.png"
-      },
-      {
-         heading: "Welcome to AidFast",
-         title: "All-in-One Healthcare – AidFast",
-         image: "/home/hero/h2.png"
-      },
-      {
-         heading: "Welcome to AidFast",
-         title: "All-in-One Healthcare – AidFast",
-         image: "/home/hero/h3.png"
-      },
-      {
-         heading: "Welcome to AidFast",
-         title: "All-in-One Healthcare – AidFast",
-         image: "/home/hero/h4.jpg"
-      },
-   ]
-   const router = useRouter()
-   return (
-      <div className='hero'>
-         <div className="bg-[#F2F4F8] w-full ">
-            <Swiper
-               keyboard={{ enabled: true }}
-               breakpoints={{
-                  320: { slidesPerView: 1, spaceBetween: 10 },
-                  640: { slidesPerView: 1, spaceBetween: 10 },
-                  768: { slidesPerView: 1, spaceBetween: 16 },
-                  1024: { slidesPerView: 1, spaceBetween: 20 },
-               }}
-               autoplay={{
-                  delay: 3000,
-                  disableOnInteraction: false,
-               }}
-               speed={1000}
-               loop={true}
-               pagination={{
-                  clickable: true,
-                  el: paginationRef.current,
-               }}
-               onBeforeInit={(swiper) => {
-                  swiper.params.pagination.el = paginationRef.current;
-               }}
-               modules={[Keyboard, Autoplay, Pagination]}
-               className="w-full"
-            >
-               {data.map((item, index) => (
-                  <SwiperSlide key={index} >
-                     {/* <div className="py-4 md:py-10 lg:py-[55px] aid-container mx-auto flex items justify-between gap-3 md:gap-2 lg:gap-4 xl:gap-10 items-center overflow-hidden">
+  const paginationRef = useRef(null);
+  const i18n = useI18n();
+  const data = [
+    {
+      heading: "Welcome to AidFast",
+      title: "All-in-One Healthcare – AidFast",
+      image: "/home/hero/h1.png",
+    },
+    {
+      heading: "Welcome to AidFast",
+      title: "All-in-One Healthcare – AidFast",
+      image: "/home/hero/h2.png",
+    },
+    {
+      heading: "Welcome to AidFast",
+      title: "All-in-One Healthcare – AidFast",
+      image: "/home/hero/h3.png",
+    },
+    {
+      heading: "Welcome to AidFast",
+      title: "All-in-One Healthcare – AidFast",
+      image: "/home/hero/h4.jpg",
+    },
+  ];
+  const router = useRouter();
+  return (
+    <div className="hero">
+      <div className="bg-[#F2F4F8] w-full ">
+        <Swiper
+          keyboard={{ enabled: true }}
+          breakpoints={{
+            320: { slidesPerView: 1, spaceBetween: 10 },
+            640: { slidesPerView: 1, spaceBetween: 10 },
+            768: { slidesPerView: 1, spaceBetween: 16 },
+            1024: { slidesPerView: 1, spaceBetween: 20 },
+          }}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
+          speed={1000}
+          loop={true}
+          pagination={{
+            clickable: true,
+            el: paginationRef.current,
+          }}
+          onBeforeInit={(swiper) => {
+            swiper.params.pagination.el = paginationRef.current;
+          }}
+          modules={[Keyboard, Autoplay, Pagination]}
+          className="w-full"
+        >
+          {data.map((item, index) => (
+            <SwiperSlide key={index}>
+              {/* <div className="py-4 md:py-10 lg:py-[55px] aid-container mx-auto flex items justify-between gap-3 md:gap-2 lg:gap-4 xl:gap-10 items-center overflow-hidden">
                         <div className=''>
                            <span className="hero-description text-[#000000] font-semibold bg-[#B1CFEA2E] px-2 py-1 md:px-4 md:py-2.4 rounded-md inline-block">
                               {i18n.t(item.heading)}
@@ -106,26 +106,33 @@ const Hero = () => {
                            />
                         </div>
                      </div> */}
-                     <div className='w-full'
-                     onClick={() => router.push("https://play.google.com/store/apps/details?id=com.aidfastbd.app")}
-                     >
-                        <Image
-                           src={item.image}
-                           width={2000}
-                           height={2000}
-                           loading='lazy'
-                           alt="mobile"
-                           className="h-[141px] sm:h-[250px] lg:h-[380px] xl:h-[540px] 2xl:h-[700px]"
-                        />
-                     </div>
-                  </SwiperSlide>
-               ))}
-            </Swiper>
-
-         </div>
-         <div ref={paginationRef} className="custom-pagination py-4 flex justify-center"></div>
+              <div
+                className="w-full"
+                onClick={() =>
+                  router.push(
+                    "https://play.google.com/store/apps/details?id=com.aidfastbd.app"
+                  )
+                }
+              >
+                <Image
+                  src={item.image}
+                  width={2000}
+                  height={2000}
+                  loading="lazy"
+                  alt="mobile"
+                  className="h-[141px] sm:h-[250px] lg:h-[380px] xl:h-[540px] 2xl:h-[700px]"
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
-   )
-}
+      <div
+        ref={paginationRef}
+        className="custom-pagination py-4 flex justify-center"
+      ></div>
+    </div>
+  );
+};
 
-export default Hero
+export default Hero;

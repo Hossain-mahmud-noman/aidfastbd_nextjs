@@ -32,10 +32,10 @@ const Navbar = ({ textColor = "text-black" }) => {
             boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.08)'
          }}
       >
-         <div className="aid-container flex flex-row justify-between items-center md:py-[18px] py-1 lg:px-0 bg-[#FFFFFF] text-[#061C3D]" >
+         <div className="aid-container flex flex-row justify-between items-center lg:py-1 bg-[#FFFFFF] text-[#061C3D]" >
             {/* Logo */}
             <Link href="/">
-               <div className="md:w-[133px] w-[100px] h-[80px] md:h-[40px] lg:w-[153px] lg:h-[46px]  flex justify-start items-center -ml-2 lg:ml-0 mt-1">
+               <div className="md:w-[133px] w-[100px] h-[80px] md:h-[40px] lg:w-[153px] lg:h-[46px] flex justify-start items-center -ml-2 lg:ml-0 mt-1">
                   <Image
                      src="/logo.png"
                      width={153}
@@ -46,7 +46,7 @@ const Navbar = ({ textColor = "text-black" }) => {
                </div>
             </Link>
             {/* Desktop Menu */}
-            <ul className=" description1 list-none xl:gap-5 gap-4 items-center hidden lg:flex">
+            <ul className=" description1 list-none xl:space-x-5 space-x-3-4 items-center hidden lg:flex">
                <NavItem
                   path="/doctor"
                   label={i18n.t("Doctor")}
