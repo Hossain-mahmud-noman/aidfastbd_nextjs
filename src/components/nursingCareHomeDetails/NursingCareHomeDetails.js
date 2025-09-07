@@ -7,7 +7,7 @@ import ProfileQR from "../profileQR";
 import { FaArrowLeft } from "react-icons/fa";
 import { image_base_endpoint, frontend_url, appname } from "../../utils/constants";
 import Head from "next/head";
-import DentalTabs from "../tabs/DentalTabs";
+import NurseTab from "../tabs/NurseTab";
 import FloatingCallButton from "../FloatingCallButton";
 import Image from "next/image";
 import DiaLocation from "../DiaLocation";
@@ -117,7 +117,7 @@ const NursingCareHomeDetails = ({ data, url }) => {
       </div>
 
       <div className="aid-container">
-        <DentalTabs typeId="12" data={data} url={url} />
+        <NurseTab typeId="12" data={data} url={url} />
       </div>
       <FloatingCallButton number={data?.contact} />
 

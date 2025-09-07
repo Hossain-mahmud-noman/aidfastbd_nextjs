@@ -10,7 +10,7 @@ import NursingCareHomeDetails from "../../../components/nursingCareHomeDetails/N
 
 export async function generateMetadata({ params }) {
   const res = await fetch(
-    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?userId=${params.slug}`,
+    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=6&userId=${params.slug}`,
     { cache: "no-store" }
   );
   const json = await res.json();
@@ -41,7 +41,8 @@ export async function generateMetadata({ params }) {
 
 export default async function NursingPage({ params }) {
   const res = await fetch(
-    `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?userId=${params.slug}`,
+    // `https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=6&userId=c2dd1982-96aa-4b25-a34a-08ddc94043c7`,
+    `https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=6&userId=${params.slug}`,
     { cache: "no-store" }
   );
   const json = await res.json();
@@ -51,6 +52,6 @@ export default async function NursingPage({ params }) {
     return <div className="p-8 text-center text-lg">Nursing Home Center not found.</div>;
   }
 
-  return <NursingCareHomeDetails data={data} url={`${base_endpoint}/GeneralInformation/GetAllGenericServiceList?userId=${params.slug}`} />;
+  return <NursingCareHomeDetails data={data} url={`${base_endpoint}/GeneralInformation/GetAllGenericServiceList?serviceType=6&userId=${params.slug}`} />;
 }
 

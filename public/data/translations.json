@@ -529,6 +529,7 @@
     "General Practitioner": "প্রাথমিক চিকিৎসা কেন্দ্র",
     "Physiotherapist": "ফিজিওথেরাপিস্ট",
     "No Physiotherapist data available": "কোনো ফিজিওথেরাপিস্টের তথ্য পাওয়া যায়নি",
-    "Care Giver": "কেয়ার গিভার"
+    "Care Giver": "কেয়ার গিভার", 
+    "Nurse": "নার্স"
   }
 }

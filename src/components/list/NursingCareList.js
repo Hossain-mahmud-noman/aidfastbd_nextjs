@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
-import { FaSpinner } from 'react-icons/fa';
-import ServiceCard from '../ServiceCard';
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { FaSpinner } from "react-icons/fa";
+import ServiceCard from "../ServiceCard";
 
 const NursingCareList = () => {
   const [data, setData] = useState([]);
@@ -18,8 +18,8 @@ const NursingCareList = () => {
     try {
       setLoading(true);
 
-      const lat = localStorage.getItem('lat') || '';
-      const lon = localStorage.getItem('lon') || '';
+      const lat = localStorage.getItem("lat") || "";
+      const lon = localStorage.getItem("lon") || "";
 
       const res = await axios.get(
         `https://api.aidfastbd.com/api/GeneralInformation/GetAllGenericServiceList?serviceType=6&pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`
@@ -38,7 +38,7 @@ const NursingCareList = () => {
         setHasMore(false);
       }
     } catch (error) {
-      console.error('Failed to fetch Nursing Care Center data:', error);
+      console.error("Failed to fetch Nursing Care Center data:", error);
     } finally {
       setLoading(false);
     }
@@ -62,7 +62,7 @@ const NursingCareList = () => {
           fetchNursing(nextPage);
         }
       },
-      { root: null, rootMargin: '0px', threshold: 1.0 }
+      { root: null, rootMargin: "0px", threshold: 1.0 }
     );
 
     if (loaderRef.current) {
@@ -87,7 +87,12 @@ const NursingCareList = () => {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-3">
           {data.map((d, index) => (
-            <ServiceCard key={`${d.id}-${index}`} slug="nursing-home-care" data={d} />
+            <ServiceCard
+              nurse={true}
+              key={index}
+              slug="nursing-home-care"
+              data={d}
+            />
           ))}
         </div>
       )}
