@@ -5,9 +5,13 @@ import ShareButton from "../ShareButton";
 import FavouriteToggle from "../FavouriteToggle";
 import ProfileQR from "../profileQR";
 import { FaArrowLeft } from "react-icons/fa";
-import { image_base_endpoint, frontend_url, appname } from "../../utils/constants";
+import {
+  image_base_endpoint,
+  frontend_url,
+  appname,
+} from "../../utils/constants";
 import Head from "next/head";
-import DentalTabs from "../tabs/DentalTabs";
+import CareTab from "../tabs/CareTab";
 import FloatingCallButton from "../FloatingCallButton";
 import EmergencyCallButton from "../EmergencyCallButton";
 import Image from "next/image";
@@ -16,7 +20,7 @@ import TextTicker from "../TextTicker";
 import { useI18n } from "../../context/i18n";
 
 const CareGiverDetails = ({ data, url }) => {
-  const i18n = useI18n()
+  const i18n = useI18n();
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
 
@@ -33,7 +37,7 @@ const CareGiverDetails = ({ data, url }) => {
     ? image_base_endpoint + data.profileImageUrl
     : "/images/doctor.jpg";
 
-  const defaultImageUrl = '/home/service/s14.png'
+  const defaultImageUrl = "/home/service/s14.png";
   const cover =
     data?.coverImageUrl == null || data?.coverImageUrl === ""
       ? defaultImageUrl
@@ -48,16 +52,26 @@ const CareGiverDetails = ({ data, url }) => {
           content={`${data?.name ?? ""} ${data?.location ?? ""}`.slice(0, 150)}
         />
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
-        <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
+        <meta
+          property="og:description"
+          content={`${data?.name ?? ""} ${data?.location ?? ""}`}
+        />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/care-giver-center/${data?.id}`} />
+        <meta
+          property="og:url"
+          content={`${frontend_url}/care-giver-center/${data?.id}`}
+        />
       </Head>
       <AppBar
         leadingIcon={<FaArrowLeft className="h-5 w-5" />}
         title={i18n.t("Care giver Details")}
         trailingComponents={
           <div className="flex">
-            <ProfileQR slug={"newService"} id={data?.id} type={"care-giver-center"} />
+            <ProfileQR
+              slug={"newService"}
+              id={data?.id}
+              type={"care-giver-center"}
+            />
             <FavouriteToggle
               isFill={data?.isFavourite}
               userId={user?.id}
@@ -65,7 +79,9 @@ const CareGiverDetails = ({ data, url }) => {
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/care-giver-center/${data?.id}`} />
+            <ShareButton
+              link={`${frontend_url}/care-giver-center/${data?.id}`}
+            />
           </div>
         }
       />
@@ -107,10 +123,9 @@ const CareGiverDetails = ({ data, url }) => {
         {data?.notice && <TextTicker text={data?.notice} />}
 
         <EmergencyCallButton number={data?.emergencyContactNumber} />
-
       </div>
       <div className="aid-container mt-6">
-        <DentalTabs data={data} typeId="15" url={url} />
+        <CareTab data={data} typeId="15" url={url} />
       </div>
       <FloatingCallButton number={data?.contact} />
     </>

@@ -6,7 +6,8 @@ import ShowOriginalImage from "../list/ShowOriginalImage";
 import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
 import { useAuth } from "../../context/AuthContext";
-function PhyTab({ data, typeId, url }) {
+function CareTab({ data, typeId, url }) {
+  console.log("🚀 ~ PhyTab ~ data:", data)
   const i18n = useI18n();
   const { user } = useAuth();
   const [reviewData, setReviewdData] = useState(data);
@@ -178,4 +179,4 @@ function PhyTab({ data, typeId, url }) {
   );
 }
 
-export default PhyTab;
+export default CareTab;
