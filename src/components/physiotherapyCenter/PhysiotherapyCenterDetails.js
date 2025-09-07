@@ -5,9 +5,13 @@ import ShareButton from "../ShareButton";
 import FavouriteToggle from "../FavouriteToggle";
 import ProfileQR from "../profileQR";
 import { FaArrowLeft } from "react-icons/fa";
-import { image_base_endpoint, frontend_url, appname } from "../../utils/constants";
+import {
+  image_base_endpoint,
+  frontend_url,
+  appname,
+} from "../../utils/constants";
 import Head from "next/head";
-import DentalTabs from "../tabs/DentalTabs";
+import PhyTab from "../tabs/PhyTab";
 import FloatingCallButton from "../FloatingCallButton";
 import Image from "next/image";
 import DiaLocation from "../DiaLocation";
@@ -16,7 +20,7 @@ import EmergencyCallButton from "../EmergencyCallButton";
 import { useI18n } from "../../context/i18n";
 
 const PhysiotherapyCenterDetails = ({ data, url }) => {
-  const i18n = useI18n()
+  const i18n = useI18n();
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
 
@@ -48,9 +52,15 @@ const PhysiotherapyCenterDetails = ({ data, url }) => {
           content={`${data?.name ?? ""} ${data?.location ?? ""}`.slice(0, 150)}
         />
         <meta property="og:title" content={`${data?.name} | ${appname}`} />
-        <meta property="og:description" content={`${data?.name ?? ""} ${data?.location ?? ""}`} />
+        <meta
+          property="og:description"
+          content={`${data?.name ?? ""} ${data?.location ?? ""}`}
+        />
         <meta property="og:image" content={profile} />
-        <meta property="og:url" content={`${frontend_url}/physiotherapy-center/${data?.id}`} />
+        <meta
+          property="og:url"
+          content={`${frontend_url}/physiotherapy-center/${data?.id}`}
+        />
       </Head>
 
       <AppBar
@@ -70,7 +80,9 @@ const PhysiotherapyCenterDetails = ({ data, url }) => {
               type={3}
               token={token}
             />
-            <ShareButton link={`${frontend_url}/physiotherapy-center/${data?.id}`} />
+            <ShareButton
+              link={`${frontend_url}/physiotherapy-center/${data?.id}`}
+            />
           </div>
         }
       />
@@ -115,7 +127,11 @@ const PhysiotherapyCenterDetails = ({ data, url }) => {
       </div>
 
       <div className="aid-container">
-        <DentalTabs data={data} typeId="9" url={url} />
+        <PhyTab
+          data={data}
+          typeId="9"
+          url={url}
+        />
       </div>
       <FloatingCallButton number={data?.contact} />
     </>
