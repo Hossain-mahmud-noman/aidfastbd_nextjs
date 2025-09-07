@@ -39,7 +39,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function DoctorPage({ params }) {
+export default async function NursingPage({ params }) {
   const res = await fetch(
     `${base_endpoint}/GeneralInformation/GetAllGenericServiceList?userId=${params.slug}`,
     { cache: "no-store" }

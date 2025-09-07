@@ -7,13 +7,13 @@ import { useI18n } from "../../context/i18n";
 import PostReview from "../postReview/PostReview";
 import { useAuth } from "../../context/AuthContext";
 
-function CareTab({ data, typeId, url }) {
+function NurseTab({ data, typeId, url }) {
   const i18n = useI18n();
   const { user } = useAuth();
   const [reviewData, setReviewdData] = useState(data);
   const tabData = [
     i18n.t("Information"),
-    i18n.t("Care Giver"),
+    i18n.t("Physiotherapist"),
     i18n.t("Services"),
     i18n.t("Review"),
   ];
@@ -88,7 +88,7 @@ function CareTab({ data, typeId, url }) {
           </div>
         )}
 
-        {activeTab === i18n.t("Care Giver") && (
+        {activeTab === i18n.t("Physiotherapist") && (
           <div className="container mx-auto">
             {data?.genericServiceAdditionalProfiles?.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
@@ -179,4 +179,4 @@ function CareTab({ data, typeId, url }) {
   );
 }
 
-export default CareTab;
+export default NurseTab;
