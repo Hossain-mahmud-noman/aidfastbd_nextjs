@@ -91,7 +91,7 @@ const Service = ({ slug = null }) => {
          link: "/nursing-home-care",
       },
       {
-         image: "/home/service/s14.png",
+         image: "/home/service/d14.jpg",
          heading: i18n.t("Caregiver Center"),
          button: i18n.t("Book Appointment"),
          // button: i18n.t("Call Now"),
@@ -99,7 +99,7 @@ const Service = ({ slug = null }) => {
          // phone: "+8801338988734",
       },
       {
-         image: "/home/service/s15.png",
+         image: "/home/service/d15.jpg",
          heading: i18n.t("Emergency Helpline"),
          button: i18n.t("Call Now"),
          phone: "+8801338988734",
