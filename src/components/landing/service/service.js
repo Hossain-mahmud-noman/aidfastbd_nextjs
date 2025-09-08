@@ -19,7 +19,7 @@ const Service = ({ slug = null }) => {
          link: "/doctor",
       },
       {
-         image: "/home/service/d2.jpg",
+         image: "/home/service/s2.jpg",
          heading: i18n.t("Diagnostic Center"),
          button: i18n.t("Find Center"),
          link: "/diagnostic",
@@ -43,7 +43,7 @@ const Service = ({ slug = null }) => {
          link: "/blood",
       },
       {
-         image: "/home/service/d6.jpg",
+         image: "/home/service/s6.jpg",
          heading: i18n.t("Ambulance Service"),
          button: i18n.t("Book Ambulance"),
          link: "/ambulance",
