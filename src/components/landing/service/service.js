@@ -85,13 +85,13 @@ const Service = ({ slug = null }) => {
          link: "/pharmacy",
       },
       {
-         image: "/home/service/s13.png",
+         image: "/home/service/d13.jpg",
          heading: i18n.t("Nursing Care Home"),
          button: i18n.t("Book Appointment"),
          link: "/nursing-home-care",
       },
       {
-         image: "/home/service/d14.jpg",
+         image: "/home/service/s14.jpg",
          heading: i18n.t("Caregiver Center"),
          button: i18n.t("Book Appointment"),
          // button: i18n.t("Call Now"),
