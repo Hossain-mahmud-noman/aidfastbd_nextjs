@@ -16,23 +16,23 @@ const Hero = () => {
     {
       heading: "Welcome to AidFast",
       title: "All-in-One Healthcare – AidFast",
-      image: "/home/hero/h1.png",
+      image: "/home/hero/b1.jpg",
     },
-    {
-      heading: "Welcome to AidFast",
-      title: "All-in-One Healthcare – AidFast",
-      image: "/home/hero/h2.png",
-    },
-    {
-      heading: "Welcome to AidFast",
-      title: "All-in-One Healthcare – AidFast",
-      image: "/home/hero/h3.png",
-    },
-    {
-      heading: "Welcome to AidFast",
-      title: "All-in-One Healthcare – AidFast",
-      image: "/home/hero/h4.jpg",
-    },
+    // {
+    //   heading: "Welcome to AidFast",
+    //   title: "All-in-One Healthcare – AidFast",
+    //   image: "/home/hero/h2.png",
+    // },
+    // {
+    //   heading: "Welcome to AidFast",
+    //   title: "All-in-One Healthcare – AidFast",
+    //   image: "/home/hero/h3.png",
+    // },
+    // {
+    //   heading: "Welcome to AidFast",
+    //   title: "All-in-One Healthcare – AidFast",
+    //   image: "/home/hero/h4.jpg",
+    // },
   ];
   const router = useRouter();
   return (
@@ -116,11 +116,12 @@ const Hero = () => {
               >
                 <Image
                   src={item.image}
-                  width={2000}
-                  height={2000}
+                  width={3000}
+                  height={3000}
                   loading="lazy"
-                  alt="mobile"
-                  className="h-[141px] sm:h-[250px] lg:h-[380px] xl:h-[540px] 2xl:h-[700px]"
+                  alt="banner"
+                  // className="h-[141px] sm:h-[250px] lg:h-[380px] xl:h-[540px] 2xl:h-[700px]"
+                  className="h-[141px] sm:h-[250px] lg:h-[380px] xl:h-[340px] object-fill w-full"
                 />
               </div>
             </SwiperSlide>
