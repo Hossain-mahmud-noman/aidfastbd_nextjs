@@ -118,7 +118,7 @@ body {
 }
 
 .service-title {
-  @apply xl:text-2xl lg:text-xl md:text-base text-[9px] font-inter font-normal md:font-medium;
+  @apply xl:text-2xl lg:text-xl md:text-base text-[9.5px] font-inter font-normal;
 }
 .contact-title {
   @apply xl:text-2xl lg:text-xl md:text-base text-xs font-inter font-medium;
