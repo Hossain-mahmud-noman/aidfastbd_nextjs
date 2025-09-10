@@ -14,13 +14,13 @@ const ProfileMenu = ({ data }) => {
       { key: 'isAmbulanceProfile', icon: '🚑', label: i18n.t('Ambulance'), link: '/profile/ambulance' },
       { key: 'isDental', icon: '🦷', label: i18n.t('Dental Clinic'), link: '/profile/dental' },
       { key: 'isDrugCenter', icon: '🚭', label: i18n.t('Drug De-Addiction Center'), link: '/profile/drug' },
-      { key: 'isPhysioCenter', icon: '🧘‍♂️', label: i18n.t('Physiotherapy Center'), link: '/profile/physioProfile' },
+      { key: 'isPhysioCenter', icon: '🧘', label: i18n.t('Physiotherapy Center'), link: '/profile/physioProfile' },
       { key: 'isHearingCenter', icon: '🦻', label: i18n.t('Hearing Care Center'), link: '/profile/hearingCareProfile' },
       { key: 'isEyeCenter', icon: '👁️', label: i18n.t('Hearing Aid Center'), link: '/profile/eyeCareProfile' },
-      { key: 'isNurse', icon: '🧑‍⚕️', label: i18n.t('Nursing Care Home'), link: '/profile/nursingCareProfile' },
+      { key: 'isNurse', icon: '🧑', label: i18n.t('Nursing Care Home'), link: '/profile/nursingCareProfile' },
       { key: 'isDoctorHomeVisit', icon: '🏠', label: i18n.t('Doctor Home Visit'), link: '/profile/doctorHomeVisit' },
-      { key: 'isCareGiver', icon: '👩‍🍼', label: i18n.t('Caregiver Center'), link: '/profile/careGiver' },
-      { key: 'isGeneralPractitioner', icon: '🧑‍⚕️', label: i18n.t('General Practitioner'), link: '/profile/practitioner' },
+      { key: 'isCareGiver', icon: '👩', label: i18n.t('Caregiver Center'), link: '/profile/careGiver' },
+      { key: 'isGeneralPractitioner', icon: '🧑', label: i18n.t('General Practitioner'), link: '/profile/practitioner' },
    ];
 
 
