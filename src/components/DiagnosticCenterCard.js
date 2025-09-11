@@ -27,10 +27,10 @@ const DiagnosticCenterCard = ({ diagnostic, slug }) => {
                         />
                     </div>
 
-                    <h3 className="md:text-md text-[10px] mt-2 text-black mb-1 line-clamp-3">{diagnostic.name}</h3>
+                    <h3 className="md:text-md text-[10px] lg:text-xl xl:text-lg mt-1 md:mt-2 text-black mb-1 line-clamp-2">{diagnostic.name}</h3>
                     <div className="flex items-center">
-                        <FaStar className="text-yellow-500 md:text-md text-[10px] mr-1" />
-                        <span className="md:text-md text-[10px] text-gray-600">
+                        <FaStar className="text-yellow-500 md:text-md text-[10px] lg:text-xl xl:text-lg mr-1" />
+                        <span className="md:text-md text-[10px] lg:text-xl xl:text-lg text-gray-600">
                             {diagnostic.rating} (ratings)
                         </span>
                     </div>
