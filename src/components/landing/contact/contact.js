@@ -107,7 +107,7 @@ const Contact = () => {
                            name="message"
                            label={i18n.t("Message")}
                            placeholder={i18n.t("Type your message")}
-                           // required
+                           required
                            textArea={true}
                            rows={5}
                            className=" mt-4 w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
