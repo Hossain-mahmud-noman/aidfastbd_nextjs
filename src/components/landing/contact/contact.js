@@ -96,7 +96,7 @@ const Contact = () => {
                         />
                      </div>
                      <FormInput
-                        name="subject"
+                        name="phoneNumber"
                         label={i18n.t("Phone Number")}
                         required
                         className="w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
@@ -118,7 +118,7 @@ const Contact = () => {
                            name="message"
                            label={i18n.t("Message")}
                            placeholder={i18n.t("Type your message")}
-                           // required
+                           required
                            textArea={true}
                            rows={2}
                            className=" mt-4 w-full rounded-xl bg-transparent lg:p-3 p-2 dashinput focus:outline-primary"
