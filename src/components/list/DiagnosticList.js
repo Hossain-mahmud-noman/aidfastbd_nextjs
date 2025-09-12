@@ -119,7 +119,7 @@ const DiagnosticList = () => {
               No data available
             </div>
           ) : (
-            <div className="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-2 md:gap-3 lg:gap-4 xl:gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4 xl:gap-5">
               {data.map((d, index) => (
                 <DiagnosticCenterCard key={`${d.id}-${index}`} diagnostic={d} />
               ))}
