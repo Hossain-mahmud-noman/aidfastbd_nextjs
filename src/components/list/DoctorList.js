@@ -1,107 +1,158 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DoctorCard from '../DoctorCard';
 import { FaSpinner } from 'react-icons/fa';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const Doctor = () => {
   const [doctors, setDoctors] = useState([]);
-  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const loaderRef = useRef(null);
-  const firstLoadRef = useRef(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  const lat = typeof window !== 'undefined' ? localStorage.getItem('lat') || '' : '';
+  const lon = typeof window !== 'undefined' ? localStorage.getItem('lon') || '' : '';
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      setWindowWidth(window.innerWidth);
+    }
+
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', handleResize);
+      }
+    };
+  }, []);
 
   const fetchDoctors = async (pageNumber) => {
-    if (loading || !hasMore) return;
     try {
       setLoading(true);
-
-      const lat = localStorage.getItem('lat') || '';
-      const lon = localStorage.getItem('lon') || '';
-
       const res = await axios.get(
         `https://api.aidfastbd.com/api/GeneralWeb/GetDoctorSearchList?pageNumber=${pageNumber}&lat=${lat}&lon=${lon}`
       );
 
       const response = res.data;
       const newDoctors = response?.data || [];
-
-      setDoctors((prev) => [...prev, ...newDoctors]);
+      setDoctors(newDoctors);
 
       const totalRecords = response?.totalRecords || 0;
       const pageSize = response?.pageSize || 15;
-      const totalPages = Math.ceil(totalRecords / pageSize);
+      const totalPagesCalculated = Math.ceil(totalRecords / pageSize);
+      setTotalPages(totalPagesCalculated);
+      setCurrentPage(pageNumber);
 
-      if (pageNumber >= totalPages) {
-        setHasMore(false);
-      }
     } catch (error) {
       console.error('Failed to fetch doctors:', error);
+      setDoctors([]);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (!firstLoadRef.current) {
-      fetchDoctors(1);
-      firstLoadRef.current = true;
+    const pageFromUrl = parseInt(searchParams.get('pageNumber')) || 1;
+    fetchDoctors(pageFromUrl);
+  }, [searchParams]);
+
+  const handlePageChange = (newPage) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.set('pageNumber', newPage);
+      router.push(`/doctor?${newSearchParams.toString()}`);
     }
-  }, []);
+  };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !loading && hasMore) {
-          setPage((prev) => {
-            const nextPage = prev + 1;
-            fetchDoctors(nextPage);
-            return nextPage;
-          });
-        }
-      },
-      { root: null, rootMargin: '0px', threshold: 1.0 }
-    );
+  const getVisiblePages = () => {
+    const maxVisiblePages = windowWidth >= 1024 ? 5 : 3;
+    const pages = [];
+    let startPage;
+    let endPage;
 
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
-    }
-
-    return () => {
-      if (loaderRef.current) {
-        observer.unobserve(loaderRef.current);
+    if (totalPages <= maxVisiblePages) {
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      const middle = Math.ceil(maxVisiblePages / 2);
+      if (currentPage <= middle) {
+        startPage = 1;
+        endPage = maxVisiblePages;
+      } else if (currentPage + middle - 1 >= totalPages) {
+        startPage = totalPages - maxVisiblePages + 1;
+        endPage = totalPages;
+      } else {
+        startPage = currentPage - middle + 1;
+        endPage = currentPage + middle - 1;
       }
-    };
-  }, [loading, hasMore]);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    return pages;
+  };
 
   return (
-    <div className="">
+    <div className="p-4">
       <h1 className="text-xl font-bold mb-4">Doctors List</h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-        {doctors.map((doc, index) => (
-          <DoctorCard key={`${doc.id}-${index}`} doctor={doc} />
-        ))}
-      </div>
 
-      {hasMore && (
-        <div
-          ref={loaderRef}
-          className="flex items-center justify-center py-6"
-          role="status"
-        >
-          {loading && (
-            <div className="flex items-center space-x-2 text-indigo-600">
-              <FaSpinner className="animate-spin text-xl" />
-              <span>Loading Doctors...</span>
+      {loading ? (
+        <div className="flex justify-center items-center h-48">
+          <FaSpinner className="animate-spin text-xl text-indigo-600" />
+          <span className="ml-2">Loading...</span>
+        </div>
+      ) : (
+        <>
+          {doctors.length === 0 ? (
+            <div className="h-[300px] w-full flex items-center justify-center text-2xl text-gray-500">
+              No data available
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4 xl:gap-5">
+              {doctors.map((doc, index) => (
+                <DoctorCard key={`${doc.id}-${index}`} doctor={doc} />
+              ))}
             </div>
           )}
-        </div>
+        </>
       )}
 
-      {!hasMore && (
-        <div className="text-center text-gray-500 mt-6">No more doctors.</div>
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center py-6 space-x-2">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 border rounded-md disabled:text-gray-400 disabled:bg-gray-200"
+          >
+            Previous
+          </button>
+          {getVisiblePages().map((pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => handlePageChange(pageNumber)}
+              className={`px-4 py-2 border rounded-md ${currentPage === pageNumber ? 'bg-indigo-600 text-white' : 'bg-white text-indigo-600'}`}
+            >
+              {pageNumber}
+            </button>
+          ))}
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 border rounded-md disabled:text-gray-400 disabled:bg-gray-200"
+          >
+            Next
+          </button>
+        </div>
       )}
     </div>
   );
