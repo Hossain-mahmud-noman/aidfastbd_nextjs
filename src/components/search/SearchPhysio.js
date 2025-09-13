@@ -51,7 +51,7 @@ export const SearchableDropdown = ({ label, options, value, onChange, slug }) =>
       </div>
 
       {isOpen && (
-        <div className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-lg mt-1 shadow-lg max-h-40 overflow-y-auto z-10">
+        <div className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-lg mt-1 shadow-lg max-h-72 overflow-y-auto z-10">
           <input
             type="text"
             className="w-full px-3 py-2 border-b border-gray-300 focus:outline-none"
@@ -60,7 +60,7 @@ export const SearchableDropdown = ({ label, options, value, onChange, slug }) =>
             onChange={(e) => setSearchTerm(e.target.value)}
             autoFocus
           />
-          <ul className="max-h-32 overflow-y-auto">
+          <ul className="max-h-72 overflow-y-auto">
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option, idx) => (
                 <li
