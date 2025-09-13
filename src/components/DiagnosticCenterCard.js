@@ -19,7 +19,6 @@ const DiagnosticCenterCard = ({ diagnostic, slug }) => {
                             width={1000}
                             height={1000}
                             src={imageUrl}
-                            placeholder="blur"
                             priority={false}
                             alt={diagnostic.name}
                             className="w-28 h-28 md:w-40 md:h-40 xl:w-48 xl:h-48 object-cover border border-primary rounded-full" 

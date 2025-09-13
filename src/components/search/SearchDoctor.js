@@ -130,7 +130,7 @@ const SearchDoctor = ({ specialityData = [] }) => {
     if (customFilters.bmdc) queryParams.append("BMDCNumber", customFilters.bmdc);
 
     try {
-      const res = await fetch(`${base_endpoint}/GeneralWeb/GetDoctorSearchList?pageNumber=1&pageSize=20&${queryParams}`);
+      const res = await fetch(`${base_endpoint}/GeneralWeb/GetDoctorSearchList?${queryParams}`);
       const data = await res.json();
       setDoctorList(data?.data || []);
       setHasSearched(true);

@@ -100,7 +100,7 @@ const SearchDiagnostic = () => {
     if (customFilters.rank?.value) queryParams.append("popularity", customFilters.rank.value);
 
     try {
-      const res = await fetch(`${base_endpoint}/GeneralWeb/GetAllDiagnosticCenterCardInfo?pageNumber=1&pageSize=20&${queryParams}`);
+      const res = await fetch(`${base_endpoint}/GeneralWeb/GetAllDiagnosticCenterCardInfo?${queryParams}`);
       const data = await res.json();
       setSearchResult(data?.data || []);
       setHasSearched(true);
@@ -178,7 +178,7 @@ const SearchDiagnostic = () => {
           {searchResult.length === 0 ? (
             <p className="text-center text-gray-500">{i18n.t("No diagnostic centers found")}</p>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4 xl:gap-5">
               {searchResult.map((item, index) => (
                 <DiagnosticCenterCard key={index} diagnostic={item} />
               ))}

@@ -113,7 +113,7 @@ const SearchBlood = () => {
 
     try {
       const res = await fetch(
-        `${base_endpoint}/GeneralWeb/GetAllBloodBankList?pageNumber=1&pageSize=20&${query.toString()}`
+        `${base_endpoint}/GeneralWeb/GetAllBloodBankList?${query.toString()}`
       );
       const data = await res.json();
       setResults(data?.data || []);

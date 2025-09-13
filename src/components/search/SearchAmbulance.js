@@ -115,7 +115,7 @@ const SearchAmbulance = () => {
 
     try {
       const res = await fetch(
-        `${base_endpoint}/GeneralWeb/GetAllAmbulanceList?pageNumber=1&pageSize=20&${query}`
+        `${base_endpoint}/GeneralWeb/GetAllAmbulanceList?${query}`
       );
       const data = await res.json();
       setResults(data?.data || []);
